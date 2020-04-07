@@ -1,7 +1,7 @@
 <!--
  * @Author: gooing
  * @since: 2020-02-02 14:52:15
- * @lastTime: 2020-04-07 23:32:35
+ * @lastTime: 2020-04-07 23:54:29
  * @LastAuthor: gooing
  * @FilePath: \pixiciv-pc\src\views\Detail\Detail.vue
  * @message:
@@ -52,7 +52,7 @@
         <figcaption class="detail-content__info">
           <div class="card">
             <h1>{{ illustDetail.title }}</h1>
-            <div class="disc">{{ illustDetail.caption }}</div>
+            <div class="disc" v-html="illustDetail.caption" />
             <div class="tags">
               <ul>
                 <li
@@ -430,7 +430,7 @@ export default {
       margin: 0 auto;
       background: #fff;
       .card {
-        width: 600px;
+        width: 800px;
         h1 {
           color: rgb(28, 28, 28);
           font-size: 20px;
