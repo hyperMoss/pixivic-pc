@@ -13,7 +13,7 @@
         <VirtualList
           :key="requestType"
           :identifier="identifier"
-          :list="requestType === 'illust' ? pictureList1 : pictureList2"
+          :list="requestType === 'illust' ? IllustList : mangaList"
           @infinite="infinite"
         >
           <div class="bookmarked-tabs" @change="getList">
@@ -40,8 +40,8 @@ export default {
     return {
       page: 1,
       requestType: 'illust',
-      pictureList1: [],
-      pictureList2: []
+      IllustList: [],
+      mangaList: []
     };
   },
   computed: {
@@ -62,9 +62,9 @@ export default {
             $state.complete();
           } else {
             if (this.requestType === 'illust') {
-              this.pictureList1 = this.pictureList1.concat(res.data.data);
+              this.IllustList = this.IllustList.concat(res.data.data);
             } else {
-              this.pictureList2 = this.pictureList2.concat(res.data.data);
+              this.mangaList = this.mangaList.concat(res.data.data);
             }
             $state.loaded();
           }
