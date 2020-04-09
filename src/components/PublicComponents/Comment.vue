@@ -1,7 +1,7 @@
 <!--
  * @Author: gooing
  * @since: 2020-04-02 18:05:53
- * @lastTime: 2020-04-03 00:49:45
+ * @lastTime: 2020-04-08 10:56:42
  * @LastAuthor: gooing
  * @FilePath: \pixiciv-pc\src\components\PublicComponents\Comment.vue
  * @message:
@@ -74,7 +74,7 @@
               <span class="cancel" @click="cancel">取消</span>
               <el-button
                 class="btn"
-                type="success"
+                type="primary"
                 round
                 @click="submitComment(item)"
               >确定</el-button>
@@ -101,7 +101,7 @@
           <span class="cancel" @click="cancel">取消</span>
           <el-button
             class="btn"
-            type="success"
+            type="primary"
             round
             @click="submitComment()"
           >确定</el-button>
