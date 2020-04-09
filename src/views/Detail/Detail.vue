@@ -1,7 +1,7 @@
 <!--
  * @Author: gooing
  * @since: 2020-02-02 14:52:15
- * @lastTime: 2020-04-07 23:54:29
+ * @lastTime: 2020-04-09 22:46:49
  * @LastAuthor: gooing
  * @FilePath: \pixiciv-pc\src\views\Detail\Detail.vue
  * @message:
@@ -261,7 +261,8 @@ export default {
       data.isLiked = !data.isLiked;
       const params = {
         userId: this.user.id,
-        illustId: data.id
+        illustId: data.id,
+        username: this.user.username
       };
       if (!flag) {
         this.$store.dispatch('handleCollectIllust', params)

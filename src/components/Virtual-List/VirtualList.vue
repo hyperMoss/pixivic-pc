@@ -125,7 +125,8 @@ export default {
       const flag = item.isLiked;
       const params = {
         userId: this.user.id,
-        illustId: data.id
+        illustId: data.id,
+        username: this.user.username
       };
       if (!flag) {
         this.$set(item, 'isLiked', true); // 先强制视图更新 防止网络延迟不动
