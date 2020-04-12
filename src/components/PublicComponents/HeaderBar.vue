@@ -1,7 +1,7 @@
 <!--
  * @Author: gooing
  * @since: 2020-01-24 22:48:37
- * @lastTime: 2020-04-03 10:06:36
+ * @lastTime: 2020-04-07 23:21:45
  * @LastAuthor: gooing
  * @FilePath: \pixiciv-pc\src\components\PublicComponents\HeaderBar.vue
  * @message:
@@ -219,8 +219,9 @@ export default {
         return;
       }
       this.$router.push({
-        path: `/keywords/${keyword}`,
+        path: `/keywords`,
         query: {
+          tag: keyword,
           illustType: this.params.illustType
         }
       });

@@ -1,7 +1,7 @@
 <!--
  * @Author: gooing
  * @since: 2020-02-02 14:52:15
- * @lastTime: 2020-04-03 00:36:07
+ * @lastTime: 2020-04-09 22:46:49
  * @LastAuthor: gooing
  * @FilePath: \pixiciv-pc\src\views\Detail\Detail.vue
  * @message:
@@ -12,7 +12,7 @@
       <main class="detail-content">
         <figure class="detail-content__figure">
           <el-image
-            v-if="illustDetail.xrestrict==0&&illustDetail.sanityLevel<6"
+            v-if="illustDetail.xrestrict==0&&illustDetail.sanityLevel<=6"
             :preview-src-list="srcList"
             :src="illustDetail.originalSrc"
             fit="contain"
@@ -52,7 +52,7 @@
         <figcaption class="detail-content__info">
           <div class="card">
             <h1>{{ illustDetail.title }}</h1>
-            <div class="disc">{{ illustDetail.caption }}</div>
+            <div class="disc" v-html="illustDetail.caption" />
             <div class="tags">
               <ul>
                 <li
@@ -119,7 +119,6 @@
         <section class="artist-preview">
           <template v-for="item in pictureList">
             <el-image
-              v-if="item.xrestrict==0&&item.sanityLevel<6"
               :key="item.id"
               :src="item.imageUrls[0].medium | replaceSmall"
               fit="cover"
@@ -134,11 +133,6 @@
                 <i class="el-icon-picture-outline" />
               </div>
             </el-image>
-            <div v-else :key="item.id" class="small-img image-slot">
-              <svg font-size="50" class="icon" aria-hidden="true">
-                <use xlink:href="#picsuo2" />
-              </svg>
-            </div>
           </template>
 
         </section>
@@ -230,7 +224,7 @@ export default {
         src: data.src || replaceSmallImg(data.imageUrls[0].medium),
         avatarSrc: data.avatarSrc || replaceBigImg(data.artistPreView.avatar),
         createDate: dayjs(data.createDate).format('YYYY-MM-DD'),
-        setu: data.setu || !!((data.xrestrict === 1 || data.sanityLevel > 5)) && this.user.username !== 'pixivic',
+        setu: data.setu || !!((data.xrestrict === 1 || data.sanityLevel > 6)) && this.user.username !== 'pixivic',
         imgs: data.imgs || data.imageUrls.reduce((pre, cur) => {
           return pre.concat(replaceBigImg(cur.original));
         }, [])
@@ -267,7 +261,8 @@ export default {
       data.isLiked = !data.isLiked;
       const params = {
         userId: this.user.id,
-        illustId: data.id
+        illustId: data.id,
+        username: this.user.username
       };
       if (!flag) {
         this.$store.dispatch('handleCollectIllust', params)
@@ -292,8 +287,9 @@ export default {
     },
     openTag(item) {
       this.$router.push({
-        path: `/tag/${item.name}`,
+        path: `/keywords`,
         query: {
+          tag: item.name,
           illustType: this.type
         }
       });
@@ -350,7 +346,7 @@ export default {
             const {
               data: { data }
             } = res;
-            this.pictureList = this.pictureList.concat(data);
+            this.pictureList = this.pictureList.concat(data).filter(item => item.xrestrict === 0 && item.sanityLevel < 6);
           }
         })
         .catch(err => {
@@ -435,7 +431,7 @@ export default {
       margin: 0 auto;
       background: #fff;
       .card {
-        width: 600px;
+        width: 800px;
         h1 {
           color: rgb(28, 28, 28);
           font-size: 20px;

@@ -1,61 +1,87 @@
 <!--
  * @Author: gooing
  * @since: 2020-02-11 12:29:14
- * @lastTime: 2020-04-02 10:37:15
+ * @lastTime: 2020-04-10 00:35:08
  * @LastAuthor: gooing
  * @FilePath: \pixiciv-pc\src\views\Artist\Artist.vue
  * @message:
  -->
 <template>
   <div class="artist">
-    <virtual-list
-      :identifier="identifier"
-      :list="pictureList"
-      @infinite="infinite"
-    ><dir v-if="artistDetail" class="artist_property">
-      <div class="artist-name">
-        <div class="avatar">
-          <img :src="artistDetail.avatarSrc" alt>
+    <keep-alive>
+      <virtual-list
+        :key="type"
+        :identifier="identifier"
+        :list="type === 'illust' ? IllustList : mangaList"
+        @infinite="infinite"
+      ><dir v-if="artistDetail" class="artist_property">
+        <div class="artist-base">
+          <div class="artist-one">
+            <div class="artist-name">
+              <div class="avatar">
+                <img :src="artistDetail.avatarSrc" alt>
+              </div>
+              <div class="name-line">
+                <div class="name">
+                  <h1>{{ artistDetail.name }}</h1>
+                </div>
+                <div class="follow">
+                  <el-button
+                    style="width:160px"
+                    round
+                    size="small"
+                    @click="followArtist"
+                  >
+                    {{ artistDetail.isFollowed ? "已关注" : "添加关注" }}
+                  </el-button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="artist-one">
+            <div class="artist-focus">
+              <span style="color: #999;">
+                <em
+                  style="font-style:normal;color: #5C5C5C;font-weight: bold;"
+                >
+                  {{ artistDetail.totalFollowUsers }} </em>关注
+              </span>
+            </div>
+          </div>
+          <div class="artist-one" style="padding: 0 0 32px;">
+            <div class="artist-focus">
+              <span v-if="artistDetail.region">
+                <i class="el-icon-location-outline" />
+                {{ artistDetail.region }}
+              </span>
+            </div>
+            <div class="artist-link">
+              <i
+                v-if="artistDetail.webPage"
+                class="el-icon-s-home icon"
+                @click="windowOpen(artistDetail.webPage)"
+              />
+              <i
+                v-if="artistDetail.twitterUrl"
+                class="el-icon-chat-dot-round icon"
+                @click="windowOpen(artistDetail.twitterUrl)"
+              />
+              <i class="el-icon-share icon" />
+            </div>
+            <div class="artist-focus">
+              <div class="comment">{{ artistDetail.comment }}</div>
+            </div>
+          </div>
         </div>
-
-        <div class="name">
-          <h2>{{ artistDetail.name }}</h2>
+        <div class="tabs" @change="getArtistList">
+          <el-radio-group v-model="type">
+            <el-radio-button label="illust" name="插画" />
+            <el-radio-button label="manga" name="漫画" />
+          </el-radio-group>
         </div>
-        <div>
-          <span style="color: #999;">
-            <em style="font-style:normal;color: #5C5C5C;font-weight: bold;">
-              {{ artistDetail.totalFollowUsers }} </em>个关注者
-          </span>
-          <el-button
-            round
-            size="small"
-            type="primary"
-            @click="followArtist"
-          >{{ artistDetail.isFollowed ? "已关注" : "添加关注" }}</el-button>
-        </div>
-      </div>
-      <div style="margin:10px;text-align:center;disply:flex">
-        <span v-if="artistDetail.region">
-          <i class="el-icon-location-outline icon" />
-          <em>{{ artistDetail.region }}</em>
-        </span>
-      </div>
-      <div style="margin:10px;text-align:center;disply:flex">
-        <i
-          v-if="artistDetail.webPage"
-          class="el-icon-s-home icon"
-          @click="windowOpen(artistDetail.webPage)"
-        />
-        <i
-          v-if="artistDetail.twitterUrl"
-          class="el-icon-chat-dot-round icon"
-          @click="windowOpen(artistDetail.twitterUrl)"
-        />
-        <i class="el-icon-share icon" />
-      </div>
-      <div class="comment">{{ artistDetail.comment }}</div>
-    </dir>
-    </virtual-list>
+      </dir>
+      </virtual-list>
+    </keep-alive>
   </div>
 </template>
 
@@ -82,7 +108,8 @@ export default {
       identifier: +new Date(),
       illustSum: 0,
       mangaSum: 0,
-      pictureList: []
+      IllustList: [],
+      mangaList: []
     };
   },
   computed: {
@@ -100,6 +127,9 @@ export default {
     this.getSummary();
   },
   methods: {
+    getArtistList() {
+      this.page = 1;
+    },
     windowOpen(url) {
       window.open(url);
     },
@@ -144,7 +174,11 @@ export default {
             const {
               data: { data }
             } = res;
-            this.pictureList = this.pictureList.concat(data);
+            if (this.type === 'illust') {
+              this.IllustList = this.IllustList.concat(data);
+            } else {
+              this.mangaList = this.mangaList.concat(data);
+            }
             $state.loaded();
           } else {
             $state.complete();
@@ -153,12 +187,6 @@ export default {
         .catch(err => {
           console.error(err);
         });
-    },
-    getList(type) {
-      this.type = type;
-      this.page = 1;
-      this.pictureList = [];
-      this.identifier += 1;
     },
     followArtist() {
       if (!this.user.id) {
@@ -205,30 +233,108 @@ export default {
   overflow: hidden;
   .artist_property {
     margin: 0 auto;
-    width: 810px;
+    width: 100%;
     padding-top: 60px;
-    .artist-name {
-      display: flex;
-      justify-content: center;
-      flex-direction: column;
-      align-items: center;
-      .avatar {
-        width: 150px;
-        height: 150px;
-        border-radius: 150px;
-        display: inline-block;
-        position: relative;
-        border: 5px solid #fff;
-        box-shadow: 0px 2px 3px #999;
-        transition: all 0.2s ease-in-out 0s;
-        img {
-          width: 150px;
-          height: 150px;
-          border-radius: 150px;
+    padding-left: 0px;
+    .artist-base {
+      position: sticky;
+      bottom: 0px;
+      background: rgb(255, 255, 255);
+      .artist-one {
+        display: -webkit-box;
+        display: -webkit-flex;
+        display: flex;
+        -webkit-box-pack: justify;
+        -webkit-justify-content: space-between;
+        justify-content: space-between;
+        -webkit-box-orient: vertical;
+        -webkit-box-direction: normal;
+        -webkit-flex-direction: column;
+        flex-direction: column;
+        -webkit-box-align: end;
+        -webkit-align-items: flex-end;
+        align-items: flex-end;
+        width: 810px;
+        margin: 0 auto;
+        .artist-name {
+          display: -webkit-box;
+          display: -webkit-flex;
+          display: flex;
+          -webkit-box-align: center;
+          -webkit-align-items: center;
+          align-items: center;
+          -webkit-box-pack: justify;
+          -webkit-justify-content: space-between;
+          justify-content: space-between;
+          height: 50px;
+          padding-top: 9px;
+          width: 686px;
+          .avatar {
+            margin-left: -124px;
+            width: 124px;
+            height: 100px;
+            transition: all 0.2s ease-in-out 0s;
+            img {
+              display: block;
+              width: 96px;
+              height: 96px;
+              position: relative;
+              border-radius: 50%;
+              flex: 0 0 auto;
+              overflow: hidden;
+              border-width: 2px;
+              border-style: solid;
+              border-color: rgb(255, 255, 255);
+              border-image: initial;
+              margin: -2px;
+              border-radius: 150px;
+            }
+          }
+          .name-line {
+            display: -webkit-box;
+            display: -webkit-flex;
+            display: flex;
+            -webkit-box-align: center;
+            -webkit-align-items: center;
+            align-items: center;
+            -webkit-box-pack: justify;
+            -webkit-justify-content: space-between;
+            justify-content: space-between;
+            width: 100%;
+            .name {
+              h1 {
+                font-size: 20px;
+                font-weight: bold;
+                line-height: 1;
+                color: rgba(0, 0, 0, 0.88);
+                margin-right: 8px;
+              }
+            }
+
+            .follow {
+              display: -webkit-box;
+              display: -webkit-flex;
+              display: flex;
+            }
+          }
+        }
+        .artist-focus {
+          margin-top: -4px;
+          margin-bottom: 12px;
+          font-size: 14px;
+          line-height: 22px;
+          height: 22px;
+          width: 568px;
+          padding-right: 118px;
+          color: #999;
         }
       }
-      .name {
+      .artist-link {
+        margin: 10px;
+        text-align: center;
         display: flex;
+        margin-bottom: 16px;
+        width: 686px;
       }
     }
   }
@@ -245,6 +351,9 @@ export default {
     width: 36px;
     color: #5e6d82;
     cursor: pointer;
+  }
+  .tabs {
+    text-align: center;
   }
 }
 </style>

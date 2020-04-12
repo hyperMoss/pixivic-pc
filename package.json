@@ -8,11 +8,12 @@
     "release": "vue-cli-service build --mode production"
   },
   "dependencies": {
+    "@babel/core": "^7.9.0",
+    "@babel/preset-env": "^7.9.5",
     "core-js": "^3.4.4",
     "element-ui": "^2.4.5",
     "uglifyjs-webpack-plugin": "^2.2.0",
     "vue": "^2.6.10",
-    "vue-gtag": "^1.6.2",
     "vue-infinite-loading": "^2.4.4",
     "vue-page-stack": "^1.4.1",
     "vue-router": "^3.1.3",

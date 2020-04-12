@@ -1,7 +1,7 @@
 /*
  * @Author: gooing
  * @since: 2020-01-26 11:47:00
- * @lastTime: 2020-04-01 23:21:01
+ * @lastTime: 2020-04-07 23:22:28
  * @LastAuthor: gooing
  * @FilePath: \pixiciv-pc\src\router.js
  * @message:
@@ -18,11 +18,10 @@ const routes = [
     component: require('./views/DailyRank/DailyRank.vue').default
   },
   {
-    path: '/keywords/:keyword',
+    path: '/keywords',
     name: 'keywords',
     // component: () =>import('./views/SearchResult/SearchResult.vue'),
-    component: require('./views/SearchResult/SearchResult.vue').default,
-    props: true
+    component: require('./views/SearchResult/SearchResult.vue').default
   },
   {
     path: '/illusts/:pid',

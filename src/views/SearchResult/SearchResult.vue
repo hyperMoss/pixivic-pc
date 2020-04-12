@@ -1,7 +1,7 @@
 <!--
  * @Author: gooing
  * @since: 2020-02-11 12:45:23
- * @lastTime: 2020-04-03 12:20:44
+ * @lastTime: 2020-04-07 23:35:06
  * @LastAuthor: gooing
  * @FilePath: \pixiciv-pc\src\views\SearchResult\SearchResult.vue
  * @message:
@@ -13,7 +13,7 @@
       :list="pictureList"
       @infinite="infinite"
     >
-      <Tags :data="[...tags, ...exclusive]" @handleClick="clickTag" /></virtual-list>
+      <Tags class="search-tag" :data="[...tags, ...exclusive]" @handleClick="clickTag" /></virtual-list>
   </div>
 </template>
 
@@ -26,18 +26,13 @@ export default {
     VirtualList,
     Tags
   },
-  props: {
-    keyword: {
-      type: String,
-      required: true
-    }
-  },
   data() {
     return {
       isSearchByImg: false,
       identifier: +new Date(),
       pictureList: [],
       date: [],
+      keyword: this.$route.query.tag || '',
       // 画作类型
       illustType: 'illust',
       // 搜索图片质量
@@ -81,8 +76,9 @@ export default {
       // this.pictureList = [];
       // this.identifier += 1;
       this.$router.push({
-        path: `/keywords/${val.keyword}`,
+        path: `/keywords`,
         query: {
+          tag: val.keyword,
           illustType: this.$route.query.illustType || this.illustType
         }
       });
@@ -138,6 +134,10 @@ export default {
 	overflow-y: hidden;
 	width: calc(~'100%');
 	display: flex;
-	justify-content: center;
+  justify-content: center;
+  .search-tag{
+    width: 80vw;
+    margin: 0 auto;
+  }
 }
 </style>

@@ -1,7 +1,7 @@
 <!--
  * @Author: gooing
  * @since: 2020-01-24 22:48:57
- * @lastTime: 2020-04-01 23:17:41
+ * @lastTime: 2020-04-06 19:46:43
  * @LastAuthor: gooing
  * @FilePath: \pixiciv-pc\src\components\PublicComponents\LeftSide.vue
  * @message:
@@ -24,9 +24,15 @@
         <span slot="title">{{ item.name }}</span>
       </el-menu-item>
     </el-menu>
-    <a href="http://www.beian.miit.gov.cn/" target="_blank" style="text-decoration:none;color:#C0C4CC;">
-      <div class="beian">桂ICP备17012945号-3</div>
-    </a>
+    <div>
+      <a
+        href="http://www.beian.miit.gov.cn/"
+        target="_blank"
+        style="text-decoration:none;color:#C0C4CC;"
+      >
+        <div class="beian">桂ICP备17012945号-3</div>
+      </a>
+    </div>
   </div>
 </template>
 
@@ -74,7 +80,9 @@ export default {
   computed: {
     computerActiveNav() {
       let result = '0';
-      const index = this.navLsit.indexOf(item => item.routePath === this.$route.path);
+      const index = this.navLsit.indexOf(
+        item => item.routePath === this.$route.path
+      );
       if (index !== -1) {
         result = '' + index;
       }
@@ -98,13 +106,18 @@ export default {
 <style scoped lang="less">
 .LeftSide {
   overflow: hidden;
-  .beian{
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-content: center;
+  .beian {
     width: 15px;
-    margin: 400px auto 0;
+    margin: 0 auto;
     line-height: 24px;
     font-size: 12px;
-    word-wrap: break-word;/*英文的时候需要加上这句，自动换行*/
-    word-break:break-all;
+    word-wrap: break-word; /*英文的时候需要加上这句，自动换行*/
+    word-break: break-all;
   }
 }
 </style>

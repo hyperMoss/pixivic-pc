@@ -1,7 +1,7 @@
 <!--
  * @Author: gooing
  * @since: 2020-03-26 23:16:26
- * @lastTime: 2020-04-01 00:19:51
+ * @lastTime: 2020-04-07 23:28:44
  * @LastAuthor: gooing
  * @FilePath: \pixiciv-pc\src\views\User\Followed\index.vue
  * @message:
@@ -31,19 +31,13 @@
         <div class="picture">
           <ul class="picture-array">
             <li
-              v-for="(item, index) in artistItem.recentlyIllustrations"
+              v-for="(item, index) in artistItem.recentlyIllustrations.filter(item => item.xrestrict === 0 && item.sanityLevel < 6)"
               :key="index"
               class="picture-item"
               @click="goDetail(item)"
             >
               <el-image
                 :src="item.imageUrls[0].squareMedium | replaceImg"
-                :style="{
-                  filter:
-                    item.xrestrict === 1 || item.sanityLevel > 5
-                      ? `blur(20px)`
-                      : ''
-                }"
                 class="small-img"
                 fit="cover"
                 lazy
@@ -85,7 +79,7 @@ export default {
   },
   data() {
     return {
-      page: { page: 1, pageSize: 10 },
+      page: { page: 0, pageSize: 10 },
       artistList: [],
       listMap: new Map(),
       userId: null,
@@ -123,7 +117,7 @@ export default {
       }
       this.$api.user
         .getArtists({
-          page: this.page.page++,
+          page: ++this.page.page,
           pageSize: this.page.pageSize,
           userId: this.userId
         })

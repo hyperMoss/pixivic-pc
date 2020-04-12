@@ -1,9 +1,9 @@
 <!--
  * @Author: gooing
  * @since: 2020-04-02 18:05:53
- * @lastTime: 2020-04-03 00:49:45
+ * @lastTime: 2020-04-11 23:19:11
  * @LastAuthor: gooing
- * @FilePath: \pixiciv-pc\src\components\PublicComponents\Comment.vue
+ * @FilePath: /pixivic-pc/src/components/PublicComponents/Comment.vue
  * @message:
  -->
 <template>
@@ -41,7 +41,7 @@
 
       <div class="reply">
         <template v-if="item.subCommentList">
-          <div v-for="reply in item.subCommentList" class="comment-item">
+          <div v-for="reply in item.subCommentList" :key="reply.id" class="comment-item">
             <div class="reply-content">
               <span class="from-name">{{ reply.replyFromName }}</span><span>: </span>
               <span class="to-name">@{{ reply.replyToName }}</span>
@@ -74,7 +74,7 @@
               <span class="cancel" @click="cancel">取消</span>
               <el-button
                 class="btn"
-                type="success"
+                type="primary"
                 round
                 @click="submitComment(item)"
               >确定</el-button>
@@ -101,7 +101,7 @@
           <span class="cancel" @click="cancel">取消</span>
           <el-button
             class="btn"
-            type="success"
+            type="primary"
             round
             @click="submitComment()"
           >确定</el-button>
@@ -181,7 +181,7 @@ export default {
       this.$api.comment.makeComments(data)
         .then(res => {
           if (res.status === 200) {
-            const params = { ...data, createDate: new Date(), replyFrom: this.user.id };
+            const params = { ...data, createDate: new Date(), replyFrom: this.user.id, id: Math.random() };
             if (params.parentId === 0) {
               this.comments.push(params);
             } else {
@@ -210,11 +210,17 @@ export default {
      * reply: 当前回复的评论
      */
     showCommentInput(item, reply) {
+      if (!this.user.id) {
+        this.$message.closeAll();
+        this.$message.info('请先登录');
+        return;
+      }
       if (reply) {
         this.copyComment = '@' + item.replyFromName + ' ';
         this.inputComment = '@' + item.replyFromName + ' ';
         this.showItemId = item.id;
       } else {
+        debugger;
         this.copyComment = '';
         this.inputComment = '';
         this.showItemId = 'new';
