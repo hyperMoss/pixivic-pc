@@ -1,7 +1,7 @@
 <!--
  * @Author: gooing
  * @since: 2020-02-11 12:29:14
- * @lastTime: 2020-04-10 00:35:08
+ * @lastTime: 2020-04-10 12:33:21
  * @LastAuthor: gooing
  * @FilePath: \pixiciv-pc\src\views\Artist\Artist.vue
  * @message:
@@ -70,14 +70,22 @@
             </div>
             <div class="artist-focus">
               <div class="comment">{{ artistDetail.comment }}</div>
+              <el-popover
+                placement="bottom"
+                trigger="click"
+                :content="artistDetail.comment"
+                :width="400"
+              >
+                <div slot="reference" class="end">查看全部</div>
+              </el-popover>
             </div>
           </div>
-        </div>
-        <div class="tabs" @change="getArtistList">
-          <el-radio-group v-model="type">
-            <el-radio-button label="illust" name="插画" />
-            <el-radio-button label="manga" name="漫画" />
-          </el-radio-group>
+          <div class="tabs" @change="getArtistList">
+            <el-radio-group v-model="type">
+              <el-radio-button label="illust" name="插画" />
+              <el-radio-button label="manga" name="漫画" />
+            </el-radio-group>
+          </div>
         </div>
       </dir>
       </virtual-list>
@@ -327,6 +335,7 @@ export default {
           width: 568px;
           padding-right: 118px;
           color: #999;
+          display: flex;
         }
       }
       .artist-link {
@@ -355,5 +364,32 @@ export default {
   .tabs {
     text-align: center;
   }
+  .comment {
+    flex-basis: 100%;
+    position: relative;
+    margin-right: 8px;
+    color: rgba(0, 0, 0, 0.64);
+    white-space: nowrap;
+    overflow: hidden;
+    &::after {
+      content: "";
+      position: absolute;
+      top: 0px;
+      right: 0px;
+      width: 32px;
+      height: 100%;
+      background: linear-gradient(
+        to right,
+        rgba(255, 255, 255, 0),
+        rgb(255, 255, 255)
+      );
+    }
+  }
 }
+.end {
+      cursor: pointer;
+      text-align: right;
+      color: #999;
+      white-space: nowrap;
+    }
 </style>
