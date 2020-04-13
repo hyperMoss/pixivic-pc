@@ -1,7 +1,7 @@
 <!--
  * @Author: gooing
  * @since: 2020-02-02 14:52:15
- * @lastTime: 2020-04-09 22:46:49
+ * @lastTime: 2020-04-13 21:30:31
  * @LastAuthor: gooing
  * @FilePath: \pixiciv-pc\src\views\Detail\Detail.vue
  * @message:
@@ -14,7 +14,7 @@
           <el-image
             v-if="illustDetail.xrestrict==0&&illustDetail.sanityLevel<=6"
             :preview-src-list="srcList"
-            :src="illustDetail.originalSrc"
+            :src="illustDetail.src"
             fit="contain"
             style="width:100%;height:80vh;"
           >
