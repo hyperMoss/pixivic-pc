@@ -14,7 +14,7 @@
           <el-image
             v-if="illustDetail.xrestrict==0&&illustDetail.sanityLevel<=6"
             :preview-src-list="srcList"
-            :src="illustDetail.src"
+            :src="illustDetail.originalSrc"
             fit="contain"
             style="width:100%;height:80vh;"
           >
