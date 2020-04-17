@@ -1,7 +1,7 @@
 <!--
  * @Author: gooing
  * @since: 2020-03-14 22:38:58
- * @lastTime: 2020-03-31 22:54:30
+ * @lastTime: 2020-04-17 21:11:54
  * @LastAuthor: gooing
  * @FilePath: \pixiciv-pc\src\components\PublicComponents\Login\Login.vue
  * @message:
@@ -17,14 +17,12 @@
       </el-form-item>
       <el-form-item label="验证码" prop="verifyCode">
         <el-row type="flex" justify="space-between" :gutter="16">
-          <el-col :span="10"> <el-input v-model="loginForm.verifyCode" :maxlength="4" /></el-col>
-          <el-col :span="10" style="height:40px;">
-            <img
-              style="height:100%;width:100%"
+          <el-col> <el-input v-model="loginForm.verifyCode" :maxlength="4">
+            <template slot="append"><img
+              style="height:30px;width:100px"
               :src="`data:image/bmp;base64,${imageBase64}`"
               @click.stop="getCode"
-            >
-          </el-col>
+            ></template></el-input></el-col>
         </el-row>
       </el-form-item>
       <el-form-item>

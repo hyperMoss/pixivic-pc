@@ -1,9 +1,9 @@
 <!--
  * @Author: gooing
  * @since: 2020-04-02 18:05:53
- * @lastTime: 2020-04-11 23:19:11
+ * @lastTime: 2020-04-18 00:02:02
  * @LastAuthor: gooing
- * @FilePath: /pixivic-pc/src/components/PublicComponents/Comment.vue
+ * @FilePath: \pixiciv-pc\src\components\PublicComponents\Comment.vue
  * @message:
  -->
 <template>
@@ -220,7 +220,6 @@ export default {
         this.inputComment = '@' + item.replyFromName + ' ';
         this.showItemId = item.id;
       } else {
-        debugger;
         this.copyComment = '';
         this.inputComment = '';
         this.showItemId = 'new';

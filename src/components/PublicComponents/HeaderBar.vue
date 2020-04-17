@@ -1,7 +1,7 @@
 <!--
  * @Author: gooing
  * @since: 2020-01-24 22:48:37
- * @lastTime: 2020-04-07 23:21:45
+ * @lastTime: 2020-04-17 21:18:21
  * @LastAuthor: gooing
  * @FilePath: \pixiciv-pc\src\components\PublicComponents\HeaderBar.vue
  * @message:
@@ -92,6 +92,10 @@ export default {
           handler: 'bookmarked'
         },
         {
+          name: '专辑',
+          handler: 'spotLight'
+        },
+        {
           name: '设置',
           handler: 'setting'
         },
@@ -153,7 +157,9 @@ export default {
         case 'logout':
           this.logout();
           break;
-
+        case 'spotLight':
+          this.toSpotLight();
+          break;
         default:
           break;
       }
@@ -171,6 +177,11 @@ export default {
     toBookmarked() {
       this.$router.push({
         path: '/users/bookmarked'
+      });
+    },
+    toSpotLight() {
+      this.$router.push({
+        path: '/spot-light/index'
       });
     },
     // 设置弹窗
