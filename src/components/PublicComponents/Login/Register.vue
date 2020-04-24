@@ -56,7 +56,7 @@ export default {
       if (!pattern.test(value)) { return callback(new Error('邮箱格式错误')); }
       this.$api.user.checkEmail(value)
         .then(res => {
-          if (res.status !== 404) {
+          if (res.status !== 200) {
             callback(new Error('邮箱已被注册'));
           }
         });
@@ -76,7 +76,7 @@ export default {
       }
       this.$api.user.checkUser(value)
         .then(res => {
-          if (res.status !== 404) {
+          if (res.status !== 200) {
             callback(new Error('此用户名已被注册'));
           } else {
             callback();
