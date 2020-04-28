@@ -1,7 +1,7 @@
 <!--
  * @Author: gooing
  * @since: 2020-01-26 11:47:00
- * @lastTime: 2020-04-03 12:03:02
+ * @lastTime: 2020-04-29 00:46:45
  * @LastAuthor: gooing
  * @FilePath: \pixiciv-pc\src\App.vue
  * @message:
@@ -36,6 +36,7 @@
 <script>
 import HeaderBar from './components/PublicComponents/HeaderBar.vue';
 import LeftSide from './components/PublicComponents/LeftSide.vue';
+import cookie from 'js-cookie';
 import Login from './components/PublicComponents/Login/index.vue';
 
 export default {
@@ -53,6 +54,17 @@ export default {
   computed: {
     key() {
       return this.$route.fullPath;
+    }
+  },
+  mounted() {
+    if (!cookie.get('alert')) {
+      this.$notify({
+        title: '消息',
+        message: '画师搜索现在可用'
+      });
+      cookie.set('alert', true, {
+        expires: 365
+      });
     }
   }
 };
