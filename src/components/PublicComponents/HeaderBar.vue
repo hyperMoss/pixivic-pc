@@ -1,7 +1,7 @@
 <!--
  * @Author: gooing
  * @since: 2020-01-24 22:48:37
- * @lastTime: 2020-04-17 21:18:21
+ * @lastTime: 2020-04-29 00:36:48
  * @LastAuthor: gooing
  * @FilePath: \pixiciv-pc\src\components\PublicComponents\HeaderBar.vue
  * @message:
@@ -141,7 +141,10 @@ export default {
       handler: 'getKeywords'
     }
   },
-  mounted() {},
+  mounted() {
+    this.params.illustType = this.$route.query.illustType;
+    this.params.keyword = this.$route.query.tag;
+  },
   methods: {
     clickMenu(type) {
       switch (type) {
