@@ -1,7 +1,7 @@
 <!--
  * @Author: gooing
  * @since: 2020-01-24 22:48:57
- * @lastTime: 2020-04-06 19:46:43
+ * @lastTime: 2020-05-01 23:09:25
  * @LastAuthor: gooing
  * @FilePath: \pixiciv-pc\src\components\PublicComponents\LeftSide.vue
  * @message:
@@ -17,7 +17,7 @@
     >
       <el-menu-item
         v-for="item of navLsit"
-        :key="item.id"
+        :key="item.name"
         :index="item.routePath"
       >
         <i :class="[item.icon]" />
@@ -45,31 +45,26 @@ export default {
       isCollapse: true,
       navLsit: [
         {
-          id: '0',
           name: '首页',
           icon: 'el-icon-s-home',
           routePath: '/'
         },
         {
-          id: '1',
           name: '须知',
           icon: 'el-icon-document',
           routePath: '/note'
         },
         {
-          id: '2',
           name: '反馈',
           icon: 'el-icon-chat-round',
           routePath: '/bbs'
         },
         {
-          id: '3',
           name: '捐赠',
           icon: 'el-icon-coffee-cup',
           routePath: '/donate'
         },
         {
-          id: '4',
           name: '友情链接',
           icon: 'el-icon-link',
           routePath: '/remark'

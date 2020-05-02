@@ -1,7 +1,7 @@
 <!--
  * @Author: gooing
  * @since: 2020-01-24 22:48:37
- * @lastTime: 2020-04-29 00:36:48
+ * @lastTime: 2020-05-02 23:05:09
  * @LastAuthor: gooing
  * @FilePath: \pixiciv-pc\src\components\PublicComponents\HeaderBar.vue
  * @message:
@@ -30,7 +30,11 @@
           @keyup.enter.native="handleSearch"
           @select="handleSelect"
         >
-          <el-select slot="prepend" v-model="params.illustType" @change="handleSelect">
+          <el-select
+            slot="prepend"
+            v-model="params.illustType"
+            @change="handleSelect"
+          >
             <el-option
               v-for="item of typeList"
               :key="item.value"
@@ -39,14 +43,33 @@
             />
           </el-select>
         </el-autocomplete>
+        <el-popover placement="bottom" trigger="hover" style="margin-left:10px">
+          <i slot="reference" class="el-icon-s-flag" style="color:#409EFF" />
+          <ImgTags v-if="hotTags.length" :tagslist="hotTags" @on-click="handleClickTag" />
+        </el-popover>
       </el-col>
       <el-col class="header-info">
         <!-- <el-badge :value="3">
           <el-button size="small">消息</el-button>
         </el-badge> -->
         <div style="margin-left:20px;" @click="userOpen">
-          <el-dropdown v-if="user.id" trigger="click" :disabled="!user.id" @command="clickMenu">
-            <el-avatar fit="cover" :src="user.id ? `https://pic.cheerfun.dev/${user.id}.png?t=${new Date().getTime()}` : ''" shape="square" />
+          <el-dropdown
+            v-if="user.id"
+            trigger="click"
+            :disabled="!user.id"
+            @command="clickMenu"
+          >
+            <el-avatar
+              fit="cover"
+              :src="
+                user.id
+                  ? `https://pic.cheerfun.dev/${
+                    user.id
+                  }.png?t=${new Date().getTime()}`
+                  : ''
+              "
+              shape="square"
+            />
             <el-dropdown-menu slot="dropdown">
               <template>
                 <el-dropdown-item
@@ -58,7 +81,12 @@
               </template>
             </el-dropdown-menu>
           </el-dropdown>
-          <el-avatar v-else icon="el-icon-user-solid" fit="cover" shape="square" />
+          <el-avatar
+            v-else
+            icon="el-icon-user-solid"
+            fit="cover"
+            shape="square"
+          />
         </div>
       </el-col>
     </el-row>
@@ -74,10 +102,12 @@
 import cookieTool from 'js-cookie';
 import { mapGetters } from 'vuex';
 import SetDialog from './Setting/index';
+import ImgTags from './ImgTags';
 export default {
   name: 'HeaderBar',
   components: {
-    SetDialog
+    SetDialog,
+    ImgTags
   },
   data() {
     return {
@@ -129,7 +159,9 @@ export default {
           name: '作者',
           value: 'artist'
         }
-      ]
+      ],
+      // 热门搜索模块
+      hotTags: []
     };
   },
   computed: {
@@ -142,10 +174,12 @@ export default {
     }
   },
   mounted() {
-    this.params.illustType = this.$route.query.illustType;
+    this.params.illustType = this.$route.query.illustType || 'illust';
     this.params.keyword = this.$route.query.tag;
+    this.getHotTag();
   },
   methods: {
+    // 点击 用户模块
     clickMenu(type) {
       switch (type) {
         case 'followed':
@@ -166,6 +200,12 @@ export default {
         default:
           break;
       }
+    },
+    // 获取标签数据
+    getHotTag() {
+      this.$api.search.getHotTag().then(res => {
+        this.hotTags = res.data.data.splice(0, 9);
+      });
     },
     // 跳转关注页
     toFollowed() {
@@ -236,6 +276,16 @@ export default {
         path: `/keywords`,
         query: {
           tag: keyword,
+          illustType: this.params.illustType
+        }
+      });
+    },
+    // 点击tag
+    handleClickTag(d) {
+      this.$router.push({
+        path: `/keywords`,
+        query: {
+          tag: d.name,
           illustType: this.params.illustType
         }
       });
