@@ -1,7 +1,7 @@
 <!--
  * @Author: gooing
  * @since: 2020-03-26 23:16:26
- * @lastTime: 2020-04-29 00:04:43
+ * @lastTime: 2020-05-06 00:06:23
  * @LastAuthor: gooing
  * @FilePath: \pixiciv-pc\src\views\User\Followed\index.vue
  * @message:
@@ -29,7 +29,7 @@ export default {
   components: { ArtistList },
   data() {
     return {
-      page: { page: 1, pageSize: 10 },
+      page: { page: 0, pageSize: 10 },
       artistList: [],
       listMap: new Map(),
       height: 0
@@ -58,13 +58,13 @@ export default {
     },
     // 获取关注列表
     getFollowArtists() {
-      if (this.artistList.length < this.page.page * this.page.pageSize && this.page.page !== 1) {
+      if (this.artistList.length < this.page.page * this.page.pageSize && this.page.page !== 0) {
         this.$message.info('关注列表已到底');
         return;
       }
       this.$api.user
         .getArtists({
-          page: this.page.page++,
+          page: ++this.page.page,
           pageSize: this.page.pageSize,
           userId: this.user.id
         })
