@@ -1,7 +1,7 @@
 <!--
  * @Author: gooing
  * @since: 2020-03-26 23:16:26
- * @lastTime: 2020-05-06 00:06:23
+ * @lastTime: 2020-05-15 14:05:08
  * @LastAuthor: gooing
  * @FilePath: \pixiciv-pc\src\views\User\Followed\index.vue
  * @message:
@@ -9,6 +9,12 @@
 <template>
   <div class="followed">
     <artist-list v-if="artistList.length" :artist-list="artistList" @on-scroll="getFollowArtists" @follow-artist="follow" />
+    <div v-else style="margin: 50px auto 0; width:300px;text-align: center;">
+      <svg font-size="160" class="icon" aria-hidden="true">
+        <use xlink:href="#pickongtai1" />
+      </svg>
+      <p style="color: #E3F2FA; font-size: 20px;">没有内容</p>
+    </div>
     <!-- <div class="pix-page">
       <el-pagination
         :current-page="page.page"
@@ -58,10 +64,6 @@ export default {
     },
     // 获取关注列表
     getFollowArtists() {
-      if (this.artistList.length < this.page.page * this.page.pageSize && this.page.page !== 0) {
-        this.$message.info('关注列表已到底');
-        return;
-      }
       this.$api.user
         .getArtists({
           page: ++this.page.page,
