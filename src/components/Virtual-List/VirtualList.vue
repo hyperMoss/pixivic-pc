@@ -185,7 +185,7 @@ export default {
           tmp['height'] = height;
           tmp['width'] = width;
           tmp['src'] = replaceSmallImg(tmp.imageUrls[0].medium);
-          tmp['setu'] = !!((tmp.xrestrict === 1 || tmp.sanityLevel > 6)) && this.user.username !== 'pixivic';
+          tmp['setu'] = !!((tmp.xrestrict === 1 || tmp.sanityLevel >= 6)) && this.user.username !== 'pixivic';
           tmp['style'] = {
             backgroundColor: randomColor()
           };
