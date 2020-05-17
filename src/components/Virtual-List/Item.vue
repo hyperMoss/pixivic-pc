@@ -1,5 +1,6 @@
 <template>
   <div
+    v-if="!column.setu"
     class="item"
     @click="goDetail"
   >
@@ -24,18 +25,6 @@
         :like="column.isLiked"
         @handleLike="handleLike"
       />
-      <div
-        v-if="column.setu"
-        class="setu-filter"
-      >
-        <svg
-          aria-hidden="true"
-          class="icon"
-          font-size="50"
-        >
-          <use xlink:href="#picsuo2" />
-        </svg>
-      </div>
     </div>
   </div>
 </template>
@@ -152,18 +141,6 @@ no-wrap() {
       padding: 0 2px;
       line-height: 20px;
     }
-  }
-
-  .setu-filter {
-    position: absolute;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
-    width: 50px;
-    height: 50px;
-    margin: auto;
-    z-index: 2;
   }
 }
 </style>
