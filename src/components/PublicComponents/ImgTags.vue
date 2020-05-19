@@ -1,7 +1,7 @@
 <!--
  * @Author: gooing
  * @since: 2020-05-01 19:08:50
- * @lastTime: 2020-05-02 23:06:17
+ * @lastTime: 2020-05-20 00:37:36
  * @LastAuthor: gooing
  * @FilePath: \pixiciv-pc\src\components\PublicComponents\ImgTags.vue
  * @message:
@@ -73,11 +73,13 @@ export default {
         position: absolute;
         bottom: 30px;
         right: 10px;
+        text-shadow: #fff 1px 0 0, #fff 0 1px 0, #fff -1px 0 0, #fff 0 -1px 0;
       }
       .tran-text {
         position: absolute;
         bottom: 10px;
         right: 10px;
+        text-shadow: #fff 1px 0 0, #fff 0 1px 0, #fff -1px 0 0, #fff 0 -1px 0;
       }
     }
   }

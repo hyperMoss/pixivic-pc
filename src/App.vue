@@ -1,7 +1,7 @@
 <!--
  * @Author: gooing
  * @since: 2020-01-26 11:47:00
- * @lastTime: 2020-04-29 00:46:45
+ * @lastTime: 2020-05-20 01:07:16
  * @LastAuthor: gooing
  * @FilePath: \pixiciv-pc\src\App.vue
  * @message:
@@ -60,7 +60,7 @@ export default {
     if (!cookie.get('alert')) {
       this.$notify({
         title: '消息',
-        message: '画师搜索现在可用'
+        message: '现已上线安卓和苹果app,请在手机端打开下载'
       });
       cookie.set('alert', true, {
         expires: 365
