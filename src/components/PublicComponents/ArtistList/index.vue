@@ -1,7 +1,7 @@
 <!--
  * @Author: gooing
  * @since: 2020-04-28 22:05:06
- * @lastTime: 2020-04-29 00:10:31
+ * @lastTime: 2020-05-20 01:03:04
  * @LastAuthor: gooing
  * @FilePath: \pixiciv-pc\src\components\PublicComponents\ArtistList\index.vue
  * @message:
@@ -93,6 +93,9 @@ export default {
       this.$router.push(`/artist/${id}`);
     },
     goDetail(data) {
+      if (data.isad) {
+        window.open(data.link);
+      }
       this.$store.dispatch('setDetail', data);
       this.$router.push(`/illusts/${data.id}`);
     },

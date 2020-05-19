@@ -1,7 +1,7 @@
 <!--
  * @Author: gooing
  * @since: 2020-04-17 23:12:03
- * @lastTime: 2020-04-18 00:31:59
+ * @lastTime: 2020-05-20 01:00:12
  * @LastAuthor: gooing
  * @FilePath: \pixiciv-pc\src\views\SpotLight\SpotLightIndex\InfoPage.vue
  * @message:
@@ -60,6 +60,9 @@ export default {
       });
     },
     goDeatil(data) {
+      if (data.isad) {
+        window.open(data.link);
+      }
       this.$store.dispatch('setDetail', data);
       this.$router.push(`/illusts/${data.id}`);
     },

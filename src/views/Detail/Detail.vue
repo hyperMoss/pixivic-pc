@@ -1,7 +1,7 @@
 <!--
  * @Author: gooing
  * @since: 2020-02-02 14:52:15
- * @lastTime: 2020-04-13 21:30:31
+ * @lastTime: 2020-05-20 01:02:49
  * @LastAuthor: gooing
  * @FilePath: \pixiciv-pc\src\views\Detail\Detail.vue
  * @message:
@@ -245,6 +245,9 @@ export default {
     },
     // 跳转详情
     goDetail(data) {
+      if (data.isad) {
+        window.open(data.link);
+      }
       this.$store.dispatch('setDetail', data);
       this.$router.push(`/illusts/${data.id}`);
     },
