@@ -1,21 +1,20 @@
 <!--
  * @Author: gooing
  * @since: 2020-04-28 22:05:06
- * @lastTime: 2020-05-20 01:03:04
+ * @lastTime: 2020-05-24 12:38:26
  * @LastAuthor: gooing
  * @FilePath: \pixiciv-pc\src\components\PublicComponents\ArtistList\index.vue
  * @message:
  -->
 <template>
   <div class="artist-list-index">
-    <ul
+    <div
       v-infinite-scroll="load"
       class="artist-list"
       infinite-scroll-immediate
       infinite-scroll-delay="1000"
-      infinite-scroll-distance="10"
     >
-      <li
+      <div
         v-for="artistItem in artistList"
         :key="artistItem.id"
         class="artist-item"
@@ -56,8 +55,9 @@
             </li>
           </ul>
         </div>
-      </li>
-    </ul>
+      </div>
+      <p v-if="loading" class="bottom">加载中...</p>
+    </div>
   </div>
 </template>
 
@@ -80,6 +80,11 @@ export default {
         return [];
       },
       type: Array
+    },
+    loading: {
+      require: false,
+      type: Boolean,
+      default: false
     }
   },
   data() {
@@ -109,9 +114,11 @@ export default {
 
 <style scoped lang="less">
 .artist-list-index {
+  .bottom{
+text-align: center;
+  }
   .artist-list {
-    max-height: calc(100vh - 80px);
-    margin: 0px auto 10px;
+    max-height: calc(100vh - 60px);
     padding: 0px;
     justify-content: center;
     overflow: auto;

@@ -1,7 +1,7 @@
 <!--
  * @Author: gooing
  * @since: 2020-02-02 14:52:15
- * @lastTime: 2020-05-20 01:02:49
+ * @lastTime: 2020-05-25 00:18:36
  * @LastAuthor: gooing
  * @FilePath: \pixiciv-pc\src\views\Detail\Detail.vue
  * @message:
@@ -249,7 +249,8 @@ export default {
         window.open(data.link);
       }
       this.$store.dispatch('setDetail', data);
-      this.$router.push(`/illusts/${data.id}`);
+      const routeUrl = this.$router.resolve(`/illusts/${data.id}`);
+      window.open(routeUrl.href, '_blank');
     },
     goArtistPage() {
       this.$router.push(`/artist/${this.illustDetail.artistId}`);

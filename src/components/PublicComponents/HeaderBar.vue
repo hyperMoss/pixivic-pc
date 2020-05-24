@@ -1,7 +1,7 @@
 <!--
  * @Author: gooing
  * @since: 2020-01-24 22:48:37
- * @lastTime: 2020-05-02 23:05:09
+ * @lastTime: 2020-05-23 22:06:18
  * @LastAuthor: gooing
  * @FilePath: \pixiciv-pc\src\components\PublicComponents\HeaderBar.vue
  * @message:
@@ -122,7 +122,11 @@ export default {
           handler: 'bookmarked'
         },
         {
-          name: '专辑',
+          name: '画集',
+          handler: 'mycollect'
+        },
+        {
+          name: '聚光灯',
           handler: 'spotLight'
         },
         {
@@ -191,6 +195,9 @@ export default {
         case 'setting':
           this.setModal();
           break;
+        case 'mycollect':
+          this.toMycollect();
+          break;
         case 'logout':
           this.logout();
           break;
@@ -215,6 +222,13 @@ export default {
           userId: this.user.id
         }
       });
+    },
+    toMycollect() {
+      this.$router.push({
+        path: '/users/collect',
+        query: {
+          userId: this.user.id
+        }});
     },
     // 跳转书签页
     toBookmarked() {

@@ -21,10 +21,15 @@
         <img src="../../assets/images/count.svg">
         <span>{{ column.pageCount }}</span>
       </div>
-      <Like
-        :like="column.isLiked"
-        @handleLike="handleLike"
-      />
+      <el-dropdown>
+        <Like
+          :like="column.isLiked"
+          @handleLike="handleLike"
+        />
+        <el-dropdown-menu slot="dropdown">
+          <el-dropdown-item>加到画集</el-dropdown-item>
+        </el-dropdown-menu>
+      </el-dropdown>
     </div>
   </div>
 </template>
@@ -62,7 +67,8 @@ export default {
         window.open(this.column.link);
       } else {
         this.$store.dispatch('setDetail', this.column);
-        this.$router.push(`/illusts/${this.column.id}`);
+        const routeUrl = this.$router.resolve(`/illusts/${this.column.id}`);
+        window.open(routeUrl.href, '_blank');
       }
     }
   }

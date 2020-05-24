@@ -1,14 +1,14 @@
 <!--
  * @Author: gooing
  * @since: 2020-03-23 15:01:37
- * @lastTime: 2020-04-17 23:26:26
+ * @lastTime: 2020-05-23 22:25:14
  * @LastAuthor: gooing
  * @FilePath: \pixiciv-pc\src\views\SpotLight\SpotLightIndex\index.vue
  * @message:
  -->
 <template>
   <div class="index">
-    <ul
+    <div
       v-infinite-scroll="getSpotLights"
       class="list-grid"
       infinite-scroll-delay="2000"
@@ -37,11 +37,11 @@
         <div style="padding: 14px;">
           <span>{{ item.title }}</span>
           <div class="bottom clearfix">
-            <time class="time">{{ 222 }}</time>
+            <time class="time">{{ item.publishDate }}</time>
           </div>
         </div>
       </el-card>
-    </ul>
+    </div>
   </div>
 </template>
 
@@ -114,7 +114,7 @@ export default {
     grid-template-columns: repeat(auto-fit, 400px);
     -webkit-box-pack: center;
     justify-content: center;
-    margin: 0px;
+    margin: 20px 0;
     margin-bottom: 20px;
     padding: 0px;
   }

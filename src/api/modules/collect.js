@@ -1,9 +1,9 @@
 /*
  * @Author: gooing
  * @since: 2020-05-21 23:08:15
- * @lastTime: 2020-05-21 23:32:27
+ * @lastTime: 2020-05-24 23:16:22
  * @LastAuthor: gooing
- * @FilePath: \pixiciv-pc\src\api\modules\collect..js
+ * @FilePath: \pixiciv-pc\src\api\modules\collect.js
  * @message:
  */
 import axios from "../base";
@@ -20,7 +20,7 @@ function postCollection(params) {
     pornWarning
   } = params;
   return axios({
-    url: `/collection`,
+    url: `/collections`,
     method: "post",
     data: {
       username,

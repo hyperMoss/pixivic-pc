@@ -1,7 +1,7 @@
 <!--
  * @Author: gooing
  * @since: 2020-03-30 22:38:24
- * @lastTime: 2020-04-07 14:09:27
+ * @lastTime: 2020-05-25 00:26:35
  * @LastAuthor: gooing
  * @FilePath: \pixiciv-pc\src\components\Virtual-List\MyItem.vue
  * @message:
@@ -31,7 +31,13 @@
         <img src="../../assets/images/count.svg">
         <span>{{ illust.pageCount }}</span>
       </div>
-      <Like :like="illust.isLiked" @handleLike="handleLike" />
+
+      <el-dropdown>
+        <Like :like="illust.isLiked" @handleLike="handleLike" />
+        <el-dropdown-menu slot="dropdown">
+          <el-dropdown-item>加到画集</el-dropdown-item>
+        </el-dropdown-menu>
+      </el-dropdown>
     </div>
   </div>
 </template>
@@ -70,7 +76,8 @@ export default {
         window.open(this.illust.link);
       } else {
         this.$store.dispatch('setDetail', this.illust);
-        this.$router.push(`/illusts/${this.illust.id}`);
+        const routeUrl = this.$router.resolve(`/illusts/${this.illust.id}`);
+        window.open(routeUrl.href, '_blank');
       }
     }
   }

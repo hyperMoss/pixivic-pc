@@ -1,7 +1,7 @@
 <!--
  * @Author: gooing
  * @since: 2020-04-17 23:12:03
- * @lastTime: 2020-05-20 01:00:12
+ * @lastTime: 2020-05-23 22:17:46
  * @LastAuthor: gooing
  * @FilePath: \pixiciv-pc\src\views\SpotLight\SpotLightIndex\InfoPage.vue
  * @message:
@@ -76,7 +76,7 @@ export default {
 <style scoped lang="less">
 .InfoPage {
   max-height: calc(~"100vh - 60px");
-  overflow-y: scroll;
+  overflow-y: auto;
   background: #fff;
   .pic-list {
     list-style: none;
