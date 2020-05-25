@@ -1,7 +1,7 @@
 /*
  * @Author: gooing
  * @since: 2020-02-02 14:59:46
- * @lastTime: 2020-03-14 11:16:38
+ * @lastTime: 2020-05-25 20:14:30
  * @LastAuthor: gooing
  * @FilePath: \pixiciv-pc\src\store\state.js
  * @message:
@@ -13,7 +13,9 @@ const state = {
   likeStatus: null, // 点赞画作状态
   followStatus: null, // 画师关注状态
   detail: null, // 详情信息
-  loginBoolean: false
+  loginBoolean: false,
+  collectBoolean:false,
+  readyCollectItem:{}
 };
 
 export default state;

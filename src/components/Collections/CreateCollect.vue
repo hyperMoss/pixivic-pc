@@ -1,7 +1,7 @@
 <!--
  * @Author: gooing
  * @since: 2020-05-24 12:16:50
- * @lastTime: 2020-05-24 23:29:04
+ * @lastTime: 2020-05-26 00:25:12
  * @LastAuthor: gooing
  * @FilePath: \pixiciv-pc\src\components\Collections\CreateCollect.vue
  * @message:
@@ -11,7 +11,7 @@
     <el-dialog
       :close-on-click-modal="false"
       :visible="showBoolean"
-      title="新建画集"
+      :title="`${modifyFlag?'修改':'新建'}画集`"
       width="30%"
       @close="closeModal"
     >
@@ -43,7 +43,7 @@
           label="标签(最多4个)"
           prop="tagList"
         >
-          <CreateTagList @emit-data="sendTagsLsit" />
+          <CreateTagList :tag-list="ruleForm.tagList" @emit-data="sendTagsLsit" />
         </el-form-item>
         <el-form-item
           label="是否公开"
@@ -85,6 +85,10 @@
           type="primary"
           @click="submitForm('ruleForm')"
         >确定</el-button>
+        <el-button
+          type="text"
+          @click="closeModal"
+        >取消</el-button>
       </div>
     </el-dialog>
   </div>
@@ -96,7 +100,7 @@ import { mapGetters } from 'vuex';
 export default {
   name: 'StartCollect',
   components: { CreateTagList },
-  props: ['show-boolean'],
+  props: ['show-boolean', 'collect-data'],
   data() {
     // 邮箱验证函数
     var checkEmail = (rule, value, callback) => {
@@ -125,6 +129,7 @@ export default {
     };
     // 密码验证
     return {
+      modifyFlag: false,
       loading: false,
       // 表格数据
       ruleForm: {
@@ -135,6 +140,7 @@ export default {
         pornWarning: 0,
         tagList: []
       },
+      collectId: '',
       // 验证规则
       rules: {
         title: [{ validator: checkEmail, trigger: 'blur' }],
@@ -148,7 +154,19 @@ export default {
     ...mapGetters(['user'])
   },
   watch: {},
-  mounted() {},
+  mounted() {
+    if (this.collectData) {
+      this.modifyFlag = true;
+      const sourceData = Object.assign({}, this.collectData);
+      this.ruleForm.title = sourceData.title;
+      this.ruleForm.caption = sourceData.caption;
+      this.ruleForm.isPublic = sourceData.isPublic;
+      this.ruleForm.tagList = sourceData.tagList;
+      this.ruleForm.forbidComment = sourceData.forbidComment;
+      this.ruleForm.pornWarning = sourceData.pornWarning;
+      this.collectId = sourceData.id;
+    }
+  },
   methods: {
     // 为列表复制
     sendTagsLsit(list) {
@@ -162,7 +180,11 @@ export default {
     submitForm(formName) {
       this.$refs[formName].validate((valid) => {
         if (valid) {
-          this.createCollectAjax();
+          if (!this.modifyFlag) {
+            this.createCollectAjax();
+          } else {
+            this.modifyCollectAjax();
+          }
         } else {
           console.log('error submit!!');
           return false;
@@ -177,6 +199,25 @@ export default {
           if (res.status === 200) {
             this.$message({
               message: '新建画集成功',
+              type: 'success'
+            });
+            this.closeModal();
+          } else {
+            this.$message({
+              message: res.data.message,
+              type: 'warning'
+            });
+          }
+        });
+    },
+    modifyCollectAjax() {
+      const params = Object.assign(this.ruleForm, { username: this.user.username, id: this.collectId });
+      this.$api.collect
+        .putCollections(params)
+        .then(res => {
+          if (res.status === 200) {
+            this.$message({
+              message: '修改画集成功',
               type: 'success'
             });
             this.closeModal();

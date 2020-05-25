@@ -1,7 +1,7 @@
 <!--
  * @Author: gooing
  * @since: 2020-04-17 23:12:03
- * @lastTime: 2020-05-23 22:17:46
+ * @lastTime: 2020-05-25 22:49:15
  * @LastAuthor: gooing
  * @FilePath: \pixiciv-pc\src\views\SpotLight\SpotLightIndex\InfoPage.vue
  * @message:
@@ -99,16 +99,5 @@ export default {
       width: 100%;
       max-width: 800px;
     }
-  }
-}
-/deep/.image-slot {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
-  height: 100%;
-  min-height: 300px;
-  background: #f5f7fa;
-  color: #909399;
-}
+  }}
 </style>

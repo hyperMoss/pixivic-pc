@@ -1,7 +1,7 @@
 <!--
  * @Author: gooing
  * @since: 2020-01-26 11:47:00
- * @lastTime: 2020-05-20 01:07:16
+ * @lastTime: 2020-05-25 22:50:30
  * @LastAuthor: gooing
  * @FilePath: \pixiciv-pc\src\App.vue
  * @message:
@@ -30,6 +30,7 @@
       </el-container>
     </el-container>
     <Login />
+    <CollectPicture />
   </div>
 </template>
 
@@ -38,13 +39,15 @@ import HeaderBar from './components/PublicComponents/HeaderBar.vue';
 import LeftSide from './components/PublicComponents/LeftSide.vue';
 import cookie from 'js-cookie';
 import Login from './components/PublicComponents/Login/index.vue';
+import CollectPicture from './components/Collections/CollectPicture';
 
 export default {
   name: 'App',
   components: {
     HeaderBar,
     LeftSide,
-    Login
+    Login,
+    CollectPicture
   },
   data() {
     return {

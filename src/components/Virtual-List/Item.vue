@@ -27,7 +27,7 @@
           @handleLike="handleLike"
         />
         <el-dropdown-menu slot="dropdown">
-          <el-dropdown-item>加到画集</el-dropdown-item>
+          <el-dropdown-item @click.native="$store.dispatch('setCollectBoolean',column)">加到画集</el-dropdown-item>
         </el-dropdown-menu>
       </el-dropdown>
     </div>

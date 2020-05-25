@@ -1,7 +1,7 @@
 /*
  * @Author: gooing
  * @since: 2020-02-02 14:59:46
- * @lastTime: 2020-03-14 11:39:52
+ * @lastTime: 2020-05-25 20:12:55
  * @LastAuthor: gooing
  * @FilePath: \pixiciv-pc\src\store\mutations.js
  * @message:
@@ -40,8 +40,12 @@ const mutations = {
   [types.SET_DETAIL](state, data) {
     state.detail = data;
   },
-  [types.SET_Login_Boolean](state) {
+  [types.SET_LOGIN_BOOLEAN](state) {
     state.loginBoolean = !state.loginBoolean;
+  },
+  [types.SET_COOLECT_BOOLEAN](state,data) {
+    if(data){    state.readyCollectItem=data}
+    state.collectBoolean = !state.collectBoolean;
   }
 };
 

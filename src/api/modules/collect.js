@@ -1,7 +1,7 @@
 /*
  * @Author: gooing
  * @since: 2020-05-21 23:08:15
- * @lastTime: 2020-05-24 23:16:22
+ * @lastTime: 2020-05-26 00:26:00
  * @LastAuthor: gooing
  * @FilePath: \pixiciv-pc\src\api\modules\collect.js
  * @message:
@@ -36,8 +36,18 @@ function postCollection(params) {
 
 // 更新画集
 function putCollections(params) {
+  const {
+    id,
+    username = 0,
+    title = 0,
+    caption,
+    tagList = [],
+    isPublic,
+    forbidComment,
+    pornWarning
+  } = params;
   return axios({
-    url: `/collections/${params.collectionId}`,
+    url: `/collections/${params.id}`,
     method: "put",
     data: {
       id,

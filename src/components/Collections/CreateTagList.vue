@@ -1,7 +1,7 @@
 <!--
  * @Author: gooing
  * @since: 2020-05-24 16:40:21
- * @lastTime: 2020-05-24 23:23:40
+ * @lastTime: 2020-05-26 00:16:38
  * @LastAuthor: gooing
  * @FilePath: \pixiciv-pc\src\components\Collections\CreateTagList.vue
  * @message:
@@ -42,6 +42,7 @@
 export default {
   name: 'CreateTagList',
   components: {},
+  props: ['tag-list'],
   data() {
     return {
       keywords: [],
@@ -56,7 +57,9 @@ export default {
       handler: 'emitData'
     }
   },
-  mounted() {},
+  mounted() {
+    this.dynamicTags = this.tagList;
+  },
   methods: {
     // 删除
     handleClose(tag) {

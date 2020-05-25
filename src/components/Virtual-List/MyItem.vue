@@ -1,7 +1,7 @@
 <!--
  * @Author: gooing
  * @since: 2020-03-30 22:38:24
- * @lastTime: 2020-05-25 00:26:35
+ * @lastTime: 2020-05-25 19:58:13
  * @LastAuthor: gooing
  * @FilePath: \pixiciv-pc\src\components\Virtual-List\MyItem.vue
  * @message:
@@ -35,7 +35,7 @@
       <el-dropdown>
         <Like :like="illust.isLiked" @handleLike="handleLike" />
         <el-dropdown-menu slot="dropdown">
-          <el-dropdown-item>加到画集</el-dropdown-item>
+          <el-dropdown-item @click.native="$store.dispatch('setCollectBoolean',column)">加到画集</el-dropdown-item>
         </el-dropdown-menu>
       </el-dropdown>
     </div>

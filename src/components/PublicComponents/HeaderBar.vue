@@ -1,7 +1,7 @@
 <!--
  * @Author: gooing
  * @since: 2020-01-24 22:48:37
- * @lastTime: 2020-05-23 22:06:18
+ * @lastTime: 2020-05-25 19:48:34
  * @LastAuthor: gooing
  * @FilePath: \pixiciv-pc\src\components\PublicComponents\HeaderBar.vue
  * @message:
@@ -261,7 +261,9 @@ export default {
       this.$api.search
         .getKeyword(this.params.keyword)
         .then(({ data: { data }}) => {
-          this.keywords = data.keywordList || [];
+          if (data && data.keywordList) {
+            this.keywords = data.keywordList || [];
+          }
         });
     },
     // 搜索相关信息
