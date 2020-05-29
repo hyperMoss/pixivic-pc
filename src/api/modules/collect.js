@@ -1,12 +1,12 @@
 /*
  * @Author: gooing
  * @since: 2020-05-21 23:08:15
- * @lastTime: 2020-05-26 00:26:00
+ * @lastTime: 2020-05-29 21:58:55
  * @LastAuthor: gooing
  * @FilePath: \pixiciv-pc\src\api\modules\collect.js
  * @message:
  */
-import axios from "../base";
+import axios from '../base';
 
 // 发起画集
 function postCollection(params) {
@@ -21,7 +21,7 @@ function postCollection(params) {
   } = params;
   return axios({
     url: `/collections`,
-    method: "post",
+    method: 'post',
     data: {
       username,
       title,
@@ -48,7 +48,7 @@ function putCollections(params) {
   } = params;
   return axios({
     url: `/collections/${params.id}`,
-    method: "put",
+    method: 'put',
     data: {
       id,
       username,
@@ -66,7 +66,7 @@ function putCollections(params) {
 function deleteCollections(collectionId) {
   return axios({
     url: `/collections/${collectionId}`,
-    method: "delete"
+    method: 'delete'
   });
 }
 
@@ -75,7 +75,7 @@ function postCollectionsIllust(params) {
   const { collectionId = 0, illust_id = 0 } = params;
   return axios({
     url: `/collections/${collectionId}/illustrations`,
-    method: "post",
+    method: 'post',
     data: {
       illust_id
     }
@@ -86,7 +86,7 @@ function deleteCollectionsIllust(params) {
   const { collectionId = 0, illustId = 0 } = params;
   return axios({
     url: `/collections/${collectionId}/illustrations/${illustId}`,
-    method: "delete"
+    method: 'delete'
   });
 }
 
@@ -100,7 +100,7 @@ function orderCollections(params) {
   } = params;
   return axios({
     url: `/collections/${collectionId}/illustrations/order`,
-    method: "put",
+    method: 'put',
     data: {
       upIllustrationId,
       lowIllustrationId,
@@ -114,7 +114,7 @@ function getUserCollections(params) {
   const { userId = 0, page, pageSize, isPublic } = params;
   return axios({
     url: `/users/${userId}/collections`,
-    method: "get",
+    method: 'get',
     params: {
       page: page,
       pageSize: pageSize || 30,
@@ -122,12 +122,12 @@ function getUserCollections(params) {
     }
   });
 }
-// 查看画集
+// 查看画集图片
 function getCollections(params) {
-  const { collectoinId = 0, page, pageSize, isPublic } = params;
+  const { collectionId = 0, page, pageSize } = params;
   return axios({
-    url: `/collections/${collectoinId}/illustrations`,
-    method: "get",
+    url: `/collections/${collectionId}/illustrations`,
+    method: 'get',
     params: {
       page: page,
       pageSize: pageSize || 30
@@ -139,7 +139,7 @@ function latestCollections(params) {
   const { page, pageSize } = params;
   return axios({
     url: `/collections/latest`,
-    method: "get",
+    method: 'get',
     params: {
       page: page,
       pageSize: pageSize || 30
@@ -152,7 +152,7 @@ function popCollections(params) {
   const { page, pageSize } = params;
   return axios({
     url: `/collections/pop`,
-    method: "get",
+    method: 'get',
     params: {
       page: page,
       pageSize: pageSize || 30
@@ -163,7 +163,7 @@ function popCollections(params) {
 function collectionsTags(keyword) {
   return axios({
     url: `/collections/tags`,
-    method: "get",
+    method: 'get',
     params: {
       keyword: keyword
     }

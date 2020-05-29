@@ -1,7 +1,7 @@
 <!--
  * @Author: gooing
  * @since: 2020-05-25 19:43:48
- * @lastTime: 2020-05-25 23:46:54
+ * @lastTime: 2020-05-29 22:38:02
  * @LastAuthor: gooing
  * @FilePath: \pixiciv-pc\src\components\Collections\CollectPicture.vue
  * @message:
@@ -51,6 +51,7 @@
             >
               <div
                 v-for="collect of collectionList"
+                :key="collect.id"
                 :class="[collect.id===collectionId?'selected':'']"
                 class="select-item"
                 @click="selectCollect(collect)"
@@ -59,7 +60,7 @@
           </div>
         </div>
       </div>
-      <div style="    justify-content: flex-end;display: flex;">
+      <div slot="footer" style="    justify-content: flex-end;display: flex;">
         <el-button
           type="text"
           @click="closeModal"
@@ -84,7 +85,6 @@ export default {
       page: { page: 1, pageSize: 10, total: 0 },
       collectionList: [],
       isPublic: 0,
-      collectionList: [],
       collectionId: ''
     };
   },
@@ -107,7 +107,6 @@ export default {
         this.collectionList.length < this.page.page * this.page.pageSize &&
         this.page.page !== 1
       ) {
-        this.$message.info('画集列表已到底');
         return;
       }
       this.$api.collect
@@ -152,6 +151,9 @@ export default {
 </script>
 
 <style scoped lang="less">
+/deep/ .el-dialog__body{
+  padding: 0;
+}
 .colletlist-bd {
     display: -ms-flex;
     display: -webkit-flex;
@@ -213,10 +215,10 @@ export default {
                     border-radius: 3px;
                 }
                 .select-item:hover {
-                    background: #e9eef2;
+                    background: rgb(217, 236, 255);
                 }
                 .selected {
-                    background: #a2bcd0;
+                    background: #409EFF;
                     color: #fff;
                 }
             }

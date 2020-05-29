@@ -1,7 +1,7 @@
 <!--
  * @Author: gooing
  * @since: 2020-01-24 22:48:37
- * @lastTime: 2020-05-25 19:48:34
+ * @lastTime: 2020-05-27 22:28:49
  * @LastAuthor: gooing
  * @FilePath: \pixiciv-pc\src\components\PublicComponents\HeaderBar.vue
  * @message:
@@ -225,7 +225,7 @@ export default {
     },
     toMycollect() {
       this.$router.push({
-        path: '/users/collect',
+        path: '/collect/mycollection',
         query: {
           userId: this.user.id
         }});

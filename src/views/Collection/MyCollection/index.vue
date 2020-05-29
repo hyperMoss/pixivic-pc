@@ -1,9 +1,9 @@
 <!--
  * @Author: gooing
  * @since: 2020-05-20 01:09:48
- * @lastTime: 2020-05-26 00:17:25
+ * @lastTime: 2020-05-29 22:35:10
  * @LastAuthor: gooing
- * @FilePath: \pixiciv-pc\src\views\User\Collection\index.vue
+ * @FilePath: \pixiciv-pc\src\views\Collection\MyCollection\index.vue
  * @message:
 -->
 <template>
@@ -90,7 +90,8 @@
       v-if="createCollectBoolean"
       :show-boolean="createCollectBoolean"
       :collect-data="collectData"
-      @close-modal="handleStartCollect"
+      @on-cancel="handleStartCollect"
+      @on-success="handleAddSuccess"
     />
   </div>
 </template>
@@ -155,6 +156,9 @@ export default {
       this.page.page = 1;
       this.getCollections();
     },
+    handleAddSuccess(e) {
+      this.handleStartCollect();
+    },
     getCollections() {
       this.$api.collect
         .getUserCollections({
@@ -177,7 +181,7 @@ export default {
       this.createCollectBoolean = !this.createCollectBoolean;
     },
     goInfoPage(item) {
-      this.$router.push({ path: '/spot-light/info-page/', query: { id: item.id }});
+      this.$router.push({ path: `/collect/collectionsillust/${item.id}`, query: { collectionId: item.id }});
     }
   }
 };
