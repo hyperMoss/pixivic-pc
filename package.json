@@ -36,6 +36,7 @@
     "js-cookie": "^2.2.1",
     "less": "^3.10.3",
     "less-loader": "^5.0.0",
+    "sass-resources-loader": "^2.0.3",
     "stylus": "^0.54.7",
     "stylus-loader": "^3.0.2",
     "vue-cli-plugin-element": "^1.0.1",

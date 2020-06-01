@@ -1,7 +1,7 @@
 <!--
  * @Author: gooing
  * @since: 2020-05-25 19:43:48
- * @lastTime: 2020-05-29 22:38:02
+ * @lastTime: 2020-06-01 23:05:37
  * @LastAuthor: gooing
  * @FilePath: \pixiciv-pc\src\components\Collections\CollectPicture.vue
  * @message:
@@ -23,16 +23,10 @@
             fit="cover"
             style="height: 140px; width: 140px;"
           >
-            <div
-              slot="error"
-              class="image-slot"
-            >
+            <div slot="error" class="image-slot">
               <i class="el-icon-picture-outline" />
             </div>
-            <div
-              slot="placeholder"
-              class="image-slot"
-            >
+            <div slot="placeholder" class="image-slot">
               加载中
               <span class="dot">...</span>
             </div>
@@ -46,25 +40,25 @@
             </div>
             <div
               v-infinite-scroll="getCollections"
+              infinite-scroll-immediate
               class="select-list"
               infinite-scroll-delay="2000"
             >
               <div
                 v-for="collect of collectionList"
                 :key="collect.id"
-                :class="[collect.id===collectionId?'selected':'']"
+                :class="[collect.id === collectionId ? 'selected' : '']"
                 class="select-item"
                 @click="selectCollect(collect)"
-              >{{ collect.title }}</div>
+              >
+                {{ collect.title }}
+              </div>
             </div>
           </div>
         </div>
       </div>
       <div slot="footer" style="    justify-content: flex-end;display: flex;">
-        <el-button
-          type="text"
-          @click="closeModal"
-        >取消</el-button>
+        <el-button type="text" @click="closeModal">取消</el-button>
         <el-button
           :disabled="!collectionId"
           type="primary"
@@ -82,7 +76,7 @@ export default {
   components: {},
   data() {
     return {
-      page: { page: 1, pageSize: 10, total: 0 },
+      page: { page: 1, pageSize: 20, total: 0 },
       collectionList: [],
       isPublic: 0,
       collectionId: ''
@@ -91,10 +85,15 @@ export default {
   computed: {
     ...mapGetters(['readyCollectItem', 'user'])
   },
-  watch: {},
-  mounted() {
-    this.getCollections();
+  watch: {
+    '$store.getters.collectBoolean': function(val) {
+      if (val) {
+        this.collectionId = '';
+        this.getCollections();
+      }
+    }
   },
+  mounted() {},
   methods: {
     selectCollect(collect) {
       this.collectionId = collect.id;
@@ -132,12 +131,11 @@ export default {
     },
     collectAjax() {
       this.$api.collect
-        .postCollectionsIllust(
-          {
-            illust_id: this.readyCollectItem.id,
-            collectionId: this.collectionId
-          }
-        ).then(res => {
+        .postCollectionsIllust({
+          illust_id: this.readyCollectItem.id,
+          collectionId: this.collectionId
+        })
+        .then(res => {
           if (res.data.data) {
             this.closeModal();
             this.$message.success('加入画集成功');
@@ -151,79 +149,79 @@ export default {
 </script>
 
 <style scoped lang="less">
-/deep/ .el-dialog__body{
+/deep/ .el-dialog__body {
   padding: 0;
 }
 .colletlist-bd {
-    display: -ms-flex;
-    display: -webkit-flex;
-    display: flex;
-    -webkit-align-items: center;
-    align-items: center;
-    .colletlist-preview {
-        width: 140px;
-        float: left;
-        padding: 0 20px;
-        margin: 70px 0;
-        text-align: center;
-        font-size: 15px;
-        color: #666;
-        word-wrap: break-word;
-        .item-title {
-            margin: 1em 0 0 0;
-            overflow: hidden;
-            max-height: 44px;
-            height: auto;
-            text-overflow: ellipsis;
-            text-overflow: -o-ellipsis-lastline;
-            display: -webkit-box;
-            -webkit-line-clamp: 2;
-            -webkit-box-orient: vertical;
-        }
+  display: -ms-flex;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-align-items: center;
+  align-items: center;
+  .colletlist-preview {
+    width: 140px;
+    float: left;
+    padding: 0 20px;
+    margin: 70px 0;
+    text-align: center;
+    font-size: 15px;
+    color: #666;
+    word-wrap: break-word;
+    .item-title {
+      margin: 1em 0 0 0;
+      overflow: hidden;
+      max-height: 44px;
+      height: auto;
+      text-overflow: ellipsis;
+      text-overflow: -o-ellipsis-lastline;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
     }
-    .colletlist-content {
-        flex: auto;
-        border-left: 1px solid #e5e5e5;
-        padding-bottom: 10px;
-        overflow: hidden;
-        .md-item {
-            padding: 20px;
-            .item-hd {
-                margin-bottom: 10px;
-                h3 {
-                    display: inline-block;
-                    background: none;
-                    margin: 0 10px 0 0;
-                    font-size: 15px;
-                    line-height: 26px;
-                    color: #666;
-                }
-            }
-            .select-list {
-                height: 200px;
-                font-size: 13px;
-                overflow-y: auto;
-                user-select: none;
-                -webkit-user-select: none;
-                .select-item {
-                    vertical-align: middle;
-                    line-height: 21px;
-                    width: 85px;
-                    box-sizing: border-box;
-                    width: 100%;
-                    padding: 7px 9px;
-                    border-radius: 3px;
-                }
-                .select-item:hover {
-                    background: rgb(217, 236, 255);
-                }
-                .selected {
-                    background: #409EFF;
-                    color: #fff;
-                }
-            }
+  }
+  .colletlist-content {
+    flex: auto;
+    border-left: 1px solid #e5e5e5;
+    padding-bottom: 10px;
+    overflow: hidden;
+    .md-item {
+      padding: 20px;
+      .item-hd {
+        margin-bottom: 10px;
+        h3 {
+          display: inline-block;
+          background: none;
+          margin: 0 10px 0 0;
+          font-size: 15px;
+          line-height: 26px;
+          color: #666;
         }
+      }
+      .select-list {
+        height: 200px;
+        font-size: 13px;
+        overflow-y: auto;
+        user-select: none;
+        -webkit-user-select: none;
+        .select-item {
+          vertical-align: middle;
+          line-height: 21px;
+          width: 85px;
+          box-sizing: border-box;
+          width: 100%;
+          padding: 7px 9px;
+          border-radius: 3px;
+        }
+        .select-item:hover {
+          background: rgb(217, 236, 255);
+        }
+        .selected {
+          background: #409eff;
+          color: #fff;
+        }
+      }
     }
+  }
 }
 .CollectPIcture {
 }

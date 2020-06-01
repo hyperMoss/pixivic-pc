@@ -1,7 +1,7 @@
 <!--
  * @Author: gooing
  * @since: 2020-02-02 14:52:15
- * @lastTime: 2020-05-25 00:18:36
+ * @lastTime: 2020-06-01 22:51:41
  * @LastAuthor: gooing
  * @FilePath: \pixiciv-pc\src\views\Detail\Detail.vue
  * @message:
@@ -81,7 +81,7 @@
           </div>
         </figcaption>
         <figcaption class="detail-content__comment">
-          <Comment :comments="commentList" :pid="pid" />
+          <Comment :pid="pid" />
         </figcaption>
         <figcaption class="detail-content__relate">
           <h2 class="relate-title">相关作品</h2>
@@ -162,7 +162,6 @@ export default {
   },
   data() {
     return {
-      commentList: [],
       page: 1,
       srcList: [],
       illustDetail: null,
@@ -198,21 +197,8 @@ export default {
       this.getIllustDetail();
     }
     this.bookmarkedUsers();
-    this.getCommentsList();
   },
   methods: {
-    // 等待后端分页处理
-    getCommentsList() {
-      this.$api.comment.getComments({
-        commentAppType: 'illusts',
-        commentAppId: this.pid
-      })
-        .then(res => {
-          if (res.status === 200) {
-            this.commentList = res.data.data || [];
-          }
-        });
-    },
     // 处理图片数据
     handleData(data) {
       this.getArtistIllust(data.artistId);

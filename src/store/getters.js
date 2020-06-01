@@ -1,7 +1,7 @@
 /*
  * @Author: gooing
  * @since: 2020-02-02 14:59:46
- * @lastTime: 2020-05-25 20:13:24
+ * @lastTime: 2020-06-01 21:12:03
  * @LastAuthor: gooing
  * @FilePath: \pixiciv-pc\src\store\getters.js
  * @message:
@@ -14,5 +14,6 @@ export const followStatus = state => state.followStatus;
 export const detail = state => state.detail;
 export const loginBoolean = state => state.loginBoolean;
 export const collectBoolean = state => state.collectBoolean;
+export const collectInfo = state => state.collectInfo;
 export const readyCollectItem = state => state.readyCollectItem;
 

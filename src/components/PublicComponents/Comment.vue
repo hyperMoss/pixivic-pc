@@ -1,7 +1,7 @@
 <!--
  * @Author: gooing
  * @since: 2020-04-02 18:05:53
- * @lastTime: 2020-05-29 22:43:28
+ * @lastTime: 2020-06-01 23:08:01
  * @LastAuthor: gooing
  * @FilePath: \pixiciv-pc\src\components\PublicComponents\Comment.vue
  * @message:
@@ -28,10 +28,10 @@
       <div style="padding-left:44px;">
         <div class="content">{{ item.content }}</div>
         <div class="control">
-          <!-- <span class="like" :class="{active: item.isLike}" @click="likeClick(item)">
-          <i class="iconfont icon-like" />
-          <span class="like-num">{{ item.likeNum > 0 ? item.likeNum + '人赞' : '赞' }}</span>
-        </span> -->
+          <span class="like" :class="{active: item.isLike}" @click="likeClick(item)">
+            <i class="iconfont icon-like" />
+            <span class="like-num"> <i class="el-icon-caret-top" /> {{ item.likedCount > 0 ? item.likedCount + '人赞' : '赞' }}</span>
+          </span>
           <span class="comment-reply" @click="showCommentInput(item, 1)">
             <i class="iconfont el-icon-chat-square" />
             <span>回复</span>
@@ -116,17 +116,18 @@ import { mapGetters } from 'vuex';
 export default {
   components: {},
   props: {
-    comments: {
-      type: Array,
-      required: true
-    },
     pid: {
       type: String,
       required: true
+    },
+    commentType: {
+      type: String,
+      default: 'illusts'
     }
   },
   data() {
     return {
+      comments: [],
       copyComment: '',
       inputComment: '',
       showItemId: ''
@@ -136,25 +137,70 @@ export default {
     ...mapGetters(['user', 'likeStatus', 'followStatus', 'detail'])
   },
   created() {
-    console.log(this.comments);
+    this.getCommentsList();
   },
   methods: {
+    // 等待后端分页处理
+    getCommentsList() {
+      this.$api.comment.getComments({
+        commentAppType: this.$props.commentType,
+        commentAppId: this.pid
+      })
+        .then(res => {
+          if (res.status === 200) {
+            this.comments = res.data.data || [];
+          }
+        });
+    },
+    // 点赞ajax
+    likeCommentAjax(reqBody, item, cb) {
+      this.$api.comment.likeComments(reqBody)
+        .then(res => {
+          cb && cb(res, item);
+        });
+    },
+    // 取消点赞ajax
+    unLikeCommentAjax(reqBody, item, cb) {
+      this.$api.comment.unLikeComments(reqBody)
+        .then(res => {
+          cb && cb(res, item);
+        });
+    },
     /**
      * 点赞
      */
-    // likeClick(item) {
-    //   if (item.isLike === null) {
-    //     Vue.$set(item, 'isLike', true);
-    //     item.likeNum++;
-    //   } else {
-    //     if (item.isLike) {
-    //       item.likeNum--;
-    //     } else {
-    //       item.likeNum++;
-    //     }
-    //     item.isLike = !item.isLike;
-    //   }
-    // },
+    likeClick(item) {
+      const reqBody = {
+        commentAppType: this.$props.commentType,
+        commentAppId: this.pid,
+        commentId: item.id
+      };
+      if (item.isLike === false) {
+        this.likeCommentAjax(reqBody, item, (res, item) => {
+          if (res.status === 200) {
+            item.likedCount++;
+            item.isLike = true;
+          }
+        });
+      } else {
+        if (item.isLike) {
+          this.unLikeCommentAjax(reqBody, item, (res, item) => {
+            if (res.status === 200) {
+              item.likedCount--;
+              if (!item.likedCount) {
+                item.isLike = false;
+              }
+            }
+          });
+        } else {
+          this.likeCommentAjax(reqBody, item, (res, item) => {
+            if (res.status === 200) {
+              item.likedCount++;
+            }
+          });
+        }
+      }
+    },
 
     /**
      * 点击取消按钮
@@ -169,7 +215,7 @@ export default {
       }
       this.inputComment = this.inputComment.substring(this.copyComment.length);
       let data = {
-        commentAppType: 'illusts',
+        commentAppType: this.$props.commentType,
         commentAppId: this.pid,
         parentId: item && item.id || 0, // 父级评论id,顶级就是0
         replyTo: item && item.replyFrom || 0, // 回复者，没有就是0
@@ -230,8 +276,8 @@ export default {
 </script>
 
 <style scoped lang="less">
-@import "../../styles/color.less";
 .container {
+  width: 100%;
   padding: 0 10px;
   box-sizing: border-box;
   .write-reply {

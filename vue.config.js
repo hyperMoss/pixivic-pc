@@ -1,14 +1,15 @@
 /*
  * @Author: gooing
  * @since: 2020-02-02 14:59:46
- * @lastTime: 2020-03-28 21:28:07
+ * @lastTime: 2020-06-01 23:29:11
  * @LastAuthor: gooing
  * @FilePath: \pixiciv-pc\vue.config.js
  * @message:
  */
 const path = require('path');
 
-const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer')
+  .BundleAnalyzerPlugin;
 // 去console插件
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 // gzip压缩插件
@@ -32,6 +33,20 @@ module.exports = {
       .set('@', resolve('src'))
       .set('assets', resolve('src/assets'))
       .set('components', resolve('src/components')); // key,value自行定义，比如.set('@@', resolve('src/components'))
+    const oneOfsMap = config.module.rule('less').oneOfs.store;
+    oneOfsMap.forEach(item => {
+      item
+        .use('sass-resources-loader')
+        .loader('sass-resources-loader')
+        .options({
+          // Provide path to the file with resources
+          resources: './src/styles/color.less'
+
+          // Or array of paths
+          // resources: ['./path/to/vars.scss', './path/to/mixins.scss']
+        })
+        .end();
+    });
   },
   // enabled by default if the machine has more than 1 cores
   parallel: require('os').cpus().length > 1,
@@ -71,11 +86,7 @@ module.exports = {
       new CompressionWebpackPlugin({
         filename: '[path].gz[query]',
         algorithm: 'gzip',
-        test: new RegExp(
-          '\\.(' +
-          ['js', 'css'].join('|') +
-          ')$'
-        ),
+        test: new RegExp('\\.(' + ['js', 'css'].join('|') + ')$'),
         threshold: 10240,
         minRatio: 0.8
       })

@@ -1,7 +1,7 @@
 <!--
  * @Author: gooing
  * @since: 2020-05-27 21:42:07
- * @lastTime: 2020-05-29 22:11:28
+ * @lastTime: 2020-06-01 23:28:53
  * @LastAuthor: gooing
  * @FilePath: \pixiciv-pc\src\views\Collection\CollectionIllust\index.vue
  * @message:
@@ -13,25 +13,30 @@
       :list="illustList"
       @infinite="infinite"
     >
-      <div class="collectionsIllust-btns"><el-button type="primary" @click="handleModifyList">列表排序</el-button></div>
-
+      <div class="collectionsIllust-btns">
+        <el-button type="primary" @click="handleModifyList">列表排序</el-button>
+      </div>
+      <div class="collectionsIllust-comment">
+        <Comment :pid="collectInfo.id" comment-type="collections" />
+      </div>
     </VirtualList>
     <CollectPictureAdjust
       v-if="modifyListBoolean"
-      :show-boolean="modifyListBoolean"
       :picture-list="CopyillustList"
+      :show-boolean="modifyListBoolean"
       @close-modal="handleModifyListClose"
     />
   </div>
 </template>
 
 <script>
+import { mapGetters } from 'vuex';
 import VirtualList from '@/components/Virtual-List/VirtualList';
 import CollectPictureAdjust from 'components/Collections/CollectPictureAdjust.vue';
+import Comment from '@/components/PublicComponents/Comment';
 export default {
   name: 'CollectionsIllust',
-  components: { VirtualList,
-    CollectPictureAdjust },
+  components: { VirtualList, CollectPictureAdjust, Comment },
   props: {
     collectionId: {
       required: true,
@@ -47,7 +52,9 @@ export default {
       CopyillustList: []
     };
   },
-  computed: {},
+  computed: {
+    ...mapGetters(['collectInfo', 'user'])
+  },
   watch: {},
   mounted() {},
   methods: {
@@ -80,14 +87,24 @@ export default {
 </script>
 
 <style scoped lang="less">
-
-.collectionsIllust{
-    height: calc(~"100vh - 60px");
+.collectionsIllust {
+  height: calc(~"100vh - 60px");
   overflow: hidden;
+  /deep/.water-content {
+    margin: 0 auto 0 20px;
+  }
   &-btns {
     display: flex;
     justify-content: flex-end;
     margin: 20px;
+  }
+  &-comment {
+    display: flex;
+    justify-content: flex-end;
+    margin: 20px;
+    float: right;
+    width: 600px;
+    border: 1px solid @border-first;
   }
 }
 </style>

@@ -1,7 +1,7 @@
 <!--
  * @Author: gooing
  * @since: 2020-05-20 01:09:48
- * @lastTime: 2020-05-29 22:35:10
+ * @lastTime: 2020-06-01 21:21:33
  * @LastAuthor: gooing
  * @FilePath: \pixiciv-pc\src\views\Collection\MyCollection\index.vue
  * @message:
@@ -181,6 +181,7 @@ export default {
       this.createCollectBoolean = !this.createCollectBoolean;
     },
     goInfoPage(item) {
+      this.$store.dispatch('setCollectInfo', item);
       this.$router.push({ path: `/collect/collectionsillust/${item.id}`, query: { collectionId: item.id }});
     }
   }
