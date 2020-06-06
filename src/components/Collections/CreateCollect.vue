@@ -1,7 +1,7 @@
 <!--
  * @Author: gooing
  * @since: 2020-05-24 12:16:50
- * @lastTime: 2020-05-29 22:32:51
+ * @lastTime: 2020-06-06 22:16:07
  * @LastAuthor: gooing
  * @FilePath: \pixiciv-pc\src\components\Collections\CreateCollect.vue
  * @message:
@@ -177,8 +177,8 @@ export default {
       this.$emit('on-cancel');
     },
     // 成功添加画集
-    success() {
-      this.$emit('on-success');
+    success(data, flag) {
+      this.$emit('on-success', data, flag);
     },
     // 表单提交
     submitForm(formName) {
@@ -205,7 +205,7 @@ export default {
               message: '新建画集成功',
               type: 'success'
             });
-            this.success();
+            this.success(params, 1);
           } else {
             this.$message({
               message: res.data.message,
@@ -224,7 +224,7 @@ export default {
               message: '修改画集成功',
               type: 'success'
             });
-            this.closeModal();
+            this.success(params, 2);
           } else {
             this.$message({
               message: res.data.message,

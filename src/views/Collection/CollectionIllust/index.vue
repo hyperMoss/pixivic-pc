@@ -1,7 +1,7 @@
 <!--
  * @Author: gooing
  * @since: 2020-05-27 21:42:07
- * @lastTime: 2020-06-01 23:28:53
+ * @lastTime: 2020-06-06 15:56:28
  * @LastAuthor: gooing
  * @FilePath: \pixiciv-pc\src\views\Collection\CollectionIllust\index.vue
  * @message:
@@ -17,7 +17,7 @@
         <el-button type="primary" @click="handleModifyList">列表排序</el-button>
       </div>
       <div class="collectionsIllust-comment">
-        <Comment :pid="collectInfo.id" comment-type="collections" />
+        <Comment :pid="collectInfo.id+''" comment-type="collections" />
       </div>
     </VirtualList>
     <CollectPictureAdjust

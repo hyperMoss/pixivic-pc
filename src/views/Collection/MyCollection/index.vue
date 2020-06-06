@@ -1,7 +1,7 @@
 <!--
  * @Author: gooing
  * @since: 2020-05-20 01:09:48
- * @lastTime: 2020-06-01 21:21:33
+ * @lastTime: 2020-06-06 22:12:06
  * @LastAuthor: gooing
  * @FilePath: \pixiciv-pc\src\views\Collection\MyCollection\index.vue
  * @message:
@@ -27,65 +27,7 @@
       </div>
       <el-button @click="handleStartCollect">发起画集</el-button>
     </div>
-
-    <div
-      v-infinite-scroll="getCollections"
-      class="list-grid"
-      infinite-scroll-delay="2000"
-      infinite-scroll-distance="10"
-      infinite-scroll-immediate
-    >
-      <el-card
-        v-for="(item) in collectionList"
-        :key="item.id"
-        :body-style="{ padding: '0px' }"
-        @click.native="goInfoPage(item)"
-      >
-        <el-image
-          v-if="item.cover"
-          :src="item.cover.imageUrls[0].medium | replaceSmall"
-          class="image"
-          fit="cover"
-          lazy
-        >
-          <div
-            slot="placeholder"
-            class="image-slot"
-          >
-            加载中
-            <span class="dot">...</span>
-          </div>
-          <div
-            slot="error"
-            class="image-slot"
-          >
-            <i class="el-icon-picture-outline" />
-          </div>
-        </el-image>
-        <el-image
-          v-else
-          class="image"
-          fit="cover"
-          lazy
-          src="https://pic.cheerfun.dev/40655.png?t=1590334915989"
-        />
-        <div style="padding: 14px;">
-          <span>{{ item.title }}</span>
-          <div class="bottom clearfix">
-            <time class="time">{{ item.createTime.split('T')[0] }}</time>
-            <el-dropdown style="padding: 0;float: right;">
-              <span>
-                <i class="el-icon-setting" />
-              </span>
-              <el-dropdown-menu slot="dropdown">
-                <el-dropdown-item @click.native="modifyCollect(item)">修改</el-dropdown-item>
-                <el-dropdown-item @click.native="deletCollect(item)">删除</el-dropdown-item>
-              </el-dropdown-menu>
-            </el-dropdown>
-          </div>
-        </div>
-      </el-card>
-    </div>
+    <CardList :collection-list="collectionList" :power-flag="true" @on-scroll="getCollections" />
     <CreateCollect
       v-if="createCollectBoolean"
       :show-boolean="createCollectBoolean"
@@ -98,11 +40,13 @@
 
 <script>
 import { mapGetters } from 'vuex';
+import CardList from 'components/Collections/CardList.vue';
 import CreateCollect from 'components/Collections/CreateCollect.vue';
 export default {
   name: 'Collection',
   components: {
-    CreateCollect
+    CreateCollect,
+    CardList
   },
   data() {
     return {
@@ -121,43 +65,13 @@ export default {
     this.getCollections();
   },
   methods: {
-    deletCollect(item) {
-      const collectionId = item.id;
-      this.$confirm('确定删除该画集吗？', '提示', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
-        type: 'warning'
-      })
-        .then(() => {
-          this.$api.collect
-            .deleteCollections(collectionId)
-            .then(res => {
-              if (res.data && res.data.data) {
-                this.$message.info('删除画集成功');
-                this.collectionList.splice(
-                  this.collectionList.findIndex(e => e.id === collectionId),
-                  1
-                );
-              } else {
-                this.$message.info('删除画集失败');
-              }
-            })
-            .catch(err => {
-              console.log(err);
-            });
-        })
-        .catch(() => {});
-    },
-    modifyCollect(item) {
-      this.collectData = item;
-      this.createCollectBoolean = !this.createCollectBoolean;
-    },
     getList() {
       this.page.page = 1;
       this.getCollections();
     },
-    handleAddSuccess(e) {
+    handleAddSuccess(e, flag) {
       this.handleStartCollect();
+      this.getList();
     },
     getCollections() {
       this.$api.collect
@@ -179,10 +93,6 @@ export default {
     handleStartCollect() {
       this.collectData = null;
       this.createCollectBoolean = !this.createCollectBoolean;
-    },
-    goInfoPage(item) {
-      this.$store.dispatch('setCollectInfo', item);
-      this.$router.push({ path: `/collect/collectionsillust/${item.id}`, query: { collectionId: item.id }});
     }
   }
 };
@@ -193,33 +103,13 @@ export default {
     max-height: calc(~'100vh - 60px');
     overflow-y: auto;
     background: #fff;
-    .header {
+     .header {
         height: 60px;
         padding: 20px;
         display: flex;
         justify-content: flex-end;
         align-items: center;
     }
-    .image {
-        width: 400px;
-        height: 400px;
-        display: block;
-    }
-    .bottom {
-        margin-top: 13px;
-        line-height: 12px;
-    }
-    .list-grid {
-        list-style: none;
-        display: grid;
-        gap: 24px;
-        flex-wrap: wrap;
-        grid-template-columns: repeat(auto-fit, 400px);
-        -webkit-box-pack: center;
-        justify-content: center;
-        margin: 20px 0;
-        margin-bottom: 20px;
-        padding: 0px;
-    }
+
 }
 </style>

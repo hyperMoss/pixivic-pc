@@ -27,7 +27,7 @@
           @handleLike="handleLike"
         />
         <el-dropdown-menu slot="dropdown">
-          <el-dropdown-item @click.native="$store.dispatch('setCollectBoolean',column)">加到画集</el-dropdown-item>
+          <el-dropdown-item @click.native="handleCollect">加到画集</el-dropdown-item>
         </el-dropdown-menu>
       </el-dropdown>
     </div>
@@ -54,6 +54,9 @@ export default {
     };
   },
   methods: {
+    handleCollect() {
+      this.$emit('handle-collect', this.column);
+    },
     handleLike() {
       this.$emit('handleLike', this.column);
     },

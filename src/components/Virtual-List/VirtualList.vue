@@ -11,7 +11,7 @@
     >
       <slot />
       <template v-slot:cell="props">
-        <Item :column="props.data" @handleLike="handleLike" />
+        <Item :column="props.data" @handleLike="handleLike" @handle-collect="setCollect" />
       </template>
     </VirtualCollection>
   </div>
@@ -104,6 +104,14 @@ export default {
     window.removeEventListener('resize', this.waterFall);
   },
   methods: {
+    setCollect(column) {
+      if (!this.user.id) {
+        this.$message.closeAll();
+        this.$message.info('请先登录');
+        return;
+      }
+      this.$store.dispatch('setCollectBoolean', column);
+    },
     infinite($state) {
       this.$emit('infinite', $state);
     },

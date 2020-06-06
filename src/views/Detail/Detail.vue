@@ -1,7 +1,7 @@
 <!--
  * @Author: gooing
  * @since: 2020-02-02 14:52:15
- * @lastTime: 2020-06-01 22:51:41
+ * @lastTime: 2020-06-06 00:51:40
  * @LastAuthor: gooing
  * @FilePath: \pixiciv-pc\src\views\Detail\Detail.vue
  * @message:
@@ -88,7 +88,7 @@
           <div>
             <ul v-infinite-scroll="reqRelatedIllust" infinite-scroll-immediate class="relate-info" infinite-scroll-distance="10" infinite-scroll-delay="1000">
               <li v-for="item in relatedPictureList" :key="item.id">
-                <Item :illust="item" @handleLike="handleLike" />
+                <Item :illust="item" @handleLike="handleLike" @handle-collect="setCollect" />
                 <!-- <el-image :src="url" lazy>
                 <div slot="error" class="image-slot">
                   <i class="el-icon-picture-outline" />
@@ -199,6 +199,15 @@ export default {
     this.bookmarkedUsers();
   },
   methods: {
+    // 打开弹窗
+    setCollect(column) {
+      if (!this.user.id) {
+        this.$message.closeAll();
+        this.$message.info('请先登录');
+        return;
+      }
+      this.$store.dispatch('setCollectBoolean', column);
+    },
     // 处理图片数据
     handleData(data) {
       this.getArtistIllust(data.artistId);

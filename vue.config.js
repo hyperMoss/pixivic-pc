@@ -1,15 +1,13 @@
 /*
  * @Author: gooing
  * @since: 2020-02-02 14:59:46
- * @lastTime: 2020-06-01 23:29:11
+ * @lastTime: 2020-06-06 17:02:32
  * @LastAuthor: gooing
  * @FilePath: \pixiciv-pc\vue.config.js
  * @message:
  */
 const path = require('path');
 
-const BundleAnalyzerPlugin = require('webpack-bundle-analyzer')
-  .BundleAnalyzerPlugin;
 // 去console插件
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 // gzip压缩插件
@@ -72,7 +70,7 @@ module.exports = {
   },
 
   configureWebpack: config => {
-    const devPlugins = [new BundleAnalyzerPlugin()];
+    const devPlugins = [];
     const plugins = [
       new UglifyJsPlugin({
         uglifyOptions: {

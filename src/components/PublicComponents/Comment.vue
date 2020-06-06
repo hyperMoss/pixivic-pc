@@ -1,7 +1,7 @@
 <!--
  * @Author: gooing
  * @since: 2020-04-02 18:05:53
- * @lastTime: 2020-06-01 23:08:01
+ * @lastTime: 2020-06-06 16:02:12
  * @LastAuthor: gooing
  * @FilePath: \pixiciv-pc\src\components\PublicComponents\Comment.vue
  * @message:
@@ -83,7 +83,7 @@
         </transition>
       </div>
     </div>
-    <div class="write-reply" @click="showCommentInput(item)">
+    <div class="write-reply" @click="showCommentInput()">
       <i class="el-icon-edit" />
       <span class="add-comment">添加新评论</span>
     </div>

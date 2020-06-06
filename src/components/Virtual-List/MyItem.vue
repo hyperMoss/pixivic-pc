@@ -1,7 +1,7 @@
 <!--
  * @Author: gooing
  * @since: 2020-03-30 22:38:24
- * @lastTime: 2020-05-25 19:58:13
+ * @lastTime: 2020-06-06 00:50:27
  * @LastAuthor: gooing
  * @FilePath: \pixiciv-pc\src\components\Virtual-List\MyItem.vue
  * @message:
@@ -35,7 +35,7 @@
       <el-dropdown>
         <Like :like="illust.isLiked" @handleLike="handleLike" />
         <el-dropdown-menu slot="dropdown">
-          <el-dropdown-item @click.native="$store.dispatch('setCollectBoolean',column)">加到画集</el-dropdown-item>
+          <el-dropdown-item @click.native="handleCollect">加到画集</el-dropdown-item>
         </el-dropdown-menu>
       </el-dropdown>
     </div>
@@ -68,6 +68,9 @@ export default {
   watch: {},
   mounted() {},
   methods: {
+    handleCollect() {
+      this.$emit('handle-collect', this.column);
+    },
     handleLike() {
       this.$emit('handleLike', this.illust);
     },
