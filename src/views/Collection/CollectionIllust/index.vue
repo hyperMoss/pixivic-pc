@@ -1,7 +1,7 @@
 <!--
  * @Author: gooing
  * @since: 2020-05-27 21:42:07
- * @lastTime: 2020-06-06 15:56:28
+ * @lastTime: 2020-06-07 23:26:12
  * @LastAuthor: gooing
  * @FilePath: \pixiciv-pc\src\views\Collection\CollectionIllust\index.vue
  * @message:
@@ -17,7 +17,13 @@
         <el-button type="primary" @click="handleModifyList">列表排序</el-button>
       </div>
       <div class="collectionsIllust-comment">
-        <Comment :pid="collectInfo.id+''" comment-type="collections" />
+        <Comment v-if="collectInfo.forbidComment" :pid="collectInfo.id+''" comment-type="collections" />
+        <div v-else style="margin:50px auto;width:200px;text-align:center;">
+          <svg font-size="160" class="icon" aria-hidden="true">
+            <use xlink:href="#pickongtai1" />
+          </svg>
+          <p style="color: #E3F2FA; font-size: 20px;">未开启评论</p>
+        </div>
       </div>
     </VirtualList>
     <CollectPictureAdjust
@@ -25,6 +31,7 @@
       :picture-list="CopyillustList"
       :show-boolean="modifyListBoolean"
       @close-modal="handleModifyListClose"
+      @on-success="handleAdjust"
     />
   </div>
 </template>
@@ -81,6 +88,11 @@ export default {
     handleModifyListClose(e) {
       this.illustList = e;
       this.modifyListBoolean = !this.modifyListBoolean;
+    },
+    handleAdjust(list) {
+      this.modifyListBoolean = false;
+      this.illustList = list;
+      this.illustList.splice(1, 0);
     }
   }
 };

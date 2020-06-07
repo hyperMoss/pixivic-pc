@@ -1,7 +1,7 @@
 <!--
  * @Author: gooing
  * @since: 2020-04-02 18:05:53
- * @lastTime: 2020-06-06 16:02:12
+ * @lastTime: 2020-06-08 00:11:46
  * @LastAuthor: gooing
  * @FilePath: \pixiciv-pc\src\components\PublicComponents\Comment.vue
  * @message:
@@ -9,7 +9,7 @@
 <template>
   <div class="container">
     <div v-for="item in comments" :key="item.id" class="comment">
-      <div class="info">
+      <div class="info" @click="goUserHomePage(item.replyFrom)">
         <img
           class="avatar"
           :src="
@@ -140,6 +140,10 @@ export default {
     this.getCommentsList();
   },
   methods: {
+    // 跳转用户主页
+    goUserHomePage(id) {
+      this.$router.push(`/users/home-page/${id}`);
+    },
     // 等待后端分页处理
     getCommentsList() {
       this.$api.comment.getComments({

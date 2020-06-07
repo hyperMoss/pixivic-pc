@@ -1,7 +1,7 @@
 <!--
  * @Author: gooing
  * @since: 2020-05-25 19:43:48
- * @lastTime: 2020-06-01 23:05:37
+ * @lastTime: 2020-06-07 22:10:26
  * @LastAuthor: gooing
  * @FilePath: \pixiciv-pc\src\components\Collections\CollectPicture.vue
  * @message:
@@ -112,8 +112,7 @@ export default {
         .getUserCollections({
           page: this.page.page++,
           pageSize: this.page.pageSize,
-          userId: this.user.id,
-          isPublic: this.isPublic
+          userId: this.user.id
         })
         .then(res => {
           const {

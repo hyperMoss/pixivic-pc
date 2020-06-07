@@ -1,7 +1,7 @@
 <!--
  * @Author: gooing
  * @since: 2020-05-20 01:09:48
- * @lastTime: 2020-06-06 22:12:06
+ * @lastTime: 2020-06-07 22:37:16
  * @LastAuthor: gooing
  * @FilePath: \pixiciv-pc\src\views\Collection\MyCollection\index.vue
  * @message:
@@ -13,25 +13,26 @@
         <el-radio-group
           v-model="isPublic"
           style="margin-right:10px;"
-          @change="getList"
+          @change="getCollections"
         >
-          <el-radio-button
-            :label="0"
-            name="私有"
-          >私有</el-radio-button>
-          <el-radio-button
-            :label="1"
-            name="公开"
-          >公开</el-radio-button>
+          <el-radio-button :label="0" name="私有">私有</el-radio-button>
+          <el-radio-button :label="1" name="公开">公开</el-radio-button>
         </el-radio-group>
       </div>
       <el-button @click="handleStartCollect">发起画集</el-button>
     </div>
-    <CardList :collection-list="collectionList" :power-flag="true" @on-scroll="getCollections" />
+    <keep-alive>
+      <CardList
+        :collection-list="isPublic ? publicCollectionList : privateCollectList"
+        :power-flag="true"
+        @on-scroll="getCollections"
+      />
+    </keep-alive>
+
     <CreateCollect
       v-if="createCollectBoolean"
-      :show-boolean="createCollectBoolean"
       :collect-data="collectData"
+      :show-boolean="createCollectBoolean"
       @on-cancel="handleStartCollect"
       @on-success="handleAddSuccess"
     />
@@ -50,8 +51,9 @@ export default {
   },
   data() {
     return {
-      page: { page: 1, pageSize: 10, total: 0 },
-      collectionList: [],
+      page: { publicPage: 1, pageSize: 10, total: 0, privatePage: 1 },
+      publicCollectionList: [],
+      privateCollectList: [],
       isPublic: 0,
       createCollectBoolean: false,
       collectData: null
@@ -66,7 +68,6 @@ export default {
   },
   methods: {
     getList() {
-      this.page.page = 1;
       this.getCollections();
     },
     handleAddSuccess(e, flag) {
@@ -76,17 +77,26 @@ export default {
     getCollections() {
       this.$api.collect
         .getUserCollections({
-          page: this.page.page++,
+          page: this.isPublic
+            ? this.page.publicPage++
+            : this.page.privatePage++,
           pageSize: this.page.pageSize,
           userId: this.user.id,
           isPublic: this.isPublic
         })
         .then(res => {
-          const {
-            data: { data }
-          } = res;
-          if (data.length) {
-            this.collectionList = data;
+          if (this.isPublic) {
+            if (res.data.data) {
+              this.publicCollectionList = this.publicCollectionList.concat(
+                res.data.data
+              );
+            }
+          } else {
+            if (res.data.data) {
+              this.privateCollectList = this.privateCollectList.concat(
+                res.data.data
+              );
+            }
           }
         });
     },
@@ -100,16 +110,15 @@ export default {
 
 <style scoped lang="less">
 .collection {
-    max-height: calc(~'100vh - 60px');
-    overflow-y: auto;
-    background: #fff;
-     .header {
-        height: 60px;
-        padding: 20px;
-        display: flex;
-        justify-content: flex-end;
-        align-items: center;
-    }
-
+  max-height: calc(~"100vh - 60px");
+  overflow-y: auto;
+  background: #fff;
+  .header {
+    height: 60px;
+    padding: 20px;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+  }
 }
 </style>

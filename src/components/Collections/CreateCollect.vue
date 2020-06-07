@@ -1,7 +1,7 @@
 <!--
  * @Author: gooing
  * @since: 2020-05-24 12:16:50
- * @lastTime: 2020-06-06 22:16:07
+ * @lastTime: 2020-06-07 21:45:59
  * @LastAuthor: gooing
  * @FilePath: \pixiciv-pc\src\components\Collections\CreateCollect.vue
  * @message:
@@ -103,7 +103,7 @@ export default {
   props: ['show-boolean', 'collect-data'],
   data() {
     // 邮箱验证函数
-    var checkEmail = (rule, value, callback) => {
+    var checkTitle = (rule, value, callback) => {
       const patrn = /[`~!@#$%^&*()\-+=<>?:"{}|,.\/;'\\[\]·~！@#￥%……&*（）——\-+={}|《》？：“”【】、；‘'，。、]/im;
       if (!value) {
         return callback(new Error('标题不能为空'));
@@ -122,9 +122,9 @@ export default {
     };
     // 用户名验证函数
     var checkTags = (rule, value, callback) => {
-      if (!value.length) {
-        return callback(new Error('标签不能为空'));
-      }
+      // if (!value.length) {
+      //   return callback(new Error('标签不能为空'));
+      // }
       callback();
     };
     // 密码验证
@@ -143,7 +143,7 @@ export default {
       collectId: '',
       // 验证规则
       rules: {
-        title: [{ validator: checkEmail, trigger: 'blur' }],
+        title: [{ validator: checkTitle, trigger: 'blur' }],
         caption: [{ validator: checkName, trigger: 'blur' }],
         tagList: [{ validator: checkTags, trigger: 'blur' }]
 

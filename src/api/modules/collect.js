@@ -1,7 +1,7 @@
 /*
  * @Author: gooing
  * @since: 2020-05-21 23:08:15
- * @lastTime: 2020-05-29 21:58:55
+ * @lastTime: 2020-06-07 23:07:17
  * @LastAuthor: gooing
  * @FilePath: \pixiciv-pc\src\api\modules\collect.js
  * @message:
@@ -94,18 +94,12 @@ function deleteCollectionsIllust(params) {
 function orderCollections(params) {
   const {
     collectionId = 0,
-    upIllustrationId = 0,
-    lowIllustrationId,
-    reOrderIllustrationId
+    picIdList
   } = params;
   return axios({
     url: `/collections/${collectionId}/illustrations/order`,
     method: 'put',
-    data: {
-      upIllustrationId,
-      lowIllustrationId,
-      reOrderIllustrationId
-    }
+    data: picIdList
   });
 }
 

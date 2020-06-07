@@ -1,27 +1,32 @@
 <!--
  * @Author: gooing
  * @since: 2020-06-06 16:32:11
- * @lastTime: 2020-06-06 22:27:02
+ * @lastTime: 2020-06-07 22:31:07
  * @LastAuthor: gooing
  * @FilePath: \pixiciv-pc\src\components\Collections\CardList.vue
  * @message:
 -->
 <template>
   <div class="CardList">
+    <div v-if="!collectionList.length" style="margin:50px auto;width:200px;text-align:center;">
+      <svg font-size="160" class="icon" aria-hidden="true">
+        <use xlink:href="#pickongtai1" />
+      </svg>
+      <p style="color: #E3F2FA; font-size: 20px;">没有内容</p>
+    </div>
     <div
       v-infinite-scroll="getCollections"
       class="list-grid"
-      infinite-scroll-delay="2000"
-      infinite-scroll-distance="10"
+      infinite-scroll-delay="1000"
+      infinite-scroll-immediate
     >
       <div
         v-for="item in collectionList"
         :key="item.id"
         :body-style="{ padding: '0px' }"
-        @click="goInfoPage(item)"
       >
         <div class="card-body">
-          <div class="image-area">
+          <div class="image-area" @click="goInfoPage(item)">
             <el-image
               v-if="item.cover"
               :src="item.cover.imageUrls[0].medium | replaceSmall"
@@ -40,6 +45,7 @@
             <el-image
               v-else
               class="image"
+              lazy
               fit="cover"
               src="https://pic.cheerfun.dev/40655.png?t=1590334915989"
             />
@@ -47,14 +53,17 @@
 
           <div class="text-area">
             <time class="time">{{ item.createTime.split("T")[0] }}</time>
-            <h3>{{ item.title }}</h3>
+            <h3 @click="goInfoPage(item)">{{ item.title }}</h3>
             <div>
-              <p>{{ item.caption }}</p>
-              <el-tag
-                v-for="tag in item.tagList"
-                :key="tag.tagName"
-                :disable-transitions="false"
-              >{{ tag.tagName }}</el-tag>
+              <p class="desc">{{ item.caption }}</p>
+              <p class="tag-list">
+                <el-tag
+                  v-for="tag in item.tagList"
+                  :key="tag.tagName"
+                  :disable-transitions="false"
+                  @click="clickTag(tag)"
+                >{{ tag.tagName }}</el-tag>
+              </p>
               <el-dropdown v-if="powerFlag" class="setting">
                 <span>
                   <i class="el-icon-setting" />
@@ -96,6 +105,14 @@ export default {
   watch: {},
   mounted() {},
   methods: {
+    clickTag(val) {
+      this.$router.push({
+        path: `/keywords`,
+        query: {
+          tag: val.tagName
+        }
+      });
+    },
     handleAddSuccess(e, flag) {
       this.handleStartCollect();
       if (flag === 2) {
@@ -166,15 +183,12 @@ export default {
       .image {
         transform: scale(1.1);
         pointer-events: none;
-        transition: all 0.6s;
       }
     }
     &:in-range {
       transform: scale(1.1);
     }
-    .el-tag + .el-tag {
-      margin-left: 10px;
-    }
+
     .image-area {
       width: 400px;
       height: 300px;
@@ -183,6 +197,7 @@ export default {
       .image {
         width: 100%;
         height: 100%;
+        transition: all 0.6s linear;
       }
     }
     .text-area {
@@ -198,12 +213,20 @@ export default {
           color: @color-main;
         }
       }
-      p {
+      .desc {
         display: -webkit-box;
         -webkit-box-orient: vertical;
         -webkit-line-clamp: 3;
-        height: 80px;
+        height: 60px;
         overflow: hidden;
+      }
+      .tag-list {
+        display: flex;
+        flex-wrap: wrap;
+        height: 80px;
+        .el-tag + .el-tag {
+          margin-left: 10px;
+        }
       }
     }
   }
@@ -220,7 +243,7 @@ export default {
     gap: 24px;
     flex-wrap: wrap;
     // grid-template-columns: repeat(auto-fit, 800px);
-    grid-template-columns: repeat(auto-fill, 600px);
+    grid-template-columns: repeat(auto-fill, 500px);
     -webkit-box-pack: center;
     justify-content: center;
     margin: 20px;
