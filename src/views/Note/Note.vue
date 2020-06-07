@@ -62,7 +62,7 @@ export default {
             '将提供以下有限的服务：pixiv日排行的浏览与免费高级会员热门排序搜索。',
             '她希望能在茫茫互联网留下一些存在的痕迹，翘首以盼大家能通过各大搜索引擎访问她（将有助于提升她的搜索排名），搜索关键词：Pixiv、pixiv、P站、p站。',
             '前端项目地址 https://github.com/cheer-fun/pixivic-pc',
-            '后端项目地址 https://github.com/cheer-fun/pixivic-web-backend'
+            '后端项目地址 https://github.com/OysterQAQ/Pixiv-Illustration-Collection-Backend'
           ]
         },
         {
