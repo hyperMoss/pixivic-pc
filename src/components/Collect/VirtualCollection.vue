@@ -1,3 +1,6 @@
+<!--
+ * TODO 重构 解决性能问题
+ -->
 <style lang="stylus" scoped>
 .vue-virtual-collection
   overflow scroll

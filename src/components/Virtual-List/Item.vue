@@ -13,7 +13,6 @@
         :style="{opacity}"
         @load="handleLoad"
       >
-      <div class="img-filter" />
       <div
         v-if="column.pageCount > 1"
         class="count"
@@ -87,7 +86,6 @@ no-wrap() {
 
 .item {
   box-sizing: border-box;
-  position: absolute;
   top: 0;
   left: 0;
   width: 100%;
@@ -115,16 +113,6 @@ no-wrap() {
       transition: opacity 0.3s, transform 0.3s ease;
       object-fit: cover;
       border-radius: 16px;
-    }
-
-    .img-filter {
-      position: absolute;
-      top: 0;
-      right: 0;
-      bottom: 0;
-      left: 0;
-      background: rgba(0, 0, 0, 0.03);
-      border-radius: 8px;
     }
   }
 
