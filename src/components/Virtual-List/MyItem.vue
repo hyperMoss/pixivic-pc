@@ -1,8 +1,8 @@
 <!--
  * @Author: gooing
  * @since: 2020-03-30 22:38:24
- * @lastTime: 2020-06-06 00:50:27
- * @LastAuthor: gooing
+ * @lastTime: 2020-06-17 22:29:06
+ * @LastAuthor: Dongzy
  * @FilePath: \pixiciv-pc\src\components\Virtual-List\MyItem.vue
  * @message:
  -->
@@ -108,15 +108,6 @@ export default {
       border-radius: 16px;
     }
 
-    .img-filter {
-      position: absolute;
-      top: 0;
-      right: 0;
-      bottom: 0;
-      left: 0;
-      background: rgba(0, 0, 0, 0.03);
-      border-radius: 8px;
-    }
   }
   &:hover {
     img {
