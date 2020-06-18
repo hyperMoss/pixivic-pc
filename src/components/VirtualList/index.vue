@@ -1,34 +1,98 @@
 <!--
  * @Author: Dongzy
  * @since: 2020-06-17 23:01:27
- * @lastTime: 2020-06-18 07:43:17
+ * @lastTime: 2020-06-18 22:54:46
  * @LastAuthor: Dongzy
  * @FilePath: \pixiciv-pc\src\components\VirtualList\index.vue
- * @message: 
---> 
+ * @message:
+-->
 
 <template>
   <div class="index">
     <div
-      class="container"
       ref="container"
+      class="container"
     />
   </div>
 </template>
 
 <script>
+import dayjs from 'dayjs';
 import mixin from './mixin';
 import { getScrollTop, getScrollHeight, getWindowHeight } from './tool';
+import { randomColor, replaceBigImg, replaceSmallImg } from '@/util';
 export default {
-  mixins: [mixin],
   name: 'VirtualList',
+  mixins: [mixin],
+  props: {
+    listWidth: {
+      type: Number,
+      default: 0
+    },
+    lsitHeight: {
+      type: Number,
+      default: 0
+    },
+    list: {
+      type: Array,
+      default() {
+        return [];
+      }
+    },
+    identifier: {
+      type: Number,
+      default: +new Date()
+    }
+  },
   data() {
-    return {};
+    return {
+      columnHeight: []
+    };
   },
   computed: {},
   components: {},
-  watch: {},
+  watch: {
+    list: {
+      handler(val, old) {
+        try {
+          if (val.length === 0) {
+            this.columnHeight = new Array(this.column).fill(0);
+          } else {
+            this.handleList(val);
+          }
+        } catch (error) {
+          console.log(error, '*******');
+        }
+      }
+    },
+  },
+  mounted() {
+    this.init();
+  },
   methods: {
+    // 处理数据
+    handleList(list) {
+      for (let i = 0; i < list.length; i++) {
+        try {
+          const tmp = list[i];
+          if (tmp._handled) { continue; }
+          tmp['_handled'] = true;
+          tmp['src'] = replaceSmallImg(tmp.imageUrls[0].medium);
+          tmp['setu'] = !!((tmp.xrestrict === 1 || tmp.sanityLevel >= 6)) && this.user.username !== 'pixivic';
+          tmp['style'] = {
+            backgroundColor: randomColor()
+          };
+          tmp['itemHeight'] = parseInt(per * this.width);
+          tmp['avatarSrc'] = replaceBigImg(tmp.artistPreView.avatar);
+          tmp['createDate'] = dayjs(tmp.createDate).format('YYYY-MM-DD');
+          tmp['originalSrc'] = replaceBigImg(tmp.imageUrls[0].original);
+          tmp['isad'] = tmp.type === 'ad_image' || tmp.type === 'donate';
+        } catch (error) {
+          console.log(error);
+        }
+      }
+    },
+    // 初始化
     init() {
       //获取组件父级宽
       const contWidth = this.$refs['container'].clientWidth;
@@ -51,8 +115,8 @@ export default {
       return this.getNewImgData(this.requestImgNum).then(res => {
         for (let i = 0; i < res.data.length; i++) {
           //获取机器人id
-          let robotId = this.generatorId({ i, getNoShowRobotListNum });
-          let beyond = this.positioning(res.data[i], robotId);
+          const robotId = this.generatorId({ i, getNoShowRobotListNum });
+          const beyond = this.positioning(res.data[i], robotId);
           if (beyond) {
             break;
           }
@@ -64,7 +128,7 @@ export default {
      */
     positioning(element, robotId) {
       //屏幕总数
-      let screenAllNum = this.screenAllNum;
+      const screenAllNum = this.screenAllNum;
       //定位与列数一直时 换行
       this.state.positioningNum == this.maxcolumns ? (this.state.positioningNum = 0) : null;
       //图片原始宽度
@@ -90,7 +154,7 @@ export default {
       const topNum = this.robotTopLocation[minTopNum];
       this.upContainerHeight(topNum);
       //获取所放置的屏幕号 下标
-      let srceenIng = screenAllNum - 1;
+      const srceenIng = screenAllNum - 1;
       //创建
       this.addlocationInfo(element, robotId, srceenIng);
       //增长
@@ -154,9 +218,6 @@ export default {
 
       return domInfo ? domInfo.robotid : this.performanceId();
     },
-  },
-  mounted() {
-    this.init();
   },
 };
 </script>

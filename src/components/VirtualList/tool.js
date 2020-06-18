@@ -1,16 +1,16 @@
 /*
  * @Author: Dongzy
  * @since: 2020-06-17 23:05:08
- * @lastTime: 2020-06-18 00:27:47
+ * @lastTime: 2020-06-18 20:28:29
  * @LastAuthor: Dongzy
  * @FilePath: \pixiciv-pc\src\components\VirtualList\tool.js
  * @message:
  */
 
 // 滚动条在Y轴上的滚动距离
-
 function getScrollTop() {
-  let bodyScrollTop = 0; let documentScrollTop = 0;
+  let bodyScrollTop = 0;
+  let documentScrollTop = 0;
 
   if (document.body) {
     // 视窗的纵向距离
@@ -37,4 +37,4 @@ function getWindowHeight() {
     : document.documentElement.clientHeight;
 }
 
-export { getScrollTop, getScrollHeight, getWindowHeight };
+export { getScrollTop, getScrollHeight, getWindowHeight, randomColor };
