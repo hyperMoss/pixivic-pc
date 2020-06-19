@@ -3,7 +3,7 @@
     v-if="!column.setu"
     class="item"
     style="postition:absolute"
-    :style="{width:positionInfo.domWidth,left:positionInfo.left,top:positionInfo.top}"
+    :style="{width:column.domWidth,left:column.left,top:column.top,height:column.domHeight}"
     @click="goDetail"
   >
     <div
@@ -12,8 +12,6 @@
     >
       <img
         :src="column.src"
-        :style="{opacity}"
-        @load="handleLoad"
       >
       <div
         v-if="column.pageCount > 1"
@@ -48,14 +46,9 @@ export default {
       type: Object,
       required: true
     },
-    positionInfo: {
-      type: Object,
-      required: true
-    }
   },
   data() {
     return {
-      opacity: 0
     };
   },
   methods: {
@@ -64,11 +57,6 @@ export default {
     },
     handleLike() {
       this.$emit('handleLike', this.column);
-    },
-    handleLoad() {
-      if (!this.column.setu) {
-        this.opacity = 1;
-      }
     },
     goDetail() {
       if (this.column.isad) {

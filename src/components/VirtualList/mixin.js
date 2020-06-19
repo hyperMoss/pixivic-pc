@@ -37,7 +37,7 @@ export default {
        * value 元素队列
        */
       locationInfo: {
-        "0": []
+        '0': []
       },
 
       robotContainer: [],
@@ -104,7 +104,7 @@ export default {
     /**
      * 增加当前加载的屏幕队
      */
-    addLoadingScreen(screenAllNum) {
+    addloadingScreen(screenAllNum) {
       const subscript = screenAllNum - 1;
 
       //最多显示4个屏幕
@@ -163,7 +163,6 @@ export default {
     addlocationInfo(data) {
       const { robotId, screenNumIng, imgData } = data;
       const {
-        src,
         width,
         height,
         left,
@@ -174,7 +173,6 @@ export default {
       } = imgData;
       this.locationInfo[screenNumIng.toString()].push({
         robotId: robotId,
-        img: src,
         owidth: width,
         oheight: height,
         left: left,
@@ -213,7 +211,7 @@ export default {
     /**
      * 添加位置信息
      */
-    addLocationInfoNum(data) {
+    addlocationInfoNum(data) {
       this.$set(this.locationInfo, data.toString(), []);
       return this.locationInfo;
     }

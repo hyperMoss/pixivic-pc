@@ -37,4 +37,4 @@ function getWindowHeight() {
     : document.documentElement.clientHeight;
 }
 
-export { getScrollTop, getScrollHeight, getWindowHeight, randomColor };
+export { getScrollTop, getScrollHeight, getWindowHeight };
