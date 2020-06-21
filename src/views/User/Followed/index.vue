@@ -121,7 +121,7 @@ export default {
 
 <style scoped lang="less">
 .followed {
-  max-height: calc(~"100vh - 60px");
+
   height: calc(~"100vh - 60px");
   overflow: hidden;
   background: #fff;

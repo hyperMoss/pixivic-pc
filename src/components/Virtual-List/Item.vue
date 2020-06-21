@@ -25,9 +25,9 @@
           :like="column.isLiked"
           @handleLike="handleLike"
         />
-        <el-dropdown-menu slot="dropdown">
+        <!-- <el-dropdown-menu slot="dropdown">
           <el-dropdown-item @click.native="handleCollect">加到画集</el-dropdown-item>
-        </el-dropdown-menu>
+        </el-dropdown-menu> -->
       </el-dropdown>
     </div>
   </div>
@@ -77,7 +77,7 @@ export default {
 };
 </script>
 
-<style lang="stylus" scope>
+<style lang="stylus" scoped>
 no-wrap() {
   text-overflow: ellipsis;
   overflow: hidden;

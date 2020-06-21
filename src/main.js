@@ -1,8 +1,8 @@
 /*
  * @Author: gooing
  * @since: 2020-01-26 11:47:00
- * @lastTime: 2020-05-25 22:53:00
- * @LastAuthor: gooing
+ * @lastTime: 2020-06-20 11:28:16
+ * @LastAuthor: Dongzy
  * @FilePath: \pixiciv-pc\src\main.js
  * @message:
  */
@@ -20,10 +20,10 @@ import App from './App.vue';
 import router from './router.js';
 import store from './store/';
 import './styles/reset.less';
-import './styles/public-style.less'
+import './styles/public-style.less';
 import VuePageStack from 'vue-page-stack';
 import ElementUI from 'element-ui';
-// import 'element-ui/lib/theme-chalk/index.css';
+import 'element-ui/lib/theme-chalk/index.css';
 import { replaceBigImg, replaceSmallImg } from '@/util';
 Vue.config.productionTip = false;
 Vue.use(VuePageStack, { router, keyName: 'VNK' });

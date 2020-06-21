@@ -1,49 +1,53 @@
 <!--
  * @Author: Dongzy
  * @since: 2020-06-17 23:01:27
- * @lastTime: 2020-06-18 22:54:46
+ * @lastTime: 2020-06-21 23:50:06
  * @LastAuthor: Dongzy
  * @FilePath: \pixiciv-pc\src\components\VirtualList\index.vue
  * @message:
 -->
 
 <template>
-  <div class="index">
+  <div ref="warp" class="index" @scroll="scrollAction">
+    <slot />
     <div
       ref="container"
       class="container"
-      :style="{height:containerHeight}"
+      style="position: relative;width: 1000px;;"
+      :style="{height:containerHeight +'px'}"
     >
-      <Item v-for="item in renderRobot" :key="item.id" :column="item" @handleLike="handleLike" @handle-collect="setCollect" />
-    </div>
-    <slot />
-    <infinite-loading :identifier="identifier" @infinite="infiniteHandler">
-      <div slot="no-more" />
-      <div slot="no-results" style="marginTop: 50px;">
+      <template v-for="item in renderList">
+        <Item v-if="item.id" :key="item.id" :column="item" @handleLike="handleLike" @handle-collect="setCollect" />
+      </template>
+
+      <div v-if="isDone" style="marginTop: 50px;">
         <svg font-size="160" class="icon" aria-hidden="true">
           <use xlink:href="#pickongtai1" />
         </svg>
         <p style="color: #E3F2FA; font-size: 20px;">没有内容</p>
       </div>
-    </infinite-loading>
+    </div>
   </div>
 </template>
 
 <script>
-import InfiniteLoading from 'vue-infinite-loading';
+import { mapGetters } from 'vuex';
 import dayjs from 'dayjs';
 import mixin from './mixin';
 import Item from './Item';
-import { getScrollTop, getScrollHeight, getWindowHeight } from './tool';
 import { randomColor, replaceBigImg, replaceSmallImg } from '@/util';
 export default {
   name: 'VirtualList',
-  components: { Item, InfiniteLoading },
+  components: { Item },
   mixins: [mixin],
   props: {
     listWidth: {
       type: Number,
       default: 0,
+    },
+    getDataAjax: {
+      type: Function,
+      required: true
     },
     lsitHeight: {
       type: Number,
@@ -62,122 +66,87 @@ export default {
   },
   data() {
     return {
-      columnHeight: [],
+      isDone: false
     };
   },
   computed: {
-    renderRobot() {
+    ...mapGetters(['user']),
+    renderList() {
       const loadingScreen = this.loadingScreen;
 
-      let robotList = null;
+      let targetList = null;
       //遍历当前应该显示的屏幕下标号
       loadingScreen.forEach(element => {
         //通过屏幕号码获取信息
         const locationInfo = this.locationInfo[element.toString()];
-
         //排除undefined
         if (!locationInfo) {
           return;
         }
-        robotList = robotList ? robotList.concat(locationInfo) : locationInfo;
+        targetList = targetList ? targetList.concat(locationInfo) : locationInfo;
       });
-      return robotList;
-    }
-  },
-  watch: {
-    list: {
-      handler(val, old) {
-        try {
-          if (val.length === 0) {
-            this.columnHeight = new Array(this.column).fill(0);
-          } else {
-            this.handleList(val);
-          }
-        } catch (error) {
-          console.log(error, '*******');
-        }
-      },
+      return targetList;
     },
   },
+  watch: {},
   mounted() {
     this.init();
   },
   methods: {
-    handleLike() {},
+    // 点击收藏
+    handleLike(data) {
+      if (!this.user.id) {
+        this.$message.closeAll();
+        this.$message.info('请先登录');
+        return;
+      }
+      const flag = data.isLiked;
+      const params = {
+        userId: this.user.id,
+        illustId: data.id,
+        username: this.user.username
+      };
+      if (!flag) {
+        this.$set(data, 'isLiked', true); // 先强制视图更新 防止网络延迟不动
+        this.$store.dispatch('handleCollectIllust', params)
+          .then(() => {})
+          .catch(() => {
+            this.$set(data, 'isLiked', false); // 失败的话在改回去
+            this.$message.closeAll();
+            this.$message.error('收藏失败');
+          });
+      } else {
+        this.$set(data, 'isLiked', false);
+        this.$store.dispatch('deleteCollectIllust', params)
+          .then(() => {})
+          .catch(() => {
+            this.$set(data, 'isLiked', true);
+            this.$message.closeAll();
+            this.$message.error('取消收藏失败');
+          });
+      }
+    },
     setCollect() {},
     //显示屏幕号 change
-    changeScreen(screenNumIng) {
+    localChangeScreen(screenNumIng) {
       //update oldScreen
-      this.changeOldNum(this.numIng);
+      this.updataOldScreen(this.numIng);
 
       //update screenIng
-      this.changeScreen(screenNumIng);
+      this.updateScreen(screenNumIng);
 
       if (screenNumIng > this.oldNum) {
         const newShowScreenNum = screenNumIng + 2;
 
         (this.loadingScreen.indexOf(newShowScreenNum) === -1)
-          ? this.downChange(screenNumIng)
+          ? this.changeDownChange(screenNumIng)
           : null;
       } else if (screenNumIng < this.oldNum) {
         const newShowScreenNum = screenNumIng - 2;
 
         (this.loadingScreen.indexOf(newShowScreenNum) === -1)
-          ? this.upChange(screenNumIng)
+          ? this.changeUpChange(screenNumIng)
           : null;
-      }
-    },
-    // 触发加载
-    infiniteHandler($state) {
-      const windowHeight = getWindowHeight();
-
-      const scrollTop = getScrollTop() + windowHeight;
-
-      const screenNumIng = Math.floor(scrollTop / windowHeight) - 1;
-
-      if (screenNumIng !== this.numIng) {
-        this.changeScreen(screenNumIng);
-      }
-
-      if (scrollTop === getScrollHeight()) {
-        //增加下一个屏幕的元素队列
-        this.addlocationInfoNum(this.screenAllNum);
-
-        //增加屏幕
-        this.addScreen();
-
-        //增加当前加载的屏幕队
-        this.addloadingScreen(this.screenAllNum);
-        this.$emit('infinite', $state);
-      }
-    },
-    // 处理数据
-    handleList(list) {
-      for (let i = 0; i < list.length; i++) {
-        try {
-          const tmp = list[i];
-          const robotId = tmp.id;
-          if (tmp['_handled']) {
-            continue;
-          } else {
-            tmp['src'] = replaceSmallImg(tmp.imageUrls[0].medium);
-            tmp['setu'] = false;
-            tmp['style'] = {
-              backgroundColor: randomColor(),
-            };
-            tmp['avatarSrc'] = replaceBigImg(tmp.artistPreView.avatar);
-            tmp['createDate'] = dayjs(tmp.createDate).format('YYYY-MM-DD');
-            tmp['originalSrc'] = replaceBigImg(tmp.imageUrls[0].original);
-            tmp['isad'] = tmp.type === 'ad_image' || tmp.type === 'donate';
-            tmp['_handled'] = true;
-          }
-          const beyond = this.positioning(tmp, robotId);
-          if (beyond) {
-            break;
-          }
-        } catch (error) {
-          console.log(error, '!!!!!!!!!!!');
-        }
       }
     },
     // 初始化
@@ -194,92 +163,127 @@ export default {
       this.setLocationLeft();
 
       //定位初始化top值
-      this.initTop(this.maxcolumns);
+      this.initTop(this.maxColumns);
+      // this.$refs['warp'].addEventListener('scroll', this.scrollAction, false);
+      this.getNewImg();
+    },
+    debounceScroll($event) { this.scrollAction($event); },
+    async scrollAction($event) {
+      const windowHeight = this.$refs['warp'].clientHeight;
 
-      // window.onscroll = () => this.scrollAction();
-      // this.getNewImg().then(window.onscroll = () => this.scrollAction());
+      const scrollTop = $event.target.scrollTop + windowHeight;
+
+      const screenNumIng = (Math.floor(scrollTop / windowHeight)) - 1;
+      // console.log(screenNumIng, this.numIng, this.loadingScreen, '**', scrollTop, this.$refs['container'].clientHeight, 'look');
+      if (screenNumIng !== this.numIng) {
+        this.localChangeScreen(screenNumIng);
+      }
+      if (scrollTop === this.$refs['container'].clientHeight && !this.isDone) {
+        //增加下一个屏幕的元素队列
+        await this.addlocationInfoNum(this.screenAllNum);
+        //增加屏幕
+        await this.addScreen();
+        //增加当前加载的屏幕队
+        await this.addloadingScreen(this.screenAllNum);
+        // 请求数据
+        this.getNewImg();
+      }
     },
 
     /**
      * 获取新资源
      */
-    getNewImg(getNoShowRobotListNum) {
-      return this.$api.rank
-        .getRank({
-          page: this.page++,
-          date: this.date,
-          mode: this.mode
-        }).then(res => {
-          for (let i = 0; i < res.data.length; i++) {
-            const beyond = this.positioning(res.data[i], robotId);
-
-            if (beyond) {
+    getNewImg() {
+      return this.getDataAjax().then(res => {
+        if (!res.data.data) {
+          this.isDone = true;
+          this.screenAllNum--;
+        } else {
+          for (let i = 0; i < res.data.data.length; i++) {
+            const boyend = this.positioning(res.data.data[i], res.data.data[i].id);
+            if (boyend) {
               break;
             }
           }
-        });
+        }
+      });
     },
     /**
      * 增加的时候开始 定位
      */
-    positioning(element, robotId) {
+    positioning(element, targetId) {
       try {
-        //屏幕总数
         const screenAllNum = this.screenAllNum;
         //定位与列数一直时 换行
-        this.positioningNum === this.maxcolumns ? (this.positioningNum = 0) : null;
+        this.positioningNum === this.maxColumns ? (this.positioningNum = 0) : null;
         //图片原始宽度
         const imgWidth = element.width || 200;
         //列宽限定
         const columnsWidth = this.columnsWidth;
         //计算出图片在进入dom后的高度
         const imgHeight = (columnsWidth / imgWidth) * element.height;
-
-        element.domHeight = imgHeight;
+        element.domHeight = imgHeight - 10;
         //宽
-        element.domWidth = columnsWidth;
-        const robotTopLocation = this.robotTopLocation;
+        element.domWidth = columnsWidth - 10;
+        const targetTopLocation = this.targetTopLocation;
         //获取top数组中最小的座位下标
-        const minTopNum = robotTopLocation.indexOf(Math.min.apply(Math, robotTopLocation));
+        const minTopNum = targetTopLocation.indexOf(Math.min.apply(Math, targetTopLocation));
         //获取top值
-        element.top = robotTopLocation[minTopNum];
+        element.top = Math.floor(targetTopLocation[minTopNum]);
         //获取left值
         element.left = this.locationLeft[minTopNum];
         //位列一行中第几位
         element.columnsNum = minTopNum;
         //设定下一个同列图片的top
         this.setTop(minTopNum, imgHeight);
-        const topNum = this.robotTopLocation[minTopNum];
-        this.updateContainerHeight(topNum);
+        const topNum = this.targetTopLocation[minTopNum];
+        this.updatecontainerHeight(topNum);
         //获取所放置的屏幕号 下标
         const srceenIng = screenAllNum - 1;
+        if (!element['_handled']) {
+          element['src'] = replaceSmallImg(element.imageUrls[0].medium);
+          element['setu'] = false;
+          element['style'] = {
+            backgroundColor: randomColor(),
+          };
+          element['id'] = targetId;
+          element['avatarSrc'] = replaceBigImg(element.artistPreView.avatar);
+          element['createDate'] = dayjs(element.createDate).format('YYYY-MM-DD');
+          element['originalSrc'] = replaceBigImg(element.imageUrls[0].original);
+          if (element.type === 'ad_image' || element.type === 'donate') {
+            element['isad'] = true;
+            element['id'] = element.id + Date.now().toString();
+          }
+          element['_handled'] = true;
+        }
         //创建
-        this.addlocationInfo({ imgData: element, robotId, screenNumIng: srceenIng });
+        this.addlocationInfo({ imgData: element, screenNumIng: srceenIng });
         //增长
         this.positioningNum++;
         //top大于当前屏幕高度 则增加屏幕
         if (element.top > this.windowViewHeight * screenAllNum) {
-        //超出高度 则不管了
-          return 'beyond';
+          //超出高度 则不管了
+          return true;
         }
       } catch (error) {
         console.log(error, '???????');
       }
     },
 
-    scrollAction() {
-
-    },
   }
 };
 </script>
 
 <style scoped lang="less">
 .container {
-  width: 100%;
-  position: relative
+
 }
 .index{
-  width:100%;
+  height: 100%;
+  width: 100%;
+  display:flex;
+  position: relative;
+  overflow-y: auto;
+  justify-content: center;
 }
 </style>

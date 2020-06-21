@@ -1,20 +1,20 @@
 <!--
  * @Author: gooing
  * @since: 2020-01-26 11:47:00
- * @lastTime: 2020-05-25 22:50:30
- * @LastAuthor: gooing
+ * @lastTime: 2020-06-21 23:35:40
+ * @LastAuthor: Dongzy
  * @FilePath: \pixiciv-pc\src\App.vue
  * @message:
  -->
 <template>
   <div id="app">
-    <el-container class="page-container">
+    <el-container class="page-container" style="overflow: hidden;">
       <!-- 左边栏开始 -->
       <el-aside style="background-color: rgb(238, 241, 246)" width="65px">
         <left-side />
       </el-aside>
       <!-- 左边栏结束 -->
-      <el-container>
+      <el-container style="overflow: hidden;">
         <!-- 标题栏开始 -->
         <el-header>
           <header-bar />
@@ -23,7 +23,7 @@
         <!-- 主要页面开始 -->
         <el-main class="window-view">
           <vue-page-stack>
-            <router-view :key="key" />
+            <router-view :key="key" style="overflow-y: auto;max-height: calc(~'100vh - 60px');" />
           </vue-page-stack>
         </el-main>
         <!-- 主要页面结束 -->
@@ -82,7 +82,7 @@ export default {
   }
 }
 .window-view {
-  min-height: calc(~"100vh - 60px");
+  height: calc(~"100vh - 60px");
   width: calc(~"100vw - 65px");
   overflow: auto;
   background: #fff;

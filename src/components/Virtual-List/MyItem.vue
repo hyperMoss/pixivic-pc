@@ -1,7 +1,7 @@
 <!--
  * @Author: gooing
  * @since: 2020-03-30 22:38:24
- * @lastTime: 2020-06-17 22:29:06
+ * @lastTime: 2020-06-21 12:36:13
  * @LastAuthor: Dongzy
  * @FilePath: \pixiciv-pc\src\components\Virtual-List\MyItem.vue
  * @message:
@@ -22,11 +22,6 @@
           加载中<span class="dot">...</span>
         </div>
       </el-image>
-      <div v-else class="setu-filter">
-        <svg font-size="50" class="icon" aria-hidden="true">
-          <use xlink:href="#picsuo2" />
-        </svg>
-      </div>
       <div v-if="illust.pageCount > 1" class="count">
         <img src="../../assets/images/count.svg">
         <span>{{ illust.pageCount }}</span>
@@ -109,11 +104,6 @@ export default {
     }
 
   }
-  &:hover {
-    img {
-      transform: scale(1.3);
-    }
-  }
    .count {
     position: absolute;
     display: inline-block;
@@ -137,17 +127,6 @@ export default {
       line-height: 20px;
     }
 
-  }
-  .setu-filter {
-    position: absolute;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
-    width: 50px;
-    height: 50px;
-    margin: auto;
-    z-index: 2;
   }
 
 }

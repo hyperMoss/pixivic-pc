@@ -110,7 +110,7 @@ export default {
 
 <style scoped lang="less">
 .collection {
-  max-height: calc(~"100vh - 60px");
+
   overflow-y: auto;
   background: #fff;
   .header {

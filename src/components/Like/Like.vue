@@ -150,7 +150,7 @@ export default {
   position: absolute;
   bottom: -10px;
   right: -5px;
-
+  will-change: transform;
   svg {
     width: 50px;
     overflow: visible;

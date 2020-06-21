@@ -62,7 +62,7 @@ export default {
     };
   },
   computed: {
-    ...mapGetters(['user', 'likeStatus', 'showTab']),
+    ...mapGetters(['user', 'likeStatus']),
     listMap() {
       const map = new Map();
       for (const item of this.list) {

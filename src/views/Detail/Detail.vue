@@ -1,8 +1,8 @@
 <!--
  * @Author: gooing
  * @since: 2020-02-02 14:52:15
- * @lastTime: 2020-06-06 00:51:40
- * @LastAuthor: gooing
+ * @lastTime: 2020-06-21 23:37:26
+ * @LastAuthor: Dongzy
  * @FilePath: \pixiciv-pc\src\views\Detail\Detail.vue
  * @message:
  -->

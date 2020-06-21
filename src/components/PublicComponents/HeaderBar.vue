@@ -1,8 +1,8 @@
 <!--
  * @Author: gooing
  * @since: 2020-01-24 22:48:37
- * @lastTime: 2020-05-27 22:28:49
- * @LastAuthor: gooing
+ * @lastTime: 2020-06-21 23:27:22
+ * @LastAuthor: Dongzy
  * @FilePath: \pixiciv-pc\src\components\PublicComponents\HeaderBar.vue
  * @message:
  -->
@@ -121,10 +121,10 @@ export default {
           name: '收藏',
           handler: 'bookmarked'
         },
-        {
-          name: '画集',
-          handler: 'mycollect'
-        },
+        // {
+        //   name: '画集',
+        //   handler: 'mycollect'
+        // },
         {
           name: '聚光灯',
           handler: 'spotLight'

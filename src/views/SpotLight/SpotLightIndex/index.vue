@@ -94,7 +94,7 @@ export default {
 
 <style scoped lang="less">
 .index {
-  max-height: calc(~"100vh - 60px");
+
   overflow-y: scroll;
   background: #fff;
   .image {
