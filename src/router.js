@@ -1,7 +1,7 @@
 /*
  * @Author: gooing
  * @since: 2020-01-26 11:47:00
- * @lastTime: 2020-04-07 23:22:28
+ * @lastTime: 2020-05-27 22:30:44
  * @LastAuthor: gooing
  * @FilePath: \pixiciv-pc\src\router.js
  * @message:
@@ -68,7 +68,8 @@ const routes = [
     component: require('./views/QQauth/QQauth.vue').default
   },
   ...require('./views/SpotLight').default, // A 业务路由入口
-  ...require('./views/User').default // A 业务路由入口
+  ...require('./views/User').default, // A 业务路由入口
+  ...require('./views/Collection/index').default // A 业务路由入口
 ];
 
 const router = new VueRouter({

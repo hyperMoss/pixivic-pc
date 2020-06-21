@@ -1,7 +1,7 @@
 <!--
  * @Author: gooing
  * @since: 2020-02-11 12:29:14
- * @lastTime: 2020-04-10 12:33:21
+ * @lastTime: 2020-06-07 23:34:23
  * @LastAuthor: gooing
  * @FilePath: \pixiciv-pc\src\views\Artist\Artist.vue
  * @message:
@@ -14,7 +14,7 @@
         :identifier="identifier"
         :list="type === 'illust' ? IllustList : mangaList"
         @infinite="infinite"
-      ><dir v-if="artistDetail" class="artist_property">
+      ><div v-if="artistDetail" class="artist_property">
         <div class="artist-base">
           <div class="artist-one">
             <div class="artist-name">
@@ -87,7 +87,7 @@
             </el-radio-group>
           </div>
         </div>
-      </dir>
+      </div>
       </virtual-list>
     </keep-alive>
   </div>

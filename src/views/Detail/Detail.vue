@@ -1,8 +1,8 @@
 <!--
  * @Author: gooing
  * @since: 2020-02-02 14:52:15
- * @lastTime: 2020-05-20 01:02:49
- * @LastAuthor: gooing
+ * @lastTime: 2020-06-21 23:37:26
+ * @LastAuthor: Dongzy
  * @FilePath: \pixiciv-pc\src\views\Detail\Detail.vue
  * @message:
  -->
@@ -81,14 +81,14 @@
           </div>
         </figcaption>
         <figcaption class="detail-content__comment">
-          <Comment :comments="commentList" :pid="pid" />
+          <Comment :pid="pid" />
         </figcaption>
         <figcaption class="detail-content__relate">
           <h2 class="relate-title">相关作品</h2>
           <div>
             <ul v-infinite-scroll="reqRelatedIllust" infinite-scroll-immediate class="relate-info" infinite-scroll-distance="10" infinite-scroll-delay="1000">
               <li v-for="item in relatedPictureList" :key="item.id">
-                <Item :illust="item" @handleLike="handleLike" />
+                <Item :illust="item" @handleLike="handleLike" @handle-collect="setCollect" />
                 <!-- <el-image :src="url" lazy>
                 <div slot="error" class="image-slot">
                   <i class="el-icon-picture-outline" />
@@ -162,7 +162,6 @@ export default {
   },
   data() {
     return {
-      commentList: [],
       page: 1,
       srcList: [],
       illustDetail: null,
@@ -198,20 +197,16 @@ export default {
       this.getIllustDetail();
     }
     this.bookmarkedUsers();
-    this.getCommentsList();
   },
   methods: {
-    // 等待后端分页处理
-    getCommentsList() {
-      this.$api.comment.getComments({
-        commentAppType: 'illusts',
-        commentAppId: this.pid
-      })
-        .then(res => {
-          if (res.status === 200) {
-            this.commentList = res.data.data || [];
-          }
-        });
+    // 打开弹窗
+    setCollect(column) {
+      if (!this.user.id) {
+        this.$message.closeAll();
+        this.$message.info('请先登录');
+        return;
+      }
+      this.$store.dispatch('setCollectBoolean', column);
     },
     // 处理图片数据
     handleData(data) {
@@ -249,7 +244,8 @@ export default {
         window.open(data.link);
       }
       this.$store.dispatch('setDetail', data);
-      this.$router.push(`/illusts/${data.id}`);
+      const routeUrl = this.$router.resolve(`/illusts/${data.id}`);
+      window.open(routeUrl.href, '_blank');
     },
     goArtistPage() {
       this.$router.push(`/artist/${this.illustDetail.artistId}`);
@@ -540,13 +536,5 @@ export default {
     }
   }
 }
-/deep/.image-slot {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
-  height: 100%;
-  background: #f5f7fa;
-  color: #909399;
-}
+
 </style>

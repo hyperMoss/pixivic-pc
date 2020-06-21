@@ -1,8 +1,8 @@
 <!--
  * @Author: gooing
  * @since: 2020-04-17 23:12:03
- * @lastTime: 2020-05-20 01:00:12
- * @LastAuthor: gooing
+ * @lastTime: 2020-06-21 23:33:01
+ * @LastAuthor: Dongzy
  * @FilePath: \pixiciv-pc\src\views\SpotLight\SpotLightIndex\InfoPage.vue
  * @message:
  -->
@@ -75,8 +75,7 @@ export default {
 
 <style scoped lang="less">
 .InfoPage {
-  max-height: calc(~"100vh - 60px");
-  overflow-y: scroll;
+
   background: #fff;
   .pic-list {
     list-style: none;
@@ -99,16 +98,5 @@ export default {
       width: 100%;
       max-width: 800px;
     }
-  }
-}
-/deep/.image-slot {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
-  height: 100%;
-  min-height: 300px;
-  background: #f5f7fa;
-  color: #909399;
-}
+  }}
 </style>

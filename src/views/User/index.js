@@ -1,7 +1,7 @@
 /*
  * @Author: gooing
  * @since: 2020-03-23 23:14:54
- * @lastTime: 2020-04-02 21:40:10
+ * @lastTime: 2020-06-07 23:37:24
  * @LastAuthor: gooing
  * @FilePath: \pixiciv-pc\src\views\User\index.js
  * @message:
@@ -22,8 +22,9 @@ export default [
     component: Followed
   },
   {
-    path: '/users/HomePage',
+    path: '/users/home-page/:userId',
     name: 'HomePage',
-    component: HomePage
+    component: HomePage,
+    props: true
   }
 ];

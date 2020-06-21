@@ -1,14 +1,14 @@
 <!--
  * @Author: gooing
  * @since: 2020-03-26 23:16:26
- * @lastTime: 2020-05-15 14:05:08
+ * @lastTime: 2020-05-24 12:35:49
  * @LastAuthor: gooing
  * @FilePath: \pixiciv-pc\src\views\User\Followed\index.vue
  * @message:
  -->
 <template>
   <div class="followed">
-    <artist-list v-if="artistList.length" :artist-list="artistList" @on-scroll="getFollowArtists" @follow-artist="follow" />
+    <artist-list v-if="artistList.length" :loading="loading" :artist-list="artistList" @on-scroll="getFollowArtists" @follow-artist="follow" />
     <div v-else style="margin: 50px auto 0; width:300px;text-align: center;">
       <svg font-size="160" class="icon" aria-hidden="true">
         <use xlink:href="#pickongtai1" />
@@ -38,7 +38,8 @@ export default {
       page: { page: 0, pageSize: 10 },
       artistList: [],
       listMap: new Map(),
-      height: 0
+      height: 0,
+      loading: false
     };
   },
   computed: {
@@ -64,6 +65,7 @@ export default {
     },
     // 获取关注列表
     getFollowArtists() {
+      this.loading = true;
       this.$api.user
         .getArtists({
           page: ++this.page.page,
@@ -71,6 +73,7 @@ export default {
           userId: this.user.id
         })
         .then(res => {
+          this.loading = false;
           const {
             data: { data }
           } = res;
@@ -82,6 +85,7 @@ export default {
               this.listMap.set(item.id, item);
             }
           }
+          // this.loading = false;
         });
     },
     follow(item) {
@@ -117,7 +121,7 @@ export default {
 
 <style scoped lang="less">
 .followed {
-  max-height: calc(~"100vh - 60px");
+
   height: calc(~"100vh - 60px");
   overflow: hidden;
   background: #fff;

@@ -1,8 +1,8 @@
 <!--
  * @Author: gooing
  * @since: 2020-01-24 22:48:37
- * @lastTime: 2020-05-02 23:05:09
- * @LastAuthor: gooing
+ * @lastTime: 2020-06-21 23:27:22
+ * @LastAuthor: Dongzy
  * @FilePath: \pixiciv-pc\src\components\PublicComponents\HeaderBar.vue
  * @message:
  -->
@@ -121,8 +121,12 @@ export default {
           name: '收藏',
           handler: 'bookmarked'
         },
+        // {
+        //   name: '画集',
+        //   handler: 'mycollect'
+        // },
         {
-          name: '专辑',
+          name: '聚光灯',
           handler: 'spotLight'
         },
         {
@@ -191,6 +195,9 @@ export default {
         case 'setting':
           this.setModal();
           break;
+        case 'mycollect':
+          this.toMycollect();
+          break;
         case 'logout':
           this.logout();
           break;
@@ -215,6 +222,13 @@ export default {
           userId: this.user.id
         }
       });
+    },
+    toMycollect() {
+      this.$router.push({
+        path: '/collect/mycollection',
+        query: {
+          userId: this.user.id
+        }});
     },
     // 跳转书签页
     toBookmarked() {
@@ -247,7 +261,9 @@ export default {
       this.$api.search
         .getKeyword(this.params.keyword)
         .then(({ data: { data }}) => {
-          this.keywords = data.keywordList || [];
+          if (data && data.keywordList) {
+            this.keywords = data.keywordList || [];
+          }
         });
     },
     // 搜索相关信息

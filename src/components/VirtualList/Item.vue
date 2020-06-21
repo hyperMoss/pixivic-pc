@@ -1,7 +1,8 @@
 <template>
   <div
-    v-if="!column.setu"
     class="item"
+    style="position: absolute;"
+    :style="{width:column.domWidth +'px',left:column.left+'px',top:column.top+'px',height:column.domHeight+'px'}"
     @click="goDetail"
   >
     <div
@@ -10,8 +11,6 @@
     >
       <img
         :src="column.src"
-        :style="{opacity}"
-        @load="handleLoad"
       >
       <div
         v-if="column.pageCount > 1"
@@ -45,11 +44,10 @@ export default {
     column: {
       type: Object,
       required: true
-    }
+    },
   },
   data() {
     return {
-      opacity: 0
     };
   },
   methods: {
@@ -58,11 +56,6 @@ export default {
     },
     handleLike() {
       this.$emit('handleLike', this.column);
-    },
-    handleLoad() {
-      if (!this.column.setu) {
-        this.opacity = 1;
-      }
     },
     goDetail() {
       if (this.column.isad) {
@@ -86,19 +79,13 @@ no-wrap() {
 
 .item {
   box-sizing: border-box;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  padding: 8px;
-  padding-bottom: 16px;
   overflow: hidden;
 
-  &:hover {
-    img {
-      transform: scale(1.3);
-    }
-  }
+  // &:hover {
+  //   img {
+  //     transform: scale(1.3);
+  //   }
+  // }
 
   .item-content {
     position: relative;

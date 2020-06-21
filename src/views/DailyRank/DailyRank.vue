@@ -1,16 +1,17 @@
 <!--
  * @Author: gooing
  * @since: 2020-01-28 23:11:51
- * @lastTime: 2020-04-01 22:05:09
- * @LastAuthor: gooing
+ * @lastTime: 2020-06-21 23:40:18
+ * @LastAuthor: Dongzy
  * @FilePath: \pixiciv-pc\src\views\DailyRank\DailyRank.vue
  * @message:
  -->
 <template>
   <div class="DailyRank">
     <virtual-list
-      :identifier="identifier"
-      :list="pictureList"
+      v-if="fatherMounted"
+      :key="identifier"
+      :get-data-ajax="getData"
       @infinite="infinite"
     >
       <el-popover
@@ -51,12 +52,13 @@
         </div>
       </el-popover>
     </virtual-list>
+
   </div>
 </template>
 
 <script>
 import dayjs from 'dayjs';
-import VirtualList from '@/components/Virtual-List/VirtualList';
+import VirtualList from '@/components/VirtualList/index';
 
 export default {
   name: 'DailyRank',
@@ -65,6 +67,7 @@ export default {
   },
   data() {
     return {
+      fatherMounted: false,
       modeFather: '0',
       modeList: [
         {
@@ -80,16 +83,18 @@ export default {
         {
           name: '漫画排行',
           children: [
-            { text: '日排行', value: 'day_manga' },
-            { text: '周排行', value: 'week_manga' },
-            { text: '月排行', value: 'month_manga' },
-            { text: '新秀周排行', value: 'week_rookie_manga' }
+            { name: '日排行', value: 'day_manga' },
+            { name: '周排行', value: 'week_manga' },
+            { name: '月排行', value: 'month_manga' },
+            { name: '新秀周排行', value: 'week_rookie_manga' }
           ]
         }
       ],
       page: 1,
       mode: 'day',
-      date: null,
+      date: dayjs(new Date())
+        .add(-3, 'days')
+        .format('YYYY-MM-DD'),
       pictureList: [],
       identifier: +new Date(),
       value2: '',
@@ -97,16 +102,14 @@ export default {
         disabledDate(time) {
           return time.getTime() > Date.now();
         }
-      }
+      },
     };
   },
   computed: {},
   watch: {},
   mounted() {
-    this.date = dayjs(new Date())
-      .add(-3, 'days')
-      .format('YYYY-MM-DD');
     localStorage.setItem('waterfull-column', 4);
+    this.fatherMounted = true;
   },
   methods: {
     infinite($state) {
@@ -127,6 +130,14 @@ export default {
     },
     changeData(e) {
       console.log(e);
+    },
+    getData() {
+      return this.$api.rank
+        .getRank({
+          page: this.page++,
+          date: this.date,
+          mode: this.mode
+        });
     },
     resetData() {
       this.page = 1;

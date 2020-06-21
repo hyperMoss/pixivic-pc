@@ -1,8 +1,8 @@
 <!--
  * @Author: gooing
  * @since: 2020-03-30 22:38:24
- * @lastTime: 2020-04-07 14:09:27
- * @LastAuthor: gooing
+ * @lastTime: 2020-06-21 12:36:13
+ * @LastAuthor: Dongzy
  * @FilePath: \pixiciv-pc\src\components\Virtual-List\MyItem.vue
  * @message:
  -->
@@ -22,16 +22,17 @@
           加载中<span class="dot">...</span>
         </div>
       </el-image>
-      <div v-else class="setu-filter">
-        <svg font-size="50" class="icon" aria-hidden="true">
-          <use xlink:href="#picsuo2" />
-        </svg>
-      </div>
       <div v-if="illust.pageCount > 1" class="count">
         <img src="../../assets/images/count.svg">
         <span>{{ illust.pageCount }}</span>
       </div>
-      <Like :like="illust.isLiked" @handleLike="handleLike" />
+
+      <el-dropdown>
+        <Like :like="illust.isLiked" @handleLike="handleLike" />
+        <el-dropdown-menu slot="dropdown">
+          <el-dropdown-item @click.native="handleCollect">加到画集</el-dropdown-item>
+        </el-dropdown-menu>
+      </el-dropdown>
     </div>
   </div>
 </template>
@@ -62,6 +63,9 @@ export default {
   watch: {},
   mounted() {},
   methods: {
+    handleCollect() {
+      this.$emit('handle-collect', this.column);
+    },
     handleLike() {
       this.$emit('handleLike', this.illust);
     },
@@ -70,7 +74,8 @@ export default {
         window.open(this.illust.link);
       } else {
         this.$store.dispatch('setDetail', this.illust);
-        this.$router.push(`/illusts/${this.illust.id}`);
+        const routeUrl = this.$router.resolve(`/illusts/${this.illust.id}`);
+        window.open(routeUrl.href, '_blank');
       }
     }
   }
@@ -98,20 +103,6 @@ export default {
       border-radius: 16px;
     }
 
-    .img-filter {
-      position: absolute;
-      top: 0;
-      right: 0;
-      bottom: 0;
-      left: 0;
-      background: rgba(0, 0, 0, 0.03);
-      border-radius: 8px;
-    }
-  }
-  &:hover {
-    img {
-      transform: scale(1.3);
-    }
   }
    .count {
     position: absolute;
@@ -136,17 +127,6 @@ export default {
       line-height: 20px;
     }
 
-  }
-  .setu-filter {
-    position: absolute;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
-    width: 50px;
-    height: 50px;
-    margin: auto;
-    z-index: 2;
   }
 
 }
