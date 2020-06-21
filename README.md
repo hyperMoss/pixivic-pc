@@ -1,24 +1,42 @@
 <!--
  * @Author: gooing
  * @since: 2020-02-02 14:59:46
- * @lastTime: 2020-04-03 09:39:34
- * @LastAuthor: gooing
+ * @lastTime: 2020-06-15 22:07:49
+ * @LastAuthor: Dongzy
  * @FilePath: \pixiciv-pc\README.md
  * @message:
  -->
 
-# pixivic-pc
+# Intro
 
-## 项目启动
+A simple pixiv picture tool website,power by vue ,vue-router,vuex
+
+## Project features
+
+- [ x ]  Waterfall Stream Module
+- [ x ]  Image Module
+- [ x ]  Artist Module
+- [ x ]  User Module
+- [ x ]  Comment Module
+- [ x ]  Search Module
+- [ x ]  Rank Module
+- [ x ]  Collection Module
+
+## Project start
+
+If you want to building this project ,you can:
 
 ```
-git clone ，npm install，npm run serve，npm run build 一把梭
+git clone https://github.com/cheer-fun/pixivic-pc.git
+cd pixivic-pc
 ```
 
-## 项目功能
+```
+npm install，
+npm run serve
+npm run build 
+```
 
-自己探索
+## Note
 
-## bug
-
-探索，然后挂 issue
+If your want some feature or find some bugs,welcome to create issuse ~ 

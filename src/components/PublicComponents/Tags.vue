@@ -64,6 +64,8 @@ export default {
   &::-webkit-scrollbar {
     display: none;
   }
+  scrollbar-width: none;
+  -ms-overflow-style: none;
 
   .tags-item {
     display: flex;
