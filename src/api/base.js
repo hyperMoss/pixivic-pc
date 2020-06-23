@@ -44,7 +44,9 @@ instance.interceptors.response.use(
       // 登录过期
       cookie.remove('jwt');
       localStorage.removeItem('user');
-      window.location.href = '/';
+      const message = '请登陆后再访问';
+      alert(message);
+      setTimeout(() => { window.location.href = '/'; }, 1000);
     }
     return response;
   },
