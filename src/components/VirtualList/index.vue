@@ -1,7 +1,7 @@
 <!--
  * @Author: Dongzy
  * @since: 2020-06-17 23:01:27
- * @lastTime: 2020-06-21 23:50:06
+ * @lastTime: 2020-06-26 10:47:17
  * @LastAuthor: Dongzy
  * @FilePath: \pixiciv-pc\src\components\VirtualList\index.vue
  * @message:
@@ -12,13 +12,16 @@
     <slot />
     <div
       ref="container"
+      v-infinite-scroll="scrollToDep"
       class="container"
-      style="position: relative;width: 1000px;;"
+      style="position: relative;width: 1000px;"
       :style="{height:containerHeight +'px'}"
+      infinite-scroll-delay
+      :infinite-scroll-disabled="isDone"
+      infinite-scroll-immediate
     >
-      <template v-for="item in renderList">
-        <Item v-if="item.id" :key="item.id" :column="item" @handleLike="handleLike" @handle-collect="setCollect" />
-      </template>
+
+      <Item v-for="item in renderList" :key="item.id" :column="item" @handleLike="handleLike" @handle-collect="setCollect" />
 
       <div v-if="isDone" style="marginTop: 50px;">
         <svg font-size="160" class="icon" aria-hidden="true">
@@ -26,6 +29,10 @@
         </svg>
         <p style="color: #E3F2FA; font-size: 20px;">没有内容</p>
       </div>
+      <p
+        v-if="isDone"
+        style="position: absolute;bottom: 20px;text-align: center;width: 1000px;;"
+      >没有更多了</p>
     </div>
   </div>
 </template>
@@ -66,7 +73,8 @@ export default {
   },
   data() {
     return {
-      isDone: false
+      isDone: false,
+      loading: false
     };
   },
   computed: {
@@ -126,7 +134,6 @@ export default {
           });
       }
     },
-    setCollect() {},
     //显示屏幕号 change
     localChangeScreen(screenNumIng) {
       //update oldScreen
@@ -157,7 +164,7 @@ export default {
       this.setColumnsWidth(contWidth);
 
       //获取可视区域高度
-      this.setWindowHeight(document.documentElement.clientHeight);
+      this.setWindowHeight(this.$refs['warp'].clientHeight);
 
       //获取left坐标
       this.setLocationLeft();
@@ -167,29 +174,28 @@ export default {
       // this.$refs['warp'].addEventListener('scroll', this.scrollAction, false);
       this.getNewImg();
     },
-    debounceScroll($event) { this.scrollAction($event); },
     async scrollAction($event) {
       const windowHeight = this.$refs['warp'].clientHeight;
 
       const scrollTop = $event.target.scrollTop + windowHeight;
 
       const screenNumIng = (Math.floor(scrollTop / windowHeight)) - 1;
-      // console.log(screenNumIng, this.numIng, this.loadingScreen, '**', scrollTop, this.$refs['container'].clientHeight, 'look');
+      console.log(screenNumIng, this.numIng, this.loadingScreen, this.locationInfo);
       if (screenNumIng !== this.numIng) {
         this.localChangeScreen(screenNumIng);
       }
-      if (scrollTop === this.$refs['container'].clientHeight && !this.isDone) {
-        //增加下一个屏幕的元素队列
-        await this.addlocationInfoNum(this.screenAllNum);
-        //增加屏幕
-        await this.addScreen();
-        //增加当前加载的屏幕队
-        await this.addloadingScreen(this.screenAllNum);
-        // 请求数据
-        this.getNewImg();
-      }
     },
 
+    async scrollToDep() {
+      //增加下一个屏幕的元素队列
+      await this.addlocationInfoNum(this.screenAllNum);
+      //增加屏幕
+      await this.addScreen();
+      //增加当前加载的屏幕队
+      await this.addloadingScreen(this.screenAllNum);
+      // 请求数据
+      this.getNewImg();
+    },
     /**
      * 获取新资源
      */
