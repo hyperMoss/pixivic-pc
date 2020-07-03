@@ -22,7 +22,7 @@ function reqArtistIllust(params) {
     params: {
       page: params.page || 1,
       pageSize: params.pageSize || 30,
-      maxSanityLevel: 10
+      maxSanityLevel: 4
     }
   });
 }
@@ -82,13 +82,5 @@ function illustHistory(data) {
   });
 }
 
-export {
-  getPixById,
-  reqArtistIllust,
-  reqIllustDetail,
-  reqArtist,
-  reqRelatedIllust,
-  reqSummary,
-  bookmarkedUsers,
-  illustHistory
-};
+export { getPixById, reqArtistIllust, reqIllustDetail, reqArtist, reqRelatedIllust, reqSummary, bookmarkedUsers, illustHistory };
+

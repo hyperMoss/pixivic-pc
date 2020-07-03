@@ -12,7 +12,7 @@
       <main class="detail-content">
         <figure class="detail-content__figure">
           <el-image
-            v-if="illustDetail.xrestrict==0&&illustDetail.sanityLevel<=6"
+            v-if="illustDetail.xrestrict==0&&illustDetail.sanityLevel<=4"
             :preview-src-list="srcList"
             :src="illustDetail.originalSrc"
             fit="contain"
@@ -219,7 +219,7 @@ export default {
         src: data.src || replaceSmallImg(data.imageUrls[0].medium),
         avatarSrc: data.avatarSrc || replaceBigImg(data.artistPreView.avatar),
         createDate: dayjs(data.createDate).format('YYYY-MM-DD'),
-        setu: data.setu || !!((data.xrestrict === 1 || data.sanityLevel > 6)) && this.user.username !== 'pixivic',
+        setu: data.setu || !!((data.xrestrict === 1 || data.sanityLevel > 4)) && this.user.username !== 'pixivic',
         imgs: data.imgs || data.imageUrls.reduce((pre, cur) => {
           return pre.concat(replaceBigImg(cur.original));
         }, [])
@@ -345,7 +345,7 @@ export default {
             const {
               data: { data }
             } = res;
-            this.pictureList = this.pictureList.concat(data).filter(item => item.xrestrict === 0 && item.sanityLevel < 6);
+            this.pictureList = this.pictureList.concat(data).filter(item => item.xrestrict === 0 && item.sanityLevel <= 4);
           }
         })
         .catch(err => {

@@ -35,7 +35,7 @@
           <ul class="picture-array">
             <li
               v-for="(item, index) in artistItem.recentlyIllustrations.filter(
-                item => item.xrestrict === 0 && item.sanityLevel < 6
+                item => item.xrestrict === 0 && item.sanityLevel <= 4
               )"
               :key="index"
               class="picture-item"
