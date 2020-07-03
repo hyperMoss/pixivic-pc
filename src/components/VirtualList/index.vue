@@ -206,6 +206,9 @@ export default {
           this.screenAllNum--;
         } else {
           for (let i = 0; i < res.data.data.length; i++) {
+            if(!!((res.data.data[i].xrestrict === 1 || res.data.data[i].sanityLevel >= 4))){
+             continue;
+            }
             const boyend = this.positioning(res.data.data[i], res.data.data[i].id);
             if (boyend) {
               break;
