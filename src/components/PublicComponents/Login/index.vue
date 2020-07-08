@@ -1,8 +1,8 @@
 <!--
  * @Author: gooing
  * @since: 2020-03-13 22:45:40
- * @lastTime: 2020-03-15 13:25:06
- * @LastAuthor: gooing
+ * @lastTime: 2020-07-08 19:52:29
+ * @LastAuthor: Dongzy
  * @FilePath: \pixiciv-pc\src\components\PublicComponents\Login\index.vue
  * @message:
  -->
@@ -13,7 +13,7 @@
       :close-on-click-modal="false"
       title="Login"
       :visible="$store.getters.loginBoolean"
-      width="30%"
+      width="600px"
       center
       @close="$store.dispatch('setLoginBoolean')"
     >

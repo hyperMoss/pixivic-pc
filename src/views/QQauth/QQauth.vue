@@ -1,8 +1,8 @@
 <!--
  * @Author: gooing
  * @since: 2020-03-19 00:33:52
- * @lastTime: 2020-03-19 22:19:58
- * @LastAuthor: gooing
+ * @lastTime: 2020-07-08 20:10:46
+ * @LastAuthor: Dongzy
  * @FilePath: \pixiciv-pc\src\views\QQauth\QQauth.vue
  * @message:
  -->
@@ -17,19 +17,7 @@ export default {
   name: 'QQauth',
   components: {},
   data() {
-    return {
-      majorUsers: {
-        positionTitle: '会签人', // 角色名 作为后缀
-        position: 'countersign', // 人物角色 用于选取角色
-        majorIdList: [
-          {
-            majorName: '', // 专业名 作为前缀
-            majorId: '', // 专业Id用于请求数据
-            taskId: '' // 任务单Id 用于请求数据
-          }
-        ]
-      }
-    };
+    return {};
   },
   computed: {
     ...mapGetters(['user'])

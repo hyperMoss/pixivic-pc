@@ -1,7 +1,7 @@
 <!--
  * @Author: gooing
  * @since: 2020-03-18 22:46:31
- * @lastTime: 2020-06-24 01:29:58
+ * @lastTime: 2020-07-08 20:31:19
  * @LastAuthor: Dongzy
  * @FilePath: \pixiciv-pc\src\components\PublicComponents\Setting\index.vue
  * @message:
@@ -29,6 +29,11 @@
               :disabled="isConnectQQ"
               @click="bindQQ"
             >{{ isConnectQQ?'已绑定QQ':'绑定QQ' }}</el-button>
+          </p>
+          <p>
+            <el-button
+              @click="resetPassword"
+            >重置密码</el-button>
           </p>
 
         </div>
@@ -116,8 +121,21 @@ export default {
   },
 
   methods: {
+    // 上传图片
     uploadFile() {
       this.$refs['fileHander'].onClick();
+    },
+    // 重置密码
+    resetPassword() {
+      this.$api.user
+        .resetPasswordEmail(this.user.email)
+        .then(res => {
+          if (res.status === 200) {
+            this.$message.info('请注意邮箱内的重置密码邮件');
+          } else {
+            this.$message.error('重置密码发起错误');
+          }
+        });
     },
     // 处理本地图片
     handleLocalImg(e) {

@@ -1,7 +1,7 @@
 /*
  * @Author: Dongzy
  * @since: 2020-06-18 07:43:03
- * @lastTime: 2020-06-21 12:52:25
+ * @lastTime: 2020-07-08 20:07:28
  * @LastAuthor: Dongzy
  * @FilePath: \pixiciv-pc\src\components\VirtualList\mixin.js
  * @message:
@@ -63,6 +63,8 @@ export default {
   },
   mounted() {},
   methods: {
+    // 添加到画集
+    setCollect() {},
     /**
      * 通过父级组件的宽获取列宽
      */

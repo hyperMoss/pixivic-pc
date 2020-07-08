@@ -1,7 +1,7 @@
 <!--
  * @Author: gooing
  * @since: 2020-01-24 22:48:37
- * @lastTime: 2020-06-21 23:27:22
+ * @lastTime: 2020-07-08 20:05:52
  * @LastAuthor: Dongzy
  * @FilePath: \pixiciv-pc\src\components\PublicComponents\HeaderBar.vue
  * @message:
@@ -56,7 +56,7 @@
           <el-dropdown
             v-if="user.id"
             trigger="click"
-            :disabled="!user.id"
+            :disabled="!user&&user.id"
             @command="clickMenu"
           >
             <el-avatar
