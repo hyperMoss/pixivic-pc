@@ -1,8 +1,8 @@
 /*
  * @Author: gooing
  * @since: 2020-01-26 11:47:00
- * @lastTime: 2020-05-27 22:30:44
- * @LastAuthor: gooing
+ * @lastTime: 2020-07-08 20:27:46
+ * @LastAuthor: Dongzy
  * @FilePath: \pixiciv-pc\src\router.js
  * @message:
  */
@@ -66,6 +66,14 @@ const routes = [
     name: 'QQauth',
     // component: () => import('./views/QQauth/QQauth.vue')
     component: require('./views/QQauth/QQauth.vue').default
+  },
+  {
+    path: '/resetPassword',
+    name: 'ResetPassword',
+    component: require('./views/ResetPassword/index.vue').default,
+    meta: {
+      title: `重置密码`
+    }
   },
   ...require('./views/SpotLight').default, // A 业务路由入口
   ...require('./views/User').default, // A 业务路由入口
