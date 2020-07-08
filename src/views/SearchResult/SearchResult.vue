@@ -52,7 +52,7 @@ export default {
       beginDate: null, // 画作发布日期限制
       endDate: null, // 画作发布日期限制
       xRestrict: 0,
-      maxSanityLevel: 6,
+      maxSanityLevel: 4,
       page: 1,
       tags: [],
       exclusive: [],

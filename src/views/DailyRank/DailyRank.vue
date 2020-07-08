@@ -18,41 +18,40 @@
         placement="left"
         style="position:fixed;z-index:999;right:40px;bottom:20px;"
         trigger="hover"
-        width="240"
+        width="300"
       >
-        <template>
+        <div style="text-align:center;width:100%;height:100%;">
           <el-radio v-model="modeFather" label="0">综合排行</el-radio>
           <el-radio v-model="modeFather" label="1">漫画排行</el-radio>
-        </template>
-        <el-radio-group
-          v-model="mode"
-          size="mini"
-          style="padding: 20px 0;"
-          @change="resetData"
-        >
-          <el-radio-button
-            v-for="radioItem of modeList[modeFather].children"
-            :key="radioItem.name"
-            :label="radioItem.value"
-          >{{ radioItem.name }}</el-radio-button>
-        </el-radio-group>
-        <el-date-picker
-          v-model="value2"
-          :picker-options="pickerOptions"
-          align="right"
-          placeholder="选择日期"
-          type="date"
-          value-format="yyyy-MM-dd"
-          @change="selectDate"
-        />
+          <el-radio-group
+            v-model="mode"
+            size="mini"
+            style="padding: 20px 0;"
+            @change="resetData"
+          >
+            <el-radio-button
+              v-for="radioItem of modeList[modeFather].children"
+              :key="radioItem.name"
+              :label="radioItem.value"
+            >{{ radioItem.name }}</el-radio-button>
+          </el-radio-group>
+          <el-date-picker
+            v-model="value2"
+            :picker-options="pickerOptions"
+            align="right"
+            placeholder="选择日期"
+            type="date"
+            value-format="yyyy-MM-dd"
+            @change="selectDate"
+          />
+        </div>
         <div slot="reference">
-          <svg aria-hidden="true" class="icon" font-size="40">
+          <svg :aria-hidden="true" class="icon" font-size="40">
             <use xlink:href="#picshizhong1" />
           </svg>
         </div>
       </el-popover>
     </virtual-list>
-
   </div>
 </template>
 
