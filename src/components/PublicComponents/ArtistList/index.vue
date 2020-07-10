@@ -1,8 +1,8 @@
 <!--
  * @Author: gooing
  * @since: 2020-04-28 22:05:06
- * @lastTime: 2020-05-24 12:38:26
- * @LastAuthor: gooing
+ * @lastTime: 2020-07-10 23:22:29
+ * @LastAuthor: Dongzy
  * @FilePath: \pixiciv-pc\src\components\PublicComponents\ArtistList\index.vue
  * @message:
  -->
@@ -35,7 +35,7 @@
           <ul class="picture-array">
             <li
               v-for="(item, index) in artistItem.recentlyIllustrations.filter(
-                item => item.xrestrict === 0 && item.sanityLevel <= 4
+                item => item.xrestrict === 0 && item.sanityLevel <= (user ? 6 : 4)
               )"
               :key="index"
               class="picture-item"
@@ -62,6 +62,7 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex';
 export default {
   name: 'Index',
   components: {},
@@ -90,7 +91,9 @@ export default {
   data() {
     return {};
   },
-  computed: {},
+  computed: {
+    ...mapGetters(['user']),
+  },
   watch: {},
   mounted() {},
   methods: {

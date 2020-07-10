@@ -1,7 +1,7 @@
 <!--
  * @Author: gooing
  * @since: 2020-03-30 22:38:24
- * @lastTime: 2020-06-21 12:36:13
+ * @lastTime: 2020-07-10 23:19:17
  * @LastAuthor: Dongzy
  * @FilePath: \pixiciv-pc\src\components\Virtual-List\MyItem.vue
  * @message:
@@ -10,7 +10,7 @@
   <div class="my-item">
     <div class="my-item-content" :style="{height:size+'px',width:size+'px'}" @click="goDetail">
       <el-image
-        v-if="illust.xrestrict===0&&illust.sanityLevel<=4"
+        v-if="illust.xrestrict===0&&illust.sanityLevel<=(user ? 6 : 4)"
         :src="illust.imageUrls[0].medium | replaceSmall"
         fit="cover"
         :style="{height:size+'px',width:size+'px'}"
