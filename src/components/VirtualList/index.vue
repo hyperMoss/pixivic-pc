@@ -1,7 +1,7 @@
 <!--
  * @Author: Dongzy
  * @since: 2020-06-17 23:01:27
- * @lastTime: 2020-06-26 10:47:17
+ * @lastTime: 2020-07-10 23:22:09
  * @LastAuthor: Dongzy
  * @FilePath: \pixiciv-pc\src\components\VirtualList\index.vue
  * @message:
@@ -206,8 +206,8 @@ export default {
           this.screenAllNum--;
         } else {
           for (let i = 0; i < res.data.data.length; i++) {
-            if(!!((res.data.data[i].xrestrict === 1 || res.data.data[i].sanityLevel >= 4))){
-             continue;
+            if (res.data.data[i].xrestrict === 1 || res.data.data[i].sanityLevel >= (this.user ? 6 : 4)) {
+              continue;
             }
             const boyend = this.positioning(res.data.data[i], res.data.data[i].id);
             if (boyend) {
