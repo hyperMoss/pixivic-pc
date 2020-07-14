@@ -1,7 +1,7 @@
 <!--
  * @Author: Dongzy
  * @since: 2020-06-17 23:01:27
- * @lastTime: 2020-07-10 23:22:09
+ * @lastTime: 2020-07-14 19:13:04
  * @LastAuthor: Dongzy
  * @FilePath: \pixiciv-pc\src\components\VirtualList\index.vue
  * @message:
@@ -205,11 +205,9 @@ export default {
           this.isDone = true;
           this.screenAllNum--;
         } else {
-          for (let i = 0; i < res.data.data.length; i++) {
-            if (res.data.data[i].xrestrict === 1 || res.data.data[i].sanityLevel >= (this.user ? 6 : 4)) {
-              continue;
-            }
-            const boyend = this.positioning(res.data.data[i], res.data.data[i].id);
+          const readyList = res.data.data.filter((item) => !(item.xrestrict === 1 || item.sanityLevel > (this.user && this.user.id ? 6 : 4)));
+          for (let i = 0; i < readyList.length; i++) {
+            const boyend = this.positioning(readyList[i], readyList[i].id);
             if (boyend) {
               break;
             }
@@ -251,7 +249,7 @@ export default {
         const srceenIng = screenAllNum - 1;
         if (!element['_handled']) {
           element['src'] = replaceSmallImg(element.imageUrls[0].medium);
-          element['setu'] = false;
+          element['setu'] = element.sanityLevel;
           element['style'] = {
             backgroundColor: randomColor(),
           };
