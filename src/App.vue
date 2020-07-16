@@ -62,13 +62,21 @@ export default {
   mounted() {
     if (!cookie.get('alert')) {
       this.$notify({
-        title: '消息',
-        message: '现已上线安卓和苹果app,请在手机端打开下载'
+        title: this.$tc('news.title'),
+        message: this.$tc('news.content')
       });
+
       cookie.set('alert', true, {
         expires: 365
       });
     }
+    this.$i18n.locale = cookie.get('lang');
+    this.$notify({
+      title: this.$tc('wechatImg'),
+      duration: 0,
+      dangerouslyUseHTMLString: true,
+      message: '<img src="https://mp.weixin.qq.com/cgi-bin/showqrcode?ticket=gQFN7zwAAAAAAAAAAS5odHRwOi8vd2VpeGluLnFxLmNvbS9xLzAyZnZ4SmdHaEZjODMxNXVQZzF2YzgAAgQGcRBfAwRYAgAA" style="height:200px;width:200px;"/>'
+    });
   }
 };
 </script>

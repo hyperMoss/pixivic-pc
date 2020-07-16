@@ -1,0 +1,12 @@
+{
+  "message": "你好 i18n !!",
+  "filter.loginError": "请登录",
+  "wechatImg": "微信公众号",
+  "news.title": "消息",
+  "news.content": "现已上线安卓和苹果app,请在手机打开下载",
+  "Notice": "须知",
+  "Home": "首页",
+  "Feedback": "反馈",
+  "Donate": "捐赠",
+  "Links": "友情链接"
+}

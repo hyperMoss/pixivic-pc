@@ -1,0 +1,12 @@
+{
+  "message": "hello i18n !!",
+  "filter.loginError": "please sign in",
+  "wechatImg": "WeChat public account",
+  "news.title": "news",
+  "news.content": "Android and Apple apps are now online, please open the download on your phone",
+  "Notice": "Notice",
+  "Home": "Home",
+  "Feedback": "Feedback",
+  "Donate": "Donate",
+  "Links": "Links"
+}

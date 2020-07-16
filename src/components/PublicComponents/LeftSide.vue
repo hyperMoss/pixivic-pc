@@ -45,27 +45,27 @@ export default {
       isCollapse: true,
       navLsit: [
         {
-          name: '首页',
+          name: this.$tc('Home'),
           icon: 'el-icon-s-home',
           routePath: '/'
         },
         {
-          name: '须知',
+          name: this.$tc('Notice'),
           icon: 'el-icon-document',
           routePath: '/note'
         },
         {
-          name: '反馈',
+          name: this.$tc('Feedback'),
           icon: 'el-icon-chat-round',
           routePath: '/bbs'
         },
         {
-          name: '捐赠',
+          name: this.$tc('Donate'),
           icon: 'el-icon-coffee-cup',
           routePath: '/donate'
         },
         {
-          name: '友情链接',
+          name: this.$tc('Links'),
           icon: 'el-icon-link',
           routePath: '/remark'
         }

@@ -1,5 +1,5 @@
 const popSearch = {
-  getKeywords () {
+  getKeywords() {
     return {
       'message': '搜索候选词获取成功',
       'data': {
@@ -9,9 +9,9 @@ const popSearch = {
           '我的愛人'
         ]
       }
-    }
+    };
   },
-  getSearch () {
+  getSearch() {
     return {
       message: '搜索结果获取成功',
       data: [
@@ -594,10 +594,10 @@ const popSearch = {
           xrestrict: 0
         }
       ]
-    }
+    };
   }
-}
+};
 
 export {
   popSearch
-}
+};

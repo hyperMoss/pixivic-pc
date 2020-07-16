@@ -1,7 +1,7 @@
 <!--
  * @Author: gooing
  * @since: 2020-01-24 22:48:37
- * @lastTime: 2020-07-08 20:05:52
+ * @lastTime: 2020-07-14 20:49:20
  * @LastAuthor: Dongzy
  * @FilePath: \pixiciv-pc\src\components\PublicComponents\HeaderBar.vue
  * @message:
@@ -16,51 +16,75 @@
     >
       <el-col>
         <a href="/">
-          <img alt src="@/assets/images/icon.svg">
+          <img
+            alt
+            src="@/assets/images/icon.svg"
+          />
         </a>
       </el-col>
       <el-col>
         <el-autocomplete
-          v-model="params.keyword"
           :debounce="300"
           :fetch-suggestions="querySearch"
           :maxlength="30"
-          class="input-with-select"
-          placeholder="搜索作品"
           @keyup.enter.native="handleSearch"
           @select="handleSelect"
+          class="input-with-select"
+          placeholder="搜索作品"
+          v-model="params.keyword"
         >
           <el-select
+            @change="handleSelect"
             slot="prepend"
             v-model="params.illustType"
-            @change="handleSelect"
           >
             <el-option
-              v-for="item of typeList"
               :key="item.value"
               :label="item.name"
               :value="item.value"
+              v-for="item of typeList"
             />
           </el-select>
         </el-autocomplete>
-        <el-popover placement="bottom" trigger="hover" style="margin-left:10px">
-          <i slot="reference" class="el-icon-s-flag" style="color:#409EFF" />
-          <ImgTags v-if="hotTags.length" :tagslist="hotTags" @on-click="handleClickTag" />
+        <el-popover
+          placement="bottom"
+          style="margin-left:10px"
+          trigger="hover"
+        >
+          <i
+            class="el-icon-s-flag"
+            slot="reference"
+            style="color:#409EFF"
+          />
+          <ImgTags
+            :tagslist="hotTags"
+            @on-click="handleClickTag"
+            v-if="hotTags.length"
+          />
         </el-popover>
       </el-col>
+      <el-select :value='$i18n.locale'  @change="changeLocaleLang">
+        <el-option
+          :key="`Lang${i}`"
+          :value="lang"
+          v-for="(lang, i) in langs"
+        >{{ lang }}</el-option>
+      </el-select>
       <el-col class="header-info">
         <!-- <el-badge :value="3">
           <el-button size="small">消息</el-button>
-        </el-badge> -->
-        <div style="margin-left:20px;" @click="userOpen">
+        </el-badge>-->
+        <div
+          @click="userOpen"
+          style="margin-left:20px;"
+        >
           <el-dropdown
-            v-if="user.id"
-            trigger="click"
             :disabled="!user&&user.id"
             @command="clickMenu"
+            trigger="click"
+            v-if="user.id"
           >
             <el-avatar
-              fit="cover"
               :src="
                 user.id
                   ? `https://pic.cheerfun.dev/${
@@ -68,38 +92,39 @@
                   }.png?t=${new Date().getTime()}`
                   : ''
               "
+              fit="cover"
               shape="square"
             />
             <el-dropdown-menu slot="dropdown">
               <template>
                 <el-dropdown-item
-                  v-for="item of MenuList"
-                  :key="item.handler"
-                  :divided="item.divided"
                   :command="item.handler"
+                  :divided="item.divided"
+                  :key="item.handler"
+                  v-for="item of MenuList"
                 >{{ item.name }}</el-dropdown-item>
               </template>
             </el-dropdown-menu>
           </el-dropdown>
           <el-avatar
-            v-else
-            icon="el-icon-user-solid"
             fit="cover"
+            icon="el-icon-user-solid"
             shape="square"
+            v-else
           />
         </div>
       </el-col>
     </el-row>
     <SetDialog
-      v-if="settingVisible"
       :setting-visible.sync="settingVisible"
       :user="user"
+      v-if="settingVisible"
     />
   </div>
 </template>
 
 <script>
-import cookieTool from 'js-cookie';
+import cookie from 'js-cookie';
 import { mapGetters } from 'vuex';
 import SetDialog from './Setting/index';
 import ImgTags from './ImgTags';
@@ -107,19 +132,20 @@ export default {
   name: 'HeaderBar',
   components: {
     SetDialog,
-    ImgTags
+    ImgTags,
   },
   data() {
     return {
+      langs: ['zh', 'en'],
       // 用户中心数据
       MenuList: [
         {
           name: '关注',
-          handler: 'followed'
+          handler: 'followed',
         },
         {
           name: '收藏',
-          handler: 'bookmarked'
+          handler: 'bookmarked',
         },
         // {
         //   name: '画集',
@@ -127,17 +153,17 @@ export default {
         // },
         {
           name: '聚光灯',
-          handler: 'spotLight'
+          handler: 'spotLight',
         },
         {
           name: '设置',
-          handler: 'setting'
+          handler: 'setting',
         },
         {
           name: '退出登录',
           handler: 'logout',
-          divided: true
-        }
+          divided: true,
+        },
       ],
       // 设置控制显示
       settingVisible: false,
@@ -145,37 +171,36 @@ export default {
       timeout: null,
       params: {
         keyword: '',
-        illustType: 'illust'
+        illustType: 'illust',
       },
       keywords: [],
-      squareUrl:
-        'https://cube.elemecdn.com/9/c2/f0ee8a3c7c9638a54940382568c9dpng.png',
+      squareUrl: 'https://cube.elemecdn.com/9/c2/f0ee8a3c7c9638a54940382568c9dpng.png',
       typeList: [
         {
           name: '插图',
-          value: 'illust'
+          value: 'illust',
         },
         {
           name: '漫画',
-          value: 'manga'
+          value: 'manga',
         },
         {
           name: '作者',
-          value: 'artist'
-        }
+          value: 'artist',
+        },
       ],
       // 热门搜索模块
-      hotTags: []
+      hotTags: [],
     };
   },
   computed: {
     // 辅助函数取出x内用户信息
-    ...mapGetters(['user'])
+    ...mapGetters(['user']),
   },
   watch: {
     'params.keyword': {
-      handler: 'getKeywords'
-    }
+      handler: 'getKeywords',
+    },
   },
   mounted() {
     this.params.illustType = this.$route.query.illustType || 'illust';
@@ -183,6 +208,12 @@ export default {
     this.getHotTag();
   },
   methods: {
+    changeLocaleLang(val) {
+      this.$i18n.locale = val;
+      cookie.set('lang',val,{
+        expires: 365
+      })
+    },
     // 点击 用户模块
     clickMenu(type) {
       switch (type) {
@@ -219,26 +250,27 @@ export default {
       this.$router.push({
         path: '/users/followed',
         query: {
-          userId: this.user.id
-        }
+          userId: this.user.id,
+        },
       });
     },
     toMycollect() {
       this.$router.push({
         path: '/collect/mycollection',
         query: {
-          userId: this.user.id
-        }});
+          userId: this.user.id,
+        },
+      });
     },
     // 跳转书签页
     toBookmarked() {
       this.$router.push({
-        path: '/users/bookmarked'
+        path: '/users/bookmarked',
       });
     },
     toSpotLight() {
       this.$router.push({
-        path: '/spot-light/index'
+        path: '/spot-light/index',
       });
     },
     // 设置弹窗
@@ -250,7 +282,7 @@ export default {
       this.$confirm('确认退出？')
         .then(_ => {
           this.$message.info('退出登录');
-          cookieTool.remove('jwt');
+          cookie.remove('jwt');
           this.$store.dispatch('clearCurrentState');
           window.location.href = '/';
         })
@@ -258,13 +290,11 @@ export default {
     },
     // 获取关键词
     getKeywords() {
-      this.$api.search
-        .getKeyword(this.params.keyword)
-        .then(({ data: { data }}) => {
-          if (data && data.keywordList) {
-            this.keywords = data.keywordList || [];
-          }
-        });
+      this.$api.search.getKeyword(this.params.keyword).then(({ data: { data } }) => {
+        if (data && data.keywordList) {
+          this.keywords = data.keywordList || [];
+        }
+      });
     },
     // 搜索相关信息
     querySearch(queryString, cb) {
@@ -292,8 +322,8 @@ export default {
         path: `/keywords`,
         query: {
           tag: keyword,
-          illustType: this.params.illustType
-        }
+          illustType: this.params.illustType,
+        },
       });
     },
     // 点击tag
@@ -302,17 +332,17 @@ export default {
         path: `/keywords`,
         query: {
           tag: d.name,
-          illustType: this.params.illustType
-        }
+          illustType: this.params.illustType,
+        },
       });
     },
     // 打卡用户系统
     userOpen() {
-      if (!cookieTool.get('jwt')) {
+      if (!cookie.get('jwt')) {
         this.$store.dispatch('setLoginBoolean');
       }
-    }
-  }
+    },
+  },
 };
 </script>
 

@@ -6,7 +6,7 @@
  * @FilePath: \pixiciv-pc\src\components\Collect\SectionManager.js
  * @message:
  */
-import Section from "./Section";
+import Section from './Section';
 
 const SECTION_SIZE = 600;
 

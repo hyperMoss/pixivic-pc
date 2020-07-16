@@ -1,6 +1,5 @@
 <template>
   <div
-    v-if="!column.setu"
     class="item"
     @click="goDetail"
   >
