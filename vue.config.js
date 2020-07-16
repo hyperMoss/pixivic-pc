@@ -1,8 +1,8 @@
 /*
  * @Author: gooing
  * @since: 2020-02-02 14:59:46
- * @lastTime: 2020-06-06 17:02:32
- * @LastAuthor: gooing
+ * @lastTime: 2020-07-14 20:51:58
+ * @LastAuthor: Dongzy
  * @FilePath: \pixiciv-pc\vue.config.js
  * @message:
  */
@@ -45,15 +45,25 @@ module.exports = {
         })
         .end();
     });
+    config.module
+      .rule('i18n')
+      .resourceQuery(/blockType=i18n/)
+      .type('javascript/auto')
+      .use('i18n')
+      .loader('@kazupon/vue-i18n-loader')
+      .end();
   },
+
   // enabled by default if the machine has more than 1 cores
   parallel: require('os').cpus().length > 1,
+
   devServer: {
     contentBase: path.join(__dirname, 'dist'),
     compress: true,
     disableHostCheck: true, //  新增该配置项
     port: 9000
   },
+
   css: {
     // // 启用 CSS modules
     // requireModuleExtension: false,
@@ -99,6 +109,15 @@ module.exports = {
       config.plugins = [...config.plugins, ...plugins];
     } else {
       config.plugins = [...config.plugins, ...devPlugins];
+    }
+  },
+
+  pluginOptions: {
+    i18n: {
+      locale: 'zh',
+      fallbackLocale: 'en',
+      localeDir: 'locales',
+      enableInSFC: true
     }
   }
 };

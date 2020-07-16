@@ -1,4 +1,4 @@
-import SectionManager from "./SectionManager";
+import SectionManager from './SectionManager';
 
 /** Represents a group of logically-related items */
 export default class GroupManager {
