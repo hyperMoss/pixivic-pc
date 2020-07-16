@@ -65,7 +65,7 @@ export default {
           routePath: '/donate'
         },
         {
-          name: this.$tc('Friend'),
+          name: this.$tc('Links'),
           icon: 'el-icon-link',
           routePath: '/remark'
         }
