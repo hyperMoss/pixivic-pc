@@ -84,7 +84,7 @@
           <Comment :pid="pid" />
         </figcaption>
         <figcaption class="detail-content__relate">
-          <h2 class="relate-title">{{$t('relateContent')}}</h2>
+          <h2 class="relate-title">{{ $t('relateContent') }}</h2>
           <div>
             <ul v-infinite-scroll="reqRelatedIllust" infinite-scroll-immediate class="relate-info" infinite-scroll-distance="10" infinite-scroll-delay="1000">
               <li v-for="item in relatedPictureList" :key="item.id">
@@ -363,7 +363,7 @@ export default {
             this.$message.info('到底了');
           } else {
             this.relatedPictureList = this.relatedPictureList.concat(
-              res.data.data
+              res.data.data.filter((item) => !(item.xrestrict === 1 || item.sanityLevel > (this.user && this.user.id ? 5 : 4)))
             );
           }
         })
