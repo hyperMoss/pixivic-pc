@@ -71,12 +71,12 @@ export default {
       });
     }
     this.$i18n.locale = cookie.get('lang') || 'zh';
-    // this.$notify({
-    //   title: this.$tc('wechatImg'),
-    //   duration: 0,
-    //   dangerouslyUseHTMLString: true,
-    //   message: '<img src="https://mp.weixin.qq.com/cgi-bin/showqrcode?ticket=gQFN7zwAAAAAAAAAAS5odHRwOi8vd2VpeGluLnFxLmNvbS9xLzAyZnZ4SmdHaEZjODMxNXVQZzF2YzgAAgQGcRBfAwRYAgAA" style="height:200px;width:200px;"/>'
-    // });
+    this.$notify({
+      title: this.$tc('wechatImg'),
+      duration: 0,
+      dangerouslyUseHTMLString: true,
+      message: '<img src="https://cdn.jsdelivr.net/gh/OysterQAQ/Blog-Image/wechat.jpg" style="height:200px;width:200px;"/>'
+    });
   }
 };
 </script>

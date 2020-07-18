@@ -10,7 +10,6 @@
   <div class="my-item">
     <div class="my-item-content" :style="{height:size+'px',width:size+'px'}" @click="goDetail">
       <el-image
-        v-if="illust.xrestrict===0&&illust.sanityLevel<=(user ? 5 : 4)"
         :src="illust.imageUrls[0].medium | replaceSmall"
         fit="cover"
         :style="{height:size+'px',width:size+'px'}"
@@ -30,7 +29,7 @@
       <el-dropdown>
         <Like :like="illust.isLiked" @handleLike="handleLike" />
         <el-dropdown-menu slot="dropdown">
-          <el-dropdown-item @click.native="handleCollect">加到画集</el-dropdown-item>
+          <!-- <el-dropdown-item @click.native="handleCollect">加到画集</el-dropdown-item> -->
         </el-dropdown-menu>
       </el-dropdown>
     </div>

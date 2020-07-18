@@ -23,12 +23,13 @@
   "follow": "Follow",
   "openAll": "View All",
   "relateContent": "Related works",
-  "username": "username",
-  "password": "password",
+  "username": "Username",
+  "password": "Password",
   "verifyCode": "Captcha",
-  "registered": "registered",
-  "login": "log in",
-  "resetPassword": "forget password",
-  "checkPassword": "confirm password",
-  "email": "email"
+  "registered": "Registered",
+  "login": "Log in",
+  "resetPassword": "Forget",
+  "checkPassword": "Confirm password",
+  "email": "Email",
+  "usernameOrEmail": "Username or email"
 }

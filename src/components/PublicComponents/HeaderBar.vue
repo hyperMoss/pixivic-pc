@@ -16,44 +16,44 @@
     >
       <el-col>
         <a href="/">
-          <img alt src="@/assets/images/icon.svg" />
+          <img alt src="@/assets/images/icon.svg">
         </a>
       </el-col>
       <el-col>
         <el-autocomplete
+          v-model="params.keyword"
           :debounce="300"
           :fetch-suggestions="querySearch"
           :maxlength="30"
-          @keyup.enter.native="handleSearch"
-          @select="handleSelect"
           class="input-with-select"
           :placeholder="$t('search')"
-          v-model="params.keyword"
+          @keyup.enter.native="handleSearch"
+          @select="handleSelect"
         >
           <el-select
-            @change="handleSelect"
             slot="prepend"
             v-model="params.illustType"
+            @change="handleSelect"
           >
             <el-option
+              v-for="item of typeList"
               :key="item.value"
               :label="item.name"
               :value="item.value"
-              v-for="item of typeList"
             />
           </el-select>
         </el-autocomplete>
         <el-popover placement="bottom" style="margin-left:10px" trigger="hover">
-          <i class="el-icon-s-flag" slot="reference" style="color:#409EFF" />
+          <i slot="reference" class="el-icon-s-flag" style="color:#409EFF" />
           <ImgTags
+            v-if="hotTags.length"
             :tagslist="hotTags"
             @on-click="handleClickTag"
-            v-if="hotTags.length"
           />
         </el-popover>
       </el-col>
       <el-select :value="$i18n.locale" @change="changeLocaleLang">
-        <el-option :key="`Lang${i}`" :value="lang" v-for="(lang, i) in langs">{{
+        <el-option v-for="(lang, i) in langs" :key="`Lang${i}`" :value="lang">{{
           lang
         }}</el-option>
       </el-select>
@@ -61,94 +61,86 @@
         <!-- <el-badge :value="3">
           <el-button size="small">消息</el-button>
         </el-badge>-->
-        <div @click="userOpen" style="margin-left:20px;">
+        <div style="margin-left:20px;" @click="userOpen">
           <el-dropdown
-            :disabled="!user && user.id"
-            @command="clickMenu"
-            trigger="click"
             v-if="user.id"
+            trigger="click"
+            @command="clickMenu"
           >
             <el-avatar
-              :src="
-                user.id
-                  ? `https://pic.cheerfun.dev/${
-                      user.id
-                    }.png?t=${new Date().getTime()}`
-                  : ''
-              "
+              :src="user.id? `https://pic.cheerfun.dev/${user.id}.png?t=${new Date().getTime()}`: ''"
               fit="cover"
               shape="square"
             />
             <el-dropdown-menu slot="dropdown">
               <template>
                 <el-dropdown-item
+                  v-for="item of MenuList"
+                  :key="item.handler"
                   :command="item.handler"
                   :divided="item.divided"
-                  :key="item.handler"
-                  v-for="item of MenuList"
-                  >{{ item.name }}</el-dropdown-item
-                >
+                >{{ item.name }}</el-dropdown-item>
               </template>
             </el-dropdown-menu>
           </el-dropdown>
           <el-avatar
+            v-else
             fit="cover"
             icon="el-icon-user-solid"
             shape="square"
-            v-else
           />
         </div>
       </el-col>
     </el-row>
     <SetDialog
+      v-if="settingVisible"
       :setting-visible.sync="settingVisible"
       :user="user"
-      v-if="settingVisible"
     />
   </div>
 </template>
 
 <script>
-import cookie from "js-cookie";
-import { mapGetters } from "vuex";
-import SetDialog from "./Setting/index";
-import ImgTags from "./ImgTags";
+import cookie from 'js-cookie';
+import { mapGetters } from 'vuex';
+import SetDialog from './Setting/index';
+import ImgTags from './ImgTags';
 export default {
-  name: "HeaderBar",
+  name: 'HeaderBar',
   components: {
     SetDialog,
     ImgTags
   },
   data() {
     return {
-      langs: ["zh", "en"],
+      langs: ['zh', 'en'],
       // 设置控制显示
       settingVisible: false,
       // 搜索时延
       timeout: null,
       params: {
-        keyword: "",
-        illustType: "illust"
+        keyword: '',
+        illustType: 'illust'
       },
       keywords: [],
       squareUrl:
-        "https://cube.elemecdn.com/9/c2/f0ee8a3c7c9638a54940382568c9dpng.png",
+        'https://cube.elemecdn.com/9/c2/f0ee8a3c7c9638a54940382568c9dpng.png',
       // 热门搜索模块
       hotTags: []
     };
   },
   computed: {
     // 辅助函数取出x内用户信息
-    ...mapGetters(["user"]),
-    MenuList(){
+    ...mapGetters(['user']),
+    MenuList() {
       return [
         {
           name: this.$t('followed'),
-          handler: "followed"
+          handler: 'followed'
         },
         {
           name: this.$t('bookmarked'),
-          handler: "bookmarked"
+          handler: 'bookmarked'
         },
         // {
         //   name: '画集',
@@ -156,71 +148,72 @@ export default {
         // },
         {
           name: this.$t('spotLight'),
-          handler: "spotLight"
+          handler: 'spotLight'
         },
         {
           name: this.$t('setting'),
-          handler: "setting"
+          handler: 'setting'
         },
         {
           name: this.$t('logout'),
-          handler: "logout",
+          handler: 'logout',
           divided: true
         }
-      ]},
+      ];
+    },
     typeList() {
       return [
         {
-          name: this.$t("illust"),
-          value: "illust"
+          name: this.$t('illust'),
+          value: 'illust'
         },
         {
           name: this.$t('manga'),
-          value: "manga"
+          value: 'manga'
         },
         {
           name: this.$t('artist'),
-          value: "artist"
+          value: 'artist'
         }
       ];
     }
   },
   watch: {
-    "params.keyword": {
-      handler: "getKeywords"
+    'params.keyword': {
+      handler: 'getKeywords'
     }
   },
   mounted() {
-    this.params.illustType = this.$route.query.illustType || "illust";
+    this.params.illustType = this.$route.query.illustType || 'illust';
     this.params.keyword = this.$route.query.tag;
     this.getHotTag();
   },
   methods: {
     changeLocaleLang(val) {
       this.$i18n.locale = val;
-      cookie.set("lang", val, {
+      cookie.set('lang', val, {
         expires: 365
       });
     },
     // 点击 用户模块
     clickMenu(type) {
       switch (type) {
-        case "followed":
+        case 'followed':
           this.toFollowed();
           break;
-        case "bookmarked":
+        case 'bookmarked':
           this.toBookmarked();
           break;
-        case "setting":
+        case 'setting':
           this.setModal();
           break;
-        case "mycollect":
+        case 'mycollect':
           this.toMycollect();
           break;
-        case "logout":
+        case 'logout':
           this.logout();
           break;
-        case "spotLight":
+        case 'spotLight':
           this.toSpotLight();
           break;
         default:
@@ -236,7 +229,7 @@ export default {
     // 跳转关注页
     toFollowed() {
       this.$router.push({
-        path: "/users/followed",
+        path: '/users/followed',
         query: {
           userId: this.user.id
         }
@@ -244,7 +237,7 @@ export default {
     },
     toMycollect() {
       this.$router.push({
-        path: "/collect/mycollection",
+        path: '/collect/mycollection',
         query: {
           userId: this.user.id
         }
@@ -253,12 +246,12 @@ export default {
     // 跳转书签页
     toBookmarked() {
       this.$router.push({
-        path: "/users/bookmarked"
+        path: '/users/bookmarked'
       });
     },
     toSpotLight() {
       this.$router.push({
-        path: "/spot-light/index"
+        path: '/spot-light/index'
       });
     },
     // 设置弹窗
@@ -270,9 +263,9 @@ export default {
       this.$confirm(this.$t('user.logoutMessage'))
         .then(_ => {
           this.$message.info(this.$t('user.logoutSuc'));
-          cookie.remove("jwt");
-          this.$store.dispatch("clearCurrentState");
-          window.location.href = "/";
+          cookie.remove('jwt');
+          this.$store.dispatch('clearCurrentState');
+          window.location.href = '/';
         })
         .catch(_ => {});
     },
@@ -280,7 +273,7 @@ export default {
     getKeywords() {
       this.$api.search
         .getKeyword(this.params.keyword)
-        .then(({ data: { data } }) => {
+        .then(({ data: { data }}) => {
           if (data && data.keywordList) {
             this.keywords = data.keywordList || [];
           }
@@ -298,7 +291,7 @@ export default {
     },
     // 选择
     handleSelect(e) {
-      console.log("##########");
+      console.log('##########');
 
       this.handleSearch();
     },
@@ -328,8 +321,8 @@ export default {
     },
     // 打卡用户系统
     userOpen() {
-      if (!cookie.get("jwt")) {
-        this.$store.dispatch("setLoginBoolean");
+      if (!cookie.get('jwt')) {
+        this.$store.dispatch('setLoginBoolean');
       }
     }
   }

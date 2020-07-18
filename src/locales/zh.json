@@ -30,5 +30,6 @@
   "login": "登录",
   "resetPassword": "忘记密码",
   "checkPassword": "确认密码",
-  "email": "邮箱"
+  "email": "邮箱",
+  "usernameOrEmail": "用户名或邮箱"
 }
