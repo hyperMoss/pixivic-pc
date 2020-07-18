@@ -12,7 +12,7 @@
       <main class="detail-content">
         <figure class="detail-content__figure">
           <el-image
-            v-if="illustDetail.xrestrict==0&&illustDetail.sanityLevel<=(user ? 6 : 4)"
+            v-if="illustDetail.xrestrict==0&&illustDetail.sanityLevel<=(user ? 5 : 4)"
             :preview-src-list="srcList"
             :src="illustDetail.originalSrc"
             fit="contain"
