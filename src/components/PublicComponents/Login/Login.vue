@@ -9,7 +9,7 @@
 <template>
   <div class="Login">
     <el-form ref="loginForm" :model="loginForm" status-icon :rules="rules" label-width="100px" label-position="left">
-      <el-form-item :label="$t('username')" prop="username">
+      <el-form-item :label="$t('usernameOrEmail')" prop="username">
         <el-input v-model="loginForm.username" />
       </el-form-item>
       <el-form-item :label="$t('password')" prop="password">
