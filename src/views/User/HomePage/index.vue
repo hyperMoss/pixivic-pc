@@ -35,7 +35,7 @@
                   size="small"
                   @click="followArtist"
                 >
-                  {{ artistDetail.isFollowed ? "已关注" : "添加关注" }}
+                  {{ artistDetail.isFollowed ? $t('followed') : $t('follow') }}
                 </el-button>
               </div> -->
             </div>
@@ -77,7 +77,7 @@
               :content="artistDetail.comment"
               :width="400"
             >
-              <div slot="reference" class="end">查看全部</div>
+              <div slot="reference" class="end">{{$t('openAll')}}</div>
             </el-popover>
           </div>
         </div> -->
