@@ -345,7 +345,7 @@ export default {
             const {
               data: { data }
             } = res;
-            this.pictureList = this.pictureList.concat(data).filter(item => item.xrestrict === 0 && item.sanityLevel <= (this.user ? 6 : 4));
+            this.pictureList = this.pictureList.concat(data).filter(item => item.xrestrict === 0 && item.sanityLevel <= (this.user ? 5 : 4));
           }
         })
         .catch(err => {
