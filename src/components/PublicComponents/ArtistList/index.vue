@@ -27,7 +27,7 @@
           <div class="desc">{{ artistItem.comment }}</div>
           <div class="followed-button">
             <el-button round type="primary" @click="follow(artistItem)">
-              {{ artistItem.isFollowed ? "已关注" : "添加关注" }}
+              {{ artistItem.isFollowed ? $t('followed') : $t('follow') }}
             </el-button>
           </div>
         </div>

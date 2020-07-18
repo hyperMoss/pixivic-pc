@@ -9,13 +9,13 @@
 <template>
   <div class="Login">
     <el-form ref="loginForm" :model="loginForm" status-icon :rules="rules" label-width="100px" label-position="left">
-      <el-form-item label="用户名" prop="username">
+      <el-form-item :label="$t('username')" prop="username">
         <el-input v-model="loginForm.username" />
       </el-form-item>
-      <el-form-item label="密码" prop="password">
+      <el-form-item :label="$t('password')" prop="password">
         <el-input v-model="loginForm.password" :maxlength="20" show-password type="password" autocomplete="off" />
       </el-form-item>
-      <el-form-item label="验证码" prop="verifyCode">
+      <el-form-item :label="$t('verifyCode')" prop="verifyCode">
         <el-row type="flex" justify="space-between" :gutter="16">
           <el-col> <el-input v-model="loginForm.verifyCode" :maxlength="4">
             <template slot="append"><img
@@ -26,14 +26,14 @@
         </el-row>
       </el-form-item>
       <el-form-item>
-        <el-button @click="$emit('typeChange','')">注册</el-button>
+        <el-button @click="$emit('typeChange','')">{{ $t('registered') }}</el-button>
         <el-button
           @click="resetPassword"
-        >忘记密码</el-button>
-        <el-button type="primary" @click="submitForm('loginForm')">登录</el-button>
+        >{{ $t('resetPassword') }}</el-button>
+        <el-button type="primary" @click="submitForm('loginForm')">{{ $t('login') }}</el-button>
         <el-button @click="loginQQ"><svg font-size="14" class="icon" aria-hidden="true">
           <use xlink:href="#picQQ" />
-        </svg>QQ登录</el-button>
+        </svg>QQ{{ $t('login') }}</el-button>
       </el-form-item>
     </el-form>
     <!-- <el-dialog
