@@ -12,7 +12,7 @@ function getRank(params) {
   return axios({
     url: `/ranks`,
     method: 'get',
-    params: { ...params, pageSize: 20 }
+    params: { ...params, pageSize: 30 }
   });
 }
 

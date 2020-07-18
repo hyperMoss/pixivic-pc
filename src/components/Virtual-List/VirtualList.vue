@@ -78,7 +78,7 @@ export default {
           if (val.length === 0) {
             this.columnHeight = new Array(this.column).fill(0);
           } else {
-            const list = val.filter(e => !old.includes(e) && e.xrestrict === 0 && e.sanityLevel <= (this.user ? 6 : 4));
+            const list = val.filter(e => !old.includes(e) && e.xrestrict === 0 && e.sanityLevel <= (this.user ? 5 : 4));
             this.handleList(list);
           }
         } catch (error) {

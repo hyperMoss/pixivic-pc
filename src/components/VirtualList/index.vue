@@ -21,9 +21,9 @@
       infinite-scroll-immediate
     >
 
-      <Item v-for="item in renderList" :key="item.id" :column="item" @handleLike="handleLike" @handle-collect="setCollect" />
+      <Item v-for="item in renderList" :key="item.id+Date.now()" :column="item" @handleLike="handleLike" @handle-collect="setCollect" />
 
-      <div v-if="isDone" style="marginTop: 50px;">
+      <div v-if="isDone&&!renderList.length" style="marginTop: 50px;">
         <svg font-size="160" class="icon" aria-hidden="true">
           <use xlink:href="#pickongtai1" />
         </svg>
@@ -74,7 +74,9 @@ export default {
   data() {
     return {
       isDone: false,
-      loading: false
+      loading: false,
+      isEmpty: false,
+      readyList: []
     };
   },
   computed: {
@@ -205,10 +207,11 @@ export default {
           this.isDone = true;
           this.screenAllNum--;
         } else {
-          const readyList = res.data.data.filter((item) => !(item.xrestrict === 1 || item.sanityLevel > (this.user && this.user.id ? 6 : 4)));
-          for (let i = 0; i < readyList.length; i++) {
-            const boyend = this.positioning(readyList[i], readyList[i].id);
+          const handleList = this.readyList.concat(res.data.data.filter((item) => !(item.xrestrict === 1 || item.sanityLevel > (this.user && this.user.id ? 5 : 4))));
+          for (let i = 0; i < handleList.length; i++) {
+            const boyend = this.positioning(handleList[i], handleList[i].id);
             if (boyend) {
+              this.readyList = handleList.slice(i + 1, handleList.length);
               break;
             }
           }
