@@ -1,42 +1,53 @@
-<!--
- * @Author: gooing
- * @since: 2020-02-02 14:59:46
- * @lastTime: 2020-06-15 22:07:49
- * @LastAuthor: Dongzy
- * @FilePath: \pixiciv-pc\README.md
- * @message:
- -->
+简体中文 | [English](./README.en-US.md)
 
-# Intro
+<h1 align="center">Pixivic 前端</h1>
 
-A simple pixiv picture tool website,power by vue ,vue-router,vuex
+<div align="center">
+</div>
 
-## Project features
+- 网站：<https://pixivic.com/>
+- FAQ：<https://pixivic.com/note>
 
-- [ x ]  Waterfall Stream Module
-- [ x ]  Image Module
-- [ x ]  Artist Module
-- [ x ]  User Module
-- [ x ]  Comment Module
-- [ x ]  Search Module
-- [ x ]  Rank Module
-- [ x ]  Collection Module
+# 简介
 
-## Project start
+一个简单的pixiv图片工具站，前端由vue全家桶驱动。
 
-If you want to building this project ,you can:
+## 项目特点
+
+- [ x ]  流畅的瀑布流
+- [ x ]  图片详情模块
+- [ x ]  画师模块
+- [ x ]  用户模块
+- [ x ]  评论模块
+- [ x ]  搜索模块
+- [ x ]  排行模块
+- [ x ]  画集模块
+
+## 启动项目
+
+### clone
 
 ```
 git clone https://github.com/cheer-fun/pixivic-pc.git
 cd pixivic-pc
 ```
 
+### yarn
+
 ```
-npm install，
+yarn
+yarn serve
+yarn build
+```
+
+### or npm
+
+```
+npm install
 npm run serve
-npm run build 
+npm run build
 ```
 
-## Note
+## 备注
 
-If your want some feature or find some bugs,welcome to create issuse ~ 
+如果你想要为这个项目添砖加瓦，欢迎提issue或者pr~~~
