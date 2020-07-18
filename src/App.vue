@@ -65,18 +65,17 @@ export default {
         title: this.$tc('news.title'),
         message: this.$tc('news.content')
       });
-
+      this.$notify({
+        title: this.$tc('wechatImg'),
+        duration: 0,
+        dangerouslyUseHTMLString: true,
+        message: '<img src="https://cdn.jsdelivr.net/gh/OysterQAQ/Blog-Image/wechat.jpg" style="height:200px;width:200px;"/>'
+      });
       cookie.set('alert', true, {
         expires: 365
       });
     }
     this.$i18n.locale = cookie.get('lang') || 'zh';
-    this.$notify({
-      title: this.$tc('wechatImg'),
-      duration: 0,
-      dangerouslyUseHTMLString: true,
-      message: '<img src="https://cdn.jsdelivr.net/gh/OysterQAQ/Blog-Image/wechat.jpg" style="height:200px;width:200px;"/>'
-    });
   }
 };
 </script>
