@@ -13,7 +13,7 @@
     "@babel/core": "^7.10.4",
     "@babel/preset-env": "^7.10.3",
     "core-js": "^3.4.4",
-    "element-ui": "^2.4.5",
+    "element-ui": "^2.13.2",
     "uglifyjs-webpack-plugin": "^2.2.0",
     "vue": "^2.6.10",
     "vue-cropper": "^0.5.4",

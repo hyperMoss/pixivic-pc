@@ -32,7 +32,7 @@
                     size="small"
                     @click="followArtist"
                   >
-                    {{ artistDetail.isFollowed ? "已关注" : "添加关注" }}
+                    {{ artistDetail.isFollowed ? $t('followed') : $t('follow') }}
                   </el-button>
                 </div>
               </div>
@@ -44,7 +44,7 @@
                 <em
                   style="font-style:normal;color: #5C5C5C;font-weight: bold;"
                 >
-                  {{ artistDetail.totalFollowUsers }} </em>关注
+                  {{ artistDetail.totalFollowUsers }} </em>{{ $t('follow') }}
               </span>
             </div>
           </div>
@@ -76,7 +76,7 @@
                 :content="artistDetail.comment"
                 :width="400"
               >
-                <div slot="reference" class="end">查看全部</div>
+                <div slot="reference" class="end">{{ $t('openAll') }}</div>
               </el-popover>
             </div>
           </div>

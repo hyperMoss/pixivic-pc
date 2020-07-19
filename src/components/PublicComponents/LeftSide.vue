@@ -43,33 +43,6 @@ export default {
   data() {
     return {
       isCollapse: true,
-      navLsit: [
-        {
-          name: this.$tc('Home'),
-          icon: 'el-icon-s-home',
-          routePath: '/'
-        },
-        {
-          name: this.$tc('Notice'),
-          icon: 'el-icon-document',
-          routePath: '/note'
-        },
-        {
-          name: this.$tc('Feedback'),
-          icon: 'el-icon-chat-round',
-          routePath: '/bbs'
-        },
-        {
-          name: this.$tc('Donate'),
-          icon: 'el-icon-coffee-cup',
-          routePath: '/donate'
-        },
-        {
-          name: this.$tc('Links'),
-          icon: 'el-icon-link',
-          routePath: '/remark'
-        }
-      ]
     };
   },
   computed: {
@@ -82,6 +55,35 @@ export default {
         result = '' + index;
       }
       return result;
+    },
+    navLsit() {
+      return [
+        {
+          name: this.$t('Home'),
+          icon: 'el-icon-s-home',
+          routePath: '/'
+        },
+        {
+          name: this.$t('Notice'),
+          icon: 'el-icon-document',
+          routePath: '/note'
+        },
+        {
+          name: this.$t('Feedback'),
+          icon: 'el-icon-chat-round',
+          routePath: '/bbs'
+        },
+        {
+          name: this.$t('Donate'),
+          icon: 'el-icon-coffee-cup',
+          routePath: '/donate'
+        },
+        {
+          name: this.$t('Links'),
+          icon: 'el-icon-link',
+          routePath: '/remark'
+        }
+      ];
     }
   },
   watch: {},

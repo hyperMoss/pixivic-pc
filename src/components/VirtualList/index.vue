@@ -17,13 +17,14 @@
       style="position: relative;width: 1000px;"
       :style="{height:containerHeight +'px'}"
       infinite-scroll-delay
-      :infinite-scroll-disabled="isDone"
+      :infinite-scroll-disabled="isDone && !cacheList.length"
       infinite-scroll-immediate
+      infinite-scroll-distance="0"
     >
 
-      <Item v-for="item in renderList" :key="item.id" :column="item" @handleLike="handleLike" @handle-collect="setCollect" />
+      <Item v-for="item in renderList" :key="item.id+Date.now()" :column="item" @handleLike="handleLike" @handle-collect="setCollect" />
 
-      <div v-if="isDone" style="marginTop: 50px;">
+      <div v-if="isDone&&!renderList.length" style="marginTop: 50px;">
         <svg font-size="160" class="icon" aria-hidden="true">
           <use xlink:href="#pickongtai1" />
         </svg>
@@ -74,7 +75,9 @@ export default {
   data() {
     return {
       isDone: false,
-      loading: false
+      loading: false,
+      isEmpty: false,
+      cacheList: []
     };
   },
   computed: {
@@ -172,7 +175,7 @@ export default {
       //定位初始化top值
       this.initTop(this.maxColumns);
       // this.$refs['warp'].addEventListener('scroll', this.scrollAction, false);
-      this.getNewImg();
+      this.initData();
     },
     async scrollAction($event) {
       const windowHeight = this.$refs['warp'].clientHeight;
@@ -180,7 +183,7 @@ export default {
       const scrollTop = $event.target.scrollTop + windowHeight;
 
       const screenNumIng = (Math.floor(scrollTop / windowHeight)) - 1;
-      console.log(screenNumIng, this.numIng, this.loadingScreen, this.locationInfo);
+      // console.log(screenNumIng, this.numIng, this.loadingScreen, this.locationInfo);
       if (screenNumIng !== this.numIng) {
         this.localChangeScreen(screenNumIng);
       }
@@ -194,7 +197,7 @@ export default {
       //增加当前加载的屏幕队
       await this.addloadingScreen(this.screenAllNum);
       // 请求数据
-      this.getNewImg();
+      this.handleNewImg();
     },
     /**
      * 获取新资源
@@ -203,17 +206,50 @@ export default {
       return this.getDataAjax().then(res => {
         if (!res.data.data) {
           this.isDone = true;
-          this.screenAllNum--;
+          // this.screenAllNum--;
         } else {
-          const readyList = res.data.data.filter((item) => !(item.xrestrict === 1 || item.sanityLevel > (this.user && this.user.id ? 6 : 4)));
-          for (let i = 0; i < readyList.length; i++) {
-            const boyend = this.positioning(readyList[i], readyList[i].id);
-            if (boyend) {
-              break;
-            }
-          }
+          this.cacheList = this.cacheList.concat(res.data.data.filter((item) => !(item.xrestrict === 1 || item.sanityLevel > (this.user && this.user.id ? 5 : 4))));
+          return;
         }
       });
+    },
+    async handleNewImg() {
+      if (this.cacheList.length <= 60 && !this.isDone) {
+        await this.getNewImg();
+        this.handleNewImg();
+      } else if (this.cacheList.length) {
+        await this.positionList();
+        if (this.cacheList.length < this.locationInfo[0].length && this.isDone) {
+          //增加下一个屏幕的元素队列
+          await this.addlocationInfoNum(this.screenAllNum);
+          //增加屏幕
+          await this.addScreen();
+          //增加当前加载的屏幕队
+          await this.addloadingScreen(this.screenAllNum);
+          this.positionList();
+          this.cacheList = [];
+        }
+      } else {
+        this.screenAllNum--;
+      }
+    },
+    positionList() {
+      const handleList = this.cacheList;
+      for (let i = 0; i < handleList.length; i++) {
+        const boyend = this.positioning(handleList[i], handleList[i].id);
+        if (boyend) {
+          this.cacheList = handleList.splice(i + 1);
+          break;
+        }
+      }
+    },
+    /**
+     * 获取初始数据
+     */
+    async initData() {
+      await this.getNewImg();
+      await this.getNewImg();
+      this.handleNewImg();
     },
     /**
      * 增加的时候开始 定位
