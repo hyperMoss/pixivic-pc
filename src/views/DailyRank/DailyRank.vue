@@ -11,7 +11,7 @@
     <virtual-list
       v-if="fatherMounted"
       :key="identifier"
-      :get-data-ajax="getData"
+      :list="pictureList"
       @infinite="infinite"
     >
       <el-popover
@@ -57,7 +57,7 @@
 
 <script>
 import dayjs from 'dayjs';
-import VirtualList from '@/components/VirtualList/index';
+import VirtualList from '@/components/Virtual-List/VirtualList';
 
 export default {
   name: 'DailyRank',
