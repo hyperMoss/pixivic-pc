@@ -11,23 +11,23 @@ export default {
   data() {
     return {
       // 视口区数据
-      //列数
+      // 列数
       maxColumns: 4,
-      //间距(像素)
+      // 间距(像素)
       spacing: 20,
-      //最后一列属性
+      // 最后一列属性
       finalColumns: null,
-      //父级容器宽度
+      // 父级容器宽度
       parentWidth: null,
-      //画作父级容器高度
+      // 画作父级容器高度
       containerHeight: 0,
-      //列宽
+      // 列宽
       columnsWidth: null,
-      //可视区域高度 160为默认值
+      // 可视区域高度 160为默认值
       windowViewHeight: 0,
-      //left 值
+      // left 值
       locationLeft: null,
-      //请求图片数量
+      // 请求图片数量
       requestImgNum: 40,
 
       // 画作数据
@@ -51,13 +51,13 @@ export default {
        * 屏幕数据
        */
 
-      //屏幕总数量 个数
+      // 屏幕总数量 个数
       screenAllNum: 1,
-      //当前第几屏幕 下标
+      // 当前第几屏幕 下标
       numIng: 0,
-      //上一次所在屏幕 下标
+      // 上一次所在屏幕 下标
       oldNum: 0,
-      //当前加载的屏幕队
+      // 当前加载的屏幕队
       loadingScreen: [0]
     };
   },
@@ -110,7 +110,7 @@ export default {
     addloadingScreen(screenAllNum) {
       const subscript = screenAllNum - 1;
 
-      //最多显示4个屏幕
+      // 最多显示4个屏幕
       for (let i = 0; i < 4; i++) {
         const showScreen = subscript - i;
         if (showScreen < 0) {
@@ -119,7 +119,7 @@ export default {
         // 用数组变异方法给当前屏幕加载队列赋值
         this.loadingScreen.splice(i, 1, showScreen);
       }
-      //返回新的显示数组
+      // 返回新的显示数组
       return this.loadingScreen;
     },
     /**

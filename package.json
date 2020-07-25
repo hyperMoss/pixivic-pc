@@ -6,7 +6,8 @@
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
     "i18n:report": "vue-cli-service i18n:report --src './src/**/*.?(js|vue)' --locales './src/locales/**/*.json'",
-    "release": "vue-cli-service build --mode production"
+    "release": "vue-cli-service build --mode production",
+    "lint": "vue-cli-service lint"
   },
   "dependencies": {
     "@babel/compat-data": "^7.10.4",

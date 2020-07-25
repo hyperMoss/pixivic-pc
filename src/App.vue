@@ -23,7 +23,7 @@
         <!-- 主要页面开始 -->
         <el-main class="window-view">
           <vue-page-stack>
-            <router-view :key="key" style="overflow-y: auto;max-height: calc(~'100vh - 60px');" />
+            <router-view :key="key" style="max-height: calc(~'100vh - 60px');" />
           </vue-page-stack>
         </el-main>
         <!-- 主要页面结束 -->

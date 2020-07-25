@@ -86,11 +86,11 @@ export default {
       const loadingScreen = this.loadingScreen;
 
       let targetList = null;
-      //遍历当前应该显示的屏幕下标号
+      // 遍历当前应该显示的屏幕下标号
       loadingScreen.forEach(element => {
-        //通过屏幕号码获取信息
+        // 通过屏幕号码获取信息
         const locationInfo = this.locationInfo[element.toString()];
-        //排除undefined
+        // 排除undefined
         if (!locationInfo) {
           return;
         }
@@ -137,12 +137,12 @@ export default {
           });
       }
     },
-    //显示屏幕号 change
+    // 显示屏幕号 change
     localChangeScreen(screenNumIng) {
-      //update oldScreen
+      // update oldScreen
       this.updataOldScreen(this.numIng);
 
-      //update screenIng
+      // update screenIng
       this.updateScreen(screenNumIng);
 
       if (screenNumIng > this.oldNum) {
@@ -161,18 +161,18 @@ export default {
     },
     // 初始化
     init() {
-      //获取组件父级宽
+      // 获取组件父级宽
       const contWidth = this.$refs['container'].clientWidth;
-      //通过组件宽获取列宽
+      // 通过组件宽获取列宽
       this.setColumnsWidth(contWidth);
 
-      //获取可视区域高度
+      // 获取可视区域高度
       this.setWindowHeight(this.$refs['warp'].clientHeight);
 
-      //获取left坐标
+      // 获取left坐标
       this.setLocationLeft();
 
-      //定位初始化top值
+      // 定位初始化top值
       this.initTop(this.maxColumns);
       // this.$refs['warp'].addEventListener('scroll', this.scrollAction, false);
       this.initData();
@@ -190,11 +190,11 @@ export default {
     },
 
     async scrollToDep() {
-      //增加下一个屏幕的元素队列
+      // 增加下一个屏幕的元素队列
       await this.addlocationInfoNum(this.screenAllNum);
-      //增加屏幕
+      // 增加屏幕
       await this.addScreen();
-      //增加当前加载的屏幕队
+      // 增加当前加载的屏幕队
       await this.addloadingScreen(this.screenAllNum);
       // 请求数据
       this.handleNewImg();
@@ -220,11 +220,11 @@ export default {
       } else if (this.cacheList.length) {
         await this.positionList();
         if (this.cacheList.length < this.locationInfo[0].length && this.isDone) {
-          //增加下一个屏幕的元素队列
+          // 增加下一个屏幕的元素队列
           await this.addlocationInfoNum(this.screenAllNum);
-          //增加屏幕
+          // 增加屏幕
           await this.addScreen();
-          //增加当前加载的屏幕队
+          // 增加当前加载的屏幕队
           await this.addloadingScreen(this.screenAllNum);
           this.positionList();
           this.cacheList = [];
@@ -257,31 +257,31 @@ export default {
     positioning(element, targetId) {
       try {
         const screenAllNum = this.screenAllNum;
-        //定位与列数一直时 换行
+        // 定位与列数一直时 换行
         this.positioningNum === this.maxColumns ? (this.positioningNum = 0) : null;
-        //图片原始宽度
+        // 图片原始宽度
         const imgWidth = element.width || 200;
-        //列宽限定
+        // 列宽限定
         const columnsWidth = this.columnsWidth;
-        //计算出图片在进入dom后的高度
+        // 计算出图片在进入dom后的高度
         const imgHeight = (columnsWidth / imgWidth) * element.height;
         element.domHeight = imgHeight - 10;
-        //宽
+        // 宽
         element.domWidth = columnsWidth - 10;
         const targetTopLocation = this.targetTopLocation;
-        //获取top数组中最小的座位下标
+        // 获取top数组中最小的座位下标
         const minTopNum = targetTopLocation.indexOf(Math.min.apply(Math, targetTopLocation));
-        //获取top值
+        // 获取top值
         element.top = Math.floor(targetTopLocation[minTopNum]);
-        //获取left值
+        // 获取left值
         element.left = this.locationLeft[minTopNum];
-        //位列一行中第几位
+        // 位列一行中第几位
         element.columnsNum = minTopNum;
-        //设定下一个同列图片的top
+        // 设定下一个同列图片的top
         this.setTop(minTopNum, imgHeight);
         const topNum = this.targetTopLocation[minTopNum];
         this.updatecontainerHeight(topNum);
-        //获取所放置的屏幕号 下标
+        // 获取所放置的屏幕号 下标
         const srceenIng = screenAllNum - 1;
         if (!element['_handled']) {
           element['src'] = replaceSmallImg(element.imageUrls[0].medium);
@@ -299,13 +299,13 @@ export default {
           }
           element['_handled'] = true;
         }
-        //创建
+        // 创建
         this.addlocationInfo({ imgData: element, screenNumIng: srceenIng });
-        //增长
+        // 增长
         this.positioningNum++;
-        //top大于当前屏幕高度 则增加屏幕
+        // top大于当前屏幕高度 则增加屏幕
         if (element.top > this.windowViewHeight * screenAllNum) {
-          //超出高度 则不管了
+          // 超出高度 则不管了
           return true;
         }
       } catch (error) {
