@@ -40,7 +40,8 @@ const mutations = {
   [types.SET_DETAIL](state, data) {
     state.detail = data;
   },
-  [types.SET_LOGIN_BOOLEAN](state) {
+  [types.SET_LOGIN_BOOLEAN](state, data = true) {
+    state.loginOrSign = data;
     state.loginBoolean = !state.loginBoolean;
   },
   [types.SET_COOLECT_BOOLEAN](state, data) {

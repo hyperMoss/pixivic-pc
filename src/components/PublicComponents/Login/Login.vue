@@ -26,7 +26,6 @@
         </el-row>
       </el-form-item>
       <el-form-item>
-        <el-button @click="$emit('typeChange','')">{{ $t('registered') }}</el-button>
         <el-button
           @click="resetPassword"
         >{{ $t('resetPassword') }}</el-button>
@@ -153,11 +152,6 @@ export default {
           return false;
         }
       });
-    },
-    // 跳转登录
-    toLogin() {
-      this.resetForm('loginForm');
-      this.$emit('typeChange');
     },
     // 重置数据
     resetForm(formName) {

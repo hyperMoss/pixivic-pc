@@ -84,9 +84,6 @@
         </el-row>
       </el-form-item>
       <el-form-item>
-        <el-button @click="toLogin">
-          {{ $t('login') }}
-        </el-button>
         <el-button
           type="primary"
           :loading="loading"
@@ -231,11 +228,6 @@ export default {
           return false;
         }
       });
-    },
-    // 跳转登录
-    toLogin() {
-      this.resetForm('ruleForm');
-      this.$emit('typeChange');
     },
     // 重置数据
     resetForm(formName) {

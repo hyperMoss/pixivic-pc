@@ -61,7 +61,7 @@
         <!-- <el-badge :value="3">
           <el-button size="small">消息</el-button>
         </el-badge>-->
-        <div style="margin-left:20px;" @click="userOpen">
+        <div style="margin-left:20px;">
           <el-dropdown
             v-if="user.id"
             trigger="click"
@@ -83,12 +83,9 @@
               </template>
             </el-dropdown-menu>
           </el-dropdown>
-          <el-avatar
+          <div
             v-else
-            fit="cover"
-            icon="el-icon-user-solid"
-            shape="square"
-          />
+          ><span class="button-text" @click="login">{{ $t('login') }}</span>  <span class="button-text" @click="signUp">{{ $t('signUp') }}</span></div>
         </div>
       </el-col>
     </el-row>
@@ -320,7 +317,12 @@ export default {
       });
     },
     // 打卡用户系统
-    userOpen() {
+    signUp() {
+      if (!cookie.get('jwt')) {
+        this.$store.dispatch('setLoginBoolean', false);
+      }
+    },
+    login() {
       if (!cookie.get('jwt')) {
         this.$store.dispatch('setLoginBoolean');
       }
@@ -365,5 +367,21 @@ export default {
     border: 1px solid #dcdfe6;
     text-align: center;
   }
+}
+.button-text{
+    user-select: none;
+    transition: background 20ms ease-in 0s;
+    cursor: pointer;
+    padding: 4px 10px;
+    border-radius: 3px;
+    flex-shrink: 0;
+    font-size: 15px;
+    margin-left: 2px;
+    margin-right: 2px;
+    font-weight: 500;
+    width: auto;
+    &:hover{
+      background: rgba(55, 53, 47, 0.16);
+    }
 }
 </style>

@@ -14,6 +14,7 @@ const state = {
   followStatus: null, // 画师关注状态
   detail: null, // 详情信息
   loginBoolean: false,
+  loginOrSign: true,
   collectBoolean: false,
   readyCollectItem: {},
   collectInfo: {}
