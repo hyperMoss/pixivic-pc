@@ -89,7 +89,8 @@ import {
   Loading,
   MessageBox,
   Message,
-  Notification
+  Notification,
+  InfiniteScroll
 } from 'element-ui';
 
 Vue.use(Pagination);
@@ -99,6 +100,7 @@ Vue.use(Dropdown);
 Vue.use(Avatar);
 Vue.use(Row);
 Vue.use(Col);
+Vue.use(InfiniteScroll);
 Vue.use(DropdownMenu);
 Vue.use(DropdownItem);
 Vue.use(Menu);

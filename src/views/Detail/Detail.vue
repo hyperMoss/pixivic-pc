@@ -19,7 +19,12 @@
             style="width:100%;height:80vh;"
           >
             <div slot="placeholder" class="image-slot">
-              加载中<span class="dot">...</span>
+              <el-image
+                v-if="illustDetail.xrestrict==0&&illustDetail.sanityLevel<=(user ? 5 : 4)"
+                :src="illustDetail.src"
+                fit="contain"
+                style="width:100%;height:80vh;"
+              />
             </div>
             <div slot="error" class="image-slot">
               <i class="el-icon-picture-outline" />
