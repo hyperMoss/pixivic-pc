@@ -1,11 +1,4 @@
-/*
- * @Author: gooing
- * @since: 2020-02-02 14:59:46
- * @lastTime: 2020-06-01 21:13:02
- * @LastAuthor: gooing
- * @FilePath: \pixiciv-pc\src\store\mutations.js
- * @message:
- */
+
 import * as types from './mutation-types';
 
 const mutations = {

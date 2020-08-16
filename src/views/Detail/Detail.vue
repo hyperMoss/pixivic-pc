@@ -1,11 +1,4 @@
-<!--
- * @Author: gooing
- * @since: 2020-02-02 14:52:15
- * @lastTime: 2020-07-10 23:23:18
- * @LastAuthor: Dongzy
- * @FilePath: \pixiciv-pc\src\views\Detail\Detail.vue
- * @message:
- -->
+
 <template>
   <div v-if="illustDetail" class="detail">
     <div class="page-padding">

@@ -1,11 +1,4 @@
-<!--
- * @Author: gooing
- * @since: 2020-05-20 01:09:48
- * @lastTime: 2020-06-07 22:37:16
- * @LastAuthor: gooing
- * @FilePath: \pixiciv-pc\src\views\Collection\MyCollection\index.vue
- * @message:
--->
+
 <template>
   <div class="collection">
     <div class="header">

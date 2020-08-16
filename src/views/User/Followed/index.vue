@@ -1,11 +1,4 @@
-<!--
- * @Author: gooing
- * @since: 2020-03-26 23:16:26
- * @lastTime: 2020-05-24 12:35:49
- * @LastAuthor: gooing
- * @FilePath: \pixiciv-pc\src\views\User\Followed\index.vue
- * @message:
- -->
+
 <template>
   <div class="followed">
     <artist-list

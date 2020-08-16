@@ -1,11 +1,4 @@
-<!--
- * @Author: gooing
- * @since: 2020-04-02 18:05:53
- * @lastTime: 2020-06-08 00:11:46
- * @LastAuthor: gooing
- * @FilePath: \pixiciv-pc\src\components\PublicComponents\Comment.vue
- * @message:
- -->
+
 <template>
   <div class="container">
     <div v-for="item in comments" :key="item.id" class="comment">
@@ -83,6 +76,10 @@
         </transition>
       </div>
     </div>
+    <div> <el-pagination
+      layout="prev, pager, next"
+      :total="50">
+    </el-pagination></div>
     <div class="write-reply" @click="showCommentInput()">
       <i class="el-icon-edit" />
       <span class="add-comment">添加新评论</span>
@@ -148,11 +145,13 @@ export default {
     getCommentsList() {
       this.$api.comment.getComments({
         commentAppType: this.$props.commentType,
-        commentAppId: this.pid
+        commentAppId: this.pid,
+        pageSize:20
       })
         .then(res => {
           if (res.status === 200) {
             this.comments = res.data.data || [];
+            this.total=res.data.data()
           }
         });
     },

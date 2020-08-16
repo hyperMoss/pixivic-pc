@@ -1,11 +1,4 @@
-<!--
- * @Author: Dongzy
- * @since: 2020-07-08 20:09:09
- * @lastTime: 2020-07-08 20:44:49
- * @LastAuthor: Dongzy
- * @FilePath: \pixiciv-pc\src\views\ResetPassword\index.vue
- * @message:
--->
+
 <template>
   <div class="index">
     <el-form ref="ruleForm" :model="ruleForm" status-icon :rules="rules" label-width="100px" class="demo-ruleForm" label-position="left">

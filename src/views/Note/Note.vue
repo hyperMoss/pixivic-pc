@@ -1,11 +1,4 @@
-<!--
- * @Author: gooing
- * @since: 2020-02-11 20:20:39
- * @lastTime: 2020-05-17 20:56:54
- * @LastAuthor: gooing
- * @FilePath: \pixiciv-pc\src\views\Note\Note.vue
- * @message:
- -->
+
 <template>
   <div class="note">
     <div class="content-list">

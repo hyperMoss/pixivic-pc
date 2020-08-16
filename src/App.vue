@@ -1,11 +1,4 @@
-<!--
- * @Author: gooing
- * @since: 2020-01-26 11:47:00
- * @lastTime: 2020-06-21 23:35:40
- * @LastAuthor: Dongzy
- * @FilePath: \pixiciv-pc\src\App.vue
- * @message:
- -->
+
 <template>
   <div id="app">
     <el-container class="page-container" style="overflow: hidden;">

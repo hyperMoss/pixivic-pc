@@ -1,11 +1,4 @@
-/*
- * @Author: gooing
- * @since: 2020-05-21 23:08:15
- * @lastTime: 2020-06-07 23:07:17
- * @LastAuthor: gooing
- * @FilePath: \pixiciv-pc\src\api\modules\collect.js
- * @message:
- */
+
 import axios from '../base';
 
 // 发起画集

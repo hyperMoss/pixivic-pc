@@ -1,11 +1,4 @@
-<!--
- * @Author: gooing
- * @since: 2020-01-24 22:48:57
- * @lastTime: 2020-05-01 23:09:25
- * @LastAuthor: gooing
- * @FilePath: \pixiciv-pc\src\components\PublicComponents\LeftSide.vue
- * @message:
- -->
+
 <template>
   <div class="LeftSide">
     <el-menu

@@ -1,11 +1,4 @@
-<!--
- * @Author: gooing
- * @since: 2020-03-13 22:45:40
- * @lastTime: 2020-07-08 19:52:29
- * @LastAuthor: Dongzy
- * @FilePath: \pixiciv-pc\src\components\PublicComponents\Login\index.vue
- * @message:
- -->
+
 <template>
   <div class="login">
     <el-dialog

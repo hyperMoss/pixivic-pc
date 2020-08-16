@@ -1,11 +1,4 @@
-<!--
- * @Author: gooing
- * @since: 2020-03-14 22:38:58
- * @lastTime: 2020-07-08 20:04:07
- * @LastAuthor: Dongzy
- * @FilePath: \pixiciv-pc\src\components\PublicComponents\Login\Login.vue
- * @message:
- -->
+
 <template>
   <div class="Login">
     <el-form ref="loginForm" :model="loginForm" status-icon :rules="rules" label-width="100px" label-position="left">

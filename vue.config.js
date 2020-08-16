@@ -1,11 +1,4 @@
-/*
- * @Author: gooing
- * @since: 2020-02-02 14:59:46
- * @lastTime: 2020-07-14 20:51:58
- * @LastAuthor: Dongzy
- * @FilePath: \pixiciv-pc\vue.config.js
- * @message:
- */
+
 const path = require('path');
 
 // 去console插件

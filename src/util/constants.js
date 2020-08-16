@@ -1,11 +1,3 @@
-/*
- * @Author: gooing
- * @since: 2020-03-10 22:01:34
- * @lastTime: 2020-03-18 21:33:34
- * @LastAuthor: gooing
- * @文件相对于项目的路径: \pixiciv-pc\src\util\constants.js
- * @message:
- */
 export const modeData = [
   {
     value: 'zonghe',

@@ -1,11 +1,4 @@
-<!--
- * @Author: gooing
- * @since: 2020-03-18 22:46:31
- * @lastTime: 2020-07-08 20:31:19
- * @LastAuthor: Dongzy
- * @FilePath: \pixiciv-pc\src\components\PublicComponents\Setting\index.vue
- * @message:
- -->
+
 
 <template>
   <div class="index">

@@ -1,11 +1,4 @@
-/*
- * @Author: gooing
- * @since: 2020-03-30 21:19:05
- * @lastTime: 2020-06-01 22:41:41
- * @LastAuthor: gooing
- * @FilePath: \pixiciv-pc\src\api\modules\comment.js
- * @message:
- */
+
 import axios from '../base';
 
 // 拉取评论

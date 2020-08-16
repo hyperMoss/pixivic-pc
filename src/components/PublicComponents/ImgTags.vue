@@ -1,11 +1,4 @@
-<!--
- * @Author: gooing
- * @since: 2020-05-01 19:08:50
- * @lastTime: 2020-05-20 00:37:36
- * @LastAuthor: gooing
- * @FilePath: \pixiciv-pc\src\components\PublicComponents\ImgTags.vue
- * @message:
- -->
+
 <template>
   <div class="img-tags">
     <div>

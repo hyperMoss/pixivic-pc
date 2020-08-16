@@ -1,11 +1,4 @@
-<!--
- * @Author: gooing
- * @since: 2020-02-11 12:29:14
- * @lastTime: 2020-06-07 23:34:23
- * @LastAuthor: gooing
- * @FilePath: \pixiciv-pc\src\views\Artist\Artist.vue
- * @message:
- -->
+
 <template>
   <div class="artist">
     <keep-alive>

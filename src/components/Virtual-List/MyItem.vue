@@ -1,11 +1,4 @@
-<!--
- * @Author: gooing
- * @since: 2020-03-30 22:38:24
- * @lastTime: 2020-07-10 23:19:17
- * @LastAuthor: Dongzy
- * @FilePath: \pixiciv-pc\src\components\Virtual-List\MyItem.vue
- * @message:
- -->
+
 <template>
   <div class="my-item">
     <div class="my-item-content" :style="{height:size+'px',width:size+'px'}" @click="goDetail">

@@ -1,11 +1,4 @@
-<!--
- * @Author: gooing
- * @since: 2020-01-24 22:48:37
- * @lastTime: 2020-07-14 20:49:20
- * @LastAuthor: Dongzy
- * @FilePath: \pixiciv-pc\src\components\PublicComponents\HeaderBar.vue
- * @message:
- -->
+
 <template>
   <div class="HeaderBar">
     <el-row

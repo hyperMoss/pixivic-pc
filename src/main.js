@@ -1,19 +1,4 @@
-/*
- * @Author: gooing
- * @since: 2020-01-26 11:47:00
- * @lastTime: 2020-06-20 11:28:16
- * @LastAuthor: Dongzy
- * @FilePath: \pixiciv-pc\src\main.js
- * @message:
- */
-/*
- * @Author: gooing
- * @since: 2020-01-24 15:59:31
- * @lastTime     : 2020-01-26 10:20:04
- * @LastAuthor   : gooing
- * @文件相对于项目的路径: \pixivic-pc\src\main.js
- * @message:
- */
+
 import Vue from 'vue';
 import api from './api';
 import App from './App.vue';

@@ -1,11 +1,4 @@
-<!--
- * @Author: gooing
- * @since: 2020-05-24 12:16:50
- * @lastTime: 2020-06-07 21:45:59
- * @LastAuthor: gooing
- * @FilePath: \pixiciv-pc\src\components\Collections\CreateCollect.vue
- * @message:
--->
+
 <template>
   <div class="createCollect">
     <el-dialog

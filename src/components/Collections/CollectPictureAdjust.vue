@@ -1,11 +1,4 @@
-<!--
- * @Author: gooing
- * @since: 2020-05-27 23:21:43
- * @lastTime: 2020-06-07 23:08:31
- * @LastAuthor: gooing
- * @FilePath: \pixiciv-pc\src\components\Collections\CollectPictureAdjust.vue
- * @message:
--->
+
 <template>
   <div class="CollectPictureAdjust">
     <el-dialog

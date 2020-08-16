@@ -1,11 +1,4 @@
-<!--
- * @Author: gooing
- * @since: 2020-04-28 22:05:06
- * @lastTime: 2020-07-10 23:22:29
- * @LastAuthor: Dongzy
- * @FilePath: \pixiciv-pc\src\components\PublicComponents\ArtistList\index.vue
- * @message:
- -->
+
 <template>
   <div class="artist-list-index">
     <div

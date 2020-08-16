@@ -1,11 +1,4 @@
-<!--
- * @Author: gooing
- * @since: 2020-01-28 23:11:51
- * @lastTime: 2020-06-21 23:40:18
- * @LastAuthor: Dongzy
- * @FilePath: \pixiciv-pc\src\views\DailyRank\DailyRank.vue
- * @message:
- -->
+
 <template>
   <div class="DailyRank">
     <virtual-list

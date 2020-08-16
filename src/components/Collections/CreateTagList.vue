@@ -1,11 +1,4 @@
-<!--
- * @Author: gooing
- * @since: 2020-05-24 16:40:21
- * @lastTime: 2020-05-26 00:16:38
- * @LastAuthor: gooing
- * @FilePath: \pixiciv-pc\src\components\Collections\CreateTagList.vue
- * @message:
--->
+
 <template>
   <div class="CreateTagList">
     <el-tag

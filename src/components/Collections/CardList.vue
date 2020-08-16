@@ -1,11 +1,4 @@
-<!--
- * @Author: gooing
- * @since: 2020-06-06 16:32:11
- * @lastTime: 2020-06-07 22:31:07
- * @LastAuthor: gooing
- * @FilePath: \pixiciv-pc\src\components\Collections\CardList.vue
- * @message:
--->
+
 <template>
   <div class="CardList">
     <div v-if="!collectionList.length" style="margin:50px auto;width:200px;text-align:center;">
