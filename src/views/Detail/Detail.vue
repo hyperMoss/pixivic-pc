@@ -1,6 +1,9 @@
 
 <template>
-  <div v-if="illustDetail" class="detail">
+  <div
+    v-if="illustDetail"
+    class="detail"
+  >
     <div class="page-padding">
       <main class="detail-content">
         <figure class="detail-content__figure">
@@ -11,15 +14,27 @@
             fit="contain"
             style="width:100%;height:80vh;"
           >
-            <div slot="placeholder" class="image-slot">
-              <el-image
-                v-if="illustDetail.xrestrict==0&&illustDetail.sanityLevel<=(user ? 5 : 4)"
-                :src="illustDetail.src"
-                fit="contain"
-                style="width:100%;height:80vh;"
-              />
+            <div
+              slot="placeholder"
+              class="image-slot"
+            >
+              <div>
+                <el-image
+                  v-if="illustDetail.xrestrict==0&&illustDetail.sanityLevel<=(user ? 5 : 4)"
+                  :src="illustDetail.src"
+                  fit="contain"
+                  style="width:100%;height:80vh;"
+                />
+                <el-progress
+                  :percentage="fakeTime"
+                  style="margin-top: -20px;"
+                />
+              </div>
             </div>
-            <div slot="error" class="image-slot">
+            <div
+              slot="error"
+              class="image-slot"
+            >
               <i class="el-icon-picture-outline" />
             </div>
           </el-image>
@@ -36,7 +51,11 @@
             trigger="hover"
             content="正在施工中"
           >
-            <a v-if="likeUsers" slot="reference" class="users">
+            <a
+              v-if="likeUsers"
+              slot="reference"
+              class="users"
+            >
               <el-avatar
                 v-for="item in likeUsers"
                 :key="item.userId"
@@ -50,7 +69,10 @@
         <figcaption class="detail-content__info">
           <div class="card">
             <h1>{{ illustDetail.title }}</h1>
-            <div class="disc" v-html="illustDetail.caption" />
+            <div
+              class="disc"
+              v-html="illustDetail.caption"
+            />
             <div class="tags">
               <ul>
                 <li
@@ -73,7 +95,10 @@
                 {{ illustDetail.totalBookmarks }}
               </li>
             </ul>
-            <div class="date" title="投稿时间">
+            <div
+              class="date"
+              title="投稿时间"
+            >
               {{ illustDetail.createDate }}
             </div>
           </div>
@@ -82,11 +107,26 @@
           <Comment :pid="pid" />
         </figcaption>
         <figcaption class="detail-content__relate">
-          <h2 class="relate-title">{{ $t('relateContent') }}</h2>
+          <h2 class="relate-title">
+            {{ $t('relateContent') }}
+          </h2>
           <div>
-            <ul v-infinite-scroll="reqRelatedIllust" infinite-scroll-immediate class="relate-info" infinite-scroll-distance="10" infinite-scroll-delay="1000">
-              <li v-for="item in relatedPictureList" :key="item.id">
-                <Item :illust="item" @handleLike="handleLike" @handle-collect="setCollect" />
+            <ul
+              v-infinite-scroll="reqRelatedIllust"
+              infinite-scroll-immediate
+              class="relate-info"
+              infinite-scroll-distance="10"
+              infinite-scroll-delay="1000"
+            >
+              <li
+                v-for="item in relatedPictureList"
+                :key="item.id"
+              >
+                <Item
+                  :illust="item"
+                  @handleLike="handleLike"
+                  @handle-collect="setCollect"
+                />
                 <!-- <el-image :src="url" lazy>
                 <div slot="error" class="image-slot">
                   <i class="el-icon-picture-outline" />
@@ -95,13 +135,18 @@
               </li>
             </ul>
           </div>
-
         </figcaption>
       </main>
       <!-- 作者信息 -->
       <aside class="detail-author">
-        <section class="artist-info" @click="goArtistPage">
-          <el-avatar :src="illustDetail.avatarSrc" size="medium" />
+        <section
+          class="artist-info"
+          @click="goArtistPage"
+        >
+          <el-avatar
+            :src="illustDetail.avatarSrc"
+            size="medium"
+          />
           <h2>{{ illustDetail.artistPreView.name }}</h2>
         </section>
         <section style="margin:10px 20px;text-align:center;">
@@ -110,9 +155,11 @@
             size="small"
             type="primary"
             @click="followArtist"
-          >{{
-            illustDetail.artistPreView.isFollowed ? $t('followed') : $t('follow')
-          }}</el-button>
+          >
+            {{
+              illustDetail.artistPreView.isFollowed ? $t('followed') : $t('follow')
+            }}
+          </el-button>
         </section>
         <section class="artist-preview">
           <template v-for="item in pictureList">
@@ -124,15 +171,20 @@
               lazy
               @click.native="goDetail(item)"
             >
-              <div slot="placeholder" class="image-slot">
+              <div
+                slot="placeholder"
+                class="image-slot"
+              >
                 加载中<span class="dot">...</span>
               </div>
-              <div slot="error" class="image-slot">
+              <div
+                slot="error"
+                class="image-slot"
+              >
                 <i class="el-icon-picture-outline" />
               </div>
             </el-image>
           </template>
-
         </section>
       </aside>
     </div>
@@ -168,7 +220,8 @@ export default {
       type: 'illust',
       pictureList: [],
       relatedPictureList: [],
-      likeUsers: []
+      likeUsers: [],
+      fakeTime:0
     };
   },
   computed: {
@@ -194,7 +247,8 @@ export default {
     } else {
       this.getIllustDetail();
     }
-    this.bookmarkedUsers();
+    // this.bookmarkedUsers();
+    this.fakeLoading()
   },
   methods: {
     // 打开弹窗
@@ -205,6 +259,9 @@ export default {
         return;
       }
       this.$store.dispatch('setCollectBoolean', column);
+    },
+    fakeLoading(){
+     let interval = setInterval(()=>{ if(this.fakeTime===98){clearInterval(interval) } this.fakeTime++},200)
     },
     // 处理图片数据
     handleData(data) {

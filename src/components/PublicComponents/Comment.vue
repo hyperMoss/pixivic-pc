@@ -1,8 +1,15 @@
 
 <template>
   <div class="container">
-    <div v-for="item in comments" :key="item.id" class="comment">
-      <div class="info" @click="goUserHomePage(item.replyFrom)">
+    <div
+      v-for="item in comments"
+      :key="item.id"
+      class="comment"
+    >
+      <div
+        class="info"
+        @click="goUserHomePage(item.replyFrom)"
+      >
         <img
           class="avatar"
           :src="
@@ -14,18 +21,31 @@
           height="36"
         >
         <div class="right">
-          <div class="name">{{ item.replyFromName }}</div>
-          <div class="date">{{ item.createDate | dateFormat }}</div>
+          <div class="name">
+            {{ item.replyFromName }}
+          </div>
+          <div class="date">
+            {{ item.createDate | dateFormat }}
+          </div>
         </div>
       </div>
       <div style="padding-left:44px;">
-        <div class="content">{{ item.content }}</div>
+        <div class="content">
+          {{ item.content }}
+        </div>
         <div class="control">
-          <span class="like" :class="{active: item.isLike}" @click="likeClick(item)">
+          <span
+            class="like"
+            :class="{active: item.isLike}"
+            @click="likeClick(item)"
+          >
             <i class="iconfont icon-like" />
             <span class="like-num"> <i class="el-icon-caret-top" /> {{ item.likedCount > 0 ? item.likedCount + '人赞' : '赞' }}</span>
           </span>
-          <span class="comment-reply" @click="showCommentInput(item, 1)">
+          <span
+            class="comment-reply"
+            @click="showCommentInput(item, 1)"
+          >
             <i class="iconfont el-icon-chat-square" />
             <span>回复</span>
           </span>
@@ -34,7 +54,11 @@
 
       <div class="reply">
         <template v-if="item.subCommentList">
-          <div v-for="reply in item.subCommentList" :key="reply.id" class="comment-item">
+          <div
+            v-for="reply in item.subCommentList"
+            :key="reply.id"
+            class="comment-item"
+          >
             <div class="reply-content">
               <span class="from-name">{{ reply.replyFromName }}</span><span>: </span>
               <span class="to-name">@{{ reply.replyToName }}</span>
@@ -42,7 +66,10 @@
             </div>
             <div class="reply-bottom">
               <span>{{ reply.date }}</span>
-              <span class="reply-text" @click="showCommentInput(item, 1)">
+              <span
+                class="reply-text"
+                @click="showCommentInput(item, 1)"
+              >
                 <i class="iconfont el-icon-chat-square" />
                 <span>回复</span>
               </span>
@@ -64,28 +91,41 @@
               placeholder="写下你的评论..."
             />
             <div class="btn-control">
-              <span class="cancel" @click="cancel">取消</span>
+              <span
+                class="cancel"
+                @click="cancel"
+              >取消</span>
               <el-button
                 class="btn"
                 type="primary"
                 round
                 @click="submitComment(item)"
-              >确定</el-button>
+              >
+                确定
+              </el-button>
             </div>
           </div>
         </transition>
       </div>
     </div>
-    <div> <el-pagination
-      layout="prev, pager, next"
-      :total="50">
-    </el-pagination></div>
-    <div class="write-reply" @click="showCommentInput()">
+    <div>
+      <!--      <el-pagination-->
+      <!--      layout="prev, pager, next"-->
+      <!--      :total="50">-->
+      <!--    </el-pagination>-->
+    </div>
+    <div
+      class="write-reply"
+      @click="showCommentInput()"
+    >
       <i class="el-icon-edit" />
       <span class="add-comment">添加新评论</span>
     </div>
     <transition name="fade">
-      <div v-if="showItemId === 'new'" class="input-wrapper">
+      <div
+        v-if="showItemId === 'new'"
+        class="input-wrapper"
+      >
         <el-input
           v-model="inputComment"
           class="gray-bg-input"
@@ -95,13 +135,18 @@
           placeholder="写下你的评论..."
         />
         <div class="btn-control">
-          <span class="cancel" @click="cancel">取消</span>
+          <span
+            class="cancel"
+            @click="cancel"
+          >取消</span>
           <el-button
             class="btn"
             type="primary"
             round
             @click="submitComment()"
-          >确定</el-button>
+          >
+            确定
+          </el-button>
         </div>
       </div>
     </transition>
@@ -151,7 +196,6 @@ export default {
         .then(res => {
           if (res.status === 200) {
             this.comments = res.data.data || [];
-            this.total=res.data.data()
           }
         });
     },
