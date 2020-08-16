@@ -12,11 +12,12 @@
       v-if="fatherMounted"
       :key="identifier"
       :list="pictureList"
+      :list-height="scrollHeight"
       @infinite="infinite"
     >
       <el-popover
         placement="left"
-        style="position:fixed;z-index:999;right:40px;bottom:20px;"
+        style="position:fixed;z-index:999;right:40px;bottom:100px;"
         trigger="hover"
         width="300"
       >
@@ -57,6 +58,7 @@
 
 <script>
 import dayjs from 'dayjs';
+import { getClient } from '@/util/dom';
 import VirtualList from '@/components/Virtual-List/VirtualList';
 
 export default {
@@ -104,7 +106,11 @@ export default {
       },
     };
   },
-  computed: {},
+  computed: {
+    scrollHeight() {
+      return getClient().height - 60;
+    }
+  },
   watch: {},
   mounted() {
     localStorage.setItem('waterfull-column', 4);
