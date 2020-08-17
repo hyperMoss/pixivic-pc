@@ -5,7 +5,11 @@ import axios from '../base';
 function getComments(params) {
   return axios({
     url: `${params.commentAppType}/${params.commentAppId}/comments`,
-    method: 'get'
+    method: 'get',
+    params: {
+      page: params.page || 1,
+      pageSize: params.pageSize || 10,
+    }
   });
 }
 

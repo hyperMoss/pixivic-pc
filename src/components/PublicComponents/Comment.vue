@@ -109,10 +109,13 @@
       </div>
     </div>
     <div>
-      <!--      <el-pagination-->
-      <!--      layout="prev, pager, next"-->
-      <!--      :total="50">-->
-      <!--    </el-pagination>-->
+      <el-pagination
+        style="display: flex;justify-content: center;"
+        layout="prev, pager, next"
+        :total="total"
+        :current-page.sync="pageIndex"
+        @current-change="getCommentsList"
+      />
     </div>
     <div
       class="write-reply"
@@ -172,7 +175,10 @@ export default {
       comments: [],
       copyComment: '',
       inputComment: '',
-      showItemId: ''
+      showItemId: '',
+      total:0,
+      pageSize: 20,
+      pageIndex:1,
     };
   },
   computed: {
@@ -191,11 +197,13 @@ export default {
       this.$api.comment.getComments({
         commentAppType: this.$props.commentType,
         commentAppId: this.pid,
-        pageSize:20
+        pageSize:10,
+        page:this.pageIndex
       })
         .then(res => {
           if (res.status === 200) {
             this.comments = res.data.data || [];
+            this.total=res.data.total;
           }
         });
     },

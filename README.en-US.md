@@ -22,6 +22,7 @@ A simple pixiviv picture tool website,power by vue ,vue-router,vuex
 - [ x ]  Search Module
 - [ x ]  Rank Module
 - [ x ]  Collection Module
+- [ x ]  i18n
 
 ## Project start
 
