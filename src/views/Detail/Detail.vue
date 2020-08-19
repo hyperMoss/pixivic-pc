@@ -9,7 +9,7 @@
 <template>
   <div v-if="illustDetail" class="detail">
     <div class="page-padding">
-      <main class="detail-content">
+      <div class="detail-content">
         <figure class="detail-content__figure">
           <el-image
             v-if="illustDetail.xrestrict==0&&illustDetail.sanityLevel<=(user ? 5 : 4)"
@@ -88,7 +88,7 @@
           <div>
             <ul v-infinite-scroll="reqRelatedIllust" infinite-scroll-immediate class="relate-info" infinite-scroll-distance="10" infinite-scroll-delay="1000">
               <li v-for="item in relatedPictureList" :key="item.id">
-                <Item :illust="item" @handleLike="handleLike" @handle-collect="setCollect" />
+                <Item :illust="item" @handleLike="handleLike" @handle-collect="setCollect" style="height: 20vh;width: 20vh" />
                 <!-- <el-image :src="url" lazy>
                 <div slot="error" class="image-slot">
                   <i class="el-icon-picture-outline" />
@@ -99,14 +99,14 @@
           </div>
 
         </figcaption>
-      </main>
+      </div>
       <!-- 作者信息 -->
       <aside class="detail-author">
-        <section class="artist-info" @click="goArtistPage">
+        <div class="artist-info" @click="goArtistPage">
           <el-avatar :src="illustDetail.avatarSrc" size="medium" />
           <h2>{{ illustDetail.artistPreView.name }}</h2>
-        </section>
-        <section style="margin:10px 20px;text-align:center;">
+        </div>
+        <div style="margin:10px 20px;text-align:center;">
           <el-button
             round
             size="small"
@@ -115,8 +115,8 @@
           >{{
             illustDetail.artistPreView.isFollowed ? $t('followed') : $t('follow')
           }}</el-button>
-        </section>
-        <section class="artist-preview">
+        </div>
+        <div class="artist-preview">
           <template v-for="item in pictureList">
             <el-image
               :key="item.id"
@@ -135,7 +135,7 @@
             </el-image>
           </template>
 
-        </section>
+        </div>
       </aside>
     </div>
   </div>
@@ -386,7 +386,7 @@ export default {
   }
 }
 .detail {
-  max-height: calc(~"100vh - 60px");
+  max-height: calc(~"100vh - 4rem");
   display: flex;
   justify-content: center;
   .page-padding {
@@ -394,8 +394,8 @@ export default {
     display: flex;
   }
   &-content {
-    width: 1000px;
-    flex: 0 0 auto;
+    width: 80%;
+    flex:1  0 auto;
     background-color: #fff;
     &__figure {
       margin: 20px;
@@ -433,7 +433,7 @@ export default {
         width: 800px;
         h1 {
           color: rgb(28, 28, 28);
-          font-size: 20px;
+          font-size: .25rem;
           line-height: 24px;
           font-weight: bold;
           margin: 0px 0px 8px;
@@ -470,16 +470,16 @@ export default {
           padding: 0px;
           li {
             flex: 0 0 auto;
-            margin: 0px 8px;
+            margin: 0 0.5em;
             display: list-item;
             text-align: -webkit-match-parent;
-            font-size: 12px;
+            font-size: 0.75rem;
             color: rgb(173, 173, 173);
           }
         }
         .date {
           color: rgb(173, 173, 173);
-          font-size: 12px;
+          font-size: 0.75rem;
           line-height: 1;
         }
       }
@@ -487,7 +487,7 @@ export default {
     &__relate {
       padding: 0px 16px;
       .relate-title {
-        font-size: 20px;
+        font-size: .25rem;
         line-height: 28px;
         color: rgba(0, 0, 0, 0.64);
         margin: 0px;
@@ -495,29 +495,27 @@ export default {
       .relate-info {
         list-style: none;
         display: grid;
-        gap: 24px;
+        gap: 2em;
         flex-wrap: wrap;
-        grid-template-columns: repeat(auto-fit, 184px);
+        grid-template-columns: repeat(auto-fit, 20vh);
         -webkit-box-pack: center;
         justify-content: flex-start;
-        margin: 0px;
-        margin-bottom: 20px;
-        padding: 0px;
+        margin-bottom: 2em;
+        padding-inline-start: 0;
       }
     }
   }
   &-author {
-    margin-left: 24px;
-    width: 288px;
-    flex: 0 0 auto;
+    width: 20%;
+    flex: 1 0 auto;
     background: #fdfdfd;
     .artist-info {
       display: flex;
-      padding: 16px;
-      border-radius: 8px;
+      padding: 1em;
+      border-radius: 0.5em;
       align-items: center;
       h2 {
-        font-size: 1em;
+        font-size: 1rem;
         font-weight: bold;
         margin-left: 6px;
         word-break: break-all;

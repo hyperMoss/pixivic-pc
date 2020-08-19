@@ -8,11 +8,11 @@
  -->
 <template>
   <div class="my-item">
-    <div class="my-item-content" :style="{height:size+'px',width:size+'px'}" @click="goDetail">
+    <div class="my-item-content" @click="goDetail">
       <el-image
         :src="illust.imageUrls[0].medium | replaceSmall"
         fit="cover"
-        :style="{height:size+'px',width:size+'px'}"
+        style="height:100%;width:100%"
       >
         <div slot="error" class="image-slot">
           <i class="el-icon-picture-outline" />
@@ -91,7 +91,7 @@ export default {
     position: relative;
     width: 100%;
     height: 100%;
-    border-radius: 16px;
+    border-radius: 1em;
     overflow: hidden;
 
     img {
