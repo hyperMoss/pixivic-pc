@@ -1,14 +1,13 @@
-<!--
- * @Author: gooing
- * @since: 2020-03-26 23:16:26
- * @lastTime: 2020-05-24 12:35:49
- * @LastAuthor: gooing
- * @FilePath: \pixiciv-pc\src\views\User\Followed\index.vue
- * @message:
- -->
+
 <template>
   <div class="followed">
-    <artist-list v-if="artistList.length" :loading="loading" :artist-list="artistList" @on-scroll="getFollowArtists" @follow-artist="follow" />
+    <artist-list
+      v-if="artistList.length"
+      :loading="loading"
+      :artist-list="artistList"
+      @on-scroll="getFollowArtists"
+      @follow-artist="follow"
+    />
     <div v-else style="margin: 50px auto 0; width:300px;text-align: center;">
       <svg font-size="160" class="icon" aria-hidden="true">
         <use xlink:href="#pickongtai1" />
@@ -121,9 +120,9 @@ export default {
 
 <style scoped lang="less">
 .followed {
-
   height: calc(~"100vh - 60px");
   overflow: hidden;
+  overflow-y: scroll;
   background: #fff;
 }
 </style>

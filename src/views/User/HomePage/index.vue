@@ -1,11 +1,4 @@
-<!--
- * @Author: gooing
- * @since: 2020-03-30 21:25:23
- * @lastTime: 2020-06-08 00:12:46
- * @LastAuthor: gooing
- * @FilePath: \pixiciv-pc\src\views\User\HomePage\index.vue
- * @message:
- -->
+
 <template>
   <div class="home-page">
     <div v-if="userInfo" class="artist_property">

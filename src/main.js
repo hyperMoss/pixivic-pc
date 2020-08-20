@@ -1,19 +1,4 @@
-/*
- * @Author: gooing
- * @since: 2020-01-26 11:47:00
- * @lastTime: 2020-06-20 11:28:16
- * @LastAuthor: Dongzy
- * @FilePath: \pixiciv-pc\src\main.js
- * @message:
- */
-/*
- * @Author: gooing
- * @since: 2020-01-24 15:59:31
- * @lastTime     : 2020-01-26 10:20:04
- * @LastAuthor   : gooing
- * @文件相对于项目的路径: \pixivic-pc\src\main.js
- * @message:
- */
+
 import Vue from 'vue';
 import api from './api';
 import App from './App.vue';
@@ -22,14 +7,15 @@ import store from './store/';
 import './styles/reset.less';
 import './styles/public-style.less';
 import VuePageStack from 'vue-page-stack';
-import ElementUI from 'element-ui';
 import 'element-ui/lib/theme-chalk/index.css';
 import { replaceBigImg, replaceSmallImg } from '@/util';
 import i18n from './i18n';
+import ElementUI from 'element-ui';
+
+Vue.use(ElementUI);
 Vue.config.productionTip = false;
 Vue.use(VuePageStack, { router, keyName: 'VNK' });
-Vue.use(ElementUI);
-router.onError((error) => {
+router.onError(error => {
   const pattern = /Loading chunk (\d)+ failed/g;
   const isChunkLoadFailed = error.message.match(pattern);
   const targetPath = router.history.pending.fullPath;
@@ -87,7 +73,12 @@ Vue.filter('dateFormat', val => {
 Vue.filter('replaceBig', val => replaceBigImg(val));
 Vue.filter('replaceSmall', val => replaceSmallImg(val));
 Vue.filter('replaceAvatar', val => `https://pic.cheerfun.dev/${val}.png`);
-Vue.filter('replaceSquare', val => 'https://img.cheerfun.dev:233/c/360x360_70/img-master' + val.split('img-master')[1]);
+Vue.filter(
+  'replaceSquare',
+  val =>
+    'https://original.img.cheerfun.dev/c/360x360_70/img-master' +
+    val.split('img-master')[1]
+);
 
 Vue.prototype.$api = api;
 new Vue({

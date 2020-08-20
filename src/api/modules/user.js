@@ -168,6 +168,13 @@ function checkQQ(userId) {
     method: 'get'
   });
 }
+// 检查是否绑定qq
+function unLinkQQ(userId) {
+  return axios({
+    url: `/users/${userId}/qqAccessToken`,
+    method: 'delete'
+  });
+}
 
 // 查看用户信息
 function getUsers(userId) {
@@ -245,6 +252,7 @@ export {
   qqLogin,
   qqAccess,
   checkQQ,
+  unLinkQQ,
   getUsers,
   getFollowers,
   getArtists,

@@ -1,11 +1,4 @@
-/*
- * @Author: gooing
- * @since: 2020-02-02 14:59:46
- * @lastTime: 2020-05-23 21:14:38
- * @LastAuthor: gooing
- * @FilePath: \pixiciv-pc\src\api\index.js
- * @message:
- */
+
 import * as rank from './modules/rank';
 import * as detail from './modules/detail';
 import * as search from './modules/search';

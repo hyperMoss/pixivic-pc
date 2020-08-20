@@ -1,11 +1,4 @@
-/*
- * @Author: gooing
- * @since: 2020-02-02 14:59:46
- * @lastTime: 2020-07-14 20:55:43
- * @LastAuthor: Dongzy
- * @FilePath: \pixiciv-pc\src\api\base.js
- * @message:
- */
+
 import axios from 'axios';
 import cookie from 'js-cookie';
 import i18n from '../i18n';

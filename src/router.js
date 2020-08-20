@@ -1,11 +1,4 @@
-/*
- * @Author: gooing
- * @since: 2020-01-26 11:47:00
- * @lastTime: 2020-07-08 20:27:46
- * @LastAuthor: Dongzy
- * @FilePath: \pixiciv-pc\src\router.js
- * @message:
- */
+
 import Vue from 'vue';
 import VueRouter from 'vue-router';
 

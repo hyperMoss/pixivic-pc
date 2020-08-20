@@ -1,41 +1,36 @@
-<!--
- * @Author: gooing
- * @since: 2020-03-18 22:46:31
- * @lastTime: 2020-07-08 20:31:19
- * @LastAuthor: Dongzy
- * @FilePath: \pixiciv-pc\src\components\PublicComponents\Setting\index.vue
- * @message:
- -->
+
 
 <template>
   <div class="index">
     <el-dialog
       :visible.sync="localVisible"
       title="设置"
-      width="30%"
+      width="500px"
       @close="handleClose"
     >
       <div class="modal-body">
         <div class="btn-list">
           <p>
-            <el-button
-              :disabled="isCheckEmail"
-              @click="verifyEmail"
-            >{{ isCheckEmail?'已验证邮箱':'验证邮箱' }}</el-button>
+            <el-button :disabled="isCheckEmail" @click="verifyEmail">
+              {{ isCheckEmail ? "已验证邮箱" : "验证邮箱" }}
+            </el-button>
           </p>
 
           <p>
-            <el-button
-              :disabled="isConnectQQ"
-              @click="bindQQ"
-            >{{ isConnectQQ?'已绑定QQ':'绑定QQ' }}</el-button>
+            <el-button :disabled="isConnectQQ" @click="bindQQ">
+              {{ isConnectQQ ? "已绑定QQ" : "绑定QQ" }}
+            </el-button>
           </p>
           <p>
-            <el-button
-              @click="resetPassword"
-            >重置密码</el-button>
+            <el-button @click="resetPassword">
+              重置密码
+            </el-button>
           </p>
-
+          <p>
+            <el-button :disabled="!isConnectQQ" @click="unLinkQQ">
+              解绑QQ
+            </el-button>
+          </p>
         </div>
 
         <div class="change-avatar">
@@ -48,7 +43,9 @@
             class="cropper"
           />
           <div class="upload">
-            <el-button class="btn">上传图片</el-button>
+            <el-button class="btn">
+              上传图片
+            </el-button>
             <input
               id="uploads"
               ref="fileHander"
@@ -56,11 +53,12 @@
               type="file"
               @change="handleLocalImg($event)"
             >
-            <el-button :loading="loading" @click="saveAvatar">确定头像</el-button>
+            <el-button :loading="loading" @click="saveAvatar">
+              确定头像
+            </el-button>
           </div>
         </div>
       </div>
-
     </el-dialog>
   </div>
 </template>
@@ -74,12 +72,12 @@ export default {
   props: {
     settingVisible: {
       type: Boolean,
-      default: false,
+      default: false
     },
     user: {
       type: Object,
-      default: () => {},
-    },
+      default: () => {}
+    }
   },
   data() {
     return {
@@ -87,7 +85,7 @@ export default {
         img: `https://pic.cheerfun.dev/53.png`,
         size: 0.1,
         autoCrop: true,
-        fixed: true,
+        fixed: true
       },
       dialog: false,
       loading: false,
@@ -95,7 +93,7 @@ export default {
       columns: ['自动', 1, 2, 3, 4],
       isCheckEmail: false,
       isConnectQQ: false,
-      column: 1,
+      column: 1
     };
   },
   computed: {
@@ -103,8 +101,8 @@ export default {
       get() {
         return this.settingVisible;
       },
-      set() {},
-    },
+      set() {}
+    }
   },
   watch: {},
   mounted() {
@@ -127,15 +125,13 @@ export default {
     },
     // 重置密码
     resetPassword() {
-      this.$api.user
-        .resetPasswordEmail(this.user.email)
-        .then(res => {
-          if (res.status === 200) {
-            this.$message.info('请注意邮箱内的重置密码邮件');
-          } else {
-            this.$message.error('重置密码发起错误');
-          }
-        });
+      this.$api.user.resetPasswordEmail(this.user.email).then(res => {
+        if (res.status === 200) {
+          this.$message.info('请注意邮箱内的重置密码邮件');
+        } else {
+          this.$message.error('重置密码发起错误');
+        }
+      });
     },
     // 处理本地图片
     handleLocalImg(e) {
@@ -165,10 +161,14 @@ export default {
       this.loading = true;
       this.$refs.cropper.getCropBlob(async data => {
         const type = data.type.split('/')[1];
-        const files = new File([data], `${this.user.id}.${type}`, { type: data.type });
+        const files = new File([data], `${this.user.id}.${type}`, {
+          type: data.type
+        });
         const formData = new FormData();
         formData.append('file', files);
-        const result = await this.$api.search.uploadImg(formData, { userId: this.user.id });
+        const result = await this.$api.search.uploadImg(formData, {
+          userId: this.user.id
+        });
         if (result.status === 200) {
           this.$message.success('更新头像成功');
         } else {
@@ -180,6 +180,13 @@ export default {
     bindQQ() {
       window.open(QQ_LINK);
     },
+    // 解绑qq
+    unLinkQQ() {
+      this.$api.user.unLinkQQ(this.user.id).then(res => {
+        this.$message.success(res.data.message);
+        this.isConnectQQ = false;
+      });
+    },
     verifyEmail() {
       this.$api.user.vertifyEmail(this.user.email).then(res => {
         this.$message.success(res.data.message);
@@ -188,18 +195,18 @@ export default {
     // 处理窗口关闭
     handleClose() {
       this.$emit('update:settingVisible', false);
-    },
-  },
+    }
+  }
 };
 </script>
 
 <style scoped lang="less">
-.modal-body{
+.modal-body {
   display: flex;
   justify-content: space-between;
 }
-.btn-list{
-width: 100px;
+.btn-list {
+  width: 100px;
 }
 .change-avatar {
   width: 250px;

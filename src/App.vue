@@ -1,11 +1,4 @@
-<!--
- * @Author: gooing
- * @since: 2020-01-26 11:47:00
- * @lastTime: 2020-06-21 23:35:40
- * @LastAuthor: Dongzy
- * @FilePath: \pixiciv-pc\src\App.vue
- * @message:
- -->
+
 <template>
   <div id="app">
     <el-container class="page-container" style="overflow: hidden;">
@@ -23,7 +16,7 @@
         <!-- 主要页面开始 -->
         <el-main class="window-view">
           <vue-page-stack>
-            <router-view :key="key" style="overflow-y: auto;max-height: calc(~'100vh - 60px');" />
+            <router-view :key="key" style="max-height: calc(~'100vh - 60px');" />
           </vue-page-stack>
         </el-main>
         <!-- 主要页面结束 -->

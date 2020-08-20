@@ -1,11 +1,4 @@
-/*
- * @Author: gooing
- * @since: 2020-02-02 14:59:46
- * @lastTime: 2020-06-01 21:13:23
- * @LastAuthor: gooing
- * @FilePath: \pixiciv-pc\src\store\mutation-types.js
- * @message:
- */
+
 export const SET_USER = 'SET_USER';
 export const ADD_CACHED_VIEWS = 'ADD_CACHED_VIEWS';
 export const DEL_CACHED_VIEW = 'DEL_CACHED_VIEW';

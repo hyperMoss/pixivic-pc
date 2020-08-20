@@ -1,11 +1,4 @@
-<!--
- * @Author: gooing
- * @since: 2020-02-11 12:30:17
- * @lastTime: 2020-04-02 21:13:13
- * @LastAuthor: gooing
- * @FilePath: \pixiciv-pc\src\views\Donate\Donate.vue
- * @message:
- -->
+
 <template>
   <div class="Donate">
     <el-card class="donate-card">

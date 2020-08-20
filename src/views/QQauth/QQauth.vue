@@ -1,11 +1,3 @@
-<!--
- * @Author: gooing
- * @since: 2020-03-19 00:33:52
- * @lastTime: 2020-07-08 20:10:46
- * @LastAuthor: Dongzy
- * @FilePath: \pixiciv-pc\src\views\QQauth\QQauth.vue
- * @message:
- -->
 <template>
   <div class="QQauth">绑定中请等待</div>
 </template>

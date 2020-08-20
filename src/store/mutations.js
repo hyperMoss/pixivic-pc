@@ -1,11 +1,4 @@
-/*
- * @Author: gooing
- * @since: 2020-02-02 14:59:46
- * @lastTime: 2020-06-01 21:13:02
- * @LastAuthor: gooing
- * @FilePath: \pixiciv-pc\src\store\mutations.js
- * @message:
- */
+
 import * as types from './mutation-types';
 
 const mutations = {
@@ -40,7 +33,8 @@ const mutations = {
   [types.SET_DETAIL](state, data) {
     state.detail = data;
   },
-  [types.SET_LOGIN_BOOLEAN](state) {
+  [types.SET_LOGIN_BOOLEAN](state, data = true) {
+    state.loginOrSign = data;
     state.loginBoolean = !state.loginBoolean;
   },
   [types.SET_COOLECT_BOOLEAN](state, data) {

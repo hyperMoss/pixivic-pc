@@ -1,22 +1,16 @@
-<!--
- * @Author: gooing
- * @since: 2020-01-28 23:11:51
- * @lastTime: 2020-06-21 23:40:18
- * @LastAuthor: Dongzy
- * @FilePath: \pixiciv-pc\src\views\DailyRank\DailyRank.vue
- * @message:
- -->
+
 <template>
   <div class="DailyRank">
     <virtual-list
       v-if="fatherMounted"
       :key="identifier"
-      :get-data-ajax="getData"
+      :list="pictureList"
+      :list-height="scrollHeight"
       @infinite="infinite"
     >
       <el-popover
         placement="left"
-        style="position:fixed;z-index:999;right:40px;bottom:20px;"
+        style="position:fixed;z-index:999;right:40px;bottom:100px;"
         trigger="hover"
         width="300"
       >
@@ -57,7 +51,8 @@
 
 <script>
 import dayjs from 'dayjs';
-import VirtualList from '@/components/VirtualList/index';
+import { getClient } from '@/util/dom';
+import VirtualList from '@/components/Virtual-List/VirtualList';
 
 export default {
   name: 'DailyRank',
@@ -104,7 +99,11 @@ export default {
       },
     };
   },
-  computed: {},
+  computed: {
+    scrollHeight() {
+      return getClient().height - 60;
+    }
+  },
   watch: {},
   mounted() {
     localStorage.setItem('waterfull-column', 4);

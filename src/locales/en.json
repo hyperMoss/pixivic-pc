@@ -31,5 +31,6 @@
   "resetPassword": "Forget",
   "checkPassword": "Confirm password",
   "email": "Email",
-  "usernameOrEmail": "Username or email"
+  "usernameOrEmail": "Username or email",
+  "signUp": "Sign up"
 }

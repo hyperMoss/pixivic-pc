@@ -1,11 +1,3 @@
-<!--
- * @Author: gooing
- * @since: 2020-03-14 22:38:49
- * @lastTime: 2020-03-15 13:23:08
- * @LastAuthor: gooing
- * @FilePath: \pixiciv-pc\src\components\PublicComponents\Login\Register.vue
- * @message:
- -->
 <template>
   <div class="register">
     <el-form
@@ -84,9 +76,6 @@
         </el-row>
       </el-form-item>
       <el-form-item>
-        <el-button @click="toLogin">
-          {{ $t('login') }}
-        </el-button>
         <el-button
           type="primary"
           :loading="loading"
@@ -231,11 +220,6 @@ export default {
           return false;
         }
       });
-    },
-    // 跳转登录
-    toLogin() {
-      this.resetForm('ruleForm');
-      this.$emit('typeChange');
     },
     // 重置数据
     resetForm(formName) {

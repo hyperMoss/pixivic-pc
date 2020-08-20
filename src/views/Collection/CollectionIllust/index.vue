@@ -1,11 +1,4 @@
-<!--
- * @Author: gooing
- * @since: 2020-05-27 21:42:07
- * @lastTime: 2020-06-07 23:26:12
- * @LastAuthor: gooing
- * @FilePath: \pixiciv-pc\src\views\Collection\CollectionIllust\index.vue
- * @message:
--->
+
 <template>
   <div class="collectionsIllust">
     <VirtualList

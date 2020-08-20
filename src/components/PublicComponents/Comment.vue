@@ -1,15 +1,14 @@
-<!--
- * @Author: gooing
- * @since: 2020-04-02 18:05:53
- * @lastTime: 2020-06-08 00:11:46
- * @LastAuthor: gooing
- * @FilePath: \pixiciv-pc\src\components\PublicComponents\Comment.vue
- * @message:
- -->
 <template>
   <div class="container">
-    <div v-for="item in comments" :key="item.id" class="comment">
-      <div class="info" @click="goUserHomePage(item.replyFrom)">
+    <div
+      v-for="item in comments"
+      :key="item.id"
+      class="comment"
+    >
+      <div
+        class="info"
+        @click="goUserHomePage(item.replyFrom)"
+      >
         <img
           class="avatar"
           :src="
@@ -21,18 +20,32 @@
           height="36"
         >
         <div class="right">
-          <div class="name">{{ item.replyFromName }}</div>
-          <div class="date">{{ item.createDate | dateFormat }}</div>
+          <div class="name">
+            {{ item.replyFromName }}
+          </div>
+          <div class="date">
+            {{ item.createDate | dateFormat }}
+          </div>
         </div>
       </div>
       <div style="padding-left:44px;">
-        <div class="content">{{ item.content }}</div>
+        <div class="content">
+          {{ item.content }}
+        </div>
         <div class="control">
-          <span class="like" :class="{active: item.isLike}" @click="likeClick(item)">
+          <span
+            class="like"
+            :class="{active: item.isLike}"
+            @click="likeClick(item)"
+          >
             <i class="iconfont icon-like" />
-            <span class="like-num"> <i class="el-icon-caret-top" /> {{ item.likedCount > 0 ? item.likedCount + '人赞' : '赞' }}</span>
+            <span class="like-num"> <i class="el-icon-caret-top" />
+              {{ item.likedCount > 0 ? item.likedCount + '人赞' : '赞' }}</span>
           </span>
-          <span class="comment-reply" @click="showCommentInput(item, 1)">
+          <span
+            class="comment-reply"
+            @click="showCommentInput(item, 1)"
+          >
             <i class="iconfont el-icon-chat-square" />
             <span>回复</span>
           </span>
@@ -41,7 +54,11 @@
 
       <div class="reply">
         <template v-if="item.subCommentList">
-          <div v-for="reply in item.subCommentList" :key="reply.id" class="comment-item">
+          <div
+            v-for="reply in item.subCommentList"
+            :key="reply.id"
+            class="comment-item"
+          >
             <div class="reply-content">
               <span class="from-name">{{ reply.replyFromName }}</span><span>: </span>
               <span class="to-name">@{{ reply.replyToName }}</span>
@@ -49,7 +66,10 @@
             </div>
             <div class="reply-bottom">
               <span>{{ reply.date }}</span>
-              <span class="reply-text" @click="showCommentInput(item, 1)">
+              <span
+                class="reply-text"
+                @click="showCommentInput(item, 1)"
+              >
                 <i class="iconfont el-icon-chat-square" />
                 <span>回复</span>
               </span>
@@ -71,24 +91,44 @@
               placeholder="写下你的评论..."
             />
             <div class="btn-control">
-              <span class="cancel" @click="cancel">取消</span>
+              <span
+                class="cancel"
+                @click="cancel"
+              >取消</span>
               <el-button
                 class="btn"
                 type="primary"
                 round
                 @click="submitComment(item)"
-              >确定</el-button>
+              >
+                确定
+              </el-button>
             </div>
           </div>
         </transition>
       </div>
     </div>
-    <div class="write-reply" @click="showCommentInput()">
+    <div>
+      <el-pagination
+        style="display: flex;justify-content: center;"
+        layout="prev, pager, next"
+        :total="total"
+        :current-page.sync="pageIndex"
+        @current-change="getCommentsList"
+      />
+    </div>
+    <div
+      class="write-reply"
+      @click="showCommentInput()"
+    >
       <i class="el-icon-edit" />
       <span class="add-comment">添加新评论</span>
     </div>
     <transition name="fade">
-      <div v-if="showItemId === 'new'" class="input-wrapper">
+      <div
+        v-if="showItemId === 'new'"
+        class="input-wrapper"
+      >
         <el-input
           v-model="inputComment"
           class="gray-bg-input"
@@ -98,13 +138,18 @@
           placeholder="写下你的评论..."
         />
         <div class="btn-control">
-          <span class="cancel" @click="cancel">取消</span>
+          <span
+            class="cancel"
+            @click="cancel"
+          >取消</span>
           <el-button
             class="btn"
             type="primary"
             round
             @click="submitComment()"
-          >确定</el-button>
+          >
+            确定
+          </el-button>
         </div>
       </div>
     </transition>
@@ -113,6 +158,7 @@
 
 <script>
 import { mapGetters } from 'vuex';
+
 export default {
   components: {},
   props: {
@@ -130,7 +176,10 @@ export default {
       comments: [],
       copyComment: '',
       inputComment: '',
-      showItemId: ''
+      showItemId: '',
+      total: 0,
+      pageSize: 20,
+      pageIndex: 1,
     };
   },
   computed: {
@@ -148,11 +197,14 @@ export default {
     getCommentsList() {
       this.$api.comment.getComments({
         commentAppType: this.$props.commentType,
-        commentAppId: this.pid
+        commentAppId: this.pid,
+        pageSize: 10,
+        page: this.pageIndex
       })
         .then(res => {
           if (res.status === 200) {
             this.comments = res.data.data || [];
+            this.total = res.data.total || 0;
           }
         });
     },
@@ -234,6 +286,7 @@ export default {
             const params = { ...data, createDate: new Date(), replyFrom: this.user.id, id: Math.random() };
             if (params.parentId === 0) {
               this.comments.push(params);
+              this.total++;
             } else {
               const item = this.comments.find(item => item.id === params.parentId);
               if (item.subCommentList) {
@@ -284,6 +337,7 @@ export default {
   width: 100%;
   padding: 0 10px;
   box-sizing: border-box;
+
   .write-reply {
     display: flex;
     align-items: center;
@@ -291,149 +345,182 @@ export default {
     color: @text-minor;
     padding: 10px;
     cursor: pointer;
+
     &:hover {
       color: @text-main;
     }
+
     .el-icon-edit {
       margin-right: 5px;
     }
   }
+
   .comment {
     display: flex;
     flex-direction: column;
     padding: 10px;
     border-bottom: 1px solid @border-fourth;
+
     .info {
       display: flex;
       align-items: center;
+
       .avatar {
         border-radius: 50%;
       }
+
       .right {
         display: flex;
         flex-direction: column;
         margin-left: 10px;
+
         .name {
           font-size: 16px;
           color: @text-main;
           margin-bottom: 5px;
           font-weight: 500;
         }
+
         .date {
           font-size: 12px;
           color: @text-minor;
         }
       }
     }
+
     .content {
       font-size: 16px;
       color: @text-main;
       line-height: 20px;
       padding: 10px 0;
     }
+
     .control {
       display: flex;
       align-items: center;
       font-size: 14px;
       color: @text-minor;
+
       .like {
         display: flex;
         align-items: center;
         margin-right: 20px;
         cursor: pointer;
+
         &.active,
         &:hover {
           color: @color-main;
         }
+
         .iconfont {
           font-size: 14px;
           margin-right: 5px;
         }
       }
+
       .comment-reply {
         display: flex;
         align-items: center;
         cursor: pointer;
+
         &:hover {
           color: @text-333;
         }
+
         .iconfont {
           font-size: 16px;
           margin-right: 5px;
         }
       }
     }
+
     .reply {
       margin: 10px 44px;
       border-left: 2px solid @border-first;
+
       .comment-item {
         margin: 0 10px;
         padding: 10px 0;
         border-bottom: 1px dashed @border-third;
+
         .reply-content {
           display: flex;
           align-items: center;
           font-size: 14px;
           color: @text-main;
+
           .from-name {
             color: @color-main;
           }
+
           .to-name {
             color: @color-main;
             margin-left: 5px;
             margin-right: 5px;
           }
         }
+
         .reply-bottom {
           display: flex;
           align-items: center;
           margin-top: 6px;
           font-size: 12px;
           color: @text-minor;
+
           .reply-text {
             display: flex;
             align-items: center;
             margin-left: 10px;
             cursor: pointer;
+
             &:hover {
               color: @text-333;
             }
+
             .icon-comment {
               margin-right: 5px;
             }
           }
         }
       }
+
       .fade-enter-active,
       fade-leave-active {
         transition: opacity 0.5s;
       }
+
       .fade-enter,
       .fade-leave-to {
         opacity: 0;
       }
     }
   }
+
   .input-wrapper {
     padding: 10px;
+
     .gray-bg-input,
     .el-input__inner {
       /*background-color: #67C23A;*/
     }
+
     .btn-control {
       display: flex;
       justify-content: flex-end;
       align-items: center;
       padding-top: 10px;
+
       .cancel {
         font-size: 16px;
         color: @text-normal;
         margin-right: 20px;
         cursor: pointer;
+
         &:hover {
           color: @text-333;
         }
       }
+
       .confirm {
         font-size: 16px;
       }

@@ -1,11 +1,4 @@
-<!--
- * @Author: gooing
- * @since: 2020-04-17 23:12:03
- * @lastTime: 2020-06-21 23:33:01
- * @LastAuthor: Dongzy
- * @FilePath: \pixiciv-pc\src\views\SpotLight\SpotLightIndex\InfoPage.vue
- * @message:
- -->
+
 <template>
   <div class="InfoPage">
     <ul v-for="item of pictureList" :key="item.id" class="pic-list">

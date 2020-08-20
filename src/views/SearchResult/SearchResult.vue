@@ -1,11 +1,4 @@
-<!--
- * @Author: gooing
- * @since: 2020-02-11 12:45:23
- * @lastTime: 2020-04-29 00:40:30
- * @LastAuthor: gooing
- * @FilePath: \pixiciv-pc\src\views\SearchResult\SearchResult.vue
- * @message:
- -->
+
 <template>
   <div class="search-result">
     <virtual-list

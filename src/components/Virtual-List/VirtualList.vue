@@ -20,7 +20,7 @@
 <script>
 import dayjs from 'dayjs';
 import { mapGetters } from 'vuex';
-import VirtualCollection from '@/components/Collect/VirtualCollection';
+import VirtualCollection from '@/components/VirtualListNew/VirtualCollection';
 import throttle from 'lodash/throttle';
 import Item from './Item';
 import { randomColor, replaceBigImg, replaceSmallImg } from '@/util';
@@ -37,9 +37,9 @@ export default {
       type: Number,
       default: 0
     },
-    lsitHeight: {
+    listHeight: {
       type: Number,
-      default: 0
+      default: getClient().height - 60
     },
     list: {
       type: Array,
@@ -58,7 +58,7 @@ export default {
       columnHeight: [],
       column: 0,
       width: this.listWidth || getClient().width - 65,
-      height: this.lsitHeight || getClient().height
+      height: this.listHeight || getClient().height
     };
   },
   computed: {
@@ -158,7 +158,7 @@ export default {
     },
     waterFall() {
       this.width = this.listWidth || getClient().width - 65;
-      this.height = this.lsitHeight || getClient().height;
+      this.height = this.listHeight || getClient().height;
       const column = parseInt(localStorage.getItem('waterfull-column'));
       if (column) {
         this.column = column;

@@ -1,11 +1,4 @@
-<!--
- * @Author: Dongzy
- * @since: 2020-06-23 21:20:50
- * @lastTime: 2020-06-23 21:40:21
- * @LastAuthor: Dongzy
- * @FilePath: \pixiciv-pc\src\views\User\Setting\MailCheck.vue
- * @message:
--->
+
 <template>
   <div />
 </template>
