@@ -1,4 +1,11 @@
-
+<!--
+ * @Author: gooing
+ * @since: 2020-02-02 14:52:15
+ * @lastTime: 2020-07-10 23:23:18
+ * @LastAuthor: Dongzy
+ * @FilePath: \pixiciv-pc\src\views\Detail\Detail.vue
+ * @message:
+ -->
 <template>
   <div
     v-if="illustDetail"
@@ -124,6 +131,7 @@
               >
                 <Item
                   :illust="item"
+                  style="height: 20vh;width: 20vh"
                   @handleLike="handleLike"
                   @handle-collect="setCollect"
                 />
@@ -247,8 +255,8 @@ export default {
     } else {
       this.getIllustDetail();
     }
-    // this.bookmarkedUsers();
-    this.fakeLoading()
+    this.bookmarkedUsers();
+    this.fakeLoading();
   },
   methods: {
     // 打开弹窗
@@ -449,8 +457,8 @@ export default {
     display: flex;
   }
   &-content {
-    width: 1000px;
-    flex: 0 0 auto;
+    width: 80%;
+    flex:1  0 auto;
     background-color: #fff;
     &__figure {
       margin: 20px;
@@ -488,7 +496,7 @@ export default {
         width: 800px;
         h1 {
           color: rgb(28, 28, 28);
-          font-size: 20px;
+          font-size: .25rem;
           line-height: 24px;
           font-weight: bold;
           margin: 0px 0px 8px;
@@ -525,16 +533,16 @@ export default {
           padding: 0px;
           li {
             flex: 0 0 auto;
-            margin: 0px 8px;
+            margin: 0 0.5em;
             display: list-item;
             text-align: -webkit-match-parent;
-            font-size: 12px;
+            font-size: 0.75rem;
             color: rgb(173, 173, 173);
           }
         }
         .date {
           color: rgb(173, 173, 173);
-          font-size: 12px;
+          font-size: 0.75rem;
           line-height: 1;
         }
       }
@@ -542,7 +550,7 @@ export default {
     &__relate {
       padding: 0px 16px;
       .relate-title {
-        font-size: 20px;
+        font-size: .25rem;
         line-height: 28px;
         color: rgba(0, 0, 0, 0.64);
         margin: 0px;
@@ -550,29 +558,27 @@ export default {
       .relate-info {
         list-style: none;
         display: grid;
-        gap: 24px;
+        gap: 2em;
         flex-wrap: wrap;
-        grid-template-columns: repeat(auto-fit, 184px);
+        grid-template-columns: repeat(auto-fit, 20vh);
         -webkit-box-pack: center;
         justify-content: flex-start;
-        margin: 0px;
-        margin-bottom: 20px;
-        padding: 0px;
+        margin-bottom: 2em;
+        padding-inline-start: 0;
       }
     }
   }
   &-author {
-    margin-left: 24px;
-    width: 288px;
-    flex: 0 0 auto;
+    width: 20%;
+    flex: 1 0 auto;
     background: #fdfdfd;
     .artist-info {
       display: flex;
-      padding: 16px;
-      border-radius: 8px;
+      padding: 1em;
+      border-radius: 0.5em;
       align-items: center;
       h2 {
-        font-size: 1em;
+        font-size: 1rem;
         font-weight: bold;
         margin-left: 6px;
         word-break: break-all;

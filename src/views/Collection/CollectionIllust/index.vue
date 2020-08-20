@@ -109,7 +109,7 @@ export default {
     margin: 20px;
     float: right;
     width: 600px;
-    border: 1px solid @border-first;
+    border: 1px solid;
   }
 }
 </style>
