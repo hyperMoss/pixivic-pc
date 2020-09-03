@@ -76,7 +76,7 @@ Vue.filter('replaceAvatar', val => `https://pic.cheerfun.dev/${val}.png`);
 Vue.filter(
   'replaceSquare',
   val =>
-    'https://original.img.cheerfun.dev/c/360x360_70/img-master' +
+    'https://img.cheerfun.dev/c/360x360_70/img-master' +
     val.split('img-master')[1]
 );
 
