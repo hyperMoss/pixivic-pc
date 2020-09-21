@@ -282,7 +282,6 @@ export default {
         src: data.src || replaceSmallImg(data.imageUrls[0].medium),
         avatarSrc: data.avatarSrc || replaceBigImg(data.artistPreView.avatar),
         createDate: dayjs(data.createDate).format('YYYY-MM-DD'),
-        setu: data.setu || !!((data.xrestrict === 1 || data.sanityLevel > (this.user ? 5 : 4))) && this.user.username !== 'pixivic',
         imgs: data.imgs || data.imageUrls.reduce((pre, cur) => {
           return pre.concat(replaceBigImg(cur.original));
         }, [])

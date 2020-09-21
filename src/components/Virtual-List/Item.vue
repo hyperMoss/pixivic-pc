@@ -9,8 +9,6 @@
     >
       <img
         :src="column.src"
-        :style="{opacity}"
-        @load="handleLoad"
       >
       <div
         v-if="column.pageCount > 1"
@@ -46,22 +44,12 @@ export default {
       required: true
     }
   },
-  data() {
-    return {
-      opacity: 0
-    };
-  },
   methods: {
     handleCollect() {
       this.$emit('handle-collect', this.column);
     },
     handleLike() {
       this.$emit('handleLike', this.column);
-    },
-    handleLoad() {
-      if (!this.column.setu) {
-        this.opacity = 1;
-      }
     },
     goDetail() {
       if (this.column.isad) {
