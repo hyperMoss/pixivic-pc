@@ -15,8 +15,18 @@
         width="300"
       >
         <div style="text-align:center;width:100%;height:100%;">
-          <el-radio v-model="modeFather" label="0">综合排行</el-radio>
-          <el-radio v-model="modeFather" label="1">漫画排行</el-radio>
+          <el-radio
+            v-model="modeFather"
+            label="0"
+          >
+            综合排行
+          </el-radio>
+          <el-radio
+            v-model="modeFather"
+            label="1"
+          >
+            漫画排行
+          </el-radio>
           <el-radio-group
             v-model="mode"
             size="mini"
@@ -27,7 +37,9 @@
               v-for="radioItem of modeList[modeFather].children"
               :key="radioItem.name"
               :label="radioItem.value"
-            >{{ radioItem.name }}</el-radio-button>
+            >
+              {{ radioItem.name }}
+            </el-radio-button>
           </el-radio-group>
           <el-date-picker
             v-model="value2"
@@ -40,7 +52,11 @@
           />
         </div>
         <div slot="reference">
-          <svg :aria-hidden="true" class="icon" font-size="40">
+          <svg
+            :aria-hidden="true"
+            class="icon"
+            font-size="40"
+          >
             <use xlink:href="#picshizhong1" />
           </svg>
         </div>
@@ -121,7 +137,7 @@ export default {
           if (!res.data.data) {
             $state.complete();
           } else {
-            this.pictureList = this.pictureList.concat(res.data.data);
+            this.pictureList = this.pictureList.concat(res.data.data.filter(e=> e.xrestrict === 0 && e.sanityLevel <= (this.user ? 5 : 4)));
             $state.loaded();
           }
         });

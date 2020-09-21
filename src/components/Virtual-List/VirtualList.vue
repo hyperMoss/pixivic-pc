@@ -11,7 +11,11 @@
     >
       <slot />
       <template v-slot:cell="props">
-        <Item :column="props.data" @handleLike="handleLike" @handle-collect="setCollect" />
+        <Item
+          :column="props.data"
+          @handleLike="handleLike"
+          @handle-collect="setCollect"
+        />
       </template>
     </VirtualCollection>
   </div>
@@ -78,7 +82,7 @@ export default {
           if (val.length === 0) {
             this.columnHeight = new Array(this.column).fill(0);
           } else {
-            const list = val.filter(e => !old.includes(e) && e.xrestrict === 0 && e.sanityLevel <= (this.user ? 5 : 4));
+            const list = val.filter(e => !old.includes(e)); 
             this.handleList(list);
           }
         } catch (error) {
@@ -86,7 +90,7 @@ export default {
         }
       }
     },
-    likeStatus(val, old) {
+    likeStatus(val) {
       // 注意 List不一定找得到item 要判断下
       const { illustId, like } = val;
       const item = this.listMap.get(illustId);
@@ -115,7 +119,7 @@ export default {
     infinite($state) {
       this.$emit('infinite', $state);
     },
-    cellSizeAndPositionGetter(item, index) {
+    cellSizeAndPositionGetter(item) {
       return {
         width: item.width,
         height: item.height,
