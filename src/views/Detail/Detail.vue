@@ -1,27 +1,47 @@
 <!--
  * @Author: gooing
  * @since: 2020-02-02 14:52:15
- * @lastTime: 2020-04-13 21:30:31
- * @LastAuthor: gooing
+ * @lastTime: 2020-07-10 23:23:18
+ * @LastAuthor: Dongzy
  * @FilePath: \pixiciv-pc\src\views\Detail\Detail.vue
  * @message:
  -->
 <template>
-  <div v-if="illustDetail" class="detail">
+  <div
+    v-if="illustDetail"
+    class="detail"
+  >
     <div class="page-padding">
       <main class="detail-content">
         <figure class="detail-content__figure">
           <el-image
-            v-if="illustDetail.xrestrict==0&&illustDetail.sanityLevel<=6"
+            v-if="illustDetail.xrestrict==0&&illustDetail.sanityLevel<=(user ? 5 : 4)"
             :preview-src-list="srcList"
             :src="illustDetail.originalSrc"
             fit="contain"
             style="width:100%;height:80vh;"
           >
-            <div slot="placeholder" class="image-slot">
-              加载中<span class="dot">...</span>
+            <div
+              slot="placeholder"
+              class="image-slot"
+            >
+              <div>
+                <el-image
+                  v-if="illustDetail.xrestrict==0&&illustDetail.sanityLevel<=(user ? 5 : 4)"
+                  :src="illustDetail.src"
+                  fit="contain"
+                  style="width:100%;height:80vh;"
+                />
+                <el-progress
+                  :percentage="fakeTime"
+                  style="margin-top: -20px;"
+                />
+              </div>
             </div>
-            <div slot="error" class="image-slot">
+            <div
+              slot="error"
+              class="image-slot"
+            >
               <i class="el-icon-picture-outline" />
             </div>
           </el-image>
@@ -38,7 +58,11 @@
             trigger="hover"
             content="正在施工中"
           >
-            <a v-if="likeUsers" slot="reference" class="users">
+            <a
+              v-if="likeUsers"
+              slot="reference"
+              class="users"
+            >
               <el-avatar
                 v-for="item in likeUsers"
                 :key="item.userId"
@@ -52,7 +76,10 @@
         <figcaption class="detail-content__info">
           <div class="card">
             <h1>{{ illustDetail.title }}</h1>
-            <div class="disc" v-html="illustDetail.caption" />
+            <div
+              class="disc"
+              v-html="illustDetail.caption"
+            />
             <div class="tags">
               <ul>
                 <li
@@ -75,20 +102,39 @@
                 {{ illustDetail.totalBookmarks }}
               </li>
             </ul>
-            <div class="date" title="投稿时间">
+            <div
+              class="date"
+              title="投稿时间"
+            >
               {{ illustDetail.createDate }}
             </div>
           </div>
         </figcaption>
         <figcaption class="detail-content__comment">
-          <Comment :comments="commentList" :pid="pid" />
+          <Comment :pid="pid" />
         </figcaption>
         <figcaption class="detail-content__relate">
-          <h2 class="relate-title">相关作品</h2>
+          <h2 class="relate-title">
+            {{ $t('relateContent') }}
+          </h2>
           <div>
-            <ul v-infinite-scroll="reqRelatedIllust" infinite-scroll-immediate class="relate-info" infinite-scroll-distance="10" infinite-scroll-delay="1000">
-              <li v-for="item in relatedPictureList" :key="item.id">
-                <Item :illust="item" @handleLike="handleLike" />
+            <ul
+              v-infinite-scroll="reqRelatedIllust"
+              infinite-scroll-immediate
+              class="relate-info"
+              infinite-scroll-distance="10"
+              infinite-scroll-delay="1000"
+            >
+              <li
+                v-for="item in relatedPictureList"
+                :key="item.id"
+              >
+                <Item
+                  :illust="item"
+                  style="height: 20vh;width: 20vh"
+                  @handleLike="handleLike"
+                  @handle-collect="setCollect"
+                />
                 <!-- <el-image :src="url" lazy>
                 <div slot="error" class="image-slot">
                   <i class="el-icon-picture-outline" />
@@ -97,13 +143,18 @@
               </li>
             </ul>
           </div>
-
         </figcaption>
       </main>
       <!-- 作者信息 -->
       <aside class="detail-author">
-        <section class="artist-info" @click="goArtistPage">
-          <el-avatar :src="illustDetail.avatarSrc" size="medium" />
+        <section
+          class="artist-info"
+          @click="goArtistPage"
+        >
+          <el-avatar
+            :src="illustDetail.avatarSrc"
+            size="medium"
+          />
           <h2>{{ illustDetail.artistPreView.name }}</h2>
         </section>
         <section style="margin:10px 20px;text-align:center;">
@@ -112,9 +163,11 @@
             size="small"
             type="primary"
             @click="followArtist"
-          >{{
-            illustDetail.artistPreView.isFollowed ? "已关注" : "添加关注"
-          }}</el-button>
+          >
+            {{
+              illustDetail.artistPreView.isFollowed ? $t('followed') : $t('follow')
+            }}
+          </el-button>
         </section>
         <section class="artist-preview">
           <template v-for="item in pictureList">
@@ -126,15 +179,20 @@
               lazy
               @click.native="goDetail(item)"
             >
-              <div slot="placeholder" class="image-slot">
+              <div
+                slot="placeholder"
+                class="image-slot"
+              >
                 加载中<span class="dot">...</span>
               </div>
-              <div slot="error" class="image-slot">
+              <div
+                slot="error"
+                class="image-slot"
+              >
                 <i class="el-icon-picture-outline" />
               </div>
             </el-image>
           </template>
-
         </section>
       </aside>
     </div>
@@ -162,7 +220,6 @@ export default {
   },
   data() {
     return {
-      commentList: [],
       page: 1,
       srcList: [],
       illustDetail: null,
@@ -171,7 +228,8 @@ export default {
       type: 'illust',
       pictureList: [],
       relatedPictureList: [],
-      likeUsers: []
+      likeUsers: [],
+      fakeTime:0
     };
   },
   computed: {
@@ -198,20 +256,20 @@ export default {
       this.getIllustDetail();
     }
     this.bookmarkedUsers();
-    this.getCommentsList();
+    this.fakeLoading();
   },
   methods: {
-    // 等待后端分页处理
-    getCommentsList() {
-      this.$api.comment.getComments({
-        commentAppType: 'illusts',
-        commentAppId: this.pid
-      })
-        .then(res => {
-          if (res.status === 200) {
-            this.commentList = res.data.data || [];
-          }
-        });
+    // 打开弹窗
+    setCollect(column) {
+      if (!this.user.id) {
+        this.$message.closeAll();
+        this.$message.info('请先登录');
+        return;
+      }
+      this.$store.dispatch('setCollectBoolean', column);
+    },
+    fakeLoading(){
+     let interval = setInterval(()=>{ if(this.fakeTime===98){clearInterval(interval) } this.fakeTime++},200)
     },
     // 处理图片数据
     handleData(data) {
@@ -224,7 +282,6 @@ export default {
         src: data.src || replaceSmallImg(data.imageUrls[0].medium),
         avatarSrc: data.avatarSrc || replaceBigImg(data.artistPreView.avatar),
         createDate: dayjs(data.createDate).format('YYYY-MM-DD'),
-        setu: data.setu || !!((data.xrestrict === 1 || data.sanityLevel > 6)) && this.user.username !== 'pixivic',
         imgs: data.imgs || data.imageUrls.reduce((pre, cur) => {
           return pre.concat(replaceBigImg(cur.original));
         }, [])
@@ -245,8 +302,12 @@ export default {
     },
     // 跳转详情
     goDetail(data) {
+      if (data.isad) {
+        window.open(data.link);
+      }
       this.$store.dispatch('setDetail', data);
-      this.$router.push(`/illusts/${data.id}`);
+      const routeUrl = this.$router.resolve(`/illusts/${data.id}`);
+      window.open(routeUrl.href, '_blank');
     },
     goArtistPage() {
       this.$router.push(`/artist/${this.illustDetail.artistId}`);
@@ -346,7 +407,7 @@ export default {
             const {
               data: { data }
             } = res;
-            this.pictureList = this.pictureList.concat(data).filter(item => item.xrestrict === 0 && item.sanityLevel < 6);
+            this.pictureList = this.pictureList.concat(data).filter(item => item.xrestrict === 0 && item.sanityLevel <= (this.user ? 5 : 4));
           }
         })
         .catch(err => {
@@ -364,7 +425,7 @@ export default {
             this.$message.info('到底了');
           } else {
             this.relatedPictureList = this.relatedPictureList.concat(
-              res.data.data
+              res.data.data.filter((item) => !(item.xrestrict === 1 || item.sanityLevel > (this.user && this.user.id ? 5 : 4)))
             );
           }
         })
@@ -395,8 +456,8 @@ export default {
     display: flex;
   }
   &-content {
-    width: 1000px;
-    flex: 0 0 auto;
+    width: 80%;
+    flex:1  0 auto;
     background-color: #fff;
     &__figure {
       margin: 20px;
@@ -434,7 +495,7 @@ export default {
         width: 800px;
         h1 {
           color: rgb(28, 28, 28);
-          font-size: 20px;
+          font-size: .25rem;
           line-height: 24px;
           font-weight: bold;
           margin: 0px 0px 8px;
@@ -471,16 +532,16 @@ export default {
           padding: 0px;
           li {
             flex: 0 0 auto;
-            margin: 0px 8px;
+            margin: 0 0.5em;
             display: list-item;
             text-align: -webkit-match-parent;
-            font-size: 12px;
+            font-size: 0.75rem;
             color: rgb(173, 173, 173);
           }
         }
         .date {
           color: rgb(173, 173, 173);
-          font-size: 12px;
+          font-size: 0.75rem;
           line-height: 1;
         }
       }
@@ -488,7 +549,7 @@ export default {
     &__relate {
       padding: 0px 16px;
       .relate-title {
-        font-size: 20px;
+        font-size: .25rem;
         line-height: 28px;
         color: rgba(0, 0, 0, 0.64);
         margin: 0px;
@@ -496,29 +557,27 @@ export default {
       .relate-info {
         list-style: none;
         display: grid;
-        gap: 24px;
+        gap: 2em;
         flex-wrap: wrap;
-        grid-template-columns: repeat(auto-fit, 184px);
+        grid-template-columns: repeat(auto-fit, 20vh);
         -webkit-box-pack: center;
         justify-content: flex-start;
-        margin: 0px;
-        margin-bottom: 20px;
-        padding: 0px;
+        margin-bottom: 2em;
+        padding-inline-start: 0;
       }
     }
   }
   &-author {
-    margin-left: 24px;
-    width: 288px;
-    flex: 0 0 auto;
+    width: 20%;
+    flex: 1 0 auto;
     background: #fdfdfd;
     .artist-info {
       display: flex;
-      padding: 16px;
-      border-radius: 8px;
+      padding: 1em;
+      border-radius: 0.5em;
       align-items: center;
       h2 {
-        font-size: 1em;
+        font-size: 1rem;
         font-weight: bold;
         margin-left: 6px;
         word-break: break-all;
@@ -537,13 +596,5 @@ export default {
     }
   }
 }
-/deep/.image-slot {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
-  height: 100%;
-  background: #f5f7fa;
-  color: #909399;
-}
+
 </style>

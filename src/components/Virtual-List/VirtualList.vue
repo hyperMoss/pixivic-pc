@@ -11,7 +11,11 @@
     >
       <slot />
       <template v-slot:cell="props">
-        <Item :column="props.data" @handleLike="handleLike" />
+        <Item
+          :column="props.data"
+          @handleLike="handleLike"
+          @handle-collect="setCollect"
+        />
       </template>
     </VirtualCollection>
   </div>
@@ -20,7 +24,7 @@
 <script>
 import dayjs from 'dayjs';
 import { mapGetters } from 'vuex';
-import VirtualCollection from '@/components/Collect/VirtualCollection';
+import VirtualCollection from '@/components/VirtualListNew/VirtualCollection';
 import throttle from 'lodash/throttle';
 import Item from './Item';
 import { randomColor, replaceBigImg, replaceSmallImg } from '@/util';
@@ -37,9 +41,9 @@ export default {
       type: Number,
       default: 0
     },
-    lsitHeight: {
+    listHeight: {
       type: Number,
-      default: 0
+      default: getClient().height - 60
     },
     list: {
       type: Array,
@@ -58,11 +62,11 @@ export default {
       columnHeight: [],
       column: 0,
       width: this.listWidth || getClient().width - 65,
-      height: this.lsitHeight || getClient().height
+      height: this.listHeight || getClient().height
     };
   },
   computed: {
-    ...mapGetters(['user', 'likeStatus', 'showTab']),
+    ...mapGetters(['user', 'likeStatus']),
     listMap() {
       const map = new Map();
       for (const item of this.list) {
@@ -78,7 +82,7 @@ export default {
           if (val.length === 0) {
             this.columnHeight = new Array(this.column).fill(0);
           } else {
-            const list = val.filter(e => !old.includes(e) && e.xrestrict === 0 && e.sanityLevel < 6);
+            const list = val.filter(e => !old.includes(e)); 
             this.handleList(list);
           }
         } catch (error) {
@@ -86,7 +90,7 @@ export default {
         }
       }
     },
-    likeStatus(val, old) {
+    likeStatus(val) {
       // 注意 List不一定找得到item 要判断下
       const { illustId, like } = val;
       const item = this.listMap.get(illustId);
@@ -104,10 +108,18 @@ export default {
     window.removeEventListener('resize', this.waterFall);
   },
   methods: {
+    setCollect(column) {
+      if (!this.user.id) {
+        this.$message.closeAll();
+        this.$message.info('请先登录');
+        return;
+      }
+      this.$store.dispatch('setCollectBoolean', column);
+    },
     infinite($state) {
       this.$emit('infinite', $state);
     },
-    cellSizeAndPositionGetter(item, index) {
+    cellSizeAndPositionGetter(item) {
       return {
         width: item.width,
         height: item.height,
@@ -150,7 +162,7 @@ export default {
     },
     waterFall() {
       this.width = this.listWidth || getClient().width - 65;
-      this.height = this.lsitHeight || getClient().height;
+      this.height = this.listHeight || getClient().height;
       const column = parseInt(localStorage.getItem('waterfull-column'));
       if (column) {
         this.column = column;
@@ -185,7 +197,6 @@ export default {
           tmp['height'] = height;
           tmp['width'] = width;
           tmp['src'] = replaceSmallImg(tmp.imageUrls[0].medium);
-          tmp['setu'] = !!((tmp.xrestrict === 1 || tmp.sanityLevel > 6)) && this.user.username !== 'pixivic';
           tmp['style'] = {
             backgroundColor: randomColor()
           };

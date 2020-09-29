@@ -1,30 +1,72 @@
-<!--
- * @Author: gooing
- * @since: 2020-03-14 22:38:49
- * @lastTime: 2020-03-15 13:23:08
- * @LastAuthor: gooing
- * @FilePath: \pixiciv-pc\src\components\PublicComponents\Login\Register.vue
- * @message:
- -->
 <template>
   <div class="register">
-    <el-form ref="ruleForm" :model="ruleForm" status-icon :rules="rules" label-width="100px" class="demo-ruleForm" label-position="left">
-      <el-form-item label="邮箱地址" prop="email">
+    <el-form
+      ref="ruleForm"
+      :model="ruleForm"
+      status-icon
+      :rules="rules"
+      label-width="100px"
+      class="demo-ruleForm"
+      label-position="left"
+    >
+      <el-form-item
+        :label="$t('email')"
+        prop="email"
+      >
         <el-input v-model="ruleForm.email" />
       </el-form-item>
-      <el-form-item label="用户名" prop="username">
-        <el-input v-model="ruleForm.username" :maxlength="10" />
+      <el-form-item
+        :label="$t('username')"
+        prop="username"
+      >
+        <el-input
+          v-model="ruleForm.username"
+          :maxlength="10"
+        />
       </el-form-item>
-      <el-form-item label="密码" prop="password">
-        <el-input v-model="ruleForm.password" :maxlength="20" show-password type="password" autocomplete="off" />
+      <el-form-item
+        :label="$t('password')"
+        prop="password"
+      >
+        <el-input
+          v-model="ruleForm.password"
+          :maxlength="20"
+          show-password
+          type="password"
+          autocomplete="off"
+        />
       </el-form-item>
-      <el-form-item label="确认密码" prop="checkPass">
-        <el-input v-model="ruleForm.checkPass" :maxlength="20" show-password type="password" autocomplete="off" />
+      <el-form-item
+        :label="$t('checkPassword')"
+        prop="checkPass"
+      >
+        <el-input
+          v-model="ruleForm.checkPass"
+          :maxlength="20"
+          show-password
+          type="password"
+          autocomplete="off"
+        />
       </el-form-item>
-      <el-form-item label="验证码" prop="verifyCode">
-        <el-row type="flex" justify="space-between" :gutter="16">
-          <el-col :span="10"> <el-input v-model="ruleForm.verifyCode" :maxlength="4" /></el-col>
-          <el-col :span="10" style="height:40px;">
+      <el-form-item
+        :label="$t('verifyCode')"
+        prop="verifyCode"
+      >
+        <el-row
+          type="flex"
+          justify="space-between"
+          :gutter="16"
+        >
+          <el-col :span="10">
+            <el-input
+              v-model="ruleForm.verifyCode"
+              :maxlength="4"
+            />
+          </el-col>
+          <el-col
+            :span="10"
+            style="height:40px;"
+          >
             <img
               style="height:100%;width:100%"
               :src="`data:image/bmp;base64,${imageBase64}`"
@@ -34,8 +76,13 @@
         </el-row>
       </el-form-item>
       <el-form-item>
-        <el-button @click="toLogin">登录</el-button>
-        <el-button type="primary" :loading="loading" @click="submitForm('ruleForm')">确认注册</el-button>
+        <el-button
+          type="primary"
+          :loading="loading"
+          @click="submitForm('ruleForm')"
+        >
+          {{ $t('registered') }}
+        </el-button>
       </el-form-item>
     </el-form>
   </div>
@@ -56,7 +103,7 @@ export default {
       if (!pattern.test(value)) { return callback(new Error('邮箱格式错误')); }
       this.$api.user.checkEmail(value)
         .then(res => {
-          if (res.status !== 404) {
+          if (res.status !== 200) {
             callback(new Error('邮箱已被注册'));
           }
         });
@@ -76,7 +123,7 @@ export default {
       }
       this.$api.user.checkUser(value)
         .then(res => {
-          if (res.status !== 404) {
+          if (res.status !== 200) {
             callback(new Error('此用户名已被注册'));
           } else {
             callback();
@@ -173,11 +220,6 @@ export default {
           return false;
         }
       });
-    },
-    // 跳转登录
-    toLogin() {
-      this.resetForm('ruleForm');
-      this.$emit('typeChange');
     },
     // 重置数据
     resetForm(formName) {

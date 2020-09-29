@@ -1,38 +1,31 @@
-<!--
- * @Author: gooing
- * @since: 2020-03-14 22:38:58
- * @lastTime: 2020-03-31 22:54:30
- * @LastAuthor: gooing
- * @FilePath: \pixiciv-pc\src\components\PublicComponents\Login\Login.vue
- * @message:
- -->
+
 <template>
   <div class="Login">
     <el-form ref="loginForm" :model="loginForm" status-icon :rules="rules" label-width="100px" label-position="left">
-      <el-form-item label="用户名" prop="username">
+      <el-form-item :label="$t('usernameOrEmail')" prop="username">
         <el-input v-model="loginForm.username" />
       </el-form-item>
-      <el-form-item label="密码" prop="password">
+      <el-form-item :label="$t('password')" prop="password">
         <el-input v-model="loginForm.password" :maxlength="20" show-password type="password" autocomplete="off" />
       </el-form-item>
-      <el-form-item label="验证码" prop="verifyCode">
+      <el-form-item :label="$t('verifyCode')" prop="verifyCode">
         <el-row type="flex" justify="space-between" :gutter="16">
-          <el-col :span="10"> <el-input v-model="loginForm.verifyCode" :maxlength="4" /></el-col>
-          <el-col :span="10" style="height:40px;">
-            <img
-              style="height:100%;width:100%"
+          <el-col> <el-input v-model="loginForm.verifyCode" :maxlength="4">
+            <template slot="append"><img
+              style="height:30px;width:100px"
               :src="`data:image/bmp;base64,${imageBase64}`"
               @click.stop="getCode"
-            >
-          </el-col>
+            ></template></el-input></el-col>
         </el-row>
       </el-form-item>
       <el-form-item>
-        <el-button @click="$emit('typeChange','')">注册</el-button>
-        <el-button type="primary" @click="submitForm('loginForm')">登录</el-button>
+        <el-button
+          @click="resetPassword"
+        >{{ $t('resetPassword') }}</el-button>
+        <el-button type="primary" @click="submitForm('loginForm')">{{ $t('login') }}</el-button>
         <el-button @click="loginQQ"><svg font-size="14" class="icon" aria-hidden="true">
           <use xlink:href="#picQQ" />
-        </svg>QQ登录</el-button>
+        </svg>QQ{{ $t('login') }}</el-button>
       </el-form-item>
     </el-form>
     <!-- <el-dialog
@@ -114,6 +107,25 @@ export default {
     this.getCode();
   },
   methods: {
+    // 重置密码
+    resetPassword() {
+      this.$prompt('请输入邮箱', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        inputPattern: /[\w!#$%&'*+/=?^_`{|}~-]+(?:\.[\w!#$%&'*+/=?^_`{|}~-]+)*@(?:[\w](?:[\w-]*[\w])?\.)+[\w](?:[\w-]*[\w])?/,
+        inputErrorMessage: '邮箱格式不正确'
+      }).then(({ value }) => {
+        this.$api.user
+          .resetPasswordEmail(value)
+          .then(res => {
+            if (res.status === 200) {
+              this.$message.info('请注意查收邮箱内的重置密码邮件');
+            } else {
+              this.$message.error('重置密码发起错误');
+            }
+          });
+      }).catch(() => {});
+    },
     // 获取验证码
     getCode() {
       this.$api.user.verificationCode()
@@ -133,11 +145,6 @@ export default {
           return false;
         }
       });
-    },
-    // 跳转登录
-    toLogin() {
-      this.resetForm('loginForm');
-      this.$emit('typeChange');
     },
     // 重置数据
     resetForm(formName) {

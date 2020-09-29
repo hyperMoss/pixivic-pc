@@ -1,11 +1,4 @@
-/*
- * @Author: gooing
- * @since: 2020-02-02 14:59:46
- * @lastTime: 2020-03-29 21:02:14
- * @LastAuthor: gooing
- * @文件相对于项目的路径: \pixiciv-pc\src\api\modules\detail.js
- * @message:
- */
+
 import axios from '../base';
 
 function getPixById(id) {
@@ -22,7 +15,7 @@ function reqArtistIllust(params) {
     params: {
       page: params.page || 1,
       pageSize: params.pageSize || 30,
-      maxSanityLevel: 10
+      maxSanityLevel: 4
     }
   });
 }
@@ -82,13 +75,5 @@ function illustHistory(data) {
   });
 }
 
-export {
-  getPixById,
-  reqArtistIllust,
-  reqIllustDetail,
-  reqArtist,
-  reqRelatedIllust,
-  reqSummary,
-  bookmarkedUsers,
-  illustHistory
-};
+export { getPixById, reqArtistIllust, reqIllustDetail, reqArtist, reqRelatedIllust, reqSummary, bookmarkedUsers, illustHistory };
+

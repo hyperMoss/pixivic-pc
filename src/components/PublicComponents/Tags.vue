@@ -1,11 +1,4 @@
-<!--
- * @Author: gooing
- * @since: 2020-04-03 10:09:24
- * @lastTime: 2020-04-03 11:56:42
- * @LastAuthor: gooing
- * @FilePath: \pixiciv-pc\src\components\PublicComponents\Tags.vue
- * @message:
- -->
+
 <template>
   <div class="tags">
     <div
@@ -64,6 +57,8 @@ export default {
   &::-webkit-scrollbar {
     display: none;
   }
+  scrollbar-width: none;
+  -ms-overflow-style: none;
 
   .tags-item {
     display: flex;

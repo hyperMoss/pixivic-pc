@@ -22,7 +22,14 @@ function getSearch(params) {
     }
   });
 }
-
+// 搜索画师
+function searchArtists(params) {
+  return axios({
+    url: `/artists`,
+    method: 'get',
+    params: { ...params, pageSize: 30 }
+  });
+}
 // 获取该搜索词相关联的tag
 function getTags(param) {
   return axios({
@@ -90,5 +97,6 @@ export {
   uploadImg,
   searchByImg,
   getExists,
-  getHotTag
+  getHotTag,
+  searchArtists
 };

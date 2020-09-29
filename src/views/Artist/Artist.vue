@@ -1,11 +1,4 @@
-<!--
- * @Author: gooing
- * @since: 2020-02-11 12:29:14
- * @lastTime: 2020-04-10 12:33:21
- * @LastAuthor: gooing
- * @FilePath: \pixiciv-pc\src\views\Artist\Artist.vue
- * @message:
- -->
+
 <template>
   <div class="artist">
     <keep-alive>
@@ -14,7 +7,7 @@
         :identifier="identifier"
         :list="type === 'illust' ? IllustList : mangaList"
         @infinite="infinite"
-      ><dir v-if="artistDetail" class="artist_property">
+      ><div v-if="artistDetail" class="artist_property">
         <div class="artist-base">
           <div class="artist-one">
             <div class="artist-name">
@@ -32,7 +25,7 @@
                     size="small"
                     @click="followArtist"
                   >
-                    {{ artistDetail.isFollowed ? "已关注" : "添加关注" }}
+                    {{ artistDetail.isFollowed ? $t('followed') : $t('follow') }}
                   </el-button>
                 </div>
               </div>
@@ -44,7 +37,7 @@
                 <em
                   style="font-style:normal;color: #5C5C5C;font-weight: bold;"
                 >
-                  {{ artistDetail.totalFollowUsers }} </em>关注
+                  {{ artistDetail.totalFollowUsers }} </em>{{ $t('follow') }}
               </span>
             </div>
           </div>
@@ -76,7 +69,7 @@
                 :content="artistDetail.comment"
                 :width="400"
               >
-                <div slot="reference" class="end">查看全部</div>
+                <div slot="reference" class="end">{{ $t('openAll') }}</div>
               </el-popover>
             </div>
           </div>
@@ -87,7 +80,7 @@
             </el-radio-group>
           </div>
         </div>
-      </dir>
+      </div>
       </virtual-list>
     </keep-alive>
   </div>
@@ -179,9 +172,7 @@ export default {
         })
         .then(res => {
           if (res.data.data) {
-            const {
-              data: { data }
-            } = res;
+            const data = res.data.data.filter(tmp => !(tmp.xrestrict === 1 || tmp.sanityLevel >= (this.user ? 5 : 4)));
             if (this.type === 'illust') {
               this.IllustList = this.IllustList.concat(data);
             } else {

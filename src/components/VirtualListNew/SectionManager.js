@@ -1,12 +1,26 @@
 /*
- * @Author: gooing
- * @since: 2020-02-02 14:59:46
- * @lastTime: 2020-03-02 10:39:58
- * @LastAuthor: gooing
- * @FilePath: \pixiciv-pc\src\components\Collect\SectionManager.js
- * @message:
- */
-import Section from "./Section";
+* MIT License
+
+ Copyright (c) 2018 Weijia Wang
+
+ Permission is hereby granted, free of charge, to any person obtaining a copy
+ of this software and associated documentation files (the "Software"), to deal
+ in the Software without restriction, including without limitation the rights
+ to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ copies of the Software, and to permit persons to whom the Software is
+ furnished to do so, subject to the following conditions:
+
+ The above copyright notice and this permission notice shall be included in all
+ copies or substantial portions of the Software.
+
+ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+ SOFTWARE.*/
+import Section from './Section';
 
 const SECTION_SIZE = 600;
 
@@ -22,9 +36,7 @@ export default class SectionManager {
     const frozenCellMetadatum = Object.freeze(cellMetadatum);
     this._cellMetadata[index] = frozenCellMetadatum;
 
-    this.getSections(frozenCellMetadatum).forEach(section =>
-      section.addCellIndex({ index })
-    );
+    this.getSections(frozenCellMetadatum).forEach(section => section.addCellIndex({ index }));
   }
 
   freezeCells() {
@@ -66,9 +78,9 @@ export default class SectionManager {
   }
 
   /**
-   * Gets all cell indices contained in the specified region.
-   * A region may encompass 1 or more Sections.
-   */
+     * Gets all cell indices contained in the specified region.
+     * A region may encompass 1 or more Sections.
+     */
   getCellIndices({ height, width, x, y }) {
     const indices = {};
 

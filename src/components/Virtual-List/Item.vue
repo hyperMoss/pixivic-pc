@@ -9,10 +9,7 @@
     >
       <img
         :src="column.src"
-        :style="{opacity}"
-        @load="handleLoad"
       >
-      <div class="img-filter" />
       <div
         v-if="column.pageCount > 1"
         class="count"
@@ -20,22 +17,15 @@
         <img src="../../assets/images/count.svg">
         <span>{{ column.pageCount }}</span>
       </div>
-      <Like
-        :like="column.isLiked"
-        @handleLike="handleLike"
-      />
-      <div
-        v-if="column.setu"
-        class="setu-filter"
-      >
-        <svg
-          aria-hidden="true"
-          class="icon"
-          font-size="50"
-        >
-          <use xlink:href="#picsuo2" />
-        </svg>
-      </div>
+      <el-dropdown>
+        <Like
+          :like="column.isLiked"
+          @handleLike="handleLike"
+        />
+        <el-dropdown-menu slot="dropdown">
+          <!-- <el-dropdown-item @click.native="handleCollect">加到画集</el-dropdown-item> -->
+        </el-dropdown-menu>
+      </el-dropdown>
     </div>
   </div>
 </template>
@@ -54,33 +44,27 @@ export default {
       required: true
     }
   },
-  data() {
-    return {
-      opacity: 0
-    };
-  },
   methods: {
+    handleCollect() {
+      this.$emit('handle-collect', this.column);
+    },
     handleLike() {
       this.$emit('handleLike', this.column);
-    },
-    handleLoad() {
-      if (!this.column.setu) {
-        this.opacity = 1;
-      }
     },
     goDetail() {
       if (this.column.isad) {
         window.open(this.column.link);
       } else {
         this.$store.dispatch('setDetail', this.column);
-        this.$router.push(`/illusts/${this.column.id}`);
+        const routeUrl = this.$router.resolve(`/illusts/${this.column.id}`);
+        window.open(routeUrl.href, '_blank');
       }
     }
   }
 };
 </script>
 
-<style lang="stylus" scope>
+<style lang="stylus" scoped>
 no-wrap() {
   text-overflow: ellipsis;
   overflow: hidden;
@@ -89,7 +73,6 @@ no-wrap() {
 
 .item {
   box-sizing: border-box;
-  position: absolute;
   top: 0;
   left: 0;
   width: 100%;
@@ -118,16 +101,6 @@ no-wrap() {
       object-fit: cover;
       border-radius: 16px;
     }
-
-    .img-filter {
-      position: absolute;
-      top: 0;
-      right: 0;
-      bottom: 0;
-      left: 0;
-      background: rgba(0, 0, 0, 0.03);
-      border-radius: 8px;
-    }
   }
 
   .count {
@@ -152,18 +125,6 @@ no-wrap() {
       padding: 0 2px;
       line-height: 20px;
     }
-  }
-
-  .setu-filter {
-    position: absolute;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
-    width: 50px;
-    height: 50px;
-    margin: auto;
-    z-index: 2;
   }
 }
 </style>

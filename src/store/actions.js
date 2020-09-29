@@ -97,6 +97,12 @@ export const setDetail = ({
 }, data) => {
   commit(types.SET_DETAIL, data);
 };
-export const setLoginBoolean = ({ commit }) => {
-  commit(types.SET_Login_Boolean);
+export const setLoginBoolean = ({ commit }, data) => {
+  commit(types.SET_LOGIN_BOOLEAN, data);
+};
+export const setCollectBoolean = ({ commit }, data) => {
+  commit(types.SET_COOLECT_BOOLEAN, data);
+};
+export const setCollectInfo = ({ commit }, data) => {
+  commit(types.SET_COOLECT_INFO, data);
 };

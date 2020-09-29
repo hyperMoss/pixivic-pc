@@ -1,11 +1,4 @@
-<!--
- * @Author: gooing
- * @since: 2020-03-11 00:30:09
- * @lastTime: 2020-03-15 14:04:36
- * @LastAuthor: gooing
- * @FilePath: \pixiciv-pc\src\views\BBS\BBS.vue
- * @message:
- -->
+
 <template>
   <div class="bbs">
     <div class="iframe">

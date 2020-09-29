@@ -1,14 +1,6 @@
-/*
- * @Author: gooing
- * @since: 2020-02-02 14:59:46
- * @lastTime: 2020-03-28 21:28:07
- * @LastAuthor: gooing
- * @FilePath: \pixiciv-pc\vue.config.js
- * @message:
- */
+
 const path = require('path');
 
-const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 // 去console插件
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 // gzip压缩插件
@@ -32,15 +24,39 @@ module.exports = {
       .set('@', resolve('src'))
       .set('assets', resolve('src/assets'))
       .set('components', resolve('src/components')); // key,value自行定义，比如.set('@@', resolve('src/components'))
+    const oneOfsMap = config.module.rule('less').oneOfs.store;
+    oneOfsMap.forEach(item => {
+      item
+        .use('sass-resources-loader')
+        .loader('sass-resources-loader')
+        .options({
+          // Provide path to the file with resources
+          resources: './src/styles/color.less'
+
+          // Or array of paths
+          // resources: ['./path/to/vars.scss', './path/to/mixins.scss']
+        })
+        .end();
+    });
+    config.module
+      .rule('i18n')
+      .resourceQuery(/blockType=i18n/)
+      .type('javascript/auto')
+      .use('i18n')
+      .loader('@kazupon/vue-i18n-loader')
+      .end();
   },
+
   // enabled by default if the machine has more than 1 cores
   parallel: require('os').cpus().length > 1,
+
   devServer: {
     contentBase: path.join(__dirname, 'dist'),
     compress: true,
     disableHostCheck: true, //  新增该配置项
     port: 9000
   },
+
   css: {
     // // 启用 CSS modules
     // requireModuleExtension: false,
@@ -57,7 +73,7 @@ module.exports = {
   },
 
   configureWebpack: config => {
-    const devPlugins = [new BundleAnalyzerPlugin()];
+    const devPlugins = [];
     const plugins = [
       new UglifyJsPlugin({
         uglifyOptions: {
@@ -71,11 +87,7 @@ module.exports = {
       new CompressionWebpackPlugin({
         filename: '[path].gz[query]',
         algorithm: 'gzip',
-        test: new RegExp(
-          '\\.(' +
-          ['js', 'css'].join('|') +
-          ')$'
-        ),
+        test: new RegExp('\\.(' + ['js', 'css'].join('|') + ')$'),
         threshold: 10240,
         minRatio: 0.8
       })
@@ -90,6 +102,15 @@ module.exports = {
       config.plugins = [...config.plugins, ...plugins];
     } else {
       config.plugins = [...config.plugins, ...devPlugins];
+    }
+  },
+
+  pluginOptions: {
+    i18n: {
+      locale: 'zh',
+      fallbackLocale: 'en',
+      localeDir: 'locales',
+      enableInSFC: true
     }
   }
 };

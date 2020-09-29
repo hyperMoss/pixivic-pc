@@ -1,11 +1,4 @@
-<!--
- * @Author: gooing
- * @since: 2020-02-11 20:20:39
- * @lastTime: 2020-04-03 09:48:26
- * @LastAuthor: gooing
- * @FilePath: \pixiciv-pc\src\views\Note\Note.vue
- * @message:
- -->
+
 <template>
   <div class="note">
     <div class="content-list">
@@ -58,11 +51,11 @@ export default {
           title: '关于',
           content: [
             '出生于2018-10-01，是一位兴趣使然的工具酱。',
-            '她天然（无广告），精致（ui统一），敏捷（前后分离&纯js）。',
+            '她天然，精致（ui统一），敏捷（前后分离&纯js）。',
             '将提供以下有限的服务：pixiv日排行的浏览与免费高级会员热门排序搜索。',
             '她希望能在茫茫互联网留下一些存在的痕迹，翘首以盼大家能通过各大搜索引擎访问她（将有助于提升她的搜索排名），搜索关键词：Pixiv、pixiv、P站、p站。',
             '前端项目地址 https://github.com/cheer-fun/pixivic-pc',
-            '后端项目地址 https://github.com/cheer-fun/pixivic-web-backend'
+            '后端项目地址 https://github.com/OysterQAQ/Pixiv-Illustration-Collection-Backend'
           ]
         },
         {
@@ -97,12 +90,12 @@ export default {
             '（邮箱：oysterqaq@gmail.com），出示证明后侵权部分将会被删除。'
           ]
         },
-         {
-                  title: '商务合作、广告投放',
-                  content: [
-                    '联系QQ：392822872'
-                  ]
-                }
+        {
+          title: '商务合作、广告投放',
+          content: [
+            '联系QQ：392822872'
+          ]
+        }
       ],
       // 开发人员
       devsInfo: [
