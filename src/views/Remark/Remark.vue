@@ -45,7 +45,7 @@ export default {
         {
           title: '果汁导航',
           desc: '一个简约优质实用的资源导航平台~',
-          href: 'http://guozhivip.com/nav/'
+          href: 'http://guozhivip.com'
         },
         {
           title: 'Animex动漫社',
