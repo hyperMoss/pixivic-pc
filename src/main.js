@@ -72,7 +72,7 @@ Vue.filter('dateFormat', val => {
 });
 Vue.filter('replaceBig', val => replaceBigImg(val));
 Vue.filter('replaceSmall', val => replaceSmallImg(val));
-Vue.filter('replaceAvatar', val => `https://pic.cheerfun.dev/${val}.png`);
+Vue.filter('replaceAvatar', val => `${process.env.VUE_APP_STATIC_API}${val}.jpg`);
 Vue.filter(
   'replaceSquare',
   val =>

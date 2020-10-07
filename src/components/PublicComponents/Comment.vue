@@ -13,7 +13,7 @@
           class="avatar"
           :src="
             item.replyFrom
-              ? `https://pic.cheerfun.dev/${item.replyFrom}.png`
+              ? `${staticUrl}${item.replyFrom}.jpg`
               : ''
           "
           width="36"
@@ -173,6 +173,7 @@ export default {
   },
   data() {
     return {
+      staticUrl:process.env.VUE_APP_STATIC_API,
       comments: [],
       copyComment: '',
       inputComment: '',
@@ -180,6 +181,7 @@ export default {
       total: 0,
       pageSize: 20,
       pageIndex: 1,
+      replyParam:{platform:this.getPlatform()}
     };
   },
   computed: {
@@ -189,6 +191,30 @@ export default {
     this.getCommentsList();
   },
   methods: {
+    // GET UA INFO
+    getPlatform() {
+      const ua = navigator.userAgent.toLowerCase();
+     const uaRules={
+       osRule:[
+         {patterns: /(mac\sos\sx)\s?([\w\s\.]+\w)*/i,name:'MacOS'},
+       {patterns:/microsoft\s(windows)\s(vista|xp)/i,name:'Windows'},
+       {patterns:/(hurd|linux)\s?([\w\.]+)*/i,name:'Linux'}
+       ],
+      browserRules:[{
+         patterns:/(chromium|Chrome)\/([\w\.-]+)/i,name:'Chrome'
+      },{
+         patterns: /(edge|edgios|edgea)\/((\d+)?[\w\.]+)/i,name: 'Edge',
+      },{
+        patterns: /(opera\smini)\/([\w\.-]+)/i,name: 'Opera',
+      },{
+        patterns: /(trident).+rv[:\s]([\w\.]+).+like\sgecko/i,name: 'IE11',
+      },{
+        patterns: /version\/([\w\.]+).+?(mobile\s?safari|safari)/i,name: 'Safari',
+      }
+      ]
+     }
+      return uaRules.osRule.find(e=>e.patterns.exec(ua)).name+' '+uaRules.browserRules.find(e=>e.patterns.exec(ua)).name
+    },
     // 跳转用户主页
     goUserHomePage(id) {
       this.$router.push(`/users/home-page/${id}`);
