@@ -40,7 +40,7 @@
               class="image"
               lazy
               fit="cover"
-              src="https://pic.cheerfun.dev/40655.png?t=1590334915989"
+              src="https://static.pixivic.net/avatar/299x299/40655.jpg?t=1590334915989"
             />
           </div>
 

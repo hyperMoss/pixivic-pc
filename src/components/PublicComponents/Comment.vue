@@ -13,7 +13,7 @@
           class="avatar"
           :src="
             item.replyFrom
-              ? `https://pic.cheerfun.dev/${item.replyFrom}.png`
+              ? `https://static.pixivic.net/avatar/299x299/${item.replyFrom}.jpg`
               : ''
           "
           width="36"

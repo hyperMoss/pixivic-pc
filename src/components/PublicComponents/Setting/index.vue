@@ -82,7 +82,7 @@ export default {
   data() {
     return {
       option: {
-        img: `https://pic.cheerfun.dev/53.png`,
+        img: `https://static.pixivic.net/avatar/299x299/53.jpg`,
         size: 0.1,
         autoCrop: true,
         fixed: true

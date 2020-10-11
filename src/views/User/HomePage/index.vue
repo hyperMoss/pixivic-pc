@@ -9,9 +9,9 @@
               <img
                 :src="
                   user.id
-                    ? `https://pic.cheerfun.dev/${
+                    ? `https://static.pixivic.net/avatar/299x299//${
                       userInfo.id
-                    }.png`
+                    }.jpg`
                     : ''
                 "
                 alt

@@ -61,7 +61,7 @@
             @command="clickMenu"
           >
             <el-avatar
-              :src="user.id? `https://pic.cheerfun.dev/${user.id}.png?t=${new Date().getTime()}`: ''"
+              :src="user.id? `https://static.pixivic.net/avatar/299x299/${user.id}.jpg?t=${new Date().getTime()}`: ''"
               fit="cover"
               shape="square"
             />
