@@ -10,8 +10,6 @@ function resolve(dir) {
   return path.join(__dirname, dir);
 }
 
-console.log('Url prefix: ', process.env.VUE_APP_PREFIX);
-
 module.exports = {
   runtimeCompiler: true,
   lintOnSave: false,

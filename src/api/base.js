@@ -4,8 +4,7 @@ import cookie from 'js-cookie';
 import i18n from '../i18n';
 // 创建axios实例
 const instance = axios.create({
-  baseURL: 'https://api.pixivic.com',
-  // baseURL: process.env.VUE_APP_BASE_API,
+  baseURL: process.env.VUE_APP_BASE_API,
   timeout: 20000,
   validateStatus(status) {
     return status >= 200 && status < 600;

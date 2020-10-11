@@ -9,7 +9,10 @@
     >
       <el-col>
         <a href="/">
-          <img alt src="@/assets/images/icon.svg">
+          <img
+            alt
+            src="@/assets/images/icon.svg"
+          >
         </a>
       </el-col>
       <el-col>
@@ -36,8 +39,16 @@
             />
           </el-select>
         </el-autocomplete>
-        <el-popover placement="bottom" style="margin-left:10px" trigger="hover">
-          <i slot="reference" class="el-icon-s-flag" style="color:#409EFF" />
+        <el-popover
+          placement="bottom"
+          style="margin-left:10px"
+          trigger="hover"
+        >
+          <i
+            slot="reference"
+            class="el-icon-s-flag"
+            style="color:#409EFF"
+          />
           <ImgTags
             v-if="hotTags.length"
             :tagslist="hotTags"
@@ -45,10 +56,19 @@
           />
         </el-popover>
       </el-col>
-      <el-select :value="$i18n.locale" @change="changeLocaleLang">
-        <el-option v-for="(lang, i) in langs" :key="`Lang${i}`" :value="lang">{{
-          lang
-        }}</el-option>
+      <el-select
+        :value="$i18n.locale"
+        @change="changeLocaleLang"
+      >
+        <el-option
+          v-for="(lang, i) in langs"
+          :key="`Lang${i}`"
+          :value="lang"
+        >
+          {{
+            lang
+          }}
+        </el-option>
       </el-select>
       <el-col class="header-info">
         <!-- <el-badge :value="3">
@@ -61,7 +81,7 @@
             @command="clickMenu"
           >
             <el-avatar
-              :src="user.id? `https://static.pixivic.net/avatar/299x299/${user.id}.jpg?t=${new Date().getTime()}`: ''"
+              :src="user.id? `${staticUrl}${user.id}.jpg?t=${new Date().getTime()}`: ''"
               fit="cover"
               shape="square"
             />
@@ -72,13 +92,23 @@
                   :key="item.handler"
                   :command="item.handler"
                   :divided="item.divided"
-                >{{ item.name }}</el-dropdown-item>
+                >
+                  {{ item.name }}
+                </el-dropdown-item>
               </template>
             </el-dropdown-menu>
           </el-dropdown>
           <div
             v-else
-          ><span class="button-text" @click="login">{{ $t('login') }}</span>  <span class="button-text" @click="signUp">{{ $t('signUp') }}</span></div>
+          >
+            <span
+              class="button-text"
+              @click="login"
+            >{{ $t('login') }}</span>  <span
+              class="button-text"
+              @click="signUp"
+            >{{ $t('signUp') }}</span>
+          </div>
         </div>
       </el-col>
     </el-row>
@@ -103,6 +133,7 @@ export default {
   },
   data() {
     return {
+      staticUrl:process.env.VUE_APP_STATIC_API,
       langs: ['zh', 'en'],
       // 设置控制显示
       settingVisible: false,
@@ -169,9 +200,9 @@ export default {
     }
   },
   watch: {
-    'params.keyword': {
-      handler: 'getKeywords'
-    }
+    // 'params.keyword': {
+    //   handler: 'getKeywords'
+    // }
   },
   mounted() {
     this.params.illustType = this.$route.query.illustType || 'illust';

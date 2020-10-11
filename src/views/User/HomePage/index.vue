@@ -1,7 +1,10 @@
 
 <template>
   <div class="home-page">
-    <div v-if="userInfo" class="artist_property">
+    <div
+      v-if="userInfo"
+      class="artist_property"
+    >
       <div class="artist-base">
         <div class="artist-one">
           <div class="artist-name">
@@ -9,7 +12,7 @@
               <img
                 :src="
                   user.id
-                    ? `https://static.pixivic.net/avatar/299x299//${
+                    ? `${process.env.VUE_APP_STATIC_API}${
                       userInfo.id
                     }.jpg`
                     : ''

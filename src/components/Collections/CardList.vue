@@ -1,11 +1,20 @@
 
 <template>
   <div class="CardList">
-    <div v-if="!collectionList.length" style="margin:50px auto;width:200px;text-align:center;">
-      <svg font-size="160" class="icon" aria-hidden="true">
+    <div
+      v-if="!collectionList.length"
+      style="margin:50px auto;width:200px;text-align:center;"
+    >
+      <svg
+        font-size="160"
+        class="icon"
+        aria-hidden="true"
+      >
         <use xlink:href="#pickongtai1" />
       </svg>
-      <p style="color: #E3F2FA; font-size: 20px;">没有内容</p>
+      <p style="color: #E3F2FA; font-size: 20px;">
+        没有内容
+      </p>
     </div>
     <div
       v-infinite-scroll="getCollections"
@@ -19,7 +28,10 @@
         :body-style="{ padding: '0px' }"
       >
         <div class="card-body">
-          <div class="image-area" @click="goInfoPage(item)">
+          <div
+            class="image-area"
+            @click="goInfoPage(item)"
+          >
             <el-image
               v-if="item.cover"
               :src="item.cover.imageUrls[0].medium | replaceSmall"
@@ -27,11 +39,17 @@
               fit="cover"
               lazy
             >
-              <div slot="placeholder" class="image-slot">
+              <div
+                slot="placeholder"
+                class="image-slot"
+              >
                 加载中
                 <span class="dot">...</span>
               </div>
-              <div slot="error" class="image-slot">
+              <div
+                slot="error"
+                class="image-slot"
+              >
                 <i class="el-icon-picture-outline" />
               </div>
             </el-image>
@@ -40,34 +58,47 @@
               class="image"
               lazy
               fit="cover"
-              src="https://static.pixivic.net/avatar/299x299/40655.jpg?t=1590334915989"
+              :src="`${staticUrl}40655.jpg?t=1590334915989`"
             />
           </div>
 
           <div class="text-area">
             <time class="time">{{ item.createTime.split("T")[0] }}</time>
-            <h3 @click="goInfoPage(item)">{{ item.title }}</h3>
+            <h3 @click="goInfoPage(item)">
+              {{ item.title }}
+            </h3>
             <div>
-              <p class="desc">{{ item.caption }}</p>
+              <p class="desc">
+                {{ item.caption }}
+              </p>
               <p class="tag-list">
                 <el-tag
                   v-for="tag in item.tagList"
                   :key="tag.tagName"
                   :disable-transitions="false"
                   @click="clickTag(tag)"
-                >{{ tag.tagName }}</el-tag>
+                >
+                  {{ tag.tagName }}
+                </el-tag>
               </p>
-              <el-dropdown v-if="powerFlag" class="setting">
+              <el-dropdown
+                v-if="powerFlag"
+                class="setting"
+              >
                 <span>
                   <i class="el-icon-setting" />
                 </span>
                 <el-dropdown-menu slot="dropdown">
                   <el-dropdown-item
                     @click.native="modifyCollect(item)"
-                  >修改</el-dropdown-item>
+                  >
+                    修改
+                  </el-dropdown-item>
                   <el-dropdown-item
                     @click.native="deletCollect(item)"
-                  >删除</el-dropdown-item>
+                  >
+                    删除
+                  </el-dropdown-item>
                 </el-dropdown-menu>
               </el-dropdown>
             </div>
@@ -92,7 +123,7 @@ export default {
   components: { CreateCollect },
   props: ['collectionList', 'powerFlag'],
   data() {
-    return { createCollectBoolean: false, collectData: null };
+    return { createCollectBoolean: false, collectData: null,staticUrl:process.env.VUE_APP_STATIC_API };
   },
   computed: {},
   watch: {},

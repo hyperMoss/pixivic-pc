@@ -11,13 +11,19 @@
       <div class="modal-body">
         <div class="btn-list">
           <p>
-            <el-button :disabled="isCheckEmail" @click="verifyEmail">
+            <el-button
+              :disabled="isCheckEmail"
+              @click="verifyEmail"
+            >
               {{ isCheckEmail ? "已验证邮箱" : "验证邮箱" }}
             </el-button>
           </p>
 
           <p>
-            <el-button :disabled="isConnectQQ" @click="bindQQ">
+            <el-button
+              :disabled="isConnectQQ"
+              @click="bindQQ"
+            >
               {{ isConnectQQ ? "已绑定QQ" : "绑定QQ" }}
             </el-button>
           </p>
@@ -27,7 +33,10 @@
             </el-button>
           </p>
           <p>
-            <el-button :disabled="!isConnectQQ" @click="unLinkQQ">
+            <el-button
+              :disabled="!isConnectQQ"
+              @click="unLinkQQ"
+            >
               解绑QQ
             </el-button>
           </p>
@@ -53,7 +62,10 @@
               type="file"
               @change="handleLocalImg($event)"
             >
-            <el-button :loading="loading" @click="saveAvatar">
+            <el-button
+              :loading="loading"
+              @click="saveAvatar"
+            >
               确定头像
             </el-button>
           </div>
@@ -82,7 +94,7 @@ export default {
   data() {
     return {
       option: {
-        img: `https://static.pixivic.net/avatar/299x299/53.jpg`,
+        img: `${process.env.VUE_APP_STATIC_API}53.jpg`,
         size: 0.1,
         autoCrop: true,
         fixed: true
