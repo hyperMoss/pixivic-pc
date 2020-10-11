@@ -56,7 +56,7 @@ function getTranslations(param) {
 // 图片上传
 function uploadImg(data, params) {
   return axios({
-    url: `${process.env.VUE_APP_STATIC_API}upload?isTemp=${!params}`,
+    url: `https://upload.pixivic.com/avatar/image?isTemp=${!params}`,
     method: 'post',
     data,
     params
