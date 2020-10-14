@@ -15,7 +15,7 @@
               :key="code"
               :code="code"
               width="80"
-              @click.native="chooseSticker(code)"
+              @click.native="chooseSticker(`[${item.name}_${code}]`)"
             />
           </el-scrollbar>
         </div>
