@@ -13,7 +13,7 @@
             <Sticker
               v-for="code of item.ids"
               :key="code"
-              :code="code"
+              :code="`[${item.name}_${code}]`"
               width="80"
               @click.native="chooseSticker(`[${item.name}_${code}]`)"
             />
