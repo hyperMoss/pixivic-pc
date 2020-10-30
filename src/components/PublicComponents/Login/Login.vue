@@ -1,31 +1,78 @@
 
 <template>
   <div class="Login">
-    <el-form ref="loginForm" :model="loginForm" status-icon :rules="rules" label-width="100px" label-position="left">
-      <el-form-item :label="$t('usernameOrEmail')" prop="username">
+    <el-form
+      ref="loginForm"
+      :model="loginForm"
+      status-icon
+      :rules="rules"
+      label-width="100px"
+      label-position="left"
+    >
+      <el-form-item
+        :label="$t('usernameOrEmail')"
+        prop="username"
+      >
         <el-input v-model="loginForm.username" />
       </el-form-item>
-      <el-form-item :label="$t('password')" prop="password">
-        <el-input v-model="loginForm.password" :maxlength="20" show-password type="password" autocomplete="off" />
+      <el-form-item
+        :label="$t('password')"
+        prop="password"
+      >
+        <el-input
+          v-model="loginForm.password"
+          :maxlength="20"
+          show-password
+          type="password"
+          autocomplete="off"
+        />
       </el-form-item>
-      <el-form-item :label="$t('verifyCode')" prop="verifyCode">
-        <el-row type="flex" justify="space-between" :gutter="16">
-          <el-col> <el-input v-model="loginForm.verifyCode" :maxlength="4">
-            <template slot="append"><img
-              style="height:30px;width:100px"
-              :src="`data:image/bmp;base64,${imageBase64}`"
-              @click.stop="getCode"
-            ></template></el-input></el-col>
+      <el-form-item
+        :label="$t('verifyCode')"
+        prop="verifyCode"
+      >
+        <el-row
+          type="flex"
+          justify="space-between"
+          :gutter="16"
+        >
+          <el-col>
+            <el-input
+              v-model="loginForm.verifyCode"
+              :maxlength="4"
+            >
+              <template slot="append">
+                <img
+                  style="height:30px;width:100px"
+                  :src="`data:image/bmp;base64,${imageBase64}`"
+                  @click.stop="getCode"
+                >
+              </template>
+            </el-input>
+          </el-col>
         </el-row>
       </el-form-item>
       <el-form-item>
         <el-button
           @click="resetPassword"
-        >{{ $t('resetPassword') }}</el-button>
-        <el-button type="primary" @click="submitForm('loginForm')">{{ $t('login') }}</el-button>
-        <el-button @click="loginQQ"><svg font-size="14" class="icon" aria-hidden="true">
-          <use xlink:href="#picQQ" />
-        </svg>QQ{{ $t('login') }}</el-button>
+        >
+          {{ $t('resetPassword') }}
+        </el-button>
+        <el-button
+          type="primary"
+          @click="submitForm('loginForm')"
+        >
+          {{ $t('login') }}
+        </el-button>
+        <el-button @click="loginQQ">
+          <svg
+            font-size="14"
+            class="icon"
+            aria-hidden="true"
+          >
+            <use xlink:href="#picQQ" />
+          </svg>QQ{{ $t('login') }}
+        </el-button>
       </el-form-item>
     </el-form>
     <!-- <el-dialog
@@ -46,6 +93,7 @@
 
 <script>
 import { QQ_LINK } from '@/util/constants';
+import { proxyList } from '@/store/getters';
 export default {
   name: 'Login',
   components: {},
@@ -173,6 +221,21 @@ export default {
             this.$store.dispatch('setUser', res.data.data);
             this.$store.dispatch('setLoginBoolean');
             this.$message.success(res.data.message);
+            const {permissionLevel,permissionLevelExpireDate}=res.data.data
+            if(permissionLevel>=3&&permissionLevelExpireDate>Date.now()){
+              this.$api.user.getVipProxyServer().then(
+                res=>{
+                  if(res.status===200){
+                    this.$store.dispatch('setProxyList', res.data.data);
+                    const currentApi =res.data.data[Math.floor(proxyList.length*Math.random())].serverAddress
+                    sessionStorage.setItem('accelerateKey',currentApi)
+                  }else {
+                    this.$message.closeAll();
+                    this.$message.info(res.data.message);
+                  }
+                }
+              )
+            }
           } else {
             this.$message.closeAll();
             this.$message.info(res.data.message);

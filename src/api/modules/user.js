@@ -232,6 +232,26 @@ function getOldHistory(data) {
   });
 }
 
+// 获取高速服务器列表
+function getVipProxyServer() {
+  return axios({
+    url:'/vipProxyServer',
+    method:'get',
+  })
+}
+
+// 用户激活
+
+function putPlusCode(userId,code){
+  return axios({
+    url:`/users/${userId}/permissionLevel`,
+    method: 'put',
+    params: {
+      exchangeCode:code
+    }
+  })
+}
+
 export {
   verificationCode,
   register,
@@ -257,5 +277,7 @@ export {
   getFollowers,
   getArtists,
   getRecentHistory,
-  getOldHistory
+  getOldHistory,
+  getVipProxyServer,
+  putPlusCode
 };

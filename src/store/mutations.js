@@ -43,6 +43,9 @@ const mutations = {
   },
   [types.SET_COOLECT_INFO](state, data) {
     if (data) { state.collectInfo = data; }
+  },
+  [types.SET_PROXY_LIST](state, data) {
+    if (data) { state.proxyList = data; }
   }
 };
 

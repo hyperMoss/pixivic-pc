@@ -106,3 +106,7 @@ export const setCollectBoolean = ({ commit }, data) => {
 export const setCollectInfo = ({ commit }, data) => {
   commit(types.SET_COOLECT_INFO, data);
 };
+export const setProxyList =({commit}, data) => {
+  localStorage.setItem('proxyList', JSON.stringify(data));
+  commit(types.SET_PROXY_LIST, data);
+}

@@ -81,6 +81,7 @@
             @command="clickMenu"
           >
             <el-avatar
+              :style="checkPlusStyle"
               :src="user.id? `${staticUrl}${user.id}.jpg?t=${new Date().getTime()}`: ''"
               fit="cover"
               shape="square"
@@ -210,6 +211,14 @@ export default {
     this.getHotTag();
   },
   methods: {
+    // 检查是否为会员
+    checkPlusStyle(){
+      if(this.user.permissionLevel>=3 && this.user.permissionLevelExpireDate>Date.now()){
+        return {
+          border: 'solid 1px #E6A23C',
+        }
+      }
+    },
     changeLocaleLang(val) {
       this.$i18n.locale = val;
       cookie.set('lang', val, {

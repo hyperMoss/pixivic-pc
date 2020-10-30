@@ -87,3 +87,7 @@ export function replaceBigImg(url) {
 export function replaceSmallImg(url) {
   return url.replace('i.pximg.net', 'img.cheerfun.dev');
 }
+
+export function replaceBigImgProxy(url){
+  return url.replace('_webp', '').replace('i.pximg.net', sessionStorage.getItem('accelerateKey'));
+}
