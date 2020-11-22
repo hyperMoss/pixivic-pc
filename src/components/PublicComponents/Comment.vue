@@ -1,6 +1,56 @@
 <template>
   <div class="container">
     <div
+      class="write-reply"
+      @click="showCommentInput()"
+    >
+      <i class="el-icon-edit" />
+      <span class="add-comment">添加新评论</span>
+    </div>
+    <transition name="fade">
+      <div
+        v-if="showItemId === 'new'"
+        class="input-wrapper"
+      >
+        <el-input
+          v-model="inputComment"
+          :disabled="isSticker"
+          class="gray-bg-input"
+          type="textarea"
+          :rows="3"
+          autofocus
+          placeholder="写下你的评论..."
+        />
+        <div class="btn-control">
+          <span
+            class="cancel"
+            @click="cancel"
+          >取消</span>
+          <el-popover
+            placement="right"
+            trigger="click"
+          >
+            <StickerTab @submit="submitSticker" />
+            <el-button
+              slot="reference"
+              style="margin-right: 20px;"
+              type="primary"
+              icon="el-icon-edit"
+              circle
+            />
+          </el-popover>
+          <el-button
+            class="btn"
+            type="primary"
+            round
+            @click="submitComment()"
+          >
+            确定
+          </el-button>
+        </div>
+      </div>
+    </transition>
+    <div
       v-for="item in comments"
       :key="item.id"
       class="comment"
@@ -25,7 +75,7 @@
             {{ item.replyFromName }}
           </div>
           <div class="date">
-            {{ item.createDate | dateFormat }} {{ ' '+ item.platform }}
+            {{ item.createDate | dateFormat }} {{ ' '+ item.platform?item.platform:'' }}
           </div>
         </div>
       </div>
@@ -146,56 +196,6 @@
         @current-change="getCommentsList"
       />
     </div>
-    <div
-      class="write-reply"
-      @click="showCommentInput()"
-    >
-      <i class="el-icon-edit" />
-      <span class="add-comment">添加新评论</span>
-    </div>
-    <transition name="fade">
-      <div
-        v-if="showItemId === 'new'"
-        class="input-wrapper"
-      >
-        <el-input
-          v-model="inputComment"
-          :disabled="isSticker"
-          class="gray-bg-input"
-          type="textarea"
-          :rows="3"
-          autofocus
-          placeholder="写下你的评论..."
-        />
-        <div class="btn-control">
-          <span
-            class="cancel"
-            @click="cancel"
-          >取消</span>
-          <el-popover
-            placement="right"
-            trigger="click"
-          >
-            <StickerTab @submit="submitSticker" />
-            <el-button
-              slot="reference"
-              style="margin-right: 20px;"
-              type="primary"
-              icon="el-icon-edit"
-              circle
-            />
-          </el-popover>
-          <el-button
-            class="btn"
-            type="primary"
-            round
-            @click="submitComment()"
-          >
-            确定
-          </el-button>
-        </div>
-      </div>
-    </transition>
   </div>
 </template>
 
@@ -367,7 +367,7 @@ export default {
           if (res.status === 200) {
             const params = { ...data, createDate: new Date(), replyFrom: this.user.id, id: Math.random() };
             if (params.parentId === 0) {
-              this.comments.push(params);
+              this.comments.unshift(params);
               this.total++;
             } else {
               const item = this.comments.find(item => item.id === params.parentId);
