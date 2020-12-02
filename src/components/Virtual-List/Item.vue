@@ -53,6 +53,11 @@ export default {
     },
     goDetail() {
       if (this.column.isad) {
+      gtag('event', 'click', {
+                        'event_category': 'outbound',
+                        'event_label': this.column.link,
+                        'transport_type': 'beacon'
+                      });
         window.open(this.column.link);
       } else {
         this.$store.dispatch('setDetail', this.column);
