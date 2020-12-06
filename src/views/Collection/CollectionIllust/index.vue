@@ -6,18 +6,48 @@
       :list="illustList"
       @infinite="infinite"
     >
-      <div class="collectionsIllust-btns">
-        <el-button type="primary" @click="handleModifyList">列表排序</el-button>
-      </div>
-      <div class="collectionsIllust-comment">
-        <Comment v-if="collectInfo.forbidComment" :pid="collectInfo.id+''" comment-type="collections" />
-        <div v-else style="margin:50px auto;width:200px;text-align:center;">
-          <svg font-size="160" class="icon" aria-hidden="true">
-            <use xlink:href="#pickongtai1" />
-          </svg>
-          <p style="color: #E3F2FA; font-size: 20px;">未开启评论</p>
+      <!--      <div class="collectionsIllust-btns">-->
+      <!--        <el-button-->
+      <!--          type="primary"-->
+      <!--          @click="handleModifyList"-->
+      <!--        >-->
+      <!--          列表排序-->
+      <!--        </el-button>-->
+      <!--      </div>-->
+      <el-popover
+        placement="left"
+        style="position:fixed;z-index:999;right:40px;top:300px;"
+        trigger="click"
+      >
+        <div slot="reference">
+          <i
+            style="font-size: 30px;color: #409eff"
+            class="el-icon-chat-round"
+          />
         </div>
-      </div>
+        <div class="collectionsIllust-comment">
+          <Comment
+            v-if="collectInfo.forbidComment"
+            :pid="collectInfo.id+''"
+            comment-type="collections"
+          />
+          <div
+            v-else
+            style="margin:50px auto;width:200px;text-align:center;"
+          >
+            <svg
+              font-size="160"
+              class="icon"
+              aria-hidden="true"
+            >
+              <use xlink:href="#pickongtai1" />
+            </svg>
+            <p style="color: #E3F2FA; font-size: 20px;">
+              未开启评论
+            </p>
+          </div>
+        </div>
+      </el-popover>
     </VirtualList>
     <CollectPictureAdjust
       v-if="modifyListBoolean"
@@ -104,12 +134,11 @@ export default {
     margin: 20px;
   }
   &-comment {
-    display: flex;
-    justify-content: flex-end;
     margin: 20px;
-    float: right;
     width: 600px;
-    border: 1px solid;
+    border: 1px solid @border-first;
+    max-height: 600px;
+    overflow-y: scroll;
   }
 }
 </style>

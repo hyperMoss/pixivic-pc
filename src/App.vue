@@ -1,9 +1,15 @@
 
 <template>
   <div id="app">
-    <el-container class="page-container" style="overflow: hidden;">
+    <el-container
+      class="page-container"
+      style="overflow: hidden;"
+    >
       <!-- 左边栏开始 -->
-      <el-aside style="background-color: rgb(238, 241, 246)" width="65px">
+      <el-aside
+        style="background-color: rgb(238, 241, 246)"
+        width="65px"
+      >
         <left-side />
       </el-aside>
       <!-- 左边栏结束 -->
@@ -16,7 +22,10 @@
         <!-- 主要页面开始 -->
         <el-main class="window-view">
           <vue-page-stack>
-            <router-view :key="key" style="max-height: calc(~'100vh - 60px');" />
+            <router-view
+              :key="key"
+              style="max-height: calc(~'100vh - 60px');"
+            />
           </vue-page-stack>
         </el-main>
         <!-- 主要页面结束 -->
@@ -54,10 +63,10 @@ export default {
   },
   mounted() {
     if (!cookie.get('alert')) {
-      this.$notify({
-        title: this.$tc('news.title'),
-        message: this.$tc('news.content')
-      });
+      // this.$notify({
+      //   title: this.$tc('news.title'),
+      //   message: this.$tc('news.content')
+      // });
       this.$notify({
         title: this.$tc('wechatImg'),
         duration: 0,
