@@ -10,13 +10,7 @@
           <div class="artist-name">
             <div class="avatar">
               <img
-                :src="
-                  user.id
-                    ? `${process.env.VUE_APP_STATIC_API}${
-                      userInfo.id
-                    }.jpg`
-                    : ''
-                "
+                :src="computerUserUrl"
                 alt
               >
             </div>
@@ -120,6 +114,13 @@ export default {
     this.getCollections();
   },
   methods: {
+    computerUserUrl(){
+      this.user.id
+        ? `${process.env.VUE_APP_STATIC_API}${
+          this.userInfo.id
+        }.jpg`
+        : ''
+    },
     getArtistList() {},
     getUsersInfo() {
       this.$api.user.getUsers(this.userId).then(res => {

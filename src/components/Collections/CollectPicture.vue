@@ -16,15 +16,23 @@
             fit="cover"
             style="height: 140px; width: 140px;"
           >
-            <div slot="error" class="image-slot">
+            <div
+              slot="error"
+              class="image-slot"
+            >
               <i class="el-icon-picture-outline" />
             </div>
-            <div slot="placeholder" class="image-slot">
+            <div
+              slot="placeholder"
+              class="image-slot"
+            >
               加载中
               <span class="dot">...</span>
             </div>
           </el-image>
-          <p class="item-title">{{ readyCollectItem.title }}</p>
+          <p class="item-title">
+            {{ readyCollectItem.title }}
+          </p>
         </div>
         <div class="colletlist-content">
           <div class="md-item">
@@ -50,13 +58,23 @@
           </div>
         </div>
       </div>
-      <div slot="footer" style="    justify-content: flex-end;display: flex;">
-        <el-button type="text" @click="closeModal">取消</el-button>
+      <div
+        slot="footer"
+        style="    justify-content: flex-end;display: flex;"
+      >
+        <el-button
+          type="text"
+          @click="closeModal"
+        >
+          取消
+        </el-button>
         <el-button
           :disabled="!collectionId"
           type="primary"
           @click="collectAjax"
-        >保存</el-button>
+        >
+          保存
+        </el-button>
       </div>
     </el-dialog>
   </div>
@@ -210,6 +228,9 @@ export default {
         .selected {
           background: #409eff;
           color: #fff;
+        }
+        .selected:hover{
+          background: #409EFF;
         }
       }
     }
