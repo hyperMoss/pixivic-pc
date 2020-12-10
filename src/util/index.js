@@ -13,7 +13,7 @@ export default {
 };
 
 export const replaceImg = src => {
-  return `https://test.img.cheerfun.dev/get/${src}`;
+  return `https://test.img.pixivic.net/get/${src}`;
 };
 
 export function download(href, cb) {
@@ -81,9 +81,9 @@ export function debounceAsyncValidator(validator, delay) {
 }
 
 export function replaceBigImg(url) {
-  return url.replace('_webp', '').replace('i.pximg.net', 'original.img.cheerfun.dev');
+  return url.replace('_webp', '').replace('i.pximg.net', 'original.img.pixivic.net');
 }
 
 export function replaceSmallImg(url) {
-  return url.replace('i.pximg.net', 'img.cheerfun.dev');
+  return url.replace('i.pximg.net', 'img.pixivic.net');
 }
