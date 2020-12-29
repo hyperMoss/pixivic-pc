@@ -19,9 +19,9 @@
     </el-menu>
     <div>
       <a
-        href="http://www.beian.miit.gov.cn/"
+        href="http://beian.miit.gov.cn/"
         target="_blank"
-        style="text-decoration:none;color:#C0C4CC;"
+        style="text-decoration:none;color:#0080FF;"
       >
         <div class="beian">桂ICP备17012945号-3</div>
       </a>

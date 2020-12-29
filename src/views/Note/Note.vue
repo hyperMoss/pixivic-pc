@@ -91,7 +91,7 @@ export default {
           ]
         },
         {
-          title: '商务合作、广告投放',
+          title: '商务合作、广告投放（不接受广告联盟）',
           content: [
             '联系QQ：392822872'
           ]

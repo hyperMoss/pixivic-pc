@@ -22,9 +22,11 @@
           :like="column.isLiked"
           @handleLike="handleLike"
         />
-        <el-dropdown-menu slot="dropdown">
-          <!-- <el-dropdown-item @click.native="handleCollect">加到画集</el-dropdown-item> -->
-        </el-dropdown-menu>
+        <!--        <el-dropdown-menu slot="dropdown">-->
+        <!--          <el-dropdown-item @click.native="handleCollect">-->
+        <!--            加到画集-->
+        <!--          </el-dropdown-item>-->
+        <!--        </el-dropdown-menu>-->
       </el-dropdown>
     </div>
   </div>
@@ -53,6 +55,11 @@ export default {
     },
     goDetail() {
       if (this.column.isad) {
+      gtag('event', 'click', {
+                        'event_category': 'outbound',
+                        'event_label': this.column.link,
+                        'transport_type': 'beacon'
+                      });
         window.open(this.column.link);
       } else {
         this.$store.dispatch('setDetail', this.column);
