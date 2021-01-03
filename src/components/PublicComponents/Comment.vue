@@ -200,6 +200,30 @@
 </template>
 
 <script>
+// GET UA INFO
+function getPlatform() {
+  const ua = navigator.userAgent.toLowerCase();
+  const uaRules={
+    osRule:[
+      {patterns: /(mac\sos\sx)\s?([\w\s.]+\w)*/i,name:'MacOS'},
+      {patterns:/microsoft\s(windows)\s(vista|xp)/i,name:'Windows'},
+      {patterns:/(hurd|linux)\s?([\w.]+)*/i,name:'Linux'}
+    ],
+    browserRules:[{
+      patterns:/(chromium|Chrome)\/([\w.-]+)/i,name:'Chrome'
+    },{
+      patterns: /(edge|edgios|edgea)\/((\d+)?[\w.]+)/i,name: 'Edge',
+    },{
+      patterns: /(opera\smini)\/([\w.-]+)/i,name: 'Opera',
+    },{
+      patterns: /(trident).+rv[:\s]([\w.]+).+like\sgecko/i,name: 'IE11',
+    },{
+      patterns: /version\/([\w.]+).+?(mobile\s?safari|safari)/i,name: 'Safari',
+    }
+    ]
+  }
+  return uaRules.osRule.find(e=>e.patterns.exec(ua))?.name+' '+uaRules.browserRules.find(e=>e.patterns.exec(ua))?.name
+}
 import { mapGetters } from 'vuex';
 import StickerTab from 'components/PublicComponents/StickerTab';
 import Sticker from 'components/PublicComponents/Sticker';
@@ -228,7 +252,7 @@ export default {
       total: 0,
       pageSize: 20,
       pageIndex: 1,
-      replyParam:{platform:this.getPlatform()}
+      replyParam:{platform:getPlatform()}
     };
   },
   computed: {
@@ -242,30 +266,6 @@ export default {
     submitSticker(e){
       this.isSticker=true
       this.inputComment=e
-    },
-    // GET UA INFO
-    getPlatform() {
-      const ua = navigator.userAgent.toLowerCase();
-     const uaRules={
-       osRule:[
-         {patterns: /(mac\sos\sx)\s?([\w\s.]+\w)*/i,name:'MacOS'},
-       {patterns:/microsoft\s(windows)\s(vista|xp)/i,name:'Windows'},
-       {patterns:/(hurd|linux)\s?([\w.]+)*/i,name:'Linux'}
-       ],
-      browserRules:[{
-         patterns:/(chromium|Chrome)\/([\w.-]+)/i,name:'Chrome'
-      },{
-         patterns: /(edge|edgios|edgea)\/((\d+)?[\w.]+)/i,name: 'Edge',
-      },{
-        patterns: /(opera\smini)\/([\w.-]+)/i,name: 'Opera',
-      },{
-        patterns: /(trident).+rv[:\s]([\w.]+).+like\sgecko/i,name: 'IE11',
-      },{
-        patterns: /version\/([\w.]+).+?(mobile\s?safari|safari)/i,name: 'Safari',
-      }
-      ]
-     }
-      return uaRules.osRule.find(e=>e.patterns.exec(ua)).name+' '+uaRules.browserRules.find(e=>e.patterns.exec(ua)).name
     },
     // 跳转用户主页
     goUserHomePage(id) {

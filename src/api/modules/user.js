@@ -252,6 +252,22 @@ function putPlusCode(userId,code){
   })
 }
 
+// 获取活动可参与状态
+function canParticipateStatus(activityName) {
+  return axios({
+    url: `/vipActivity/${activityName}/canParticipateStatus`,
+    method: 'get'
+  });
+}
+
+// 参与活动
+function participateStatus(activityName) {
+  return axios({
+    url: `/vipActivity/${activityName}/participateStatus`,
+    method: 'put'
+  });
+}
+
 export {
   verificationCode,
   register,
@@ -279,5 +295,7 @@ export {
   getRecentHistory,
   getOldHistory,
   getVipProxyServer,
-  putPlusCode
+  putPlusCode,
+  canParticipateStatus,
+  participateStatus
 };

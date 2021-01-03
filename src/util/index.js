@@ -6,6 +6,8 @@
  */
 import * as dom from './dom';
 import axios from 'axios';
+import store from '@/store/';
+import cookie from 'js-cookie';
 import { COLOR_LIST } from './constants';
 
 export default {
@@ -81,13 +83,16 @@ export function debounceAsyncValidator(validator, delay) {
 }
 
 export function replaceBigImg(url) {
-  return url.replace('_webp', '').replace('i.pximg.net', 'original.img.pixivic.net');
+  url = url.replace('_webp', '');
+  if (store.getters.isVip && store.getters.proxyList) {
+    url = url.replace('https://i.pximg.net', store.getters.proxyList);
+    url += `?Authorization=${cookie.get('jwt')}`;
+    return url;
+  } else {
+    return url.replace('i.pximg.net', 'original.img.pixivic.net');
+  }
 }
 
 export function replaceSmallImg(url) {
   return url.replace('i.pximg.net', 'img.pixivic.net');
-}
-
-export function replaceBigImgProxy(url){
-  return url.replace('_webp', '').replace('i.pximg.net', sessionStorage.getItem('accelerateKey'));
 }

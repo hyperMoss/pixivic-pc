@@ -14,64 +14,23 @@
     <div class="page-padding">
       <main class="detail-content">
         <figure class="detail-content__figure">
-          <el-image
+          <img
             v-if="illustDetail.xrestrict==0&&illustDetail.sanityLevel<=(user ? 5 : 4)"
-            :preview-src-list="srcList"
             :src="illustDetail.originalSrc"
-            fit="contain"
-            style="width:100%;height:80vh;"
+            style="width:100%;height:80vh;object-fit: contain"
           >
-            <div
-              slot="placeholder"
-              class="image-slot"
-            >
-              <div>
-                <el-image
-                  v-if="illustDetail.xrestrict==0&&illustDetail.sanityLevel<=(user ? 5 : 4)"
-                  :src="illustDetail.src"
-                  fit="contain"
-                  style="width:100%;height:80vh;"
-                />
-                <el-progress
-                  :percentage="fakeTime"
-                  style="margin-top: -20px;"
-                />
-              </div>
-            </div>
-            <div
-              slot="error"
-              class="image-slot"
-            >
-              <i class="el-icon-picture-outline" />
-            </div>
-          </el-image>
         </figure>
         <div class="detail-content__action">
+          <el-image
+            :preview-src-list="srcList"
+            class="showScreenImg"
+            alt=""
+            :src="require('assets/images/image.svg')"
+          />
           <div
             :class="['like', { 'is-like': illustDetail.isLiked }]"
             @click="handleLike(illustDetail)"
           />
-          <el-popover
-            placement="top-start"
-            title="标题"
-            width="200"
-            trigger="hover"
-            content="正在施工中"
-          >
-            <a
-              v-if="likeUsers"
-              slot="reference"
-              class="users"
-            >
-              <el-avatar
-                v-for="item in likeUsers"
-                :key="item.userId"
-                :size="40"
-                :src="item.userId | replaceAvatar"
-                @click="goUsers"
-              />
-            </a>
-          </el-popover>
         </div>
         <figcaption class="detail-content__info">
           <div class="card">
@@ -464,7 +423,7 @@ export default {
     }
     &__action {
       display: flex;
-      justify-content: flex-end;
+      justify-content: space-between;
       background: #fff;
       padding: 0 20px;
       .users {
@@ -594,6 +553,32 @@ export default {
         height: 80px;
       }
     }
+  }
+
+
+  .showScreenImg {
+    position: relative;
+    left: -2px;
+    width: 18px;
+    height: 18px;
+    z-index: 999;
+    padding-right: 96px;
+  }
+  .showScreenImg:after{
+    position: absolute;
+    display: inline-block;
+    left: 28px;
+    top: -1px;
+    content: '点击看大图';
+    width: 88px;
+    height: 18px;
+  }
+  /deep/ .showScreenImg .el-image__inner.el-image__preview {
+    position: relative;
+    z-index: 9999;
+    padding-right: 96px;
+    width: 18px;
+    height: 18px;
   }
 }
 

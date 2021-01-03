@@ -1,18 +1,6 @@
 
 <template>
   <div class="Donate">
-    <div class="code">
-      <div @click="goMall">
-        点我购买燃料
-      </div>
-      <el-input
-        v-model="code"
-        placeholder="请输入燃料"
-      />
-      <el-button @click="submitCode">
-        自然选择，前进四
-      </el-button>
-    </div>
     <div class="donate-card-warp">
       <el-card class="donate-card">
         <div slot="header">
@@ -42,7 +30,7 @@ export default {
   name: 'Donate',
   components: {},
   data() {
-    return {code:''};
+    return {};
   },
   computed: {
     ...mapGetters(['user'])
@@ -50,39 +38,7 @@ export default {
   watch: {},
   mounted() {},
   methods: {
-    //打开购买页面
-    goMall(){
-      window.open('https://mall.pixivic.net/product/')
-    },
-    // 提交燃料
-    submitCode(){
-      if(!this.user.id||this.code.trim()){
-        this.$message.closeAll();
-        this.$message.warning('请输入有效的燃料');
-      }
-      this.$api.user.putPlusCode(this.user.id,this.code).then(
-        res=>{
-          if(res.status===200){
-            this.$message.closeAll();
-            this.$message.success(res.data.message);
-            this.$api.user.getUsers(this.user.id).then(
-              res=>{
-                if(res.status===200){
-                  localStorage.setItem('user', JSON.stringify(res.data.data));
-                  this.$store.dispatch('setUser', res.data.data);
-                }else {
-                  this.$message.closeAll();
-                  this.$message.info('请重新登录刷新用户数据');
-                }
-              }
-            )
-          }else {
-            this.$message.closeAll();
-            this.$message.info(res.data.message);
-          }
-        }
-      )
-    }
+
   }
 };
 </script>

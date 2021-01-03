@@ -1,5 +1,6 @@
 import * as types from './mutation-types';
-import { collectIllust, deleteCollect, followArtist } from '@/api/modules/user';
+import { collectIllust, deleteCollect, followArtist,getVipProxyServer  } from '@/api/modules/user';
+import { Message } from 'element-ui';
 
 export const setUser = ({
   commit
@@ -106,7 +107,26 @@ export const setCollectBoolean = ({ commit }, data) => {
 export const setCollectInfo = ({ commit }, data) => {
   commit(types.SET_COOLECT_INFO, data);
 };
-export const setProxyList =({commit}, data) => {
-  localStorage.setItem('proxyList', JSON.stringify(data));
-  commit(types.SET_PROXY_LIST, data);
+
+export const vipProxyServer = ({commit}) => {
+  return new Promise((resolve, reject) => {
+    getVipProxyServer()
+      .then(res => {
+        if (res.status === 200 && res.data.data) {
+          const data = res.data.data;
+          const url = data[Math.floor((Math.random() * data.length))];
+          localStorage.setItem('serverAddress', url.serverAddress);
+          commit(types.SET_PROXY_LIST, url.serverAddress);
+          Message.success({message: '您正在享受原图加速服务'});
+          resolve();
+        } else {
+          Message.error({message: '原图加速服务暂时失效 请稍后刷新重试'});
+          localStorage.removeItem('serverAddress');
+          reject();
+        }
+      })
+      .catch(err => {
+        reject(err);
+      });
+  });
 }
