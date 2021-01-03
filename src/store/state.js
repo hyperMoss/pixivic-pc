@@ -10,7 +10,8 @@ const state = {
   loginOrSign: true,
   collectBoolean: false,
   readyCollectItem: {},
-  collectInfo: {}
+  collectInfo: {},
+  proxyList:JSON.parse(localStorage.getItem('proxyList'))||[],
 };
 
 export default state;

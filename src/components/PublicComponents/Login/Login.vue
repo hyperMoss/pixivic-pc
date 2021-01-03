@@ -1,31 +1,78 @@
-
 <template>
   <div class="Login">
-    <el-form ref="loginForm" :model="loginForm" status-icon :rules="rules" label-width="100px" label-position="left">
-      <el-form-item :label="$t('usernameOrEmail')" prop="username">
+    <el-form
+      ref="loginForm"
+      :model="loginForm"
+      status-icon
+      :rules="rules"
+      label-width="100px"
+      label-position="left"
+    >
+      <el-form-item
+        :label="$t('usernameOrEmail')"
+        prop="username"
+      >
         <el-input v-model="loginForm.username" />
       </el-form-item>
-      <el-form-item :label="$t('password')" prop="password">
-        <el-input v-model="loginForm.password" :maxlength="20" show-password type="password" autocomplete="off" />
+      <el-form-item
+        :label="$t('password')"
+        prop="password"
+      >
+        <el-input
+          v-model="loginForm.password"
+          :maxlength="20"
+          show-password
+          type="password"
+          autocomplete="off"
+        />
       </el-form-item>
-      <el-form-item :label="$t('verifyCode')" prop="verifyCode">
-        <el-row type="flex" justify="space-between" :gutter="16">
-          <el-col> <el-input v-model="loginForm.verifyCode" :maxlength="4">
-            <template slot="append"><img
-              style="height:30px;width:100px"
-              :src="`data:image/bmp;base64,${imageBase64}`"
-              @click.stop="getCode"
-            ></template></el-input></el-col>
+      <el-form-item
+        :label="$t('verifyCode')"
+        prop="verifyCode"
+      >
+        <el-row
+          type="flex"
+          justify="space-between"
+          :gutter="16"
+        >
+          <el-col>
+            <el-input
+              v-model="loginForm.verifyCode"
+              :maxlength="4"
+            >
+              <template slot="append">
+                <img
+                  style="height:30px;width:100px"
+                  :src="`data:image/bmp;base64,${imageBase64}`"
+                  @click.stop="getCode"
+                >
+              </template>
+            </el-input>
+          </el-col>
         </el-row>
       </el-form-item>
       <el-form-item>
         <el-button
           @click="resetPassword"
-        >{{ $t('resetPassword') }}</el-button>
-        <el-button type="primary" @click="submitForm('loginForm')">{{ $t('login') }}</el-button>
-        <el-button @click="loginQQ"><svg font-size="14" class="icon" aria-hidden="true">
-          <use xlink:href="#picQQ" />
-        </svg>QQ{{ $t('login') }}</el-button>
+        >
+          {{ $t('resetPassword') }}
+        </el-button>
+        <el-button
+          type="primary"
+          @click="submitForm('loginForm')"
+        >
+          {{ $t('login') }}
+        </el-button>
+        <el-button @click="loginQQ">
+          <svg
+            font-size="14"
+            class="icon"
+            aria-hidden="true"
+          >
+            <use xlink:href="#picQQ" />
+          </svg>
+          QQ{{ $t('login') }}
+        </el-button>
       </el-form-item>
     </el-form>
     <!-- <el-dialog
@@ -45,7 +92,10 @@
 </template>
 
 <script>
-import { QQ_LINK } from '@/util/constants';
+import {QQ_LINK} from '@/util/constants';
+import {proxyList} from '@/store/getters';
+import {mapGetters} from "vuex";
+
 export default {
   name: 'Login',
   components: {},
@@ -90,18 +140,22 @@ export default {
       // 验证规则
       rules: {
         username: [
-          { validator: checkName, trigger: 'blur' }
+          {validator: checkName, trigger: 'blur'}
         ],
         password: [
-          { validator: validatePass, trigger: 'blur' }
+          {validator: validatePass, trigger: 'blur'}
         ],
         verifyCode: [
-          { validator: checkCode, trigger: 'blur' }
+          {validator: checkCode, trigger: 'blur'}
         ]
-      }
+      },
     };
   },
-  computed: {},
+  computed: {
+    ...mapGetters([
+      'proxyList',
+    ]),
+  },
   watch: {},
   mounted() {
     this.getCode();
@@ -114,7 +168,7 @@ export default {
         cancelButtonText: '取消',
         inputPattern: /[\w!#$%&'*+/=?^_`{|}~-]+(?:\.[\w!#$%&'*+/=?^_`{|}~-]+)*@(?:[\w](?:[\w-]*[\w])?\.)+[\w](?:[\w-]*[\w])?/,
         inputErrorMessage: '邮箱格式不正确'
-      }).then(({ value }) => {
+      }).then(({value}) => {
         this.$api.user
           .resetPasswordEmail(value)
           .then(res => {
@@ -124,13 +178,14 @@ export default {
               this.$message.error('重置密码发起错误');
             }
           });
-      }).catch(() => {});
+      }).catch(() => {
+      });
     },
     // 获取验证码
     getCode() {
       this.$api.user.verificationCode()
         .then(res => {
-          const { data: { data }} = res;
+          const {data: {data}} = res;
           this.imageBase64 = data.imageBase64;
           this.vid = data.vid;
         });
@@ -157,7 +212,7 @@ export default {
       window.location = QQ_LINK;
     },
     // 登录
-    loginAjax() {
+    async loginAjax() {
       const reqBody = {
         userInfo: {
           username: this.loginForm.username.trim(),
@@ -166,29 +221,60 @@ export default {
         vid: this.vid,
         value: this.loginForm.verifyCode
       };
-      this.$api.user.login(reqBody)
-        .then(res => {
-          if (res.status === 200) {
-            localStorage.setItem('user', JSON.stringify(res.data.data));
-            this.$store.dispatch('setUser', res.data.data);
-            this.$store.dispatch('setLoginBoolean');
-            this.$message.success(res.data.message);
-          } else {
-            this.$message.closeAll();
-            this.$message.info(res.data.message);
+      const res = await this.$api.user.login(reqBody)
+      if (res.status !== 200) {
+        this.$message.closeAll();
+        this.$message.info(res.data.message);
+        this.loading = false;
+        this.getCode();
+        return
+      }
+      localStorage.setItem('user', JSON.stringify(res.data.data));
+      this.$store.dispatch('setUser', res.data.data);
+      this.$store.dispatch('setLoginBoolean');
+      this.$message.success(res.data.message);
+      const {permissionLevel, permissionLevelExpireDate} = res.data.data
+      if (this.user.id && !localStorage.getItem('participate')) {
+        const res = await this.$api.user.canParticipateStatus('try');
+        if (res.data.data) {
+          this.$notify({message:'🎉恭喜您获得会员试用资格，点击开始试用吧（已经是会员状态将免费增加一天）'
+            ,onClick:()=>{this.beginTry()},offset:80})
+        }
+      }
+      if (permissionLevel >= 3 && permissionLevelExpireDate > Date.now()) {
+        this.$api.user.getVipProxyServer().then(
+          res => {
+            if (res.status === 200) {
+              this.$store.dispatch('setProxyList', res.data.data);
+              const currentApi = res.data.data[Math.floor(proxyList.length * Math.random())].serverAddress
+              sessionStorage.setItem('accelerateKey', currentApi)
+            } else {
+              this.$message.closeAll();
+              this.$message.info(res.data.message);
+            }
           }
-        })
-        .catch(err => {
-          console.error(err);
-        });
-      this.loading = false;
-      this.getCode();
-    }
+        )
+      }
+    },
+  //  会员试用
+    beginTry() {
+      this.$api.user.participateStatus('try')
+        .then(res => {
+          this.$message.info({ content: res.data.message });
+          if (res.status === 200) {
+            this.$store.dispatch('setUser', res.data.data);
+            this.$store.dispatch('vipProxyServer');
+          }
+        }).finally(() => {
+        localStorage.setItem('participate', true);
+      });
+    },
   }
 };
 </script>
 
 <style scoped lang="less">
 
-.Login{}
+.Login {
+}
 </style>

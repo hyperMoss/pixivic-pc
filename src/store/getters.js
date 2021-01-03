@@ -10,4 +10,5 @@ export const loginOrSign = state => state.loginOrSign;
 export const collectBoolean = state => state.collectBoolean;
 export const collectInfo = state => state.collectInfo;
 export const readyCollectItem = state => state.readyCollectItem;
-
+export const isVip = state => state.user.permissionLevel === 4 || (state.user.permissionLevel > 2 && new Date(state.user.permissionLevelExpireDate).getTime() > Date.now());
+export const proxyList = state => state.proxyList;

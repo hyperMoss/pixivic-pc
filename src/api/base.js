@@ -10,19 +10,6 @@ const instance = axios.create({
     return status >= 200 && status < 600;
   }
 });
-
-export function getLanguage() {
-  const chooseLanguage = cookie.get('language');
-  if (chooseLanguage) return chooseLanguage;
-  const language = (navigator.language || navigator.browserLanguage).toLowerCase();
-  const locales = Object.keys(messages);
-  for (const locale of locales) {
-    if (language.indexOf(locale) > -1) {
-      return locale;
-    }
-  }
-  return 'zh';
-}
 instance.interceptors.request.use(
   config => {
     if (cookie.get('jwt')) {

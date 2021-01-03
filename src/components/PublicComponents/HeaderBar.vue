@@ -1,4 +1,3 @@
-
 <template>
   <div class="HeaderBar">
     <el-row
@@ -75,18 +74,12 @@
           <el-button size="small">消息</el-button>
         </el-badge>-->
         <div style="margin-left:20px;">
-          <el-dropdown
-            v-if="user.id"
-            trigger="click"
-            @command="clickMenu"
-          >
-            <el-avatar
-              :src="user.id? `${staticUrl}${user.id}.jpg?t=${new Date().getTime()}`: ''"
-              fit="cover"
-              shape="square"
-            />
-            <el-dropdown-menu slot="dropdown">
-              <template>
+          <div v-if="user.id">
+            <el-dropdown
+              trigger="click"
+              @command="clickMenu"
+            >
+              <el-dropdown-menu slot="dropdown">
                 <el-dropdown-item
                   v-for="item of MenuList"
                   :key="item.handler"
@@ -95,16 +88,24 @@
                 >
                   {{ item.name }}
                 </el-dropdown-item>
-              </template>
-            </el-dropdown-menu>
-          </el-dropdown>
+              </el-dropdown-menu>
+              <div>
+                <el-avatar
+                  :style="checkPlusStyle()"
+                  :src="user.id? `${staticUrl}${user.id}.jpg?t=${new Date().getTime()}`: ''"
+                  fit="cover"
+                  shape="square"
+                />
+              </div>
+            </el-dropdown>
+          </div>
           <div
             v-else
           >
             <span
               class="button-text"
               @click="login"
-            >{{ $t('login') }}</span>  <span
+            >{{ $t('login') }}</span> <span
               class="button-text"
               @click="signUp"
             >{{ $t('signUp') }}</span>
@@ -117,26 +118,35 @@
       :setting-visible.sync="settingVisible"
       :user="user"
     />
+    <PayModal
+      v-if="payModalVisible"
+      :pay-visible.sync="payModalVisible"
+      :user="user"
+    />
   </div>
 </template>
 
 <script>
 import cookie from 'js-cookie';
-import { mapGetters } from 'vuex';
+import {mapGetters} from 'vuex';
 import SetDialog from './Setting/index';
+import PayModal from './Pay/index'
 import ImgTags from './ImgTags';
+
 export default {
   name: 'HeaderBar',
   components: {
     SetDialog,
-    ImgTags
+    ImgTags,
+    PayModal
   },
   data() {
     return {
-      staticUrl:process.env.VUE_APP_STATIC_API,
+      staticUrl: process.env.VUE_APP_STATIC_API,
       langs: ['zh', 'en'],
       // 设置控制显示
       settingVisible: false,
+      payModalVisible: false,
       // 搜索时延
       timeout: null,
       params: {
@@ -176,6 +186,10 @@ export default {
           handler: 'setting'
         },
         {
+          name: this.$t('member'),
+          handler: 'vip'
+        },
+        {
           name: this.$t('logout'),
           handler: 'logout',
           divided: true
@@ -210,6 +224,14 @@ export default {
     this.getHotTag();
   },
   methods: {
+    // 检查是否为会员
+    checkPlusStyle() {
+      if (this.user.permissionLevel >= 3 && this.user.permissionLevelExpireDate > Date.now()) {
+        return {
+          border: 'solid 3px #FFB6C1',
+        }
+      }
+    },
     changeLocaleLang(val) {
       this.$i18n.locale = val;
       cookie.set('lang', val, {
@@ -236,6 +258,9 @@ export default {
           break;
         case 'spotLight':
           this.toSpotLight();
+          break;
+        case 'vip':
+          this.showpayModal();
           break;
         default:
           break;
@@ -279,6 +304,9 @@ export default {
     setModal() {
       this.settingVisible = !this.settingVisible;
     },
+    showpayModal() {
+      this.payModalVisible = !this.payModalVisible
+    },
     // 退出登录
     logout() {
       this.$confirm(this.$t('user.logoutMessage'))
@@ -288,13 +316,14 @@ export default {
           this.$store.dispatch('clearCurrentState');
           window.location.href = '/';
         })
-        .catch(_ => {});
+        .catch(_ => {
+        });
     },
     // 获取关键词
     getKeywords() {
       this.$api.search
         .getKeyword(this.params.keyword)
-        .then(({ data: { data }}) => {
+        .then(({data: {data}}) => {
           if (data && data.keywordList) {
             this.keywords = data.keywordList || [];
           }
@@ -303,7 +332,7 @@ export default {
     // 搜索相关信息
     querySearch(queryString, cb) {
       const result = this.keywords.map(e => {
-        return { value: e };
+        return {value: e};
       });
       clearTimeout(this.timeout);
       this.timeout = setTimeout(() => {
@@ -311,9 +340,7 @@ export default {
       }, 1000);
     },
     // 选择
-    handleSelect(e) {
-      console.log('##########');
-
+    handleSelect() {
       this.handleSearch();
     },
     // 搜索跳转
@@ -362,10 +389,12 @@ export default {
   width: 100%;
   display: flex;
   overflow: hidden;
-  /deep/.el-select .el-input {
+
+  /deep/ .el-select .el-input {
     width: 80px;
   }
-  /deep/.input-with-select {
+
+  /deep/ .input-with-select {
     width: 25vw;
     background-color: #fff;
   }
@@ -373,17 +402,20 @@ export default {
   .input-with-select:hover {
     background-color: rgba(0, 0, 0, 0.08);
   }
+
   .header-info {
     display: flex;
     justify-content: flex-end;
     align-items: center;
   }
 }
+
 .user-tools {
   display: flex;
   flex-wrap: wrap;
   justify-content: space-evenly;
   margin-bottom: 20px;
+
   .tool {
     height: 2rem;
     width: 2rem;
@@ -392,20 +424,22 @@ export default {
     text-align: center;
   }
 }
-.button-text{
-    user-select: none;
-    transition: background 20ms ease-in 0s;
-    cursor: pointer;
-    padding: 4px 10px;
-    border-radius: 3px;
-    flex-shrink: 0;
-    font-size: 15px;
-    margin-left: 2px;
-    margin-right: 2px;
-    font-weight: 500;
-    width: auto;
-    &:hover{
-      background: rgba(55, 53, 47, 0.16);
-    }
+
+.button-text {
+  user-select: none;
+  transition: background 20ms ease-in 0s;
+  cursor: pointer;
+  padding: 4px 10px;
+  border-radius: 3px;
+  flex-shrink: 0;
+  font-size: 15px;
+  margin-left: 2px;
+  margin-right: 2px;
+  font-weight: 500;
+  width: auto;
+
+  &:hover {
+    background: rgba(55, 53, 47, 0.16);
+  }
 }
 </style>

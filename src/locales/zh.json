@@ -32,5 +32,6 @@
   "checkPassword": "确认密码",
   "email": "邮箱",
   "usernameOrEmail": "用户名或邮箱",
-  "signUp": "注册"
+  "signUp": "注册",
+  "member": "会员"
 }

@@ -32,5 +32,6 @@
   "checkPassword": "Confirm password",
   "email": "Email",
   "usernameOrEmail": "Username or email",
-  "signUp": "Sign up"
+  "signUp": "Sign up",
+  "member": "Member"
 }
