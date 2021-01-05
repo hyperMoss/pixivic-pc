@@ -1,4 +1,3 @@
-
 <template>
   <div class="createCollect">
     <el-dialog
@@ -36,7 +35,10 @@
           label="标签(最多4个)"
           prop="tagList"
         >
-          <CreateTagList :tag-list="ruleForm.tagList" @emit-data="sendTagsLsit" />
+          <CreateTagList
+            :tag-list="ruleForm.tagList"
+            @emit-data="sendTagsLsit"
+          />
         </el-form-item>
         <el-form-item
           label="是否公开"
@@ -72,31 +74,39 @@
           />
         </el-form-item>
       </el-form>
-      <div slot="footer" style="    justify-content: flex-end;display: flex;">
+      <div
+        slot="footer"
+        style="    justify-content: flex-end;display: flex;"
+      >
         <el-button
           :loading="loading"
           type="primary"
           @click="submitForm('ruleForm')"
-        >确定</el-button>
+        >
+          确定
+        </el-button>
         <el-button
           type="text"
           @click="closeModal"
-        >取消</el-button>
+        >
+          取消
+        </el-button>
       </div>
     </el-dialog>
   </div>
 </template>
 
 <script>
-import CreateTagList from './CreateTagList';
 import { mapGetters } from 'vuex';
+import CreateTagList from './CreateTagList';
+
 export default {
   name: 'StartCollect',
   components: { CreateTagList },
   props: ['show-boolean', 'collect-data'],
   data() {
     // 邮箱验证函数
-    var checkTitle = (rule, value, callback) => {
+    const checkTitle = (rule, value, callback) => {
       const patrn = /[`~!@#$%^&*()\-+=<>?:"{}|,.\/;'\\[\]·~！@#￥%……&*（）——\-+={}|《》？：“”【】、；‘'，。、]/im;
       if (!value) {
         return callback(new Error('标题不能为空'));
@@ -107,14 +117,14 @@ export default {
       callback();
     };
     // 用户名验证函数
-    var checkName = (rule, value, callback) => {
+    const checkName = (rule, value, callback) => {
       if (!value) {
         return callback(new Error('简介不能为空'));
       }
       callback();
     };
     // 用户名验证函数
-    var checkTags = (rule, value, callback) => {
+    const checkTags = (rule, value, callback) => {
       // if (!value.length) {
       //   return callback(new Error('标签不能为空'));
       // }
@@ -131,26 +141,26 @@ export default {
         isPublic: 0,
         forbidComment: 0,
         pornWarning: 0,
-        tagList: []
+        tagList: [],
       },
       collectId: '',
       // 验证规则
       rules: {
         title: [{ validator: checkTitle, trigger: 'blur' }],
         caption: [{ validator: checkName, trigger: 'blur' }],
-        tagList: [{ validator: checkTags, trigger: 'blur' }]
+        tagList: [{ validator: checkTags, trigger: 'blur' }],
 
-      }
+      },
     };
   },
   computed: {
-    ...mapGetters(['user'])
+    ...mapGetters(['user']),
   },
   watch: {},
   mounted() {
     if (this.collectData) {
       this.modifyFlag = true;
-      const sourceData = Object.assign({}, this.collectData);
+      const sourceData = { ...this.collectData };
       this.ruleForm.title = sourceData.title;
       this.ruleForm.caption = sourceData.caption;
       this.ruleForm.isPublic = sourceData.isPublic;
@@ -192,17 +202,17 @@ export default {
       const params = Object.assign(this.ruleForm, { username: this.user.username });
       this.$api.collect
         .postCollection(params)
-        .then(res => {
+        .then((res) => {
           if (res.status === 200) {
             this.$message({
               message: '新建画集成功',
-              type: 'success'
+              type: 'success',
             });
             this.success(params, 1);
           } else {
             this.$message({
               message: res.data.message,
-              type: 'warning'
+              type: 'warning',
             });
           }
         });
@@ -211,22 +221,22 @@ export default {
       const params = Object.assign(this.ruleForm, { username: this.user.username, id: this.collectId });
       this.$api.collect
         .putCollections(params)
-        .then(res => {
+        .then((res) => {
           if (res.status === 200) {
             this.$message({
               message: '修改画集成功',
-              type: 'success'
+              type: 'success',
             });
             this.success(params, 2);
           } else {
             this.$message({
               message: res.data.message,
-              type: 'warning'
+              type: 'warning',
             });
           }
         });
-    }
-  }
+    },
+  },
 };
 </script>
 

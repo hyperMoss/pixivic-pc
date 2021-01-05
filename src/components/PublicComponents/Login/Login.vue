@@ -92,28 +92,28 @@
 </template>
 
 <script>
-import {QQ_LINK} from '@/util/constants';
-import {proxyList} from '@/store/getters';
-import {mapGetters} from "vuex";
+import { QQ_LINK } from '@/util/constants';
+import { proxyList } from '@/store/getters';
+import { mapGetters } from 'vuex';
 
 export default {
   name: 'Login',
   components: {},
   data() {
-    var checkName = (rule, value, callback) => {
+    const checkName = (rule, value, callback) => {
       if (!value) {
         return callback(new Error('请输入密码用户名'));
       }
       callback();
     };
     // 密码验证
-    var validatePass = (rule, value, callback) => {
+    const validatePass = (rule, value, callback) => {
       if (value === '') {
         callback(new Error('请输入密码'));
       }
       callback();
     };
-    var checkCode = (rule, value, callback) => {
+    const checkCode = (rule, value, callback) => {
       if (value === '') {
         callback(new Error('请输入验证码'));
       } else if (value.length < 4) {
@@ -133,21 +133,21 @@ export default {
       loginForm: {
         username: '',
         password: '',
-        verifyCode: ''
+        verifyCode: '',
       },
       // 验证码id
       valid: '',
       // 验证规则
       rules: {
         username: [
-          {validator: checkName, trigger: 'blur'}
+          { validator: checkName, trigger: 'blur' },
         ],
         password: [
-          {validator: validatePass, trigger: 'blur'}
+          { validator: validatePass, trigger: 'blur' },
         ],
         verifyCode: [
-          {validator: checkCode, trigger: 'blur'}
-        ]
+          { validator: checkCode, trigger: 'blur' },
+        ],
       },
     };
   },
@@ -167,11 +167,11 @@ export default {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
         inputPattern: /[\w!#$%&'*+/=?^_`{|}~-]+(?:\.[\w!#$%&'*+/=?^_`{|}~-]+)*@(?:[\w](?:[\w-]*[\w])?\.)+[\w](?:[\w-]*[\w])?/,
-        inputErrorMessage: '邮箱格式不正确'
-      }).then(({value}) => {
+        inputErrorMessage: '邮箱格式不正确',
+      }).then(({ value }) => {
         this.$api.user
           .resetPasswordEmail(value)
-          .then(res => {
+          .then((res) => {
             if (res.status === 200) {
               this.$message.info('请注意查收邮箱内的重置密码邮件');
             } else {
@@ -184,8 +184,8 @@ export default {
     // 获取验证码
     getCode() {
       this.$api.user.verificationCode()
-        .then(res => {
-          const {data: {data}} = res;
+        .then((res) => {
+          const { data: { data } } = res;
           this.imageBase64 = data.imageBase64;
           this.vid = data.vid;
         });
@@ -216,60 +216,63 @@ export default {
       const reqBody = {
         userInfo: {
           username: this.loginForm.username.trim(),
-          password: this.loginForm.password
+          password: this.loginForm.password,
         },
         vid: this.vid,
-        value: this.loginForm.verifyCode
+        value: this.loginForm.verifyCode,
       };
-      const res = await this.$api.user.login(reqBody)
+      const res = await this.$api.user.login(reqBody);
       if (res.status !== 200) {
         this.$message.closeAll();
         this.$message.info(res.data.message);
         this.loading = false;
         this.getCode();
-        return
+        return;
       }
       localStorage.setItem('user', JSON.stringify(res.data.data));
       this.$store.dispatch('setUser', res.data.data);
       this.$store.dispatch('setLoginBoolean');
       this.$message.success(res.data.message);
-      const {permissionLevel, permissionLevelExpireDate} = res.data.data
+      const { permissionLevel, permissionLevelExpireDate } = res.data.data;
       if (this.user.id && !localStorage.getItem('participate')) {
         const res = await this.$api.user.canParticipateStatus('try');
         if (res.data.data) {
-          this.$notify({message:'🎉恭喜您获得会员试用资格，点击开始试用吧（已经是会员状态将免费增加一天）'
-            ,onClick:()=>{this.beginTry()},offset:80})
+          this.$notify({
+            message: '🎉恭喜您获得会员试用资格，点击开始试用吧（已经是会员状态将免费增加一天）',
+            onClick: () => { this.beginTry(); },
+            offset: 80,
+          });
         }
       }
       if (permissionLevel >= 3 && permissionLevelExpireDate > Date.now()) {
         this.$api.user.getVipProxyServer().then(
-          res => {
+          (res) => {
             if (res.status === 200) {
               this.$store.dispatch('setProxyList', res.data.data);
-              const currentApi = res.data.data[Math.floor(proxyList.length * Math.random())].serverAddress
-              sessionStorage.setItem('accelerateKey', currentApi)
+              const currentApi = res.data.data[Math.floor(proxyList.length * Math.random())].serverAddress;
+              sessionStorage.setItem('accelerateKey', currentApi);
             } else {
               this.$message.closeAll();
               this.$message.info(res.data.message);
             }
-          }
-        )
+          },
+        );
       }
     },
-  //  会员试用
+    //  会员试用
     beginTry() {
       this.$api.user.participateStatus('try')
-        .then(res => {
+        .then((res) => {
           this.$message.info({ content: res.data.message });
           if (res.status === 200) {
             this.$store.dispatch('setUser', res.data.data);
             this.$store.dispatch('vipProxyServer');
           }
         }).finally(() => {
-        localStorage.setItem('participate', true);
-      });
+          localStorage.setItem('participate', true);
+        });
     },
-  }
+  },
 };
 </script>
 

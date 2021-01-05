@@ -128,9 +128,9 @@
 
 <script>
 import cookie from 'js-cookie';
-import {mapGetters} from 'vuex';
+import { mapGetters } from 'vuex';
 import SetDialog from './Setting/index';
-import PayModal from './Pay/index'
+import PayModal from './Pay/index';
 import ImgTags from './ImgTags';
 
 export default {
@@ -138,7 +138,7 @@ export default {
   components: {
     SetDialog,
     ImgTags,
-    PayModal
+    PayModal,
   },
   data() {
     return {
@@ -151,13 +151,13 @@ export default {
       timeout: null,
       params: {
         keyword: '',
-        illustType: 'illust'
+        illustType: 'illust',
       },
       keywords: [],
       squareUrl:
         'https://cube.elemecdn.com/9/c2/f0ee8a3c7c9638a54940382568c9dpng.png',
       // 热门搜索模块
-      hotTags: []
+      hotTags: [],
     };
   },
   computed: {
@@ -167,11 +167,11 @@ export default {
       return [
         {
           name: this.$t('followed'),
-          handler: 'followed'
+          handler: 'followed',
         },
         {
           name: this.$t('bookmarked'),
-          handler: 'bookmarked'
+          handler: 'bookmarked',
         },
         // {
         //   name: '画集',
@@ -179,39 +179,39 @@ export default {
         // },
         {
           name: this.$t('spotLight'),
-          handler: 'spotLight'
+          handler: 'spotLight',
         },
         {
           name: this.$t('setting'),
-          handler: 'setting'
+          handler: 'setting',
         },
         {
           name: this.$t('member'),
-          handler: 'vip'
+          handler: 'vip',
         },
         {
           name: this.$t('logout'),
           handler: 'logout',
-          divided: true
-        }
+          divided: true,
+        },
       ];
     },
     typeList() {
       return [
         {
           name: this.$t('illust'),
-          value: 'illust'
+          value: 'illust',
         },
         {
           name: this.$t('manga'),
-          value: 'manga'
+          value: 'manga',
         },
         {
           name: this.$t('artist'),
-          value: 'artist'
-        }
+          value: 'artist',
+        },
       ];
-    }
+    },
   },
   watch: {
     // 'params.keyword': {
@@ -229,13 +229,13 @@ export default {
       if (this.user.permissionLevel >= 3 && this.user.permissionLevelExpireDate > Date.now()) {
         return {
           border: 'solid 3px #FFB6C1',
-        }
+        };
       }
     },
     changeLocaleLang(val) {
       this.$i18n.locale = val;
       cookie.set('lang', val, {
-        expires: 365
+        expires: 365,
       });
     },
     // 点击 用户模块
@@ -268,7 +268,7 @@ export default {
     },
     // 获取标签数据
     getHotTag() {
-      this.$api.search.getHotTag().then(res => {
+      this.$api.search.getHotTag().then((res) => {
         this.hotTags = res.data.data.splice(0, 9);
       });
     },
@@ -277,27 +277,27 @@ export default {
       this.$router.push({
         path: '/users/followed',
         query: {
-          userId: this.user.id
-        }
+          userId: this.user.id,
+        },
       });
     },
     toMycollect() {
       this.$router.push({
         path: '/collect/mycollection',
         query: {
-          userId: this.user.id
-        }
+          userId: this.user.id,
+        },
       });
     },
     // 跳转书签页
     toBookmarked() {
       this.$router.push({
-        path: '/users/bookmarked'
+        path: '/users/bookmarked',
       });
     },
     toSpotLight() {
       this.$router.push({
-        path: '/spot-light/index'
+        path: '/spot-light/index',
       });
     },
     // 设置弹窗
@@ -305,25 +305,25 @@ export default {
       this.settingVisible = !this.settingVisible;
     },
     showpayModal() {
-      this.payModalVisible = !this.payModalVisible
+      this.payModalVisible = !this.payModalVisible;
     },
     // 退出登录
     logout() {
       this.$confirm(this.$t('user.logoutMessage'))
-        .then(_ => {
+        .then((_) => {
           this.$message.info(this.$t('user.logoutSuc'));
           cookie.remove('jwt');
           this.$store.dispatch('clearCurrentState');
           window.location.href = '/';
         })
-        .catch(_ => {
+        .catch((_) => {
         });
     },
     // 获取关键词
     getKeywords() {
       this.$api.search
         .getKeyword(this.params.keyword)
-        .then(({data: {data}}) => {
+        .then(({ data: { data } }) => {
           if (data && data.keywordList) {
             this.keywords = data.keywordList || [];
           }
@@ -331,9 +331,7 @@ export default {
     },
     // 搜索相关信息
     querySearch(queryString, cb) {
-      const result = this.keywords.map(e => {
-        return {value: e};
-      });
+      const result = this.keywords.map((e) => ({ value: e }));
       clearTimeout(this.timeout);
       this.timeout = setTimeout(() => {
         cb(result);
@@ -345,26 +343,26 @@ export default {
     },
     // 搜索跳转
     handleSearch() {
-      const keyword = this.params.keyword;
+      const { keyword } = this.params;
       if (!keyword.trim()) {
         return;
       }
       this.$router.push({
-        path: `/keywords`,
+        path: '/keywords',
         query: {
           tag: keyword,
-          illustType: this.params.illustType
-        }
+          illustType: this.params.illustType,
+        },
       });
     },
     // 点击tag
     handleClickTag(d) {
       this.$router.push({
-        path: `/keywords`,
+        path: '/keywords',
         query: {
           tag: d.name,
-          illustType: this.params.illustType
-        }
+          illustType: this.params.illustType,
+        },
       });
     },
     // 打卡用户系统
@@ -377,8 +375,8 @@ export default {
       if (!cookie.get('jwt')) {
         this.$store.dispatch('setLoginBoolean');
       }
-    }
-  }
+    },
+  },
 };
 </script>
 

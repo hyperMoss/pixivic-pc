@@ -1,4 +1,3 @@
-
 const state = {
   user: JSON.parse(localStorage.getItem('user')) || {},
   cachedViews: [],
@@ -11,7 +10,7 @@ const state = {
   collectBoolean: false,
   readyCollectItem: {},
   collectInfo: {},
-  proxyList:JSON.parse(localStorage.getItem('proxyList'))||[],
+  proxyList: JSON.parse(localStorage.getItem('proxyList')) || [],
 };
 
 export default state;

@@ -26,7 +26,9 @@
  * Sections have a fixed size and contain 0 to many cells (tracked by their indices).
  */
 export default class Section {
-  constructor({ height, width, x, y }) {
+  constructor({
+    height, width, x, y,
+  }) {
     this.height = height;
     this.width = width;
     this.x = x;

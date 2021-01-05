@@ -1,4 +1,3 @@
-
 <template>
   <div class="collectionsIllust">
     <VirtualList
@@ -64,14 +63,15 @@ import { mapGetters } from 'vuex';
 import VirtualList from '@/components/Virtual-List/VirtualList';
 import CollectPictureAdjust from 'components/Collections/CollectPictureAdjust.vue';
 import Comment from '@/components/PublicComponents/Comment';
+
 export default {
   name: 'CollectionsIllust',
   components: { VirtualList, CollectPictureAdjust, Comment },
   props: {
     collectionId: {
       required: true,
-      type: [String, Number]
-    }
+      type: [String, Number],
+    },
   },
   data() {
     return {
@@ -79,11 +79,11 @@ export default {
       illustList: [],
       identifier: +new Date(),
       modifyListBoolean: false,
-      CopyillustList: []
+      CopyillustList: [],
     };
   },
   computed: {
-    ...mapGetters(['collectInfo', 'user'])
+    ...mapGetters(['collectInfo', 'user']),
   },
   watch: {},
   mounted() {},
@@ -92,9 +92,9 @@ export default {
       this.$api.collect
         .getCollections({
           page: this.page++,
-          collectionId: this.$route.query.collectionId
+          collectionId: this.$route.query.collectionId,
         })
-        .then(res => {
+        .then((res) => {
           if (!res.data.data) {
             $state.complete();
           } else {
@@ -116,8 +116,8 @@ export default {
       this.modifyListBoolean = false;
       this.illustList = list;
       this.illustList.splice(1, 0);
-    }
-  }
+    },
+  },
 };
 </script>
 

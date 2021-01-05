@@ -1,9 +1,13 @@
-
 <template>
   <div class="img-tags">
     <div>
       <li class="tags-containe">
-        <ul v-for="item of tagslist" :key="item.name" class="tag-item" @click="clickTag(item)">
+        <ul
+          v-for="item of tagslist"
+          :key="item.name"
+          class="tag-item"
+          @click="clickTag(item)"
+        >
           <el-image
             :src="item.illustration.imageUrls[0].medium | replaceSmall"
             fit="cover"
@@ -24,8 +28,8 @@ export default {
   props: {
     tagslist: {
       required: true,
-      type: Array
-    }
+      type: Array,
+    },
   },
   data() {
     return {};
@@ -36,8 +40,8 @@ export default {
   methods: {
     clickTag(item) {
       this.$emit('on-click', item);
-    }
-  }
+    },
+  },
 };
 </script>
 

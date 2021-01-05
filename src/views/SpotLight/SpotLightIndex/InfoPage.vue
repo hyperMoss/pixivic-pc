@@ -1,12 +1,20 @@
-
 <template>
   <div class="InfoPage">
-    <ul v-for="item of pictureList" :key="item.id" class="pic-list">
+    <ul
+      v-for="item of pictureList"
+      :key="item.id"
+      class="pic-list"
+    >
       <li>
         <div class="artist-info">
-          <el-avatar :src="item.artistPreView.avatarSrc" size="large" @click="goArtistPage(item.artistPreView)" />
-          <h2 @click="goArtistPage(item.artistPreView)">{{ item.artistPreView.name }}</h2>
-
+          <el-avatar
+            :src="item.artistPreView.avatarSrc"
+            size="large"
+            @click="goArtistPage(item.artistPreView)"
+          />
+          <h2 @click="goArtistPage(item.artistPreView)">
+            {{ item.artistPreView.name }}
+          </h2>
         </div>
         <h2>{{ item.title }}</h2>
         <el-image
@@ -17,11 +25,17 @@
           lazy
           @click.native="goDeatil(item)"
         >
-          <div slot="placeholder" class="image-slot">
+          <div
+            slot="placeholder"
+            class="image-slot"
+          >
             加载中
             <span class="dot">...</span>
           </div>
-          <div slot="error" class="image-slot">
+          <div
+            slot="error"
+            class="image-slot"
+          >
             <i class="el-icon-picture-outline" />
           </div>
         </el-image>
@@ -38,7 +52,7 @@ export default {
   data() {
     return {
       pictureList: [],
-      id: this.$route.query.id
+      id: this.$route.query.id,
     };
   },
   computed: {},
@@ -48,7 +62,7 @@ export default {
   },
   methods: {
     getSpotLightsIllust() {
-      this.$api.spot.getSpotLightsIllust(this.id).then(res => {
+      this.$api.spot.getSpotLightsIllust(this.id).then((res) => {
         this.pictureList = this.pictureList.concat(res.data.data) || [];
       });
     },
@@ -61,8 +75,8 @@ export default {
     },
     goArtistPage(data) {
       this.$router.push(`/artist/${data.id}`);
-    }
-  }
+    },
+  },
 };
 </script>
 

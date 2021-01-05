@@ -201,50 +201,52 @@
 
 <script>
 // GET UA INFO
-function getPlatform() {
-  const ua = navigator.userAgent.toLowerCase();
-  const uaRules={
-    osRule:[
-      {patterns: /(mac\sos\sx)\s?([\w\s.]+\w)*/i,name:'MacOS'},
-      {patterns:/microsoft\s(windows)\s(vista|xp)/i,name:'Windows'},
-      {patterns:/(hurd|linux)\s?([\w.]+)*/i,name:'Linux'}
-    ],
-    browserRules:[{
-      patterns:/(chromium|Chrome)\/([\w.-]+)/i,name:'Chrome'
-    },{
-      patterns: /(edge|edgios|edgea)\/((\d+)?[\w.]+)/i,name: 'Edge',
-    },{
-      patterns: /(opera\smini)\/([\w.-]+)/i,name: 'Opera',
-    },{
-      patterns: /(trident).+rv[:\s]([\w.]+).+like\sgecko/i,name: 'IE11',
-    },{
-      patterns: /version\/([\w.]+).+?(mobile\s?safari|safari)/i,name: 'Safari',
-    }
-    ]
-  }
-  return uaRules.osRule.find(e=>e.patterns.exec(ua))?.name+' '+uaRules.browserRules.find(e=>e.patterns.exec(ua))?.name
-}
 import { mapGetters } from 'vuex';
 import StickerTab from 'components/PublicComponents/StickerTab';
 import Sticker from 'components/PublicComponents/Sticker';
-import pathJSON from '@/assets/sticker/path.json'
+import pathJSON from '@/assets/sticker/path.json';
+
+function getPlatform() {
+  const ua = navigator.userAgent.toLowerCase();
+  const uaRules = {
+    osRule: [
+      { patterns: /(mac\sos\sx)\s?([\w\s.]+\w)*/i, name: 'MacOS' },
+      { patterns: /microsoft\s(windows)\s(vista|xp)/i, name: 'Windows' },
+      { patterns: /(hurd|linux)\s?([\w.]+)*/i, name: 'Linux' },
+    ],
+    browserRules: [{
+      patterns: /(chromium|Chrome)\/([\w.-]+)/i, name: 'Chrome',
+    }, {
+      patterns: /(edge|edgios|edgea)\/((\d+)?[\w.]+)/i, name: 'Edge',
+    }, {
+      patterns: /(opera\smini)\/([\w.-]+)/i, name: 'Opera',
+    }, {
+      patterns: /(trident).+rv[:\s]([\w.]+).+like\sgecko/i, name: 'IE11',
+    }, {
+      patterns: /version\/([\w.]+).+?(mobile\s?safari|safari)/i, name: 'Safari',
+    },
+    ],
+  };
+  return `${uaRules.osRule.find((e) => e.patterns.exec(ua))&&uaRules.osRule.find((e) => e.patterns.exec(ua)).name}
+  ${uaRules.browserRules.find((e) => e.patterns.exec(ua))&&uaRules.browserRules.find((e) => e.patterns.exec(ua)).name}`;
+}
 export default {
-  components: {StickerTab,Sticker},
+  components: { StickerTab, Sticker },
   props: {
     pid: {
       type: String,
-      required: true
+      required: true,
     },
     commentType: {
       type: String,
-      default: 'illusts'
-    }
+      default: 'illusts',
+    },
   },
   data() {
     return {
-      pathJSON:pathJSON,
-      isSticker:false,
-      staticUrl:process.env.VUE_APP_STATIC_API,
+      pathJSON,
+      isSticker: false,
+      staticUrl: process.env.VUE_APP_STATIC_API,
       comments: [],
       copyComment: '',
       inputComment: '',
@@ -252,20 +254,20 @@ export default {
       total: 0,
       pageSize: 20,
       pageIndex: 1,
-      replyParam:{platform:getPlatform()}
+      replyParam: { platform: getPlatform() },
     };
   },
   computed: {
-    ...mapGetters(['user', 'likeStatus', 'followStatus', 'detail'])
+    ...mapGetters(['user', 'likeStatus', 'followStatus', 'detail']),
   },
   created() {
     this.getCommentsList();
   },
   methods: {
     // 提交评论
-    submitSticker(e){
-      this.isSticker=true
-      this.inputComment=e
+    submitSticker(e) {
+      this.isSticker = true;
+      this.inputComment = e;
     },
     // 跳转用户主页
     goUserHomePage(id) {
@@ -277,9 +279,9 @@ export default {
         commentAppType: this.$props.commentType,
         commentAppId: this.pid,
         pageSize: 10,
-        page: this.pageIndex
+        page: this.pageIndex,
       })
-        .then(res => {
+        .then((res) => {
           if (res.status === 200) {
             this.comments = res.data.data || [];
             this.total = res.data.total || 0;
@@ -289,14 +291,14 @@ export default {
     // 点赞ajax
     likeCommentAjax(reqBody, item, cb) {
       this.$api.comment.likeComments(reqBody)
-        .then(res => {
+        .then((res) => {
           cb && cb(res, item);
         });
     },
     // 取消点赞ajax
     unLikeCommentAjax(reqBody, item, cb) {
       this.$api.comment.unLikeComments(reqBody)
-        .then(res => {
+        .then((res) => {
           cb && cb(res, item);
         });
     },
@@ -307,7 +309,7 @@ export default {
       const reqBody = {
         commentAppType: this.$props.commentType,
         commentAppId: this.pid,
-        commentId: item.id
+        commentId: item.id,
       };
       if (item.isLike === false) {
         this.likeCommentAjax(reqBody, item, (res, item) => {
@@ -316,23 +318,21 @@ export default {
             item.isLike = true;
           }
         });
+      } else if (item.isLike) {
+        this.unLikeCommentAjax(reqBody, item, (res, item) => {
+          if (res.status === 200) {
+            item.likedCount--;
+            if (!item.likedCount) {
+              item.isLike = false;
+            }
+          }
+        });
       } else {
-        if (item.isLike) {
-          this.unLikeCommentAjax(reqBody, item, (res, item) => {
-            if (res.status === 200) {
-              item.likedCount--;
-              if (!item.likedCount) {
-                item.isLike = false;
-              }
-            }
-          });
-        } else {
-          this.likeCommentAjax(reqBody, item, (res, item) => {
-            if (res.status === 200) {
-              item.likedCount++;
-            }
-          });
-        }
+        this.likeCommentAjax(reqBody, item, (res, item) => {
+          if (res.status === 200) {
+            item.likedCount++;
+          }
+        });
       }
     },
 
@@ -340,7 +340,7 @@ export default {
      * 点击取消按钮
      */
     cancel() {
-      this.isSticker=false;
+      this.isSticker = false;
       this.showItemId = '';
     },
     // 提交评论
@@ -349,7 +349,7 @@ export default {
         this.$message('请输入评论');
         return;
       }
-      if(!this.isSticker){
+      if (!this.isSticker) {
         this.inputComment = this.inputComment.substring(this.copyComment.length);
       }
       let data = {
@@ -359,18 +359,20 @@ export default {
         replyTo: item && item.replyFrom || 0, // 回复者，没有就是0
         replyFromName: this.user.username, // 评论者用户名
         replyToName: item && item.replyFromName || '', // 回复者用户名
-        content: this.inputComment// 内容
+        content: this.inputComment, // 内容
       };
       data = Object.assign(data, this.replyParam);
       this.$api.comment.makeComments(data)
-        .then(res => {
+        .then((res) => {
           if (res.status === 200) {
-            const params = { ...data, createDate: new Date(), replyFrom: this.user.id, id: Math.random() };
+            const params = {
+              ...data, createDate: new Date(), replyFrom: this.user.id, id: Math.random(),
+            };
             if (params.parentId === 0) {
               this.comments.unshift(params);
               this.total++;
             } else {
-              const item = this.comments.find(item => item.id === params.parentId);
+              const item = this.comments.find((item) => item.id === params.parentId);
               if (item.subCommentList) {
                 item.subCommentList.push(params);
               } else {
@@ -395,16 +397,16 @@ export default {
         return;
       }
       if (reply) {
-        this.copyComment = '@' + item.replyFromName + ' ';
-        this.inputComment = '@' + item.replyFromName + ' ';
+        this.copyComment = `@${item.replyFromName} `;
+        this.inputComment = `@${item.replyFromName} `;
         this.showItemId = item.id;
       } else {
         this.copyComment = '';
         this.inputComment = '';
         this.showItemId = 'new';
       }
-    }
-  }
+    },
+  },
 };
 </script>
 
@@ -559,7 +561,6 @@ export default {
           }
         }
       }
-
 
       .fade-enter,
       .fade-leave-to {

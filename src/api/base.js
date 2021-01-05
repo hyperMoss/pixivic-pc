@@ -1,4 +1,3 @@
-
 import axios from 'axios';
 import cookie from 'js-cookie';
 import i18n from '../i18n';
@@ -8,27 +7,27 @@ const instance = axios.create({
   timeout: 20000,
   validateStatus(status) {
     return status >= 200 && status < 600;
-  }
+  },
 });
 instance.interceptors.request.use(
-  config => {
+  (config) => {
     if (cookie.get('jwt')) {
       config.headers.authorization = cookie.get('jwt');
     }
     return config;
   },
-  error => {
+  (error) => {
     console.log(error);
     Promise.reject(error);
-  }
+  },
 );
 
 instance.interceptors.response.use(
-  response => {
+  (response) => {
     // console.log('response', response);
     if (response.headers.hasOwnProperty('authorization')) {
       cookie.set('jwt', response.headers.authorization, {
-        expires: 365
+        expires: 365,
       });
     }
     if (response.status === 401) {
@@ -41,10 +40,10 @@ instance.interceptors.response.use(
     }
     return response;
   },
-  error => {
-    console.log('err' + error);
+  (error) => {
+    console.log(`err${error}`);
     return Promise.reject(error);
-  }
+  },
 );
 
 export default instance;

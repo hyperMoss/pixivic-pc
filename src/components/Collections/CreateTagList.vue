@@ -1,4 +1,3 @@
-
 <template>
   <div class="CreateTagList">
     <el-tag
@@ -7,7 +6,9 @@
       :disable-transitions="false"
       closable
       @close="handleClose(tag)"
-    >{{ tag.tagName }}</el-tag>
+    >
+      {{ tag.tagName }}
+    </el-tag>
     <el-autocomplete
       v-if="inputVisible"
       ref="saveTagInput"
@@ -27,7 +28,9 @@
       class="button-new-tag"
       size="small"
       @click="showInput"
-    >+新标签</el-button>
+    >
+      +新标签
+    </el-button>
   </div>
 </template>
 
@@ -41,14 +44,14 @@ export default {
       keywords: [],
       dynamicTags: [],
       inputVisible: false,
-      inputValue: ''
+      inputValue: '',
     };
   },
   computed: {},
   watch: {
-    'dynamicTags': {
-      handler: 'emitData'
-    }
+    dynamicTags: {
+      handler: 'emitData',
+    },
   },
   mounted() {
     this.dynamicTags = this.tagList;
@@ -56,12 +59,12 @@ export default {
   methods: {
     // 删除
     handleClose(tag) {
-      this.dynamicTags.splice(this.dynamicTags.findIndex(e => e.tagName === tag.tagName), 1);
+      this.dynamicTags.splice(this.dynamicTags.findIndex((e) => e.tagName === tag.tagName), 1);
     },
     // 显示输入框
     showInput() {
       this.inputVisible = true;
-      this.$nextTick(_ => {
+      this.$nextTick((_) => {
         this.$refs.saveTagInput.$refs.input.focus();
       });
     },
@@ -69,12 +72,12 @@ export default {
     handleInputConfirm() {
       const item = { tagName: this.inputValue, id: '' };
       if (!this.inputValue.trim()) { return; }
-      if (this.dynamicTags.findIndex(e => e.tagName.toLowerCase() === item.tagName.toLowerCase()) === -1) {
+      if (this.dynamicTags.findIndex((e) => e.tagName.toLowerCase() === item.tagName.toLowerCase()) === -1) {
         this.dynamicTags.push(item);
       } else {
         this.$message({
           message: '请勿添加相同标签',
-          type: 'warning'
+          type: 'warning',
         });
       }
       this.inputVisible = false;
@@ -82,13 +85,13 @@ export default {
     },
     // 选中
     handleSelect(item) {
-      if (this.dynamicTags.findIndex(e => e.tagName.toLowerCase() === item.tagName.toLowerCase()) === -1) {
+      if (this.dynamicTags.findIndex((e) => e.tagName.toLowerCase() === item.tagName.toLowerCase()) === -1) {
         delete item.value;
         this.dynamicTags.push(item);
       } else {
         this.$message({
           message: '请勿添加相同标签',
-          type: 'warning'
+          type: 'warning',
         });
       }
       this.inputVisible = false;
@@ -98,7 +101,7 @@ export default {
     getKeywords() {
       this.$api.search
         .getKeyword(this.params.keyword)
-        .then(({ data: { data }}) => {
+        .then(({ data: { data } }) => {
           this.keywords = data.keywordList || [];
         });
     },
@@ -109,7 +112,7 @@ export default {
         .then(({ data }) => {
           if (data.data) {
             const result = data.data;
-            result.forEach(e => {
+            result.forEach((e) => {
               e.value = e.tagName;
             });
             cb(result);
@@ -120,8 +123,8 @@ export default {
     },
     emitData() {
       this.$emit('emit-data', this.dynamicTags);
-    }
-  }
+    },
+  },
 };
 </script>
 

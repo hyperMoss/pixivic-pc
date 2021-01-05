@@ -1,4 +1,3 @@
-
 import axios from '../base';
 
 // 发起画集
@@ -10,10 +9,10 @@ function postCollection(params) {
     tagList = [],
     isPublic,
     forbidComment,
-    pornWarning
+    pornWarning,
   } = params;
   return axios({
-    url: `/collections`,
+    url: '/collections',
     method: 'post',
     data: {
       username,
@@ -22,8 +21,8 @@ function postCollection(params) {
       tagList,
       isPublic,
       forbidComment,
-      pornWarning
-    }
+      pornWarning,
+    },
   });
 }
 
@@ -37,7 +36,7 @@ function putCollections(params) {
     tagList = [],
     isPublic,
     forbidComment,
-    pornWarning
+    pornWarning,
   } = params;
   return axios({
     url: `/collections/${params.id}`,
@@ -50,8 +49,8 @@ function putCollections(params) {
       tagList,
       isPublic,
       forbidComment,
-      pornWarning
-    }
+      pornWarning,
+    },
   });
 }
 
@@ -59,7 +58,7 @@ function putCollections(params) {
 function deleteCollections(collectionId) {
   return axios({
     url: `/collections/${collectionId}`,
-    method: 'delete'
+    method: 'delete',
   });
 }
 
@@ -70,8 +69,8 @@ function postCollectionsIllust(params) {
     url: `/collections/${collectionId}/illustrations`,
     method: 'post',
     data: {
-      illust_id
-    }
+      illust_id,
+    },
   });
 }
 // 画集删除画作
@@ -79,7 +78,7 @@ function deleteCollectionsIllust(params) {
   const { collectionId = 0, illustId = 0 } = params;
   return axios({
     url: `/collections/${collectionId}/illustrations/${illustId}`,
-    method: 'delete'
+    method: 'delete',
   });
 }
 
@@ -87,26 +86,28 @@ function deleteCollectionsIllust(params) {
 function orderCollections(params) {
   const {
     collectionId = 0,
-    picIdList
+    picIdList,
   } = params;
   return axios({
     url: `/collections/${collectionId}/illustrations/order`,
     method: 'put',
-    data: picIdList
+    data: picIdList,
   });
 }
 
 // 查看用户画集
 function getUserCollections(params) {
-  const { userId = 0, page, pageSize, isPublic } = params;
+  const {
+    userId = 0, page, pageSize, isPublic,
+  } = params;
   return axios({
     url: `/users/${userId}/collections`,
     method: 'get',
     params: {
-      page: page,
+      page,
       pageSize: pageSize || 30,
-      isPublic
-    }
+      isPublic,
+    },
   });
 }
 // 查看画集图片
@@ -116,21 +117,21 @@ function getCollections(params) {
     url: `/collections/${collectionId}/illustrations`,
     method: 'get',
     params: {
-      page: page,
-      pageSize: pageSize || 30
-    }
+      page,
+      pageSize: pageSize || 30,
+    },
   });
 }
 // 获取最新公开画集
 function latestCollections(params) {
   const { page, pageSize } = params;
   return axios({
-    url: `/collections/latest`,
+    url: '/collections/latest',
     method: 'get',
     params: {
-      page: page,
-      pageSize: pageSize || 30
-    }
+      page,
+      pageSize: pageSize || 30,
+    },
   });
 }
 
@@ -138,22 +139,22 @@ function latestCollections(params) {
 function popCollections(params) {
   const { page, pageSize } = params;
   return axios({
-    url: `/collections/pop`,
+    url: '/collections/pop',
     method: 'get',
     params: {
-      page: page,
-      pageSize: pageSize || 30
-    }
+      page,
+      pageSize: pageSize || 30,
+    },
   });
 }
 // 标签补全
 function collectionsTags(keyword) {
   return axios({
-    url: `/collections/tags`,
+    url: '/collections/tags',
     method: 'get',
     params: {
-      keyword: keyword
-    }
+      keyword,
+    },
   });
 }
 
@@ -168,5 +169,5 @@ export {
   getCollections,
   latestCollections,
   popCollections,
-  collectionsTags
+  collectionsTags,
 };

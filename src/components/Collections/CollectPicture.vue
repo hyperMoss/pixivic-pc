@@ -1,4 +1,3 @@
-
 <template>
   <div class="CollectPIcture">
     <el-dialog
@@ -82,6 +81,7 @@
 
 <script>
 import { mapGetters } from 'vuex';
+
 export default {
   name: 'CollectPicture',
   components: {},
@@ -90,19 +90,19 @@ export default {
       page: { page: 1, pageSize: 20, total: 0 },
       collectionList: [],
       isPublic: 0,
-      collectionId: ''
+      collectionId: '',
     };
   },
   computed: {
-    ...mapGetters(['readyCollectItem', 'user'])
+    ...mapGetters(['readyCollectItem', 'user']),
   },
   watch: {
-    '$store.getters.collectBoolean': function(val) {
+    '$store.getters.collectBoolean': function (val) {
       if (val) {
         this.collectionId = '';
         this.getCollections();
       }
-    }
+    },
   },
   mounted() {},
   methods: {
@@ -114,8 +114,8 @@ export default {
     },
     getCollections() {
       if (
-        this.collectionList.length < this.page.page * this.page.pageSize &&
-        this.page.page !== 1
+        this.collectionList.length < this.page.page * this.page.pageSize
+        && this.page.page !== 1
       ) {
         return;
       }
@@ -123,11 +123,11 @@ export default {
         .getUserCollections({
           page: this.page.page++,
           pageSize: this.page.pageSize,
-          userId: this.user.id
+          userId: this.user.id,
         })
-        .then(res => {
+        .then((res) => {
           const {
-            data: { data }
+            data: { data },
           } = res;
           if (data && data.length) {
             this.collectionList = data;
@@ -143,9 +143,9 @@ export default {
       this.$api.collect
         .postCollectionsIllust({
           illust_id: this.readyCollectItem.id,
-          collectionId: this.collectionId
+          collectionId: this.collectionId,
         })
-        .then(res => {
+        .then((res) => {
           if (res.data.data) {
             this.closeModal();
             this.$message.success('加入画集成功');
@@ -153,8 +153,8 @@ export default {
             this.$message.error('加入画集失败');
           }
         });
-    }
-  }
+    },
+  },
 };
 </script>
 

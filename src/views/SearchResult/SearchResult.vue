@@ -1,4 +1,3 @@
-
 <template>
   <div class="search-result">
     <virtual-list
@@ -13,7 +12,12 @@
         @handleClick="clickTag"
       />
     </virtual-list>
-    <artist-list v-if="artistList.length" :artist-list="artistList" @on-scroll="serachArtists" @follow-artist="follow" />
+    <artist-list
+      v-if="artistList.length"
+      :artist-list="artistList"
+      @on-scroll="serachArtists"
+      @follow-artist="follow"
+    />
   </div>
 </template>
 
@@ -22,12 +26,13 @@ import VirtualList from '@/components/Virtual-List/VirtualList';
 import Tags from '@/components/PublicComponents/Tags';
 import ArtistList from 'components/PublicComponents/ArtistList/index.vue';
 import { mapGetters } from 'vuex';
+
 export default {
   name: 'SearchResult',
   components: {
     VirtualList,
     Tags,
-    ArtistList
+    ArtistList,
   },
   data() {
     return {
@@ -51,11 +56,11 @@ export default {
       exclusive: [],
       artistPage: { page: 1, pageSize: 20 },
       artistList: [],
-      listMap: new Map()
+      listMap: new Map(),
     };
   },
   computed: {
-    ...mapGetters(['user', 'followStatus'])
+    ...mapGetters(['user', 'followStatus']),
   },
   watch: {
     followStatus(val) {
@@ -64,7 +69,7 @@ export default {
       if (item) {
         this.$set(item, 'isFollowed', follow);
       }
-    }
+    },
   },
   mounted() {
     if (this.searchKeyType === 'artist') {
@@ -76,12 +81,12 @@ export default {
   },
   methods: {
     getTags(param) {
-      this.$api.search.getTags(param).then(res => {
+      this.$api.search.getTags(param).then((res) => {
         this.tags = res.data.data || [];
       });
     },
     getExclusive(param) {
-      this.$api.search.getExclusive(param).then(res => {
+      this.$api.search.getExclusive(param).then((res) => {
         this.exclusive = res.data.data || [];
       });
     },
@@ -89,11 +94,11 @@ export default {
       this.getTags(val.keyword);
       this.getExclusive(val.keyword);
       this.$router.push({
-        path: `/keywords`,
+        path: '/keywords',
         query: {
           tag: val.keyword,
-          illustType: this.searchKeyType
-        }
+          illustType: this.searchKeyType,
+        },
       });
     },
     optionsParams() {
@@ -105,9 +110,9 @@ export default {
         beginDate: this.date[0] || '',
         endDate: this.date[1] || '',
         xRestrict: this.xRestrict, // 0关 1开
-        maxSanityLevel: this.maxSanityLevel // 16禁
+        maxSanityLevel: this.maxSanityLevel, // 16禁
       };
-      Object.keys(data).forEach(item => {
+      Object.keys(data).forEach((item) => {
         if (!data[item]) {
           delete data[item];
         }
@@ -122,10 +127,10 @@ export default {
         .getSearch({
           ...this.optionsParams(),
           page: this.page++,
-          keyword: this.keyword
+          keyword: this.keyword,
         })
-        .then(res => {
-          const data = res.data.data;
+        .then((res) => {
+          const { data } = res.data;
           if (!data) {
             $state.complete();
           } else {
@@ -133,7 +138,7 @@ export default {
             $state.loaded();
           }
         })
-        .catch(err => {
+        .catch((err) => {
           console.error(err);
         });
     },
@@ -146,11 +151,11 @@ export default {
         .searchArtists({
           artistName: this.keyword,
           page: this.artistPage.page++,
-          pageSize: this.artistPage.pageSize
+          pageSize: this.artistPage.pageSize,
         })
-        .then(res => {
+        .then((res) => {
           const {
-            data: { data }
+            data: { data },
           } = res;
           if (!data) {
             this.$message.info('已经到底了');
@@ -167,13 +172,13 @@ export default {
       const data = {
         artistId: val.id,
         userId: this.user.id,
-        username: this.user.username
+        username: this.user.username,
       };
       if (val.isFollowed) {
         val.isFollowed = false;
         this.$store
           .dispatch('handleFollowArtist', { ...data, follow: false })
-          .then(res => {})
+          .then((res) => {})
           .catch(() => {
             val.isFollowed = true;
             this.$message.info('取消关注失败');
@@ -182,14 +187,14 @@ export default {
         val.isFollowed = true;
         this.$store
           .dispatch('handleFollowArtist', { ...data, follow: true })
-          .then(res => {})
+          .then((res) => {})
           .catch(() => {
             val.isFollowed = false;
             this.$message.info('关注失败');
           });
       }
-    }
-  }
+    },
+  },
 };
 </script>
 

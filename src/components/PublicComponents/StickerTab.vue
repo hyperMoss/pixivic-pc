@@ -25,22 +25,22 @@
 </template>
 
 <script>
-import stickerJSON from '@/assets/sticker/sticker.json'
+import stickerJSON from '@/assets/sticker/sticker.json';
 import Sticker from 'components/PublicComponents/Sticker';
 export default {
- name: 'StickerTab',
-  components: {Sticker},
-  computed:{
-    stickerList(){
-      return  Object.keys(stickerJSON).map(e=> {return {name:e,ids:stickerJSON[e]}})
-    }
+  name: 'StickerTab',
+  components: { Sticker },
+  computed: {
+    stickerList() {
+      return Object.keys(stickerJSON).map((e) => ({ name: e, ids: stickerJSON[e] }));
+    },
   },
   methods: {
-    chooseSticker(e){
-      this.$emit('submit',e);
-    }
+    chooseSticker(e) {
+      this.$emit('submit', e);
+    },
   },
-}
+};
 </script>
 
 <style scoped lang="less">

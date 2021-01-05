@@ -1,4 +1,3 @@
-
 <template>
   <div class="my-item">
     <div
@@ -48,24 +47,25 @@
 
 <script>
 import Like from '@/components/Like/Like';
+
 export default {
   name: 'MyItem',
   components: {
-    Like
+    Like,
   },
   props: {
     illust: {
       type: Object,
-      required: true
+      required: true,
     },
     size: {
       type: Number,
-      default: 180
-    }
+      default: 180,
+    },
   },
   data() {
     return {
-      opacity: 0
+      opacity: 0,
     };
   },
   computed: {},
@@ -86,8 +86,8 @@ export default {
         const routeUrl = this.$router.resolve(`/illusts/${this.illust.id}`);
         window.open(routeUrl.href, '_blank');
       }
-    }
-  }
+    },
+  },
 };
 </script>
 

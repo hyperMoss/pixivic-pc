@@ -3,8 +3,8 @@ import axios from '../base';
 // 获取图形验证码
 function verificationCode() {
   return axios({
-    url: `/verificationCode`,
-    method: 'get'
+    url: '/verificationCode',
+    method: 'get',
   });
 }
 
@@ -12,7 +12,7 @@ function register(data) {
   return axios({
     url: `/users?vid=${data.vid}&value=${data.value}`,
     method: 'post',
-    data: data.userInfo
+    data: data.userInfo,
   });
 }
 
@@ -20,7 +20,7 @@ function login(data) {
   return axios({
     url: `/users/token?vid=${data.vid}&value=${data.value}`,
     method: 'post',
-    data: data.userInfo
+    data: data.userInfo,
   });
 }
 
@@ -28,7 +28,7 @@ function login(data) {
 function resetPasswordEmail(email) {
   return axios({
     url: `/users/emails/${email}/resetPasswordEmail`,
-    method: 'get'
+    method: 'get',
   });
 }
 
@@ -37,7 +37,7 @@ function resetPassword(data) {
   return axios({
     url: `/users/password?vid=${data.vid}&value=${data.value}`,
     method: 'put',
-    data: { password: data.password }
+    data: { password: data.password },
   });
 }
 
@@ -45,7 +45,7 @@ function resetPassword(data) {
 function checkEmail(email) {
   return axios({
     url: `/users/emails/${email}`,
-    method: 'get'
+    method: 'get',
   });
 }
 
@@ -53,16 +53,16 @@ function checkEmail(email) {
 function checkUser(user) {
   return axios({
     url: `/users/usernames/${user}`,
-    method: 'get'
+    method: 'get',
   });
 }
 
 // 收藏画作
 function collectIllust(data) {
   return axios({
-    url: `/users/bookmarked`,
+    url: '/users/bookmarked',
     method: 'post',
-    data
+    data,
   });
 }
 
@@ -71,29 +71,29 @@ function getCollectList(params) {
   return axios({
     url: `/users/${params.userId}/bookmarked/${params.type}`,
     method: 'get',
-    params: { page: params.page, pageSize: params.pageSize || 30 }
+    params: { page: params.page, pageSize: params.pageSize || 30 },
   });
 }
 
 // 取消收藏
 function deleteCollect(data) {
   return axios({
-    url: `/users/bookmarked`,
+    url: '/users/bookmarked',
     method: 'delete',
-    data
+    data,
   });
 }
 
 // 关注和取消关注画师
 function followArtist(data) {
   return axios({
-    url: `/users/followed`,
+    url: '/users/followed',
     method: data.follow ? 'post' : 'delete',
     data: {
       artistId: data.artistId,
       userId: data.userId,
-      username: data.username
-    }
+      username: data.username,
+    },
   });
 }
 
@@ -102,7 +102,7 @@ function getFollowArtist(data) {
   return axios({
     url: `/users/${data.userId}/followed`,
     method: 'get',
-    params: { page: data.page, pageSize: data.pageSize || 30 }
+    params: { page: data.page, pageSize: data.pageSize || 30 },
   });
 }
 
@@ -113,8 +113,8 @@ function getNewIllust(data) {
     method: 'get',
     params: {
       page: data.page,
-      pageSize: data.pageSize || 30
-    }
+      pageSize: data.pageSize || 30,
+    },
   });
 }
 
@@ -122,7 +122,7 @@ function getNewIllust(data) {
 function getEmailIsCheck(userId) {
   return axios({
     url: `/users/${userId}/email/isCheck`,
-    method: 'get'
+    method: 'get',
   });
 }
 
@@ -130,7 +130,7 @@ function getEmailIsCheck(userId) {
 function vertifyEmail(email) {
   return axios({
     url: `/users/emails/${email}/checkEmail`,
-    method: 'get'
+    method: 'get',
   });
 }
 
@@ -139,16 +139,16 @@ function setEmail(params) {
   return axios({
     url: `/users/${params.userId}/email`,
     method: 'put',
-    params
+    params,
   });
 }
 
 // qq登录
 function qqLogin(params) {
   return axios({
-    url: `/users/tokenWithQQ`,
+    url: '/users/tokenWithQQ',
     method: 'get',
-    params
+    params,
   });
 }
 
@@ -157,7 +157,7 @@ function qqAccess(params) {
   return axios({
     url: `/users/${params.userId}/qqAccessToken`,
     method: 'put',
-    params: { qqAccessToken: params.qqAccessToken }
+    params: { qqAccessToken: params.qqAccessToken },
   });
 }
 
@@ -165,14 +165,14 @@ function qqAccess(params) {
 function checkQQ(userId) {
   return axios({
     url: `/users/${userId}/isBindQQ`,
-    method: 'get'
+    method: 'get',
   });
 }
 // 检查是否绑定qq
 function unLinkQQ(userId) {
   return axios({
     url: `/users/${userId}/qqAccessToken`,
-    method: 'delete'
+    method: 'delete',
   });
 }
 
@@ -180,7 +180,7 @@ function unLinkQQ(userId) {
 function getUsers(userId) {
   return axios({
     url: `/users/${userId}`,
-    method: 'get'
+    method: 'get',
   });
 }
 
@@ -191,8 +191,8 @@ function getFollowers(params) {
     method: 'get',
     params: {
       page: params.page || 1,
-      pageSize: params.pageSize || 30
-    }
+      pageSize: params.pageSize || 30,
+    },
   });
 }
 
@@ -203,8 +203,8 @@ function getArtists(data) {
     method: 'get',
     params: {
       page: data.page,
-      pageSize: data.pageSize || 30
-    }
+      pageSize: data.pageSize || 30,
+    },
   });
 }
 
@@ -215,8 +215,8 @@ function getRecentHistory(data) {
     method: 'get',
     params: {
       page: data.page,
-      pageSize: data.pageSize || 30
-    }
+      pageSize: data.pageSize || 30,
+    },
   });
 }
 
@@ -227,36 +227,36 @@ function getOldHistory(data) {
     method: 'get',
     params: {
       page: data.page,
-      pageSize: data.pageSize || 30
-    }
+      pageSize: data.pageSize || 30,
+    },
   });
 }
 
 // 获取高速服务器列表
 function getVipProxyServer() {
   return axios({
-    url:'/vipProxyServer',
-    method:'get',
-  })
+    url: '/vipProxyServer',
+    method: 'get',
+  });
 }
 
 // 用户激活
 
-function putPlusCode(userId,code){
+function putPlusCode(userId, code) {
   return axios({
-    url:`/users/${userId}/permissionLevel`,
+    url: `/users/${userId}/permissionLevel`,
     method: 'put',
     params: {
-      exchangeCode:code
-    }
-  })
+      exchangeCode: code,
+    },
+  });
 }
 
 // 获取活动可参与状态
 function canParticipateStatus(activityName) {
   return axios({
     url: `/vipActivity/${activityName}/canParticipateStatus`,
-    method: 'get'
+    method: 'get',
   });
 }
 
@@ -264,7 +264,7 @@ function canParticipateStatus(activityName) {
 function participateStatus(activityName) {
   return axios({
     url: `/vipActivity/${activityName}/participateStatus`,
-    method: 'put'
+    method: 'put',
   });
 }
 
@@ -297,5 +297,5 @@ export {
   getVipProxyServer,
   putPlusCode,
   canParticipateStatus,
-  participateStatus
+  participateStatus,
 };

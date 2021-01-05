@@ -1,5 +1,5 @@
-import axios from '../base';
 import dayjs from 'dayjs';
+import axios from '../base';
 
 function format(param) {
   return encodeURIComponent(param).replace('%2F', '/');
@@ -8,33 +8,33 @@ function format(param) {
 function getKeyword(param) {
   return axios({
     url: `/keywords/${format(param)}/candidates`,
-    method: 'get'
+    method: 'get',
   });
 }
 
 function getSearch(params) {
   return axios({
-    url: `/illustrations`,
+    url: '/illustrations',
     method: 'get',
     params: {
       ...params,
-      pageSize: 30
-    }
+      pageSize: 30,
+    },
   });
 }
 // 搜索画师
 function searchArtists(params) {
   return axios({
-    url: `/artists`,
+    url: '/artists',
     method: 'get',
-    params: { ...params, pageSize: 30 }
+    params: { ...params, pageSize: 30 },
   });
 }
 // 获取该搜索词相关联的tag
 function getTags(param) {
   return axios({
     url: `/keywords/${format(param)}/pixivSuggestions`,
-    method: 'get'
+    method: 'get',
   });
 }
 
@@ -42,14 +42,14 @@ function getTags(param) {
 function getExclusive(param) {
   return axios({
     url: `/keywords/${format(param)}/suggestions`,
-    method: 'get'
+    method: 'get',
   });
 }
 
 function getTranslations(param) {
   return axios({
     url: `/keywords/${format(param)}/translations`,
-    method: 'get'
+    method: 'get',
   });
 }
 
@@ -59,7 +59,7 @@ function uploadImg(data, params) {
     url: `https://upload.pixivic.com/avatar/image?isTemp=${!params}`,
     method: 'post',
     data,
-    params
+    params,
   });
 }
 
@@ -67,7 +67,7 @@ function uploadImg(data, params) {
 function searchByImg(imageUrl) {
   return axios({
     url: `/similarityImages?imageUrl=${imageUrl}`,
-    method: 'get'
+    method: 'get',
   });
 }
 
@@ -75,16 +75,16 @@ function searchByImg(imageUrl) {
 function getExists(param) {
   return axios({
     url: `/exists/${param.type}/${param.id}`,
-    method: 'get'
+    method: 'get',
   });
 }
 
 // 查看热门搜索标签
 function getHotTag(params) {
   return axios({
-    url: `/trendingTags`,
+    url: '/trendingTags',
     method: 'get',
-    params: params || { date: dayjs(new Date()).format('YYYY-MM-DD') }
+    params: params || { date: dayjs(new Date()).format('YYYY-MM-DD') },
   });
 }
 
@@ -98,5 +98,5 @@ export {
   searchByImg,
   getExists,
   getHotTag,
-  searchArtists
+  searchArtists,
 };

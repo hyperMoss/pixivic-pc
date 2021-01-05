@@ -3,12 +3,12 @@ import axios from '../base';
 // 获取资讯列表
 function getSpotLights(params) {
   return axios({
-    url: `/spotlights`,
+    url: '/spotlights',
     method: 'get',
     params: {
       page: params.page,
-      pageSize: params.pageSize || 30
-    }
+      pageSize: params.pageSize || 30,
+    },
   });
 }
 
@@ -16,11 +16,11 @@ function getSpotLights(params) {
 function getSpotLightsIllust(id) {
   return axios({
     url: `/spotlights/${id}/illustrations`,
-    method: 'get'
+    method: 'get',
   });
 }
 
 export {
   getSpotLights,
-  getSpotLightsIllust
+  getSpotLightsIllust,
 };
