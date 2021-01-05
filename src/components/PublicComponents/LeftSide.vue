@@ -1,4 +1,3 @@
-
 <template>
   <div class="LeftSide">
     <el-menu
@@ -42,10 +41,10 @@ export default {
     computerActiveNav() {
       let result = '0';
       const index = this.navLsit.indexOf(
-        item => item.routePath === this.$route.path
+        (item) => item.routePath === this.$route.path,
       );
       if (index !== -1) {
-        result = '' + index;
+        result = `${index}`;
       }
       return result;
     },
@@ -54,42 +53,42 @@ export default {
         {
           name: this.$t('Home'),
           icon: 'el-icon-s-home',
-          routePath: '/'
+          routePath: '/',
         },
         {
           name: this.$t('Notice'),
           icon: 'el-icon-document',
-          routePath: '/note'
+          routePath: '/note',
         },
         {
           name: this.$t('Feedback'),
           icon: 'el-icon-chat-round',
-          routePath: '/bbs'
+          routePath: '/bbs',
         },
         {
           name: this.$t('Donate'),
           icon: 'el-icon-coffee-cup',
-          routePath: '/donate'
+          routePath: '/donate',
         },
         {
           name: this.$t('Links'),
           icon: 'el-icon-link',
-          routePath: '/remark'
-        }
+          routePath: '/remark',
+        },
       ];
-    }
+    },
   },
   watch: {},
   mounted() {},
   methods: {
     handleOpen(key, keyPath) {
-      this.$router.push({ path: key, query: {}});
+      this.$router.push({ path: key, query: {} });
       console.log(key, keyPath);
     },
     handleClose(key, keyPath) {
       console.log(key, keyPath);
-    }
-  }
+    },
+  },
 };
 </script>
 

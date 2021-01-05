@@ -1,4 +1,3 @@
-
 import * as types from './mutation-types';
 
 const mutations = {
@@ -46,7 +45,7 @@ const mutations = {
   },
   [types.SET_PROXY_LIST](state, data) {
     if (data) { state.proxyList = data; }
-  }
+  },
 };
 
 export default mutations;

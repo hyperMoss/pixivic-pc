@@ -1,4 +1,3 @@
-
 <template>
   <div class="tags">
     <div
@@ -25,8 +24,8 @@ export default {
   props: {
     data: {
       type: Array,
-      default: () => []
-    }
+      default: () => [],
+    },
   },
   data() {
     return {
@@ -39,8 +38,8 @@ export default {
   methods: {
     handleClick(item) {
       this.$emit('handleClick', item);
-    }
-  }
+    },
+  },
 };
 </script>
 

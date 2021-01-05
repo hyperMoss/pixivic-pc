@@ -1,5 +1,3 @@
-
-
 <template>
   <div class="index">
     <el-dialog
@@ -56,23 +54,23 @@
 
 <script>
 
-import {mapGetters} from "vuex";
+import { mapGetters } from 'vuex';
 
 export default {
   name: 'PayModal',
   props: {
     payVisible: {
       type: Boolean,
-      default: false
+      default: false,
     },
     user: {
       type: Object,
-      default: () => {}
-    }
+      default: () => {},
+    },
   },
   data() {
     return {
-code:''
+      code: '',
 
     };
   },
@@ -82,53 +80,53 @@ code:''
       get() {
         return this.payVisible;
       },
-      set() {}
-    }
+      set() {},
+    },
   },
   watch: {},
   mounted() {
     // 验证状态
-    this.$api.user.getEmailIsCheck(this.user.id).then(res => {
+    this.$api.user.getEmailIsCheck(this.user.id).then((res) => {
       this.isCheckEmail = res.data.data;
     });
   },
 
   methods: {
 
-    //打开说明
-    goPayNote(){
-      window.open('https://m.pixivic.com/handbook')
+    // 打开说明
+    goPayNote() {
+      window.open('https://m.pixivic.com/handbook');
     },
-    //打开购买页面
-    goAilPay(){
-      window.open('https://mall.pixivic.net/product/')
+    // 打开购买页面
+    goAilPay() {
+      window.open('https://mall.pixivic.net/product/');
     },
-    goWeChatPay(){
-      window.open('https://weidian.com/?userid=1676062924')
+    goWeChatPay() {
+      window.open('https://weidian.com/?userid=1676062924');
     },
     // 提交燃料
-    submitCode(){
-      this.$api.user.putPlusCode(this.user.id,this.code).then(
-        res=>{
-          if(res.status===200){
+    submitCode() {
+      this.$api.user.putPlusCode(this.user.id, this.code).then(
+        (res) => {
+          if (res.status === 200) {
             this.$message.closeAll();
             this.$message.success(res.data.message);
             this.$store.dispatch('setUser', res.data.data);
             this.$store.dispatch('vipProxyServer');
-            this.handleClose()
-          }else {
-            this.code=''
+            this.handleClose();
+          } else {
+            this.code = '';
             this.$message.closeAll();
             this.$message.info(res.data.message);
           }
-        }
-      )
+        },
+      );
     },
     // 处理窗口关闭
     handleClose() {
       this.$emit('update:payVisible', false);
-    }
-  }
+    },
+  },
 };
 </script>
 

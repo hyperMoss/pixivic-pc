@@ -1,15 +1,42 @@
-
 <template>
   <div class="index">
-    <el-form ref="ruleForm" :model="ruleForm" status-icon :rules="rules" label-width="100px" class="demo-ruleForm" label-position="left">
-      <el-form-item label="密码" prop="password">
-        <el-input v-model="ruleForm.password" :maxlength="20" show-password type="password" autocomplete="off" />
+    <el-form
+      ref="ruleForm"
+      :model="ruleForm"
+      status-icon
+      :rules="rules"
+      label-width="100px"
+      class="demo-ruleForm"
+      label-position="left"
+    >
+      <el-form-item
+        label="密码"
+        prop="password"
+      >
+        <el-input
+          v-model="ruleForm.password"
+          :maxlength="20"
+          show-password
+          type="password"
+          autocomplete="off"
+        />
       </el-form-item>
-      <el-form-item label="确认密码" prop="checkPass">
-        <el-input v-model="ruleForm.checkPass" :maxlength="20" show-password type="password" autocomplete="off" />
+      <el-form-item
+        label="确认密码"
+        prop="checkPass"
+      >
+        <el-input
+          v-model="ruleForm.checkPass"
+          :maxlength="20"
+          show-password
+          type="password"
+          autocomplete="off"
+        />
       </el-form-item>
       <el-form-item>
-        <el-button @click="submitResetForm">修改密码</el-button>
+        <el-button @click="submitResetForm">
+          修改密码
+        </el-button>
       </el-form-item>
     </el-form>
   </div>
@@ -21,7 +48,7 @@ export default {
   components: {},
   data() {
     // 密码验证
-    var validatePass = (rule, value, callback) => {
+    const validatePass = (rule, value, callback) => {
       if (value === '') {
         callback(new Error('请输入密码'));
       } else {
@@ -34,7 +61,7 @@ export default {
       }
       callback();
     };
-    var validatePass2 = (rule, value, callback) => {
+    const validatePass2 = (rule, value, callback) => {
       if (value === '') {
         callback(new Error('请再次输入密码'));
       } else if (value !== this.ruleForm.password) {
@@ -52,12 +79,12 @@ export default {
       // 验证规则
       rules: {
         password: [
-          { validator: validatePass, trigger: 'blur' }
+          { validator: validatePass, trigger: 'blur' },
         ],
         checkPass: [
-          { validator: validatePass2, trigger: 'blur' }
+          { validator: validatePass2, trigger: 'blur' },
         ],
-      }
+      },
     };
   },
   computed: {},
@@ -66,7 +93,7 @@ export default {
   methods: {
     // 提交重置密码表单
     submitResetForm() {
-      this.$refs['ruleForm'].validate((valid) => {
+      this.$refs.ruleForm.validate((valid) => {
         if (valid) {
           this.resetPasswordAjax();
         } else {
@@ -84,7 +111,7 @@ export default {
       delete data.VNK;
       data = { ...data, password: this.ruleForm.password };
       this.$api.user.resetPassword(data)
-        .then(res => {
+        .then((res) => {
           if (res.status === 200) {
             this.$message.info('重置成功，等待返回首页');
             window.location.href = 'https://pixivic.com/';
@@ -92,7 +119,7 @@ export default {
             this.$message.error(res.data.message);
           }
         });
-    }
+    },
   },
 };
 </script>
@@ -104,4 +131,3 @@ export default {
   align-items: center;
 }
 </style>
-

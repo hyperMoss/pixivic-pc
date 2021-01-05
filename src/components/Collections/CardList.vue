@@ -1,4 +1,3 @@
-
 <template>
   <div class="CardList">
     <div
@@ -118,12 +117,13 @@
 
 <script>
 import CreateCollect from 'components/Collections/CreateCollect.vue';
+
 export default {
   name: 'CardList',
   components: { CreateCollect },
   props: ['collectionList', 'powerFlag'],
   data() {
-    return { createCollectBoolean: false, collectData: null,staticUrl:process.env.VUE_APP_STATIC_API };
+    return { createCollectBoolean: false, collectData: null, staticUrl: process.env.VUE_APP_STATIC_API };
   },
   computed: {},
   watch: {},
@@ -131,17 +131,17 @@ export default {
   methods: {
     clickTag(val) {
       this.$router.push({
-        path: `/keywords`,
+        path: '/keywords',
         query: {
-          tag: val.tagName
-        }
+          tag: val.tagName,
+        },
       });
     },
     handleAddSuccess(e, flag) {
       this.handleStartCollect();
       if (flag === 2) {
         let target = this.collectionList[
-          this.collectionList.findIndex(item => item.id === e.id)
+          this.collectionList.findIndex((item) => item.id === e.id)
         ];
         target = Object.assign(target, e);
       }
@@ -154,7 +154,7 @@ export default {
       this.$store.dispatch('setCollectInfo', item);
       this.$router.push({
         path: `/collect/collectionsillust/${item.id}`,
-        query: { collectionId: item.id }
+        query: { collectionId: item.id },
       });
     },
     getCollections() {
@@ -165,23 +165,23 @@ export default {
       this.$confirm('确定删除该画集吗？', '提示', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
-        type: 'warning'
+        type: 'warning',
       })
         .then(() => {
           this.$api.collect
             .deleteCollections(collectionId)
-            .then(res => {
+            .then((res) => {
               if (res.data && res.data.data) {
                 this.$message.info('删除画集成功');
                 this.collectionList.splice(
-                  this.collectionList.findIndex(e => e.id === collectionId),
-                  1
+                  this.collectionList.findIndex((e) => e.id === collectionId),
+                  1,
                 );
               } else {
                 this.$message.info('删除画集失败');
               }
             })
-            .catch(err => {
+            .catch((err) => {
               console.log(err);
             });
         })
@@ -190,8 +190,8 @@ export default {
     modifyCollect(item) {
       this.collectData = item;
       this.createCollectBoolean = !this.createCollectBoolean;
-    }
-  }
+    },
+  },
 };
 </script>
 

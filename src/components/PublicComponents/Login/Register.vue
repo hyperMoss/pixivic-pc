@@ -94,15 +94,15 @@ export default {
   components: {},
   data() {
     // 邮箱验证函数
-    var checkEmail = (rule, value, callback) => {
-      var pattern = /^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/;
+    const checkEmail = (rule, value, callback) => {
+      const pattern = /^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/;
 
       if (!value) {
         return callback(new Error('邮箱不能为空'));
       }
       if (!pattern.test(value)) { return callback(new Error('邮箱格式错误')); }
       this.$api.user.checkEmail(value)
-        .then(res => {
+        .then((res) => {
           if (res.status !== 200) {
             callback(new Error('邮箱已被注册'));
           }
@@ -110,7 +110,7 @@ export default {
       callback();
     };
     // 用户名验证函数
-    var checkName = (rule, value, callback) => {
+    const checkName = (rule, value, callback) => {
       const patrn = /[`~!@#$%^&*()\-+=<>?:"{}|,.\/;'\\[\]·~！@#￥%……&*（）——\-+={}|《》？：“”【】、；‘'，。、]/im;
       if (!value) {
         return callback(new Error('用户名不能为空'));
@@ -122,7 +122,7 @@ export default {
         return callback(new Error('用户名应为4-10位'));
       }
       this.$api.user.checkUser(value)
-        .then(res => {
+        .then((res) => {
           if (res.status !== 200) {
             callback(new Error('此用户名已被注册'));
           } else {
@@ -131,7 +131,7 @@ export default {
         });
     };
     // 密码验证
-    var validatePass = (rule, value, callback) => {
+    const validatePass = (rule, value, callback) => {
       if (value === '') {
         callback(new Error('请输入密码'));
       } else {
@@ -144,7 +144,7 @@ export default {
       }
       callback();
     };
-    var validatePass2 = (rule, value, callback) => {
+    const validatePass2 = (rule, value, callback) => {
       if (value === '') {
         callback(new Error('请再次输入密码'));
       } else if (value !== this.ruleForm.password) {
@@ -153,7 +153,7 @@ export default {
         callback();
       }
     };
-    var checkCode = (rule, value, callback) => {
+    const checkCode = (rule, value, callback) => {
       if (value === '') {
         callback(new Error('请输入验证码'));
       } else if (value.length < 4) {
@@ -173,26 +173,26 @@ export default {
         checkPass: '',
         email: '',
         username: '',
-        verifyCode: ''
+        verifyCode: '',
       },
       // 验证规则
       rules: {
         password: [
-          { validator: validatePass, trigger: 'blur' }
+          { validator: validatePass, trigger: 'blur' },
         ],
         checkPass: [
-          { validator: validatePass2, trigger: 'blur' }
+          { validator: validatePass2, trigger: 'blur' },
         ],
         email: [
-          { validator: checkEmail, trigger: 'blur' }
+          { validator: checkEmail, trigger: 'blur' },
         ],
         username: [
-          { validator: checkName, trigger: 'blur' }
+          { validator: checkName, trigger: 'blur' },
         ],
         verifyCode: [
-          { validator: checkCode, trigger: 'blur' }
-        ]
-      }
+          { validator: checkCode, trigger: 'blur' },
+        ],
+      },
     };
   },
   computed: {},
@@ -204,8 +204,8 @@ export default {
     // 获取验证码
     getCode() {
       this.$api.user.verificationCode()
-        .then(res => {
-          const { data: { data }} = res;
+        .then((res) => {
+          const { data: { data } } = res;
           this.imageBase64 = data.imageBase64;
           this.vid = data.vid;
         });
@@ -231,13 +231,13 @@ export default {
         userInfo: {
           username: this.ruleForm.username.trim(),
           email: this.ruleForm.email,
-          password: this.ruleForm.password
+          password: this.ruleForm.password,
         },
         vid: this.vid,
-        value: this.ruleForm.verifyCode
+        value: this.ruleForm.verifyCode,
       };
       this.$api.user.register(reqBody)
-        .then(res => {
+        .then((res) => {
           if (res.status === 200) {
             localStorage.setItem('user', JSON.stringify(res.data.data));
             this.$store.dispatch('setUser', res.data.data);
@@ -247,13 +247,13 @@ export default {
             this.$message.info(res.data.message);
           }
         })
-        .catch(err => {
+        .catch((err) => {
           console.error(err);
         });
       this.loading = false;
       this.getCode();
-    }
-  }
+    },
+  },
 };
 </script>
 

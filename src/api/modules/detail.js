@@ -1,10 +1,9 @@
-
 import axios from '../base';
 
 function getPixById(id) {
   return axios({
     url: `/illusts/${id}`,
-    method: 'get'
+    method: 'get',
   });
 }
 
@@ -15,22 +14,22 @@ function reqArtistIllust(params) {
     params: {
       page: params.page || 1,
       pageSize: params.pageSize || 30,
-      maxSanityLevel: 4
-    }
+      maxSanityLevel: 4,
+    },
   });
 }
 
 function reqIllustDetail(pid) {
   return axios({
     url: `/illusts/${pid}`,
-    method: 'get'
+    method: 'get',
   });
 }
 
 function reqArtist(artistId) {
   return axios({
     url: `/artists/${artistId}`,
-    method: 'get'
+    method: 'get',
   });
 }
 
@@ -41,8 +40,8 @@ function reqRelatedIllust(param) {
     method: 'get',
     params: {
       page: param.page,
-      pageSize: param.pageSize || 30
-    }
+      pageSize: param.pageSize || 30,
+    },
   });
 }
 
@@ -50,7 +49,7 @@ function reqRelatedIllust(param) {
 function reqSummary(artistId) {
   return axios({
     url: `/artists/${artistId}/summary`,
-    method: 'get'
+    method: 'get',
   });
 }
 
@@ -61,8 +60,8 @@ function bookmarkedUsers(params) {
     method: 'get',
     params: {
       page: params.page || 1,
-      pageSize: params.pageSize || 30
-    }
+      pageSize: params.pageSize || 30,
+    },
   });
 }
 
@@ -71,9 +70,10 @@ function illustHistory(data) {
   return axios({
     url: `/users/${data.userId}/illustHistory`,
     method: 'post',
-    data
+    data,
   });
 }
 
-export { getPixById, reqArtistIllust, reqIllustDetail, reqArtist, reqRelatedIllust, reqSummary, bookmarkedUsers, illustHistory };
-
+export {
+  getPixById, reqArtistIllust, reqIllustDetail, reqArtist, reqRelatedIllust, reqSummary, bookmarkedUsers, illustHistory,
+};

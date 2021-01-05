@@ -1,11 +1,10 @@
-
 import axios from '../base';
 
 function getRank(params) {
   return axios({
-    url: `/ranks`,
+    url: '/ranks',
     method: 'get',
-    params: { ...params, pageSize: 30 }
+    params: { ...params, pageSize: 30 },
   });
 }
 

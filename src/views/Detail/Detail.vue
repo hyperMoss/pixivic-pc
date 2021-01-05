@@ -160,7 +160,7 @@
 
 <script>
 import { mapGetters } from 'vuex';
-import { replaceBigImg, replaceSmallImg,replaceBigImgProxy } from '@/util';
+import { replaceBigImg, replaceSmallImg, replaceBigImgProxy } from '@/util';
 import dayjs from 'dayjs';
 import Item from '@/components/Virtual-List/MyItem';
 import Comment from '@/components/PublicComponents/Comment';
@@ -169,13 +169,13 @@ export default {
   name: 'Detail',
   components: {
     Item,
-    Comment
+    Comment,
   },
   props: {
     pid: {
       type: String,
-      required: true
-    }
+      required: true,
+    },
   },
   data() {
     return {
@@ -188,11 +188,11 @@ export default {
       pictureList: [],
       relatedPictureList: [],
       likeUsers: [],
-      fakeTime:0
+      fakeTime: 0,
     };
   },
   computed: {
-    ...mapGetters(['user', 'likeStatus', 'followStatus', 'detail'])
+    ...mapGetters(['user', 'likeStatus', 'followStatus', 'detail']),
   },
   watch: {
     // 详情去画师那里更改点赞状态 然后后退回来详情 状态也要变
@@ -206,7 +206,7 @@ export default {
       if (val.artistId === this.illustDetail.artistPreView.id) {
         this.illustDetail.artistPreView.isFollowed = val.follow;
       }
-    }
+    },
   },
   mounted() {
     if (this.detail) {
@@ -227,23 +227,21 @@ export default {
       }
       this.$store.dispatch('setCollectBoolean', column);
     },
-    fakeLoading(){
-     let interval = setInterval(()=>{ if(this.fakeTime===98){clearInterval(interval) } this.fakeTime++},200)
+    fakeLoading() {
+      const interval = setInterval(() => { if (this.fakeTime === 98) { clearInterval(interval); } this.fakeTime++; }, 200);
     },
     // 处理图片数据
     handleData(data) {
       this.getArtistIllust(data.artistId);
-      this.srcList = data.imageUrls.map(e => replaceBigImg(e.original)) || [];
+      this.srcList = data.imageUrls.map((e) => replaceBigImg(e.original)) || [];
       return {
         ...data,
         itemHeight: data.itemHeight || parseInt((data.height / data.width) * document.body.clientWidth),
-        originalSrc: this.user.permissionLevel>=3 && this.user.permissionLevelExpireDate>Date.now() ?replaceBigImgProxy(data.imageUrls[0].original):replaceBigImg(data.imageUrls[0].original),
+        originalSrc: this.user.permissionLevel >= 3 && this.user.permissionLevelExpireDate > Date.now() ? replaceBigImgProxy(data.imageUrls[0].original) : replaceBigImg(data.imageUrls[0].original),
         src: data.src || replaceSmallImg(data.imageUrls[0].medium),
         avatarSrc: data.avatarSrc || replaceBigImg(data.artistPreView.avatar),
         createDate: dayjs(data.createDate).format('YYYY-MM-DD'),
-        imgs: data.imgs || data.imageUrls.reduce((pre, cur) => {
-          return pre.concat(replaceBigImg(cur.original));
-        }, [])
+        imgs: data.imgs || data.imageUrls.reduce((pre, cur) => pre.concat(replaceBigImg(cur.original)), []),
       };
     },
     // 跳转到搜藏用户
@@ -253,9 +251,9 @@ export default {
       this.$api.detail
         .bookmarkedUsers({
           illustId: this.pid,
-          pageSize: 3
+          pageSize: 3,
         })
-        .then(res => {
+        .then((res) => {
           this.likeUsers = res.data.data;
         });
     },
@@ -282,24 +280,23 @@ export default {
       const params = {
         userId: this.user.id,
         illustId: data.id,
-        username: this.user.username
+        username: this.user.username,
       };
       if (!flag) {
         this.$store.dispatch('handleCollectIllust', params)
-          .then(e => {
+          .then((e) => {
             this.$message.success(e.data.message);
           })
-          .catch(e => {
+          .catch((e) => {
             data.isLiked = !data.isLiked;
             this.$message.error(e.data.message);
           });
       } else {
         this.$store.dispatch('deleteCollectIllust', params)
-          .then(e => {
+          .then((e) => {
             this.$message.success(e.data.message);
-          }
-          )
-          .catch(e => {
+          })
+          .catch((e) => {
             data.isLiked = !data.isLiked;
             this.$message.error(e.data.message);
           });
@@ -307,17 +304,17 @@ export default {
     },
     openTag(item) {
       this.$router.push({
-        path: `/keywords`,
+        path: '/keywords',
         query: {
           tag: item.name,
-          illustType: this.type
-        }
+          illustType: this.type,
+        },
       });
     },
     // 请求数据
     getIllustDetail() {
-      this.$api.detail.reqIllustDetail(this.pid).then(res => {
-        const data = res.data.data;
+      this.$api.detail.reqIllustDetail(this.pid).then((res) => {
+        const { data } = res.data;
         this.illustDetail = this.handleData(data);
       });
     },
@@ -330,13 +327,13 @@ export default {
       const data = {
         artistId: this.illustDetail.artistPreView.id,
         userId: this.user.id,
-        username: this.user.username
+        username: this.user.username,
       };
       if (!this.illustDetail.artistPreView.isFollowed) {
         this.illustDetail.artistPreView.isFollowed = true;
         this.$store
           .dispatch('handleFollowArtist', { ...data, follow: true })
-          .then(res => {})
+          .then((res) => {})
           .catch(() => {
             this.illustDetail.artistPreView.isFollowed = false;
             this.$message.info('关注失败');
@@ -345,7 +342,7 @@ export default {
         this.illustDetail.artistPreView.isFollowed = false;
         this.$store
           .dispatch('handleFollowArtist', { ...data, follow: false })
-          .then(res => {})
+          .then((res) => {})
           .catch(() => {
             this.illustDetail.artistPreView.isFollowed = true;
             this.$message.info('取消关注失败');
@@ -357,19 +354,19 @@ export default {
       this.$api.detail
         .reqArtistIllust({
           page: 1,
-          artistId: artistId,
+          artistId,
           type: this.type,
-          pageSize: 10
+          pageSize: 10,
         })
-        .then(res => {
+        .then((res) => {
           if (res.data.data) {
             const {
-              data: { data }
+              data: { data },
             } = res;
-            this.pictureList = this.pictureList.concat(data).filter(item => item.xrestrict === 0 && item.sanityLevel <= (this.user ? 5 : 4));
+            this.pictureList = this.pictureList.concat(data).filter((item) => item.xrestrict === 0 && item.sanityLevel <= (this.user ? 5 : 4));
           }
         })
-        .catch(err => {
+        .catch((err) => {
           console.error(err);
         });
     },
@@ -377,22 +374,22 @@ export default {
       this.$api.detail
         .reqRelatedIllust({
           page: this.page++,
-          illustId: this.pid
+          illustId: this.pid,
         })
-        .then(res => {
+        .then((res) => {
           if (!res.data.data) {
             this.$message.info('到底了');
           } else {
             this.relatedPictureList = this.relatedPictureList.concat(
-              res.data.data.filter((item) => !(item.xrestrict === 1 || item.sanityLevel > (this.user && this.user.id ? 5 : 4)))
+              res.data.data.filter((item) => !(item.xrestrict === 1 || item.sanityLevel > (this.user && this.user.id ? 5 : 4))),
             );
           }
         })
-        .catch(err => {
+        .catch((err) => {
           console.error(err);
         });
-    }
-  }
+    },
+  },
 };
 </script>
 
@@ -554,7 +551,6 @@ export default {
       }
     }
   }
-
 
   .showScreenImg {
     position: relative;

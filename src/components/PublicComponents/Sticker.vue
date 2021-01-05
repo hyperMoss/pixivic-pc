@@ -7,34 +7,35 @@
 </template>
 
 <script>
-import pathJSON from '@/assets/sticker/path.json'
+import pathJSON from '@/assets/sticker/path.json';
+
 export default {
- name: 'Sticker',
+  name: 'Sticker',
   components: {},
-  props:{
+  props: {
     code: {
-      required:true,
+      required: true,
       type: String,
-      default: ''
+      default: '',
     },
-    width:{
-      type: [Number,String],
-      default: 20
-    }
+    width: {
+      type: [Number, String],
+      default: 20,
+    },
   },
   data() {
     return {
 
-    }
+    };
   },
-  computed:{
-    computerSrc(){
-      return require('@/assets/'+pathJSON[this.$props.code])
-    }
+  computed: {
+    computerSrc() {
+      return require(`@/assets/${pathJSON[this.$props.code]}`);
+    },
   },
   mounted() {},
   methods: {
 
   },
-}
+};
 </script>

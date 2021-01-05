@@ -7,8 +7,8 @@ export const modeData = [
       { text: '周排行', value: 'week' },
       { text: '月排行', value: 'month' },
       { text: '男性日排行', value: 'male' },
-      { text: '女性日排行', value: 'female' }
-    ]
+      { text: '女性日排行', value: 'female' },
+    ],
   },
   {
     value: 'manhua',
@@ -17,9 +17,9 @@ export const modeData = [
       { text: '日排行', value: 'day_manga' },
       { text: '周排行', value: 'week_manga' },
       { text: '月排行', value: 'month_manga' },
-      { text: '新秀周排行', value: 'week_rookie_manga' }
-    ]
-  }
+      { text: '新秀周排行', value: 'week_rookie_manga' },
+    ],
+  },
 ];
 
 export const color = [
@@ -30,7 +30,7 @@ export const color = [
   'rgb(49, 46, 44)',
   'rgb(51, 62, 79)',
   'rgb(208, 185, 177)',
-  'rgb(168, 112, 76)'
+  'rgb(168, 112, 76)',
 ];
 
 export const IMG_PREFIX = '';
@@ -64,7 +64,7 @@ export const COLOR_LIST = [
   '#430633',
   '#2E0423',
   '#700045',
-  '#690950'
+  '#690950',
 ];
 
 export const QQ_LINK = 'https://graph.qq.com/oauth2.0/authorize?response_type=token&client_id=101727536&redirect_uri=https://pixivic.com/qqauth';

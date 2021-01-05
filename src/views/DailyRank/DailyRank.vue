@@ -1,4 +1,3 @@
-
 <template>
   <div class="DailyRank">
     <virtual-list
@@ -73,7 +72,7 @@ import VirtualList from '@/components/Virtual-List/VirtualList';
 export default {
   name: 'DailyRank',
   components: {
-    VirtualList
+    VirtualList,
   },
   data() {
     return {
@@ -87,8 +86,8 @@ export default {
             { name: '周', value: 'week' },
             { name: '月', value: 'month' },
             { name: '女性', value: 'female' },
-            { name: '男性', value: 'male' }
-          ]
+            { name: '男性', value: 'male' },
+          ],
         },
         {
           name: '漫画排行',
@@ -96,9 +95,9 @@ export default {
             { name: '日排行', value: 'day_manga' },
             { name: '周排行', value: 'week_manga' },
             { name: '月排行', value: 'month_manga' },
-            { name: '新秀周排行', value: 'week_rookie_manga' }
-          ]
-        }
+            { name: '新秀周排行', value: 'week_rookie_manga' },
+          ],
+        },
       ],
       page: 1,
       mode: 'day',
@@ -111,14 +110,14 @@ export default {
       pickerOptions: {
         disabledDate(time) {
           return time.getTime() > Date.now();
-        }
+        },
       },
     };
   },
   computed: {
     scrollHeight() {
       return getClient().height - 60;
-    }
+    },
   },
   watch: {},
   mounted() {
@@ -131,13 +130,13 @@ export default {
         .getRank({
           page: this.page++,
           date: this.date,
-          mode: this.mode
+          mode: this.mode,
         })
-        .then(res => {
+        .then((res) => {
           if (!res.data.data) {
             $state.complete();
           } else {
-            this.pictureList = this.pictureList.concat(res.data.data.filter(e=> e.xrestrict === 0 && e.sanityLevel <= (this.user ? 5 : 4)));
+            this.pictureList = this.pictureList.concat(res.data.data.filter((e) => e.xrestrict === 0 && e.sanityLevel <= (this.user ? 5 : 4)));
             $state.loaded();
           }
         });
@@ -150,7 +149,7 @@ export default {
         .getRank({
           page: this.page++,
           date: this.date,
-          mode: this.mode
+          mode: this.mode,
         });
     },
     resetData() {
@@ -164,8 +163,8 @@ export default {
     },
     selectMode() {
       this.resetData();
-    }
-  }
+    },
+  },
 };
 </script>
 

@@ -1,4 +1,3 @@
-
 <template>
   <div class="Donate">
     <div class="donate-card-warp">
@@ -25,7 +24,8 @@
 </template>
 
 <script>
-import {mapGetters} from 'vuex'
+import { mapGetters } from 'vuex';
+
 export default {
   name: 'Donate',
   components: {},
@@ -33,13 +33,13 @@ export default {
     return {};
   },
   computed: {
-    ...mapGetters(['user'])
+    ...mapGetters(['user']),
   },
   watch: {},
   mounted() {},
   methods: {
 
-  }
+  },
 };
 </script>
 

@@ -1,4 +1,3 @@
-
 <template>
   <div id="app">
     <el-container
@@ -37,28 +36,29 @@
 </template>
 
 <script>
+import cookie from 'js-cookie';
+import HeaderBar from './components/PublicComponents/HeaderBar.vue';
+import LeftSide from './components/PublicComponents/LeftSide.vue';
+import Login from './components/PublicComponents/Login/index.vue';
+import CollectPicture from './components/Collections/CollectPicture';
+
 function checkWebpFeature(feature, callback) {
-  var kTestImages = {
-    lossy: "UklGRiIAAABXRUJQVlA4IBYAAAAwAQCdASoBAAEADsD+JaQAA3AAAAAA",
-    lossless: "UklGRhoAAABXRUJQVlA4TA0AAAAvAAAAEAcQERGIiP4HAA==",
-    alpha: "UklGRkoAAABXRUJQVlA4WAoAAAAQAAAAAAAAAAAAQUxQSAwAAAARBxAR/Q9ERP8DAABWUDggGAAAABQBAJ0BKgEAAQAAAP4AAA3AAP7mtQAAAA==",
-    animation: "UklGRlIAAABXRUJQVlA4WAoAAAASAAAAAAAAAAAAQU5JTQYAAAD/////AABBTk1GJgAAAAAAAAAAAAAAAAAAAGQAAABWUDhMDQAAAC8AAAAQBxAREYiI/gcA"
+  const kTestImages = {
+    lossy: 'UklGRiIAAABXRUJQVlA4IBYAAAAwAQCdASoBAAEADsD+JaQAA3AAAAAA',
+    lossless: 'UklGRhoAAABXRUJQVlA4TA0AAAAvAAAAEAcQERGIiP4HAA==',
+    alpha: 'UklGRkoAAABXRUJQVlA4WAoAAAAQAAAAAAAAAAAAQUxQSAwAAAARBxAR/Q9ERP8DAABWUDggGAAAABQBAJ0BKgEAAQAAAP4AAA3AAP7mtQAAAA==',
+    animation: 'UklGRlIAAABXRUJQVlA4WAoAAAASAAAAAAAAAAAAQU5JTQYAAAD/////AABBTk1GJgAAAAAAAAAAAAAAAAAAAGQAAABWUDhMDQAAAC8AAAAQBxAREYiI/gcA',
   };
-  var img = new Image();
+  const img = new Image();
   img.onload = function () {
-    var result = (img.width > 0) && (img.height > 0);
+    const result = (img.width > 0) && (img.height > 0);
     callback(feature, result);
   };
   img.onerror = function () {
     callback(feature, false);
   };
-  img.src = "data:image/webp;base64," + kTestImages[feature];
+  img.src = `data:image/webp;base64,${kTestImages[feature]}`;
 }
-import HeaderBar from './components/PublicComponents/HeaderBar.vue';
-import LeftSide from './components/PublicComponents/LeftSide.vue';
-import cookie from 'js-cookie';
-import Login from './components/PublicComponents/Login/index.vue';
-import CollectPicture from './components/Collections/CollectPicture';
 
 export default {
   name: 'App',
@@ -66,7 +66,7 @@ export default {
     HeaderBar,
     LeftSide,
     Login,
-    CollectPicture
+    CollectPicture,
   },
   data() {
     return {
@@ -76,7 +76,7 @@ export default {
   computed: {
     key() {
       return this.$route.fullPath;
-    }
+    },
   },
   mounted() {
     if (!cookie.get('alert')) {
@@ -84,16 +84,17 @@ export default {
         title: this.$tc('wechatImg'),
         duration: 0,
         dangerouslyUseHTMLString: true,
-        message: '<img src="https://cdn.jsdelivr.net/gh/OysterQAQ/Blog-Image/wechat.jpg" style="height:200px;width:200px;"/>'
+        message: '<img src="https://cdn.jsdelivr.net/gh/OysterQAQ/Blog-Image/wechat.jpg" style="height:200px;width:200px;"/>',
       });
       cookie.set('alert', true, {
-        expires: 365
+        expires: 365,
       });
     }
     this.$i18n.locale = cookie.get('lang') || 'zh';
-    checkWebpFeature('lossless',(f,e)=>{
-      sessionStorage.setItem('supportWebp',e)})
-  }
+    checkWebpFeature('lossless', (f, e) => {
+      sessionStorage.setItem('supportWebp', e);
+    });
+  },
 };
 </script>
 

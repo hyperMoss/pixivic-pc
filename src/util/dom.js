@@ -6,12 +6,11 @@
  */
 
 function isInViewPortOfOne(el, pad = 100) {
-  const viewPortHeight =
-    window.innerHeight ||
-    document.documentElement.clientHeight ||
-    document.body.clientHeight;
-  const offsetTop = el.offsetTop;
-  const scrollTop = document.documentElement.scrollTop;
+  const viewPortHeight = window.innerHeight
+    || document.documentElement.clientHeight
+    || document.body.clientHeight;
+  const { offsetTop } = el;
+  const { scrollTop } = document.documentElement;
   const top = offsetTop - scrollTop;
   return top <= viewPortHeight + pad;
 }
@@ -36,7 +35,7 @@ function downloadByData(url, cb) {
     const ctx = canvas.getContext('2d');
     ctx.drawImage(image, 0, 0, image.width, image.height);
     const ext = image.src.substring(image.src.lastIndexOf('.') + 1).toLowerCase();
-    const dataURL = canvas.toDataURL('image/' + ext);
+    const dataURL = canvas.toDataURL(`image/${ext}`);
     download(dataURL, cb);
   };
 }
@@ -63,7 +62,7 @@ function downloadByBlob(url, cb) {
 function getClient() {
   return {
     width: document.body.clientWidth || document.documentElement.clientWidth,
-    height: document.body.clientHeight || document.documentElement.clientHeight
+    height: document.body.clientHeight || document.documentElement.clientHeight,
   };
 }
 
@@ -72,5 +71,5 @@ export {
   downloadByData,
   download,
   isInViewPortOfOne,
-  getClient
+  getClient,
 };

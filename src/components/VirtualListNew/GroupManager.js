@@ -19,7 +19,7 @@
  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
- SOFTWARE.*/
+ SOFTWARE. */
 import SectionManager from './SectionManager';
 
 /** Represents a group of logically-related items */
@@ -43,11 +43,13 @@ export default class GroupManager {
       const cellMetadatum = this._cellSizeAndPositionGetter(item, index, this._groupId);
       sectionManager.registerCell({
         index,
-        cellMetadatum
+        cellMetadatum,
       });
 
       // compute total height and total width
-      const { x, y, width, height } = cellMetadatum;
+      const {
+        x, y, width, height,
+      } = cellMetadatum;
       const bottom = y + height;
       const right = x + width;
       if (bottom > totalHeight) {

@@ -1,4 +1,3 @@
-
 <template>
   <div class="artist-list-index">
     <div
@@ -12,14 +11,28 @@
         :key="artistItem.id"
         class="artist-item"
       >
-        <div class="avatar" @click="goArtist(artistItem.id)">
-          <el-avatar :size="80" :src="artistItem.avatar | replaceBig" />
+        <div
+          class="avatar"
+          @click="goArtist(artistItem.id)"
+        >
+          <el-avatar
+            :size="80"
+            :src="artistItem.avatar | replaceBig"
+          />
         </div>
         <div class="info">
-          <div class="name">{{ artistItem.name }}</div>
-          <div class="desc">{{ artistItem.comment }}</div>
+          <div class="name">
+            {{ artistItem.name }}
+          </div>
+          <div class="desc">
+            {{ artistItem.comment }}
+          </div>
           <div class="followed-button">
-            <el-button round type="primary" @click="follow(artistItem)">
+            <el-button
+              round
+              type="primary"
+              @click="follow(artistItem)"
+            >
               {{ artistItem.isFollowed ? $t('followed') : $t('follow') }}
             </el-button>
           </div>
@@ -40,46 +53,55 @@
                 fit="cover"
                 lazy
               >
-                <div slot="error" class="image-slot">
+                <div
+                  slot="error"
+                  class="image-slot"
+                >
                   <i class="el-icon-picture-outline" />
                 </div>
               </el-image>
-              <div class="title">{{ item.title }}</div>
+              <div class="title">
+                {{ item.title }}
+              </div>
             </li>
           </ul>
         </div>
       </div>
-      <p v-if="loading" class="bottom">加载中...</p>
+      <p
+        v-if="loading"
+        class="bottom"
+      >
+        加载中...
+      </p>
     </div>
   </div>
 </template>
 
 <script>
 import { mapGetters } from 'vuex';
+
 export default {
   name: 'Index',
   components: {},
   filters: {
     replaceImg(val) {
       return (
-        'https://img.pixivic.net/c/360x360_70/img-master' +
-        val.split('img-master')[1]
+        `https://img.pixivic.net/c/360x360_70/img-master${
+          val.split('img-master')[1]}`
       );
-    }
+    },
   },
   props: {
     artistList: {
       require: true,
-      default: () => {
-        return [];
-      },
-      type: Array
+      default: () => [],
+      type: Array,
     },
     loading: {
       require: false,
       type: Boolean,
-      default: false
-    }
+      default: false,
+    },
   },
   data() {
     return {};
@@ -103,8 +125,8 @@ export default {
     follow(artistItem) {
       this.$emit('follow-artist', artistItem);
     },
-    load() { this.$emit('on-scroll'); }
-  }
+    load() { this.$emit('on-scroll'); },
+  },
 };
 </script>
 
