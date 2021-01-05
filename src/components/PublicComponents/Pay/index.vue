@@ -10,7 +10,10 @@
     >
       <div style="text-align: center">
         <div style="font-size: 1.6rem;font-weight: bold;margin-bottom: 20px">
-          {{ isVip?`当前会员加速中🚀&nbsp;\n有效期到${user.permissionLevelExpireDate | dateFormat}` :'当前还不是会员😥' }}
+          {{ isVip?'当前会员加速中🚀'
+            :'当前还不是会员😥' }}
+          <br>
+          {{ isVip?`有效期到${dateFormat(user.permissionLevelExpireDate)}`:'' }}
         </div>
         <div style="margin: 20px 0px">
           <el-button
@@ -92,7 +95,14 @@ export default {
   },
 
   methods: {
-
+    // 日期
+    dateFormat(val) {
+      const time = new Date(val);
+      const y = time.getFullYear();
+      const m = time.getMonth() + 1;
+      const d = time.getDate();
+      return `${y}-${m < 10 ? `0${m}` : m}-${d < 10 ? `0${d}` : d}`;
+    },
     // 打开说明
     goPayNote() {
       window.open('https://m.pixivic.com/handbook');

@@ -93,7 +93,7 @@
 
 <script>
 import { QQ_LINK } from '@/util/constants';
-import { proxyList } from '@/store/getters';
+import { serverAddress } from '@/store/getters';
 import { mapGetters } from 'vuex';
 
 export default {
@@ -153,7 +153,7 @@ export default {
   },
   computed: {
     ...mapGetters([
-      'proxyList',
+      'serverAddress',
     ]),
   },
   watch: {},
@@ -234,7 +234,7 @@ export default {
       this.$store.dispatch('setLoginBoolean');
       this.$message.success(res.data.message);
       const { permissionLevel, permissionLevelExpireDate } = res.data.data;
-      if (this.user.id && !localStorage.getItem('participate')) {
+      if (res.data.data.id && !localStorage.getItem('participate')) {
         const res = await this.$api.user.canParticipateStatus('try');
         if (res.data.data) {
           this.$notify({
@@ -244,12 +244,11 @@ export default {
           });
         }
       }
-      if (permissionLevel >= 3 && permissionLevelExpireDate > Date.now()) {
+      if (permissionLevel >= 3 && new Date(permissionLevelExpireDate).valueOf() > Date.now()) {
         this.$api.user.getVipProxyServer().then(
           (res) => {
             if (res.status === 200) {
-              this.$store.dispatch('setProxyList', res.data.data);
-              const currentApi = res.data.data[Math.floor(proxyList.length * Math.random())].serverAddress;
+              const currentApi = res.data.data[Math.floor(serverAddress.length * Math.random())].serverAddress;
               sessionStorage.setItem('accelerateKey', currentApi);
             } else {
               this.$message.closeAll();

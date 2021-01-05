@@ -44,7 +44,7 @@ const mutations = {
     if (data) { state.collectInfo = data; }
   },
   [types.SET_PROXY_LIST](state, data) {
-    if (data) { state.proxyList = data; }
+    if (data) { state.serverAddress = data; }
   },
 };
 

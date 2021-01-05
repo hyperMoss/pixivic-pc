@@ -81,8 +81,8 @@ export function debounceAsyncValidator(validator, delay) {
 
 export function replaceBigImg(url) {
   url = url.replace('_webp', '');
-  if (store.getters.isVip && store.getters.proxyList) {
-    url = url.replace('https://i.pximg.net', store.getters.proxyList);
+  if (store.getters.isVip && store.getters.serverAddress) {
+    url = url.replace('https://i.pximg.net', store.getters.serverAddress);
     url += `?Authorization=${cookie.get('jwt')}`;
     return url;
   }
