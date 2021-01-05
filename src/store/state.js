@@ -10,7 +10,7 @@ const state = {
   collectBoolean: false,
   readyCollectItem: {},
   collectInfo: {},
-  proxyList: JSON.parse(localStorage.getItem('proxyList')) || [],
+  serverAddress: localStorage.getItem('serverAddress') || null,
 };
 
 export default state;

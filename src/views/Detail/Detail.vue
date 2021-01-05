@@ -160,7 +160,7 @@
 
 <script>
 import { mapGetters } from 'vuex';
-import { replaceBigImg, replaceSmallImg, replaceBigImgProxy } from '@/util';
+import { replaceBigImg, replaceSmallImg } from '@/util';
 import dayjs from 'dayjs';
 import Item from '@/components/Virtual-List/MyItem';
 import Comment from '@/components/PublicComponents/Comment';
@@ -236,8 +236,8 @@ export default {
       this.srcList = data.imageUrls.map((e) => replaceBigImg(e.original)) || [];
       return {
         ...data,
-        itemHeight: data.itemHeight || parseInt((data.height / data.width) * document.body.clientWidth),
-        originalSrc: this.user.permissionLevel >= 3 && this.user.permissionLevelExpireDate > Date.now() ? replaceBigImgProxy(data.imageUrls[0].original) : replaceBigImg(data.imageUrls[0].original),
+        itemHeight: data.itemHeight || parseInt((data.height / data.width) * document.body.clientWidth, 10),
+        originalSrc: replaceBigImg(data.imageUrls[0].original),
         src: data.src || replaceSmallImg(data.imageUrls[0].medium),
         avatarSrc: data.avatarSrc || replaceBigImg(data.artistPreView.avatar),
         createDate: dayjs(data.createDate).format('YYYY-MM-DD'),

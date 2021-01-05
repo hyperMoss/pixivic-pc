@@ -226,7 +226,7 @@ export default {
   methods: {
     // 检查是否为会员
     checkPlusStyle() {
-      if (this.user.permissionLevel >= 3 && this.user.permissionLevelExpireDate > Date.now()) {
+      if (this.user.permissionLevel >= 3 && new Date(this.user.permissionLevelExpireDate).valueOf() > Date.now()) {
         return {
           border: 'solid 3px #FFB6C1',
         };
