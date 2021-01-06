@@ -97,7 +97,21 @@ export default {
     checkWebpFeature('lossless', (f, e) => {
       sessionStorage.setItem('supportWebp', e);
     });
-    const { permissionLevelExpireDate = Date.now(), permissionLevel = 1 } = this.user;
+  },
+
+  methods: {
+    async getUsersInfo() {
+      if (!this.userId) { return; }
+      const res = await this.$api.user.getUsers(this.userId);
+      const {
+        data: { data },
+      } = res;
+      this.getProxyList(data);
+    },
+  },
+
+  getProxyList(data) {
+    const { permissionLevelExpireDate = Date.now(), permissionLevel = 1 } = data;
     if (permissionLevel >= 3 && new Date(permissionLevelExpireDate).valueOf() > Date.now()) {
       this.$api.user.getVipProxyServer().then(
         (res) => {

@@ -66,10 +66,6 @@ export default {
       type: Boolean,
       default: false,
     },
-    user: {
-      type: Object,
-      default: () => {},
-    },
   },
   data() {
     return {
@@ -78,7 +74,7 @@ export default {
     };
   },
   computed: {
-    ...mapGetters(['isVip']),
+    ...mapGetters(['isVip', 'user']),
     localVisible: {
       get() {
         return this.payVisible;
@@ -105,7 +101,7 @@ export default {
     },
     // 打开说明
     goPayNote() {
-      window.open('https://m.pixivic.com/handbook');
+      window.open('https://discuss.pixivic.net/d/10');
     },
     // 打开购买页面
     goAilPay() {

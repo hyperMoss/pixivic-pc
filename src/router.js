@@ -60,6 +60,11 @@ const routes = [
     component: require('./views/QQauth/QQauth.vue').default,
   },
   {
+    path: '/oauth/authorize',
+    name: 'Oauth',
+    component: require('./views/Oauth/index.vue').default,
+  },
+  {
     path: '/resetPassword',
     name: 'ResetPassword',
     component: require('./views/ResetPassword/index.vue').default,
