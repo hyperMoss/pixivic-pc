@@ -239,7 +239,6 @@ export default {
       this.$api.user.register(reqBody)
         .then((res) => {
           if (res.status === 200) {
-            localStorage.setItem('user', JSON.stringify(res.data.data));
             this.$store.dispatch('setUser', res.data.data);
             this.$store.dispatch('setLoginBoolean');
           } else {

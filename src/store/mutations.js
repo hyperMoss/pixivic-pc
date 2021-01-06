@@ -4,6 +4,7 @@ const mutations = {
   [types.SET_USER](state, user) {
     if (user) {
       state.user = user;
+      localStorage.setItem('user', JSON.stringify(user));
     } else {
       state.user = {};
     }

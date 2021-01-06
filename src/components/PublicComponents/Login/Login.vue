@@ -229,7 +229,6 @@ export default {
         this.getCode();
         return;
       }
-      localStorage.setItem('user', JSON.stringify(res.data.data));
       this.$store.dispatch('setUser', res.data.data);
       this.$store.dispatch('setLoginBoolean');
       this.$message.success(res.data.message);
