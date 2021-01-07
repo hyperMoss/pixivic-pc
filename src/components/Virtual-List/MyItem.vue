@@ -30,7 +30,7 @@
         <span>{{ illust.pageCount }}</span>
       </div>
 
-      <el-dropdown>
+<!--      <el-dropdown>-->
         <Like
           :like="illust.isLiked"
           @handleLike="handleLike"
@@ -40,7 +40,7 @@
         <!--            加到画集-->
         <!--          </el-dropdown-item>-->
         <!--        </el-dropdown-menu>-->
-      </el-dropdown>
+<!--      </el-dropdown>-->
     </div>
   </div>
 </template>
