@@ -1,11 +1,8 @@
 <template>
   <div class="bbs">
-    <div class="iframe">
-
       <a href="https://discuss.pixivic.net/" target="_Blank">
-        <el-button round size="small" type="primary">点击跳转</el-button>
+
       </a>
-    </div>
   </div>
 </template>
 
