@@ -88,7 +88,7 @@ export default {
       console.log(key, keyPath);
     },
     goBBS(){
-      window.open('url')
+      window.open('https://discuss.pixivic.net/')
     }
   }
 };
