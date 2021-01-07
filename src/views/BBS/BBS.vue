@@ -1,8 +1,10 @@
 <template>
   <div class="bbs">
-      <a class="bbs" href="https://discuss.pixivic.net/" target="_Blank">
-
-      </a>
+    <a
+      class="bbs"
+      href="https://discuss.pixivic.net/"
+      target="_Blank"
+    />
   </div>
 </template>
 
