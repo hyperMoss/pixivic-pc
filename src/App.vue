@@ -97,6 +97,7 @@ export default {
     checkWebpFeature('lossless', (f, e) => {
       sessionStorage.setItem('supportWebp', e);
     });
+    this.getUsersInfo();
   },
 
   methods: {
