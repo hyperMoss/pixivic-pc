@@ -15,10 +15,14 @@
         <i :class="[item.icon]" />
         <span slot="title">{{ item.name }}</span>
       </el-menu-item>
+      <el-menu-item @click.native="goBBS">
+        <i class="el-icon-chat-round" />
+        <span slot="title">{{ this.$t('Feedback') }}</span>
+      </el-menu-item>
     </el-menu>
     <div>
       <a
-        href="http://beian.miit.gov.cn/"
+        href=" "
         target="_blank"
         style="text-decoration:none;color:#0080FF;"
       >
@@ -61,11 +65,6 @@ export default {
           routePath: '/note',
         },
         {
-          name: this.$t('Feedback'),
-          icon: 'el-icon-chat-round',
-          routePath: '/bbs',
-        },
-        {
           name: this.$t('Donate'),
           icon: 'el-icon-coffee-cup',
           routePath: '/donate',
@@ -87,6 +86,9 @@ export default {
     },
     handleClose(key, keyPath) {
       console.log(key, keyPath);
+    },
+    goBBS() {
+      window.open('https://discuss.pixivic.net/');
     },
   },
 };

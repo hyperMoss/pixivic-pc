@@ -17,7 +17,7 @@
         <img src="../../assets/images/count.svg">
         <span>{{ column.pageCount }}</span>
       </div>
-      <el-dropdown>
+<!--      <el-dropdown>-->
         <Like
           :like="column.isLiked"
           @handleLike="handleLike"
@@ -27,7 +27,7 @@
         <!--            加到画集-->
         <!--          </el-dropdown-item>-->
         <!--        </el-dropdown-menu>-->
-      </el-dropdown>
+<!--      </el-dropdown>-->
     </div>
   </div>
 </template>

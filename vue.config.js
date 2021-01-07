@@ -1,8 +1,6 @@
 const path = require('path');
 const os = require('os');
 
-// 去console插件
-const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 // gzip压缩插件
 const CompressionWebpackPlugin = require('compression-webpack-plugin');
 
@@ -73,15 +71,6 @@ module.exports = {
   configureWebpack: (config) => {
     const devPlugins = [];
     const plugins = [
-      new UglifyJsPlugin({
-        uglifyOptions: {
-          warnings: false,
-          drop_debugger: true,
-          drop_console: true,
-        },
-        sourceMap: false,
-        parallel: true,
-      }),
       new CompressionWebpackPlugin({
         filename: '[path].gz[query]',
         algorithm: 'gzip',

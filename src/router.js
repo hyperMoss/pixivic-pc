@@ -46,18 +46,22 @@ const routes = [
     name: 'Remark',
     // component: () => import('./views/Remark/Remark.vue')
     component: require('./views/Remark/Remark.vue').default,
-  },
-  {
+  }, /* ,  {
     path: '/bbs',
     name: 'BBS',
     // component: () => import('./views/BBS/BBS.vue')
     component: require('./views/BBS/BBS.vue').default,
-  },
+  } */
   {
     path: '/qqauth',
     name: 'QQauth',
     // component: () => import('./views/QQauth/QQauth.vue')
     component: require('./views/QQauth/QQauth.vue').default,
+  },
+  {
+    path: '/oauth/authorize',
+    name: 'Oauth',
+    component: require('./views/Oauth/index.vue').default,
   },
   {
     path: '/resetPassword',

@@ -27,6 +27,7 @@
 <script>
 import stickerJSON from '@/assets/sticker/sticker.json';
 import Sticker from 'components/PublicComponents/Sticker';
+
 export default {
   name: 'StickerTab',
   components: { Sticker },

@@ -37,7 +37,6 @@ export default {
       this.$api.user.qqLogin({ qqAccessToken })
         .then((res) => {
           if (res.status === 200) {
-            localStorage.setItem('user', JSON.stringify(res.data.data));
             this.$store.dispatch('setUser', res.data.data);
             this.$router.push('/');
           } else {

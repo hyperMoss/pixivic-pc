@@ -268,6 +268,14 @@ function participateStatus(activityName) {
   });
 }
 
+// 用户oauth
+function oauth(query) {
+  return axios({
+    url: `/oauth/authorize${query}`,
+    method: 'get',
+  });
+}
+
 export {
   verificationCode,
   register,
@@ -298,4 +306,5 @@ export {
   putPlusCode,
   canParticipateStatus,
   participateStatus,
+  oauth,
 };

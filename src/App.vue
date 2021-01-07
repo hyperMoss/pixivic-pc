@@ -37,6 +37,8 @@
 
 <script>
 import cookie from 'js-cookie';
+import { mapGetters } from 'vuex';
+import { serverAddress } from '@/store/getters';
 import HeaderBar from './components/PublicComponents/HeaderBar.vue';
 import LeftSide from './components/PublicComponents/LeftSide.vue';
 import Login from './components/PublicComponents/Login/index.vue';
@@ -77,6 +79,7 @@ export default {
     key() {
       return this.$route.fullPath;
     },
+    ...mapGetters(['user']),
   },
   mounted() {
     if (!cookie.get('alert')) {
@@ -94,6 +97,37 @@ export default {
     checkWebpFeature('lossless', (f, e) => {
       sessionStorage.setItem('supportWebp', e);
     });
+    this.getUsersInfo();
+  },
+
+  methods: {
+    async getUsersInfo() {
+      if (!this.userId) { return; }
+      const res = await this.$api.user.getUsers(this.userId);
+      const {
+        data: { data },
+      } = res;
+      this.getProxyList(data);
+    },
+  },
+
+  getProxyList(data) {
+    const { permissionLevelExpireDate = Date.now(), permissionLevel = 1 } = data;
+    if (permissionLevel >= 3 && new Date(permissionLevelExpireDate).valueOf() > Date.now()) {
+      this.$api.user.getVipProxyServer().then(
+        (res) => {
+          if (res.status === 200) {
+            const currentApi = res.data.data[Math.floor(
+              serverAddress.length * Math.random(),
+            )].serverAddress;
+            sessionStorage.setItem('accelerateKey', currentApi);
+          } else {
+            this.$message.closeAll();
+            this.$message.info(res.data.message);
+          }
+        },
+      );
+    }
   },
 };
 </script>

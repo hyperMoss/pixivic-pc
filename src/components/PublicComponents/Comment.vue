@@ -227,8 +227,8 @@ function getPlatform() {
     },
     ],
   };
-  return `${uaRules.osRule.find((e) => e.patterns.exec(ua))&&uaRules.osRule.find((e) => e.patterns.exec(ua)).name}
-  ${uaRules.browserRules.find((e) => e.patterns.exec(ua))&&uaRules.browserRules.find((e) => e.patterns.exec(ua)).name}`;
+  return `${uaRules.osRule.find((e) => e.patterns.exec(ua)) && uaRules.osRule.find((e) => e.patterns.exec(ua)).name}
+  ${uaRules.browserRules.find((e) => e.patterns.exec(ua)) && uaRules.browserRules.find((e) => e.patterns.exec(ua)).name}`;
 }
 export default {
   components: { StickerTab, Sticker },
