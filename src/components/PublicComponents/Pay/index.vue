@@ -119,6 +119,7 @@ export default {
             this.$message.success(res.data.message);
             this.$store.dispatch('setUser', res.data.data);
             this.$store.dispatch('vipProxyServer');
+            window.location.reload();
             this.handleClose();
           } else {
             this.code = '';

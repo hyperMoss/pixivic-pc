@@ -1,6 +1,7 @@
 import {
   collectIllust, deleteCollect, followArtist, getVipProxyServer,
 } from '@/api/modules/user';
+import { serverAddress } from '@/store/getters';
 import { Message } from 'element-ui';
 import * as types from './mutation-types';
 
@@ -8,6 +9,22 @@ export const setUser = ({
   commit,
 }, user) => {
   commit(types.SET_USER, user);
+  const { permissionLevelExpireDate = Date.now(), permissionLevel = 1 } = user;
+  if (permissionLevel >= 3 && new Date(permissionLevelExpireDate).valueOf() > Date.now()) {
+    getVipProxyServer().then(
+      (res) => {
+        if (res.status === 200) {
+          const currentApi = res.data.data[Math.floor(
+            serverAddress.length * Math.random(),
+          )].serverAddress;
+          sessionStorage.setItem('accelerateKey', currentApi);
+        } else {
+          this.$message.closeAll();
+          this.$message.info(res.data.message);
+        }
+      },
+    );
+  }
 };
 
 export const clearCurrentState = ({
