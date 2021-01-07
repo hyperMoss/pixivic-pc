@@ -1,9 +1,9 @@
 <template>
-
+  <div class="bbs">
       <a class="bbs" href="https://discuss.pixivic.net/" target="_Blank">
 
       </a>
-
+  </div>
 </template>
 
 <script>

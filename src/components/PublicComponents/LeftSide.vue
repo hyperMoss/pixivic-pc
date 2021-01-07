@@ -15,15 +15,19 @@
         <i :class="[item.icon]" />
         <span slot="title">{{ item.name }}</span>
       </el-menu-item>
+      <el-menu-item @click.native="goBBS">
+        <i class="el-icon-chat-round" />
+        <span slot="title">{{ this.$t('Feedback') }}</span>
+      </el-menu-item>
     </el-menu>
     <div>
       <a
-        href="http://beian.miit.gov.cn/"
+        href=" "
         target="_blank"
         style="text-decoration:none;color:#0080FF;"
       >
         <div class="beian">桂ICP备17012945号-3</div>
-      </a>
+      </a >
     </div>
   </div>
 </template>
@@ -41,10 +45,10 @@ export default {
     computerActiveNav() {
       let result = '0';
       const index = this.navLsit.indexOf(
-        (item) => item.routePath === this.$route.path,
+        item => item.routePath === this.$route.path
       );
       if (index !== -1) {
-        result = `${index}`;
+        result = '' + index;
       }
       return result;
     },
@@ -53,42 +57,40 @@ export default {
         {
           name: this.$t('Home'),
           icon: 'el-icon-s-home',
-          routePath: '/',
+          routePath: '/'
         },
         {
           name: this.$t('Notice'),
           icon: 'el-icon-document',
-          routePath: '/note',
-        },
-        {
-          name: this.$t('Feedback'),
-          icon: 'el-icon-chat-round',
-          routePath: '/bbs',
+          routePath: '/note'
         },
         {
           name: this.$t('Donate'),
           icon: 'el-icon-coffee-cup',
-          routePath: '/donate',
+          routePath: '/donate'
         },
         {
           name: this.$t('Links'),
           icon: 'el-icon-link',
-          routePath: '/remark',
-        },
+          routePath: '/remark'
+        }
       ];
-    },
+    }
   },
   watch: {},
   mounted() {},
   methods: {
     handleOpen(key, keyPath) {
-      this.$router.push({ path: key, query: {} });
+      this.$router.push({ path: key, query: {}});
       console.log(key, keyPath);
     },
     handleClose(key, keyPath) {
       console.log(key, keyPath);
     },
-  },
+    goBBS(){
+      window.open('url')
+    }
+  }
 };
 </script>
 
