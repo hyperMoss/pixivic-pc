@@ -132,6 +132,13 @@ export default {
     collection() {
       this.resetCollection();
     },
+    $route: {
+      handler() {
+        // 跳转其他页面后保持scroll高度
+        this.$refs.outer.scrollTop = this.scrollY;
+        // console.log(this.scrollY);
+      },
+    },
   },
   created() {
     this.groupManagers = [];
@@ -144,6 +151,7 @@ export default {
     } else {
       this.$refs.outer.addEventListener('resize', this.onContainerResized);
     }
+    console.log(this.scrollY);
   },
   beforeDestroy() {
     if (ResizeObserver) {

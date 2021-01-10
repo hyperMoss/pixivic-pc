@@ -15,7 +15,8 @@ function getComments(params) {
 // 发表评论
 function makeComments(params) {
   const {
-    parentId = 0, replyTo = 0, replyFromName, replyToName, content, commentAppType, commentAppId, platform,
+    parentId = 0, replyTo = 0, replyFromName,
+    replyToName, content, commentAppType, commentAppId, platform, replyToCommentId = null,
   } = params;
   return axios({
     url: `${commentAppType}/${commentAppId}/comments`,
@@ -23,6 +24,7 @@ function makeComments(params) {
     data: {
       parentId,
       replyTo,
+      replyToCommentId,
       replyFromName,
       replyToName,
       content,
