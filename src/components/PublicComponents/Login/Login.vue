@@ -39,6 +39,7 @@
             <el-input
               v-model="loginForm.verifyCode"
               :maxlength="4"
+              @keyup.enter.native="submitForm('loginForm')"
             >
               <template slot="append">
                 <img
@@ -232,7 +233,6 @@ export default {
       this.$store.dispatch('setUser', res.data.data);
       this.$store.dispatch('setLoginBoolean');
       this.$message.success(res.data.message);
-      const { permissionLevel, permissionLevelExpireDate } = res.data.data;
       if (res.data.data.id && !localStorage.getItem('participate')) {
         const res = await this.$api.user.canParticipateStatus('try');
         if (res.data.data) {
@@ -242,19 +242,6 @@ export default {
             offset: 80,
           });
         }
-      }
-      if (permissionLevel >= 3 && new Date(permissionLevelExpireDate).valueOf() > Date.now()) {
-        this.$api.user.getVipProxyServer().then(
-          (res) => {
-            if (res.status === 200) {
-              const currentApi = res.data.data[Math.floor(serverAddress.length * Math.random())].serverAddress;
-              sessionStorage.setItem('accelerateKey', currentApi);
-            } else {
-              this.$message.closeAll();
-              this.$message.info(res.data.message);
-            }
-          },
-        );
       }
     },
     //  会员试用

@@ -7,7 +7,7 @@
 </template>
 
 <script>
-import pathJSON from '@/assets/sticker/path.json';
+import pathJSON from 'assets/sticker/path.json';
 
 export default {
   name: 'Sticker',
@@ -25,12 +25,13 @@ export default {
   },
   data() {
     return {
+      pathJSON,
 
     };
   },
   computed: {
     computerSrc() {
-      return require(`@/assets/${pathJSON[this.$props.code]}`);
+      return require(`@/assets/${this.pathJSON[this.$props.code]}`);
     },
   },
   mounted() {},

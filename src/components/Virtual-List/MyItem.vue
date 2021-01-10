@@ -30,17 +30,17 @@
         <span>{{ illust.pageCount }}</span>
       </div>
 
-<!--      <el-dropdown>-->
-        <Like
-          :like="illust.isLiked"
-          @handleLike="handleLike"
-        />
-        <!--        <el-dropdown-menu slot="dropdown">-->
-        <!--          <el-dropdown-item @click.native="handleCollect">-->
-        <!--            加到画集-->
-        <!--          </el-dropdown-item>-->
-        <!--        </el-dropdown-menu>-->
-<!--      </el-dropdown>-->
+      <!--      <el-dropdown>-->
+      <Like
+        :like="illust.isLiked"
+        @handleLike="handleLike"
+      />
+      <!--        <el-dropdown-menu slot="dropdown">-->
+      <!--          <el-dropdown-item @click.native="handleCollect">-->
+      <!--            加到画集-->
+      <!--          </el-dropdown-item>-->
+      <!--        </el-dropdown-menu>-->
+      <!--      </el-dropdown>-->
     </div>
   </div>
 </template>
@@ -83,8 +83,12 @@ export default {
         window.open(this.illust.link);
       } else {
         this.$store.dispatch('setDetail', this.illust);
-        const routeUrl = this.$router.resolve(`/illusts/${this.illust.id}`);
-        window.open(routeUrl.href, '_blank');
+        if (localStorage.getItem('openNew') === 'true') {
+          const routeUrl = this.$router.resolve(`/illusts/${this.illust.id}`);
+          window.open(routeUrl.href, '_blank');
+        } else {
+          this.$router.push(`/illusts/${this.illust.id}`);
+        }
       }
     },
   },

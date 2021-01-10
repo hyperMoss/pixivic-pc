@@ -1,24 +1,22 @@
 <template>
-  <div class="list">
-    <VirtualCollection
-      :cell-size-and-position-getter="cellSizeAndPositionGetter"
-      :collection="list"
-      :identifier="identifier"
-      :width="width"
-      :height="height"
-      :column="column"
-      @infinite="infinite"
-    >
-      <slot />
-      <template v-slot:cell="props">
-        <Item
-          :column="props.data"
-          @handleLike="handleLike"
-          @handle-collect="setCollect"
-        />
-      </template>
-    </VirtualCollection>
-  </div>
+  <VirtualCollection
+    :cell-size-and-position-getter="cellSizeAndPositionGetter"
+    :collection="list"
+    :identifier="identifier"
+    :width="width"
+    :height="height"
+    :column="column"
+    @infinite="infinite"
+  >
+    <slot />
+    <template v-slot:cell="props">
+      <Item
+        :column="props.data"
+        @handleLike="handleLike"
+        @handle-collect="setCollect"
+      />
+    </template>
+  </VirtualCollection>
 </template>
 
 <script>
@@ -105,7 +103,7 @@ export default {
     this.waterFall();
     window.addEventListener('resize', throttle(this.waterFall));
   },
-  destroyed() {
+  beforeDestroy() {
     window.removeEventListener('resize', this.waterFall);
   },
   methods: {

@@ -263,8 +263,12 @@ export default {
         window.open(data.link);
       }
       this.$store.dispatch('setDetail', data);
-      const routeUrl = this.$router.resolve(`/illusts/${data.id}`);
-      window.open(routeUrl.href, '_blank');
+      if (localStorage.getItem('openNew') === 'true') {
+        const routeUrl = this.$router.resolve(`/illusts/${data.id}`);
+        window.open(routeUrl.href, '_blank');
+      } else {
+        this.$router.push(`/illusts/${data.id}`);
+      }
     },
     goArtistPage() {
       this.$router.push(`/artist/${this.illustDetail.artistId}`);

@@ -102,33 +102,13 @@ export default {
 
   methods: {
     async getUsersInfo() {
-      if (!this.userId) { return; }
-      const res = await this.$api.user.getUsers(this.userId);
-      const {
-        data: { data },
-      } = res;
-      this.getProxyList(data);
+      if (!this.user.id) { return; }
+      const res = await this.$api.user.getUsers(this.user.id);
+      this.$store.dispatch('setUser', res.data.data);
+      // this.getProxyList(data);
     },
   },
 
-  getProxyList(data) {
-    const { permissionLevelExpireDate = Date.now(), permissionLevel = 1 } = data;
-    if (permissionLevel >= 3 && new Date(permissionLevelExpireDate).valueOf() > Date.now()) {
-      this.$api.user.getVipProxyServer().then(
-        (res) => {
-          if (res.status === 200) {
-            const currentApi = res.data.data[Math.floor(
-              serverAddress.length * Math.random(),
-            )].serverAddress;
-            sessionStorage.setItem('accelerateKey', currentApi);
-          } else {
-            this.$message.closeAll();
-            this.$message.info(res.data.message);
-          }
-        },
-      );
-    }
-  },
 };
 </script>
 

@@ -17,17 +17,17 @@
         <img src="../../assets/images/count.svg">
         <span>{{ column.pageCount }}</span>
       </div>
-<!--      <el-dropdown>-->
-        <Like
-          :like="column.isLiked"
-          @handleLike="handleLike"
-        />
-        <!--        <el-dropdown-menu slot="dropdown">-->
-        <!--          <el-dropdown-item @click.native="handleCollect">-->
-        <!--            加到画集-->
-        <!--          </el-dropdown-item>-->
-        <!--        </el-dropdown-menu>-->
-<!--      </el-dropdown>-->
+      <!--      <el-dropdown>-->
+      <Like
+        :like="column.isLiked"
+        @handleLike="handleLike"
+      />
+      <!--        <el-dropdown-menu slot="dropdown">-->
+      <!--          <el-dropdown-item @click.native="handleCollect">-->
+      <!--            加到画集-->
+      <!--          </el-dropdown-item>-->
+      <!--        </el-dropdown-menu>-->
+      <!--      </el-dropdown>-->
     </div>
   </div>
 </template>
@@ -63,8 +63,12 @@ export default {
         window.open(this.column.link);
       } else {
         this.$store.dispatch('setDetail', this.column);
-        const routeUrl = this.$router.resolve(`/illusts/${this.column.id}`);
-        window.open(routeUrl.href, '_blank');
+        if (localStorage.getItem('openNew') === 'true') {
+          const routeUrl = this.$router.resolve(`/illusts/${this.column.id}`);
+          window.open(routeUrl.href, '_blank');
+        } else {
+          this.$router.push(`/illusts/${this.column.id}`);
+        }
       }
     },
   },
