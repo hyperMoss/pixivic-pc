@@ -8,36 +8,36 @@
     >
       <div class="modal-body">
         <div class="btn-list">
-            <el-button
-              :disabled="isCheckEmail"
-              @click="verifyEmail"
-            >
-              {{ isCheckEmail ? "已验证邮箱" : "验证邮箱" }}
-            </el-button>
-            <el-button
-              :disabled="isConnectQQ"
-              @click="bindQQ"
-            >
-              {{ isConnectQQ ? "已绑定QQ" : "绑定QQ" }}
-            </el-button>
-            <el-button @click="resetPassword">
-              重置密码
-            </el-button>
-            <el-button
-              :disabled="!isConnectQQ"
-              @click="unLinkQQ"
-            >
-              解绑QQ
-            </el-button>
-            <el-switch
-              style="width:200px"
-              :value="newOpen"
-              active-color="#13ce66"
-              inactive-color="#ff4949"
-              @change="changeOpen"
-              active-text="开新页面"
-              inactive-text="刷原页面"
-            />
+          <el-button
+            :disabled="isCheckEmail"
+            @click="verifyEmail"
+          >
+            {{ isCheckEmail ? "已验证邮箱" : "验证邮箱" }}
+          </el-button>
+          <el-button
+            :disabled="isConnectQQ"
+            @click="bindQQ"
+          >
+            {{ isConnectQQ ? "已绑定QQ" : "绑定QQ" }}
+          </el-button>
+          <el-button @click="resetPassword">
+            重置密码
+          </el-button>
+          <el-button
+            :disabled="!isConnectQQ"
+            @click="unLinkQQ"
+          >
+            解绑QQ
+          </el-button>
+          <el-switch
+            style="width:200px"
+            :value="newOpen"
+            active-color="#13ce66"
+            inactive-color="#ff4949"
+            active-text="开新页面"
+            inactive-text="刷原页面"
+            @change="changeOpen"
+          />
         </div>
 
         <div class="change-avatar">

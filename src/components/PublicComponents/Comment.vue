@@ -133,7 +133,7 @@
               <span>{{ reply.platform }}</span>
               <span
                 class="reply-text"
-                @click="showCommentInput(item, 1)"
+                @click="showCommentInput(item, 1,reply)"
               >
                 <i class="iconfont el-icon-chat-square" />
                 <span>回复</span>
@@ -204,7 +204,7 @@
 import { mapGetters } from 'vuex';
 import StickerTab from 'components/PublicComponents/StickerTab';
 import Sticker from 'components/PublicComponents/Sticker';
-import pathJSON from '@/assets/sticker/path.json';
+import pathJSON from 'assets/sticker/path.json';
 
 function getPlatform() {
   const ua = navigator.userAgent.toLowerCase();
@@ -227,7 +227,7 @@ function getPlatform() {
     },
     ],
   };
-  return `${uaRules.osRule.find((e) => e.patterns.exec(ua)) && uaRules.osRule.find((e) => e.patterns.exec(ua)).name}
+  return `${(uaRules.osRule.find((e) => e.patterns.exec(ua)) && uaRules.osRule.find((e) => e.patterns.exec(ua)).name) || ''}
   ${uaRules.browserRules.find((e) => e.patterns.exec(ua)) && uaRules.browserRules.find((e) => e.patterns.exec(ua)).name}`;
 }
 export default {
@@ -245,6 +245,7 @@ export default {
   data() {
     return {
       pathJSON,
+      subRelayId: null,
       isSticker: false,
       staticUrl: process.env.VUE_APP_STATIC_API,
       comments: [],
@@ -355,6 +356,7 @@ export default {
       let data = {
         commentAppType: this.$props.commentType,
         commentAppId: this.pid,
+        replyToCommentId: this.subRelayId || null,
         parentId: item && item.id || 0, // 父级评论id,顶级就是0
         replyTo: item && item.replyFrom || 0, // 回复者，没有就是0
         replyFromName: this.user.username, // 评论者用户名
@@ -390,12 +392,13 @@ export default {
      * item: 当前大评论
      * reply: 当前回复的评论
      */
-    showCommentInput(item, reply) {
+    showCommentInput(item, reply, subReply) {
       if (!this.user.id) {
         this.$message.closeAll();
         this.$message.info('请先登录');
         return;
       }
+      this.subRelayId = (subReply && subReply.id) || null;
       if (reply) {
         this.copyComment = `@${item.replyFromName} `;
         this.inputComment = `@${item.replyFromName} `;

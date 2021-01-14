@@ -39,6 +39,7 @@
             <el-input
               v-model="loginForm.verifyCode"
               :maxlength="4"
+              @keyup.enter.native="submitForm('loginForm')"
             >
               <template slot="append">
                 <img

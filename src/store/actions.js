@@ -11,13 +11,14 @@ export const setUser = ({
   commit(types.SET_USER, user);
   const { permissionLevelExpireDate = Date.now(), permissionLevel = 1 } = user;
   if (permissionLevel >= 3 && new Date(permissionLevelExpireDate).valueOf() > Date.now()) {
+    if (localStorage.getItem('serverAddress')) { return; }
     getVipProxyServer().then(
       (res) => {
         if (res.status === 200) {
           const currentApi = res.data.data[Math.floor(
             serverAddress.length * Math.random(),
           )].serverAddress;
-          sessionStorage.setItem('accelerateKey', currentApi);
+          localStorage.setItem('serverAddress', currentApi);
         } else {
           this.$message.closeAll();
           this.$message.info(res.data.message);
