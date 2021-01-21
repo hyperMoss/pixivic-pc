@@ -1,4 +1,3 @@
-
 const state = {
   user: JSON.parse(localStorage.getItem('user')) || {},
   cachedViews: [],
@@ -10,7 +9,8 @@ const state = {
   loginOrSign: true,
   collectBoolean: false,
   readyCollectItem: {},
-  collectInfo: {}
+  collectInfo: {},
+  serverAddress: localStorage.getItem('serverAddress') || null,
 };
 
 export default state;

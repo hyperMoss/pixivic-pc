@@ -19,7 +19,7 @@
  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
- SOFTWARE.*/
+ SOFTWARE. */
 import Section from './Section';
 
 const SECTION_SIZE = 600;
@@ -36,7 +36,7 @@ export default class SectionManager {
     const frozenCellMetadatum = Object.freeze(cellMetadatum);
     this._cellMetadata[index] = frozenCellMetadatum;
 
-    this.getSections(frozenCellMetadatum).forEach(section => section.addCellIndex({ index }));
+    this.getSections(frozenCellMetadatum).forEach((section) => section.addCellIndex({ index }));
   }
 
   freezeCells() {
@@ -44,7 +44,9 @@ export default class SectionManager {
   }
 
   /** Get all Sections overlapping the specified region. */
-  getSections({ height, width, x, y }) {
+  getSections({
+    height, width, x, y,
+  }) {
     const sectionXStart = Math.floor(x / this._sectionSize);
     const sectionXStop = Math.floor((x + width - 1) / this._sectionSize);
     const sectionYStart = Math.floor(y / this._sectionSize);
@@ -61,7 +63,7 @@ export default class SectionManager {
             height: this._sectionSize,
             width: this._sectionSize,
             x: sectionX * this._sectionSize,
-            y: sectionY * this._sectionSize
+            y: sectionY * this._sectionSize,
           });
         }
 
@@ -81,17 +83,19 @@ export default class SectionManager {
      * Gets all cell indices contained in the specified region.
      * A region may encompass 1 or more Sections.
      */
-  getCellIndices({ height, width, x, y }) {
+  getCellIndices({
+    height, width, x, y,
+  }) {
     const indices = {};
 
-    this.getSections({ height, width, x, y }).forEach(section =>
-      section.getCellIndices().forEach(index => {
-        indices[index] = index;
-      })
-    );
+    this.getSections({
+      height, width, x, y,
+    }).forEach((section) => section.getCellIndices().forEach((index) => {
+      indices[index] = index;
+    }));
 
     // Object keys are strings; this function returns numbers
-    return Object.keys(indices).map(index => indices[index]);
+    return Object.keys(indices).map((index) => indices[index]);
   }
 
   getCellMetadata(index) {

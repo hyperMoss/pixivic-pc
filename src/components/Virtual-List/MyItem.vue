@@ -1,54 +1,71 @@
-
 <template>
   <div class="my-item">
-    <div class="my-item-content" @click="goDetail">
+    <div
+      class="my-item-content"
+      @click="goDetail"
+    >
       <el-image
         :src="illust.imageUrls[0].medium | replaceSmall"
         fit="cover"
         style="height:100%;width:100%"
       >
-        <div slot="error" class="image-slot">
+        <div
+          slot="error"
+          class="image-slot"
+        >
           <i class="el-icon-picture-outline" />
         </div>
-        <div slot="placeholder" class="image-slot">
+        <div
+          slot="placeholder"
+          class="image-slot"
+        >
           加载中<span class="dot">...</span>
         </div>
       </el-image>
-      <div v-if="illust.pageCount > 1" class="count">
+      <div
+        v-if="illust.pageCount > 1"
+        class="count"
+      >
         <img src="../../assets/images/count.svg">
         <span>{{ illust.pageCount }}</span>
       </div>
 
-      <el-dropdown>
-        <Like :like="illust.isLiked" @handleLike="handleLike" />
-        <el-dropdown-menu slot="dropdown">
-          <!-- <el-dropdown-item @click.native="handleCollect">加到画集</el-dropdown-item> -->
-        </el-dropdown-menu>
-      </el-dropdown>
+      <!--      <el-dropdown>-->
+      <Like
+        :like="illust.isLiked"
+        @handleLike="handleLike"
+      />
+      <!--        <el-dropdown-menu slot="dropdown">-->
+      <!--          <el-dropdown-item @click.native="handleCollect">-->
+      <!--            加到画集-->
+      <!--          </el-dropdown-item>-->
+      <!--        </el-dropdown-menu>-->
+      <!--      </el-dropdown>-->
     </div>
   </div>
 </template>
 
 <script>
 import Like from '@/components/Like/Like';
+
 export default {
   name: 'MyItem',
   components: {
-    Like
+    Like,
   },
   props: {
     illust: {
       type: Object,
-      required: true
+      required: true,
     },
     size: {
       type: Number,
-      default: 180
-    }
+      default: 180,
+    },
   },
   data() {
     return {
-      opacity: 0
+      opacity: 0,
     };
   },
   computed: {},
@@ -66,11 +83,15 @@ export default {
         window.open(this.illust.link);
       } else {
         this.$store.dispatch('setDetail', this.illust);
-        const routeUrl = this.$router.resolve(`/illusts/${this.illust.id}`);
-        window.open(routeUrl.href, '_blank');
+        if (localStorage.getItem('openNew') === 'true') {
+          const routeUrl = this.$router.resolve(`/illusts/${this.illust.id}`);
+          window.open(routeUrl.href, '_blank');
+        } else {
+          this.$router.push(`/illusts/${this.illust.id}`);
+        }
       }
-    }
-  }
+    },
+  },
 };
 </script>
 

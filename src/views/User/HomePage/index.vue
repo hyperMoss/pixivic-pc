@@ -1,19 +1,15 @@
-
 <template>
   <div class="home-page">
-    <div v-if="userInfo" class="artist_property">
+    <div
+      v-if="userInfo"
+      class="artist_property"
+    >
       <div class="artist-base">
         <div class="artist-one">
           <div class="artist-name">
             <div class="avatar">
               <img
-                :src="
-                  user.id
-                    ? `https://pic.cheerfun.dev/${
-                      userInfo.id
-                    }.png`
-                    : ''
-                "
+                :src="computerUserUrl"
                 alt
               >
             </div>
@@ -93,21 +89,22 @@
 <script>
 import { mapGetters } from 'vuex';
 import CardList from 'components/Collections/CardList.vue';
+
 export default {
   name: 'HomePage',
   components: { CardList },
   props: {
     userId: {
       required: true,
-      type: [String]
-    }
+      type: [String],
+    },
   },
   data() {
     return {
       type: '',
       userInfo: null,
       page: { publicPage: 1, pageSize: 10, total: 0 },
-      publicCollectionList: []
+      publicCollectionList: [],
     };
   },
   computed: { ...mapGetters(['user']) },
@@ -117,11 +114,18 @@ export default {
     this.getCollections();
   },
   methods: {
+    computerUserUrl() {
+      this.user.id
+        ? `${process.env.VUE_APP_STATIC_API}${
+          this.userInfo.id
+        }.jpg`
+        : '';
+    },
     getArtistList() {},
     getUsersInfo() {
-      this.$api.user.getUsers(this.userId).then(res => {
+      this.$api.user.getUsers(this.userId).then((res) => {
         const {
-          data: { data }
+          data: { data },
         } = res;
         this.userInfo = data;
       });
@@ -132,17 +136,17 @@ export default {
           page: this.page.publicPage++,
           pageSize: this.page.pageSize,
           userId: this.userId,
-          isPublic: 1
+          isPublic: 1,
         })
-        .then(res => {
+        .then((res) => {
           if (res.data.data) {
             this.publicCollectionList = this.publicCollectionList.concat(
-              res.data.data
+              res.data.data,
             );
           }
         });
-    }
-  }
+    },
+  },
 };
 </script>
 

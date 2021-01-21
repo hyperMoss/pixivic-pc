@@ -1,4 +1,3 @@
-
 <template>
   <div class="HeaderBar">
     <el-row
@@ -9,7 +8,10 @@
     >
       <el-col>
         <a href="/">
-          <img alt src="@/assets/images/icon.svg">
+          <img
+            alt
+            src="@/assets/images/icon.svg"
+          >
         </a>
       </el-col>
       <el-col>
@@ -36,8 +38,16 @@
             />
           </el-select>
         </el-autocomplete>
-        <el-popover placement="bottom" style="margin-left:10px" trigger="hover">
-          <i slot="reference" class="el-icon-s-flag" style="color:#409EFF" />
+        <el-popover
+          placement="bottom"
+          style="margin-left:10px"
+          trigger="hover"
+        >
+          <i
+            slot="reference"
+            class="el-icon-s-flag"
+            style="color:#409EFF"
+          />
           <ImgTags
             v-if="hotTags.length"
             :tagslist="hotTags"
@@ -45,46 +55,72 @@
           />
         </el-popover>
       </el-col>
-      <el-select :value="$i18n.locale" @change="changeLocaleLang">
-        <el-option v-for="(lang, i) in langs" :key="`Lang${i}`" :value="lang">{{
-          lang
-        }}</el-option>
+      <el-select
+        :value="$i18n.locale"
+        @change="changeLocaleLang"
+      >
+        <el-option
+          v-for="(lang, i) in langs"
+          :key="`Lang${i}`"
+          :value="lang"
+        >
+          {{
+            lang
+          }}
+        </el-option>
       </el-select>
       <el-col class="header-info">
         <!-- <el-badge :value="3">
           <el-button size="small">消息</el-button>
         </el-badge>-->
         <div style="margin-left:20px;">
-          <el-dropdown
-            v-if="user.id"
-            trigger="click"
-            @command="clickMenu"
-          >
-            <el-avatar
-              :src="user.id? `https://pic.cheerfun.dev/${user.id}.png?t=${new Date().getTime()}`: ''"
-              fit="cover"
-              shape="square"
-            />
-            <el-dropdown-menu slot="dropdown">
-              <template>
+          <div v-if="user.id">
+            <el-dropdown
+              trigger="click"
+              @command="clickMenu"
+            >
+              <el-dropdown-menu slot="dropdown">
                 <el-dropdown-item
                   v-for="item of MenuList"
                   :key="item.handler"
                   :command="item.handler"
                   :divided="item.divided"
-                >{{ item.name }}</el-dropdown-item>
-              </template>
-            </el-dropdown-menu>
-          </el-dropdown>
+                >
+                  {{ item.name }}
+                </el-dropdown-item>
+              </el-dropdown-menu>
+              <div>
+                <el-avatar
+                  :style="checkPlusStyle()"
+                  :src="user.id? `${staticUrl}${user.id}.jpg?t=${new Date().getTime()}`: ''"
+                  fit="cover"
+                  shape="square"
+                />
+              </div>
+            </el-dropdown>
+          </div>
           <div
             v-else
-          ><span class="button-text" @click="login">{{ $t('login') }}</span>  <span class="button-text" @click="signUp">{{ $t('signUp') }}</span></div>
+          >
+            <span
+              class="button-text"
+              @click="login"
+            >{{ $t('login') }}</span> <span
+              class="button-text"
+              @click="signUp"
+            >{{ $t('signUp') }}</span>
+          </div>
         </div>
       </el-col>
     </el-row>
     <SetDialog
       v-if="settingVisible"
       :setting-visible.sync="settingVisible"
+      :user="user"
+    />
+    <PayModal
+      v-if="payModalVisible"
+      :pay-visible.sync="payModalVisible"
       :user="user"
     />
   </div>
@@ -94,29 +130,34 @@
 import cookie from 'js-cookie';
 import { mapGetters } from 'vuex';
 import SetDialog from './Setting/index';
+import PayModal from './Pay/index';
 import ImgTags from './ImgTags';
+
 export default {
   name: 'HeaderBar',
   components: {
     SetDialog,
-    ImgTags
+    ImgTags,
+    PayModal,
   },
   data() {
     return {
+      staticUrl: process.env.VUE_APP_STATIC_API,
       langs: ['zh', 'en'],
       // 设置控制显示
       settingVisible: false,
+      payModalVisible: false,
       // 搜索时延
       timeout: null,
       params: {
         keyword: '',
-        illustType: 'illust'
+        illustType: 'illust',
       },
       keywords: [],
       squareUrl:
         'https://cube.elemecdn.com/9/c2/f0ee8a3c7c9638a54940382568c9dpng.png',
       // 热门搜索模块
-      hotTags: []
+      hotTags: [],
     };
   },
   computed: {
@@ -126,11 +167,11 @@ export default {
       return [
         {
           name: this.$t('followed'),
-          handler: 'followed'
+          handler: 'followed',
         },
         {
           name: this.$t('bookmarked'),
-          handler: 'bookmarked'
+          handler: 'bookmarked',
         },
         // {
         //   name: '画集',
@@ -138,40 +179,44 @@ export default {
         // },
         {
           name: this.$t('spotLight'),
-          handler: 'spotLight'
+          handler: 'spotLight',
         },
         {
           name: this.$t('setting'),
-          handler: 'setting'
+          handler: 'setting',
+        },
+        {
+          name: this.$t('member'),
+          handler: 'vip',
         },
         {
           name: this.$t('logout'),
           handler: 'logout',
-          divided: true
-        }
+          divided: true,
+        },
       ];
     },
     typeList() {
       return [
         {
           name: this.$t('illust'),
-          value: 'illust'
+          value: 'illust',
         },
         {
           name: this.$t('manga'),
-          value: 'manga'
+          value: 'manga',
         },
         {
           name: this.$t('artist'),
-          value: 'artist'
-        }
+          value: 'artist',
+        },
       ];
-    }
+    },
   },
   watch: {
-    'params.keyword': {
-      handler: 'getKeywords'
-    }
+    // 'params.keyword': {
+    //   handler: 'getKeywords'
+    // }
   },
   mounted() {
     this.params.illustType = this.$route.query.illustType || 'illust';
@@ -179,10 +224,18 @@ export default {
     this.getHotTag();
   },
   methods: {
+    // 检查是否为会员
+    checkPlusStyle() {
+      if (this.user.permissionLevel >= 3 && new Date(this.user.permissionLevelExpireDate).valueOf() > Date.now()) {
+        return {
+          border: 'solid 3px #FFB6C1',
+        };
+      }
+    },
     changeLocaleLang(val) {
       this.$i18n.locale = val;
       cookie.set('lang', val, {
-        expires: 365
+        expires: 365,
       });
     },
     // 点击 用户模块
@@ -206,13 +259,16 @@ export default {
         case 'spotLight':
           this.toSpotLight();
           break;
+        case 'vip':
+          this.showpayModal();
+          break;
         default:
           break;
       }
     },
     // 获取标签数据
     getHotTag() {
-      this.$api.search.getHotTag().then(res => {
+      this.$api.search.getHotTag().then((res) => {
         this.hotTags = res.data.data.splice(0, 9);
       });
     },
@@ -221,49 +277,53 @@ export default {
       this.$router.push({
         path: '/users/followed',
         query: {
-          userId: this.user.id
-        }
+          userId: this.user.id,
+        },
       });
     },
     toMycollect() {
       this.$router.push({
         path: '/collect/mycollection',
         query: {
-          userId: this.user.id
-        }
+          userId: this.user.id,
+        },
       });
     },
     // 跳转书签页
     toBookmarked() {
       this.$router.push({
-        path: '/users/bookmarked'
+        path: '/users/bookmarked',
       });
     },
     toSpotLight() {
       this.$router.push({
-        path: '/spot-light/index'
+        path: '/spot-light/index',
       });
     },
     // 设置弹窗
     setModal() {
       this.settingVisible = !this.settingVisible;
     },
+    showpayModal() {
+      this.payModalVisible = !this.payModalVisible;
+    },
     // 退出登录
     logout() {
       this.$confirm(this.$t('user.logoutMessage'))
-        .then(_ => {
+        .then((_) => {
           this.$message.info(this.$t('user.logoutSuc'));
           cookie.remove('jwt');
           this.$store.dispatch('clearCurrentState');
           window.location.href = '/';
         })
-        .catch(_ => {});
+        .catch((_) => {
+        });
     },
     // 获取关键词
     getKeywords() {
       this.$api.search
         .getKeyword(this.params.keyword)
-        .then(({ data: { data }}) => {
+        .then(({ data: { data } }) => {
           if (data && data.keywordList) {
             this.keywords = data.keywordList || [];
           }
@@ -271,42 +331,38 @@ export default {
     },
     // 搜索相关信息
     querySearch(queryString, cb) {
-      const result = this.keywords.map(e => {
-        return { value: e };
-      });
+      const result = this.keywords.map((e) => ({ value: e }));
       clearTimeout(this.timeout);
       this.timeout = setTimeout(() => {
         cb(result);
       }, 1000);
     },
     // 选择
-    handleSelect(e) {
-      console.log('##########');
-
+    handleSelect() {
       this.handleSearch();
     },
     // 搜索跳转
     handleSearch() {
-      const keyword = this.params.keyword;
+      const { keyword } = this.params;
       if (!keyword.trim()) {
         return;
       }
       this.$router.push({
-        path: `/keywords`,
+        path: '/keywords',
         query: {
           tag: keyword,
-          illustType: this.params.illustType
-        }
+          illustType: this.params.illustType,
+        },
       });
     },
     // 点击tag
     handleClickTag(d) {
       this.$router.push({
-        path: `/keywords`,
+        path: '/keywords',
         query: {
           tag: d.name,
-          illustType: this.params.illustType
-        }
+          illustType: this.params.illustType,
+        },
       });
     },
     // 打卡用户系统
@@ -319,8 +375,8 @@ export default {
       if (!cookie.get('jwt')) {
         this.$store.dispatch('setLoginBoolean');
       }
-    }
-  }
+    },
+  },
 };
 </script>
 
@@ -331,10 +387,12 @@ export default {
   width: 100%;
   display: flex;
   overflow: hidden;
-  /deep/.el-select .el-input {
+
+  /deep/ .el-select .el-input {
     width: 80px;
   }
-  /deep/.input-with-select {
+
+  /deep/ .input-with-select {
     width: 25vw;
     background-color: #fff;
   }
@@ -342,17 +400,20 @@ export default {
   .input-with-select:hover {
     background-color: rgba(0, 0, 0, 0.08);
   }
+
   .header-info {
     display: flex;
     justify-content: flex-end;
     align-items: center;
   }
 }
+
 .user-tools {
   display: flex;
   flex-wrap: wrap;
   justify-content: space-evenly;
   margin-bottom: 20px;
+
   .tool {
     height: 2rem;
     width: 2rem;
@@ -361,20 +422,22 @@ export default {
     text-align: center;
   }
 }
-.button-text{
-    user-select: none;
-    transition: background 20ms ease-in 0s;
-    cursor: pointer;
-    padding: 4px 10px;
-    border-radius: 3px;
-    flex-shrink: 0;
-    font-size: 15px;
-    margin-left: 2px;
-    margin-right: 2px;
-    font-weight: 500;
-    width: auto;
-    &:hover{
-      background: rgba(55, 53, 47, 0.16);
-    }
+
+.button-text {
+  user-select: none;
+  transition: background 20ms ease-in 0s;
+  cursor: pointer;
+  padding: 4px 10px;
+  border-radius: 3px;
+  flex-shrink: 0;
+  font-size: 15px;
+  margin-left: 2px;
+  margin-right: 2px;
+  font-weight: 500;
+  width: auto;
+
+  &:hover {
+    background: rgba(55, 53, 47, 0.16);
+  }
 }
 </style>

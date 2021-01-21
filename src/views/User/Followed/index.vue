@@ -1,4 +1,3 @@
-
 <template>
   <div class="followed">
     <artist-list
@@ -8,11 +7,20 @@
       @on-scroll="getFollowArtists"
       @follow-artist="follow"
     />
-    <div v-else style="margin: 50px auto 0; width:300px;text-align: center;">
-      <svg font-size="160" class="icon" aria-hidden="true">
+    <div
+      v-else
+      style="margin: 50px auto 0; width:300px;text-align: center;"
+    >
+      <svg
+        font-size="160"
+        class="icon"
+        aria-hidden="true"
+      >
         <use xlink:href="#pickongtai1" />
       </svg>
-      <p style="color: #E3F2FA; font-size: 20px;">没有内容</p>
+      <p style="color: #E3F2FA; font-size: 20px;">
+        没有内容
+      </p>
     </div>
     <!-- <div class="pix-page">
       <el-pagination
@@ -29,6 +37,7 @@
 <script>
 import ArtistList from 'components/PublicComponents/ArtistList/index.vue';
 import { mapGetters } from 'vuex';
+
 export default {
   name: 'Followed',
   components: { ArtistList },
@@ -38,11 +47,11 @@ export default {
       artistList: [],
       listMap: new Map(),
       height: 0,
-      loading: false
+      loading: false,
     };
   },
   computed: {
-    ...mapGetters(['user', 'followStatus'])
+    ...mapGetters(['user', 'followStatus']),
   },
   watch: {
     followStatus(val) {
@@ -51,7 +60,7 @@ export default {
       if (item) {
         this.$set(item, 'isFollowed', follow);
       }
-    }
+    },
   },
   mounted() {
     this.getFollowArtists();
@@ -69,12 +78,12 @@ export default {
         .getArtists({
           page: ++this.page.page,
           pageSize: this.page.pageSize,
-          userId: this.user.id
+          userId: this.user.id,
         })
-        .then(res => {
+        .then((res) => {
           this.loading = false;
           const {
-            data: { data }
+            data: { data },
           } = res;
           if (!data) {
             this.$message.info('关注列表已到底');
@@ -92,13 +101,13 @@ export default {
       const data = {
         artistId: val.id,
         userId: this.user.id,
-        username: this.user.username
+        username: this.user.username,
       };
       if (val.isFollowed) {
         val.isFollowed = false;
         this.$store
           .dispatch('handleFollowArtist', { ...data, follow: false })
-          .then(res => {})
+          .then((res) => {})
           .catch(() => {
             val.isFollowed = true;
             this.$message.info('取消关注失败');
@@ -107,14 +116,14 @@ export default {
         val.isFollowed = true;
         this.$store
           .dispatch('handleFollowArtist', { ...data, follow: true })
-          .then(res => {})
+          .then((res) => {})
           .catch(() => {
             val.isFollowed = false;
             this.$message.info('关注失败');
           });
       }
-    }
-  }
+    },
+  },
 };
 </script>
 

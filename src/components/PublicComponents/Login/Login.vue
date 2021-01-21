@@ -1,31 +1,79 @@
-
 <template>
   <div class="Login">
-    <el-form ref="loginForm" :model="loginForm" status-icon :rules="rules" label-width="100px" label-position="left">
-      <el-form-item :label="$t('usernameOrEmail')" prop="username">
+    <el-form
+      ref="loginForm"
+      :model="loginForm"
+      status-icon
+      :rules="rules"
+      label-width="100px"
+      label-position="left"
+    >
+      <el-form-item
+        :label="$t('usernameOrEmail')"
+        prop="username"
+      >
         <el-input v-model="loginForm.username" />
       </el-form-item>
-      <el-form-item :label="$t('password')" prop="password">
-        <el-input v-model="loginForm.password" :maxlength="20" show-password type="password" autocomplete="off" />
+      <el-form-item
+        :label="$t('password')"
+        prop="password"
+      >
+        <el-input
+          v-model="loginForm.password"
+          :maxlength="20"
+          show-password
+          type="password"
+          autocomplete="off"
+        />
       </el-form-item>
-      <el-form-item :label="$t('verifyCode')" prop="verifyCode">
-        <el-row type="flex" justify="space-between" :gutter="16">
-          <el-col> <el-input v-model="loginForm.verifyCode" :maxlength="4">
-            <template slot="append"><img
-              style="height:30px;width:100px"
-              :src="`data:image/bmp;base64,${imageBase64}`"
-              @click.stop="getCode"
-            ></template></el-input></el-col>
+      <el-form-item
+        :label="$t('verifyCode')"
+        prop="verifyCode"
+      >
+        <el-row
+          type="flex"
+          justify="space-between"
+          :gutter="16"
+        >
+          <el-col>
+            <el-input
+              v-model="loginForm.verifyCode"
+              :maxlength="4"
+              @keyup.enter.native="submitForm('loginForm')"
+            >
+              <template slot="append">
+                <img
+                  style="height:30px;width:100px"
+                  :src="`data:image/bmp;base64,${imageBase64}`"
+                  @click.stop="getCode"
+                >
+              </template>
+            </el-input>
+          </el-col>
         </el-row>
       </el-form-item>
       <el-form-item>
         <el-button
           @click="resetPassword"
-        >{{ $t('resetPassword') }}</el-button>
-        <el-button type="primary" @click="submitForm('loginForm')">{{ $t('login') }}</el-button>
-        <el-button @click="loginQQ"><svg font-size="14" class="icon" aria-hidden="true">
-          <use xlink:href="#picQQ" />
-        </svg>QQ{{ $t('login') }}</el-button>
+        >
+          {{ $t('resetPassword') }}
+        </el-button>
+        <el-button
+          type="primary"
+          @click="submitForm('loginForm')"
+        >
+          {{ $t('login') }}
+        </el-button>
+        <el-button @click="loginQQ">
+          <svg
+            font-size="14"
+            class="icon"
+            aria-hidden="true"
+          >
+            <use xlink:href="#picQQ" />
+          </svg>
+          QQ{{ $t('login') }}
+        </el-button>
       </el-form-item>
     </el-form>
     <!-- <el-dialog
@@ -46,24 +94,27 @@
 
 <script>
 import { QQ_LINK } from '@/util/constants';
+import { serverAddress } from '@/store/getters';
+import { mapGetters } from 'vuex';
+
 export default {
   name: 'Login',
   components: {},
   data() {
-    var checkName = (rule, value, callback) => {
+    const checkName = (rule, value, callback) => {
       if (!value) {
         return callback(new Error('请输入密码用户名'));
       }
       callback();
     };
     // 密码验证
-    var validatePass = (rule, value, callback) => {
+    const validatePass = (rule, value, callback) => {
       if (value === '') {
         callback(new Error('请输入密码'));
       }
       callback();
     };
-    var checkCode = (rule, value, callback) => {
+    const checkCode = (rule, value, callback) => {
       if (value === '') {
         callback(new Error('请输入验证码'));
       } else if (value.length < 4) {
@@ -83,25 +134,29 @@ export default {
       loginForm: {
         username: '',
         password: '',
-        verifyCode: ''
+        verifyCode: '',
       },
       // 验证码id
       valid: '',
       // 验证规则
       rules: {
         username: [
-          { validator: checkName, trigger: 'blur' }
+          { validator: checkName, trigger: 'blur' },
         ],
         password: [
-          { validator: validatePass, trigger: 'blur' }
+          { validator: validatePass, trigger: 'blur' },
         ],
         verifyCode: [
-          { validator: checkCode, trigger: 'blur' }
-        ]
-      }
+          { validator: checkCode, trigger: 'blur' },
+        ],
+      },
     };
   },
-  computed: {},
+  computed: {
+    ...mapGetters([
+      'serverAddress',
+    ]),
+  },
   watch: {},
   mounted() {
     this.getCode();
@@ -113,24 +168,25 @@ export default {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
         inputPattern: /[\w!#$%&'*+/=?^_`{|}~-]+(?:\.[\w!#$%&'*+/=?^_`{|}~-]+)*@(?:[\w](?:[\w-]*[\w])?\.)+[\w](?:[\w-]*[\w])?/,
-        inputErrorMessage: '邮箱格式不正确'
+        inputErrorMessage: '邮箱格式不正确',
       }).then(({ value }) => {
         this.$api.user
           .resetPasswordEmail(value)
-          .then(res => {
+          .then((res) => {
             if (res.status === 200) {
               this.$message.info('请注意查收邮箱内的重置密码邮件');
             } else {
               this.$message.error('重置密码发起错误');
             }
           });
-      }).catch(() => {});
+      }).catch(() => {
+      });
     },
     // 获取验证码
     getCode() {
       this.$api.user.verificationCode()
-        .then(res => {
-          const { data: { data }} = res;
+        .then((res) => {
+          const { data: { data } } = res;
           this.imageBase64 = data.imageBase64;
           this.vid = data.vid;
         });
@@ -157,38 +213,56 @@ export default {
       window.location = QQ_LINK;
     },
     // 登录
-    loginAjax() {
+    async loginAjax() {
       const reqBody = {
         userInfo: {
           username: this.loginForm.username.trim(),
-          password: this.loginForm.password
+          password: this.loginForm.password,
         },
         vid: this.vid,
-        value: this.loginForm.verifyCode
+        value: this.loginForm.verifyCode,
       };
-      this.$api.user.login(reqBody)
-        .then(res => {
+      const res = await this.$api.user.login(reqBody);
+      if (res.status !== 200) {
+        this.$message.closeAll();
+        this.$message.info(res.data.message);
+        this.loading = false;
+        this.getCode();
+        return;
+      }
+      this.$store.dispatch('setUser', res.data.data);
+      this.$store.dispatch('setLoginBoolean');
+      this.$message.success(res.data.message);
+      if (res.data.data.id && !localStorage.getItem('participate')) {
+        const res = await this.$api.user.canParticipateStatus('try');
+        if (res.data.data) {
+          this.$notify({
+            message: '🎉恭喜您获得会员试用资格，点击开始试用吧（已经是会员状态将免费增加一天）',
+            onClick: () => { this.beginTry(); },
+            offset: 80,
+          });
+        }
+      }
+    },
+    //  会员试用
+    beginTry() {
+      this.$api.user.participateStatus('try')
+        .then((res) => {
+          this.$message.info({ content: res.data.message });
           if (res.status === 200) {
-            localStorage.setItem('user', JSON.stringify(res.data.data));
             this.$store.dispatch('setUser', res.data.data);
-            this.$store.dispatch('setLoginBoolean');
-            this.$message.success(res.data.message);
-          } else {
-            this.$message.closeAll();
-            this.$message.info(res.data.message);
+            this.$store.dispatch('vipProxyServer');
           }
-        })
-        .catch(err => {
-          console.error(err);
+        }).finally(() => {
+          localStorage.setItem('participate', true);
         });
-      this.loading = false;
-      this.getCode();
-    }
-  }
+    },
+  },
 };
 </script>
 
 <style scoped lang="less">
 
-.Login{}
+.Login {
+}
 </style>

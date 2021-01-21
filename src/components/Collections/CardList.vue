@@ -1,11 +1,19 @@
-
 <template>
   <div class="CardList">
-    <div v-if="!collectionList.length" style="margin:50px auto;width:200px;text-align:center;">
-      <svg font-size="160" class="icon" aria-hidden="true">
+    <div
+      v-if="!collectionList.length"
+      style="margin:50px auto;width:200px;text-align:center;"
+    >
+      <svg
+        font-size="160"
+        class="icon"
+        aria-hidden="true"
+      >
         <use xlink:href="#pickongtai1" />
       </svg>
-      <p style="color: #E3F2FA; font-size: 20px;">没有内容</p>
+      <p style="color: #E3F2FA; font-size: 20px;">
+        没有内容
+      </p>
     </div>
     <div
       v-infinite-scroll="getCollections"
@@ -19,7 +27,10 @@
         :body-style="{ padding: '0px' }"
       >
         <div class="card-body">
-          <div class="image-area" @click="goInfoPage(item)">
+          <div
+            class="image-area"
+            @click="goInfoPage(item)"
+          >
             <el-image
               v-if="item.cover"
               :src="item.cover.imageUrls[0].medium | replaceSmall"
@@ -27,11 +38,17 @@
               fit="cover"
               lazy
             >
-              <div slot="placeholder" class="image-slot">
+              <div
+                slot="placeholder"
+                class="image-slot"
+              >
                 加载中
                 <span class="dot">...</span>
               </div>
-              <div slot="error" class="image-slot">
+              <div
+                slot="error"
+                class="image-slot"
+              >
                 <i class="el-icon-picture-outline" />
               </div>
             </el-image>
@@ -40,34 +57,47 @@
               class="image"
               lazy
               fit="cover"
-              src="https://pic.cheerfun.dev/40655.png?t=1590334915989"
+              :src="`${staticUrl}40655.jpg?t=1590334915989`"
             />
           </div>
 
           <div class="text-area">
             <time class="time">{{ item.createTime.split("T")[0] }}</time>
-            <h3 @click="goInfoPage(item)">{{ item.title }}</h3>
+            <h3 @click="goInfoPage(item)">
+              {{ item.title }}
+            </h3>
             <div>
-              <p class="desc">{{ item.caption }}</p>
+              <p class="desc">
+                {{ item.caption }}
+              </p>
               <p class="tag-list">
                 <el-tag
                   v-for="tag in item.tagList"
                   :key="tag.tagName"
                   :disable-transitions="false"
                   @click="clickTag(tag)"
-                >{{ tag.tagName }}</el-tag>
+                >
+                  {{ tag.tagName }}
+                </el-tag>
               </p>
-              <el-dropdown v-if="powerFlag" class="setting">
+              <el-dropdown
+                v-if="powerFlag"
+                class="setting"
+              >
                 <span>
                   <i class="el-icon-setting" />
                 </span>
                 <el-dropdown-menu slot="dropdown">
                   <el-dropdown-item
                     @click.native="modifyCollect(item)"
-                  >修改</el-dropdown-item>
+                  >
+                    修改
+                  </el-dropdown-item>
                   <el-dropdown-item
                     @click.native="deletCollect(item)"
-                  >删除</el-dropdown-item>
+                  >
+                    删除
+                  </el-dropdown-item>
                 </el-dropdown-menu>
               </el-dropdown>
             </div>
@@ -87,12 +117,13 @@
 
 <script>
 import CreateCollect from 'components/Collections/CreateCollect.vue';
+
 export default {
   name: 'CardList',
   components: { CreateCollect },
   props: ['collectionList', 'powerFlag'],
   data() {
-    return { createCollectBoolean: false, collectData: null };
+    return { createCollectBoolean: false, collectData: null, staticUrl: process.env.VUE_APP_STATIC_API };
   },
   computed: {},
   watch: {},
@@ -100,17 +131,17 @@ export default {
   methods: {
     clickTag(val) {
       this.$router.push({
-        path: `/keywords`,
+        path: '/keywords',
         query: {
-          tag: val.tagName
-        }
+          tag: val.tagName,
+        },
       });
     },
     handleAddSuccess(e, flag) {
       this.handleStartCollect();
       if (flag === 2) {
         let target = this.collectionList[
-          this.collectionList.findIndex(item => item.id === e.id)
+          this.collectionList.findIndex((item) => item.id === e.id)
         ];
         target = Object.assign(target, e);
       }
@@ -123,7 +154,7 @@ export default {
       this.$store.dispatch('setCollectInfo', item);
       this.$router.push({
         path: `/collect/collectionsillust/${item.id}`,
-        query: { collectionId: item.id }
+        query: { collectionId: item.id },
       });
     },
     getCollections() {
@@ -134,23 +165,23 @@ export default {
       this.$confirm('确定删除该画集吗？', '提示', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
-        type: 'warning'
+        type: 'warning',
       })
         .then(() => {
           this.$api.collect
             .deleteCollections(collectionId)
-            .then(res => {
+            .then((res) => {
               if (res.data && res.data.data) {
                 this.$message.info('删除画集成功');
                 this.collectionList.splice(
-                  this.collectionList.findIndex(e => e.id === collectionId),
-                  1
+                  this.collectionList.findIndex((e) => e.id === collectionId),
+                  1,
                 );
               } else {
                 this.$message.info('删除画集失败');
               }
             })
-            .catch(err => {
+            .catch((err) => {
               console.log(err);
             });
         })
@@ -159,8 +190,8 @@ export default {
     modifyCollect(item) {
       this.collectData = item;
       this.createCollectBoolean = !this.createCollectBoolean;
-    }
-  }
+    },
+  },
 };
 </script>
 

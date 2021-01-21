@@ -1,4 +1,3 @@
-
 <template>
   <div class="artist">
     <keep-alive>
@@ -7,80 +6,106 @@
         :identifier="identifier"
         :list="type === 'illust' ? IllustList : mangaList"
         @infinite="infinite"
-      ><div v-if="artistDetail" class="artist_property">
-        <div class="artist-base">
-          <div class="artist-one">
-            <div class="artist-name">
-              <div class="avatar">
-                <img :src="artistDetail.avatarSrc" alt>
-              </div>
-              <div class="name-line">
-                <div class="name">
-                  <h1>{{ artistDetail.name }}</h1>
-                </div>
-                <div class="follow">
-                  <el-button
-                    style="width:160px"
-                    round
-                    size="small"
-                    @click="followArtist"
+      >
+        <div
+          v-if="artistDetail"
+          class="artist_property"
+        >
+          <div class="artist-base">
+            <div class="artist-one">
+              <div class="artist-name">
+                <div class="avatar">
+                  <img
+                    :src="artistDetail.avatarSrc"
+                    alt
                   >
-                    {{ artistDetail.isFollowed ? $t('followed') : $t('follow') }}
-                  </el-button>
+                </div>
+                <div class="name-line">
+                  <div class="name">
+                    <h1>{{ artistDetail.name }}</h1>
+                  </div>
+                  <div class="follow">
+                    <el-button
+                      style="width:160px"
+                      round
+                      size="small"
+                      @click="followArtist"
+                    >
+                      {{ artistDetail.isFollowed ? $t('followed') : $t('follow') }}
+                    </el-button>
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
-          <div class="artist-one">
-            <div class="artist-focus">
-              <span style="color: #999;">
-                <em
-                  style="font-style:normal;color: #5C5C5C;font-weight: bold;"
+            <div class="artist-one">
+              <div class="artist-focus">
+                <span style="color: #999;">
+                  <em
+                    style="font-style:normal;color: #5C5C5C;font-weight: bold;"
+                  >
+                    {{ artistDetail.totalFollowUsers }} </em>{{ $t('follow') }}
+                </span>
+              </div>
+            </div>
+            <div
+              class="artist-one"
+              style="padding: 0 0 32px;"
+            >
+              <div class="artist-focus">
+                <span v-if="artistDetail.region">
+                  <i class="el-icon-location-outline" />
+                  {{ artistDetail.region }}
+                </span>
+              </div>
+              <div class="artist-link">
+                <i
+                  v-if="artistDetail.webPage"
+                  class="el-icon-s-home icon"
+                  @click="windowOpen(artistDetail.webPage)"
+                />
+                <i
+                  v-if="artistDetail.twitterUrl"
+                  class="el-icon-chat-dot-round icon"
+                  @click="windowOpen(artistDetail.twitterUrl)"
+                />
+                <i class="el-icon-share icon" />
+              </div>
+              <div class="artist-focus">
+                <div class="comment">
+                  {{ artistDetail.comment }}
+                </div>
+                <el-popover
+                  placement="bottom"
+                  trigger="click"
+                  :content="artistDetail.comment"
+                  :width="400"
                 >
-                  {{ artistDetail.totalFollowUsers }} </em>{{ $t('follow') }}
-              </span>
+                  <div
+                    slot="reference"
+                    class="end"
+                  >
+                    {{ $t('openAll') }}
+                  </div>
+                </el-popover>
+              </div>
             </div>
-          </div>
-          <div class="artist-one" style="padding: 0 0 32px;">
-            <div class="artist-focus">
-              <span v-if="artistDetail.region">
-                <i class="el-icon-location-outline" />
-                {{ artistDetail.region }}
-              </span>
+            <div
+              class="tabs"
+              @change="getArtistList"
+            >
+              <el-radio-group v-model="type">
+                <el-radio-button
+                  label="illust"
+                  name="插画"
+                />
+                <el-radio-button
+                  label="manga"
+                  name="漫画"
+                />
+              </el-radio-group>
             </div>
-            <div class="artist-link">
-              <i
-                v-if="artistDetail.webPage"
-                class="el-icon-s-home icon"
-                @click="windowOpen(artistDetail.webPage)"
-              />
-              <i
-                v-if="artistDetail.twitterUrl"
-                class="el-icon-chat-dot-round icon"
-                @click="windowOpen(artistDetail.twitterUrl)"
-              />
-              <i class="el-icon-share icon" />
-            </div>
-            <div class="artist-focus">
-              <div class="comment">{{ artistDetail.comment }}</div>
-              <el-popover
-                placement="bottom"
-                trigger="click"
-                :content="artistDetail.comment"
-                :width="400"
-              >
-                <div slot="reference" class="end">{{ $t('openAll') }}</div>
-              </el-popover>
-            </div>
-          </div>
-          <div class="tabs" @change="getArtistList">
-            <el-radio-group v-model="type">
-              <el-radio-button label="illust" name="插画" />
-              <el-radio-button label="manga" name="漫画" />
-            </el-radio-group>
           </div>
         </div>
-      </div>
       </virtual-list>
     </keep-alive>
   </div>
@@ -90,16 +115,17 @@
 import { mapGetters } from 'vuex';
 import { replaceBigImg } from '@/util';
 import VirtualList from '@/components/Virtual-List/VirtualList';
+
 export default {
   name: 'Artist',
   components: {
-    VirtualList
+    VirtualList,
   },
   props: {
     artistId: {
       required: true,
-      type: [String, Number]
-    }
+      type: [String, Number],
+    },
   },
   data() {
     return {
@@ -110,18 +136,18 @@ export default {
       illustSum: 0,
       mangaSum: 0,
       IllustList: [],
-      mangaList: []
+      mangaList: [],
     };
   },
   computed: {
-    ...mapGetters(['user', 'followStatus'])
+    ...mapGetters(['user', 'followStatus']),
   },
   watch: {
     followStatus(val) {
       if (val.artistId === this.artistDetail.id) {
         this.artistDetail.isFollowed = val.follow;
       }
-    }
+    },
   },
   mounted() {
     this.getArtistInfo();
@@ -136,20 +162,20 @@ export default {
     },
     // 取画家信息
     getArtistInfo() {
-      this.$api.detail.reqArtist(this.artistId).then(res => {
+      this.$api.detail.reqArtist(this.artistId).then((res) => {
         const {
-          data: { data }
+          data: { data },
         } = res;
         this.artistDetail = {
           ...data,
-          avatarSrc: replaceBigImg(data.avatar)
+          avatarSrc: replaceBigImg(data.avatar),
         };
       });
     },
     getSummary() {
-      this.$api.detail.reqSummary(this.artistId).then(res => {
+      this.$api.detail.reqSummary(this.artistId).then((res) => {
         const {
-          data: { data }
+          data: { data },
         } = res;
         for (const item of data) {
           if (item.type === 'illust') {
@@ -168,11 +194,11 @@ export default {
         .reqArtistIllust({
           page: this.page++,
           artistId: this.artistId,
-          type: this.type
+          type: this.type,
         })
-        .then(res => {
+        .then((res) => {
           if (res.data.data) {
-            const data = res.data.data.filter(tmp => !(tmp.xrestrict === 1 || tmp.sanityLevel >= (this.user ? 5 : 4)));
+            const data = res.data.data.filter((tmp) => !(tmp.xrestrict === 1 || tmp.sanityLevel >= (this.user ? 3 : 3)));
             if (this.type === 'illust') {
               this.IllustList = this.IllustList.concat(data);
             } else {
@@ -183,7 +209,7 @@ export default {
             $state.complete();
           }
         })
-        .catch(err => {
+        .catch((err) => {
           console.error(err);
         });
     },
@@ -196,13 +222,13 @@ export default {
       const data = {
         artistId: this.artistId,
         userId: this.user.id,
-        username: this.user.username
+        username: this.user.username,
       };
       if (!this.artistDetail.isFollowed) {
         this.artistDetail.isFollowed = true;
         this.$store
           .dispatch('handleFollowArtist', { ...data, follow: true })
-          .then(res => {
+          .then((res) => {
             this.artistDetail.totalFollowUsers++;
           })
           .catch(() => {
@@ -213,7 +239,7 @@ export default {
         this.artistDetail.isFollowed = false;
         this.$store
           .dispatch('handleFollowArtist', { ...data, follow: false })
-          .then(res => {
+          .then((res) => {
             this.artistDetail.totalFollowUsers--;
           })
           .catch(() => {
@@ -221,8 +247,8 @@ export default {
             this.$message.info('取消关注失败');
           });
       }
-    }
-  }
+    },
+  },
 };
 </script>
 

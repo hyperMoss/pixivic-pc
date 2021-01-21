@@ -1,4 +1,3 @@
-
 <template>
   <div class="index">
     <div
@@ -20,10 +19,16 @@
           class="image"
           lazy
         >
-          <div slot="placeholder" class="image-slot">
+          <div
+            slot="placeholder"
+            class="image-slot"
+          >
             加载中<span class="dot">...</span>
           </div>
-          <div slot="error" class="image-slot">
+          <div
+            slot="error"
+            class="image-slot"
+          >
             <i class="el-icon-picture-outline" />
           </div>
         </el-image>
@@ -45,7 +50,7 @@ export default {
   data() {
     return {
       page: { page: 1, pageSize: 10 },
-      soptList: []
+      soptList: [],
     };
   },
   computed: {},
@@ -56,8 +61,8 @@ export default {
   methods: {
     getSpotLights() {
       if (
-        this.soptList.length < this.page.page * this.page.pageSize &&
-        this.page.page !== 1
+        this.soptList.length < this.page.page * this.page.pageSize
+        && this.page.page !== 1
       ) {
         this.$message.info('合辑列表已到底');
         return;
@@ -65,11 +70,11 @@ export default {
       this.$api.spot
         .getSpotLights({
           page: this.page.page++,
-          pageSize: this.page.pageSize
+          pageSize: this.page.pageSize,
         })
-        .then(res => {
+        .then((res) => {
           const {
-            data: { data }
+            data: { data },
           } = res;
           if (!data) {
             this.$message.info('合辑列表已到底');
@@ -79,9 +84,9 @@ export default {
         });
     },
     goInfoPage(item) {
-      this.$router.push({ path: '/spot-light/info-page/', query: { id: item.id }});
-    }
-  }
+      this.$router.push({ path: '/spot-light/info-page/', query: { id: item.id } });
+    },
+  },
 };
 </script>
 

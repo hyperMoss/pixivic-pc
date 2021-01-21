@@ -1,10 +1,13 @@
 <template>
-  <div class="QQauth">绑定中请等待</div>
+  <div class="QQauth">
+    绑定中请等待
+  </div>
 </template>
 
 <script>
 import Cookie from 'js-cookie';
 import { mapGetters } from 'vuex';
+
 export default {
   name: 'QQauth',
   components: {},
@@ -12,7 +15,7 @@ export default {
     return {};
   },
   computed: {
-    ...mapGetters(['user'])
+    ...mapGetters(['user']),
   },
   watch: {},
   mounted() {
@@ -22,9 +25,9 @@ export default {
       // 绑定qq
       this.$api.user.qqAccess({
         userId: this.user.id,
-        qqAccessToken
+        qqAccessToken,
       })
-        .then(res => {
+        .then((res) => {
           if (res.status === 200) {
             this.$router.push('/');
           }
@@ -32,9 +35,8 @@ export default {
     } else {
       // qq登录
       this.$api.user.qqLogin({ qqAccessToken })
-        .then(res => {
+        .then((res) => {
           if (res.status === 200) {
-            localStorage.setItem('user', JSON.stringify(res.data.data));
             this.$store.dispatch('setUser', res.data.data);
             this.$router.push('/');
           } else {
@@ -44,7 +46,7 @@ export default {
         });
     }
   },
-  methods: {}
+  methods: {},
 };
 </script>
 

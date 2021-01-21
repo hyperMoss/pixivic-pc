@@ -1,4 +1,3 @@
-
 <template>
   <div class="bookmarked">
     <div>
@@ -9,10 +8,19 @@
           :list="requestType === 'illust' ? IllustList : mangaList"
           @infinite="infinite"
         >
-          <div class="bookmarked-tabs" @change="getList">
+          <div
+            class="bookmarked-tabs"
+            @change="getList"
+          >
             <el-radio-group v-model="requestType">
-              <el-radio-button label="illust" name="插画" />
-              <el-radio-button label="manga" name="漫画" />
+              <el-radio-button
+                label="illust"
+                name="插画"
+              />
+              <el-radio-button
+                label="manga"
+                name="漫画"
+              />
             </el-radio-group>
           </div>
         </VirtualList>
@@ -24,10 +32,11 @@
 <script>
 import { mapGetters } from 'vuex';
 import VirtualList from '@/components/Virtual-List/VirtualList';
+
 export default {
   name: 'BookMarked',
   components: {
-    VirtualList
+    VirtualList,
   },
   data() {
     return {
@@ -35,11 +44,11 @@ export default {
       requestType: 'illust',
       IllustList: [],
       mangaList: [],
-      identifier: +new Date()
+      identifier: +new Date(),
     };
   },
   computed: {
-    ...mapGetters(['user', 'followStatus'])
+    ...mapGetters(['user', 'followStatus']),
   },
   watch: {},
   mounted() {},
@@ -49,9 +58,9 @@ export default {
         .getCollectList({
           page: this.page++,
           type: this.requestType,
-          userId: this.user.id
+          userId: this.user.id,
         })
-        .then(res => {
+        .then((res) => {
           if (!res.data.data) {
             $state.complete();
           } else {
@@ -66,8 +75,8 @@ export default {
     },
     getList() {
       this.page = 1;
-    }
-  }
+    },
+  },
 };
 </script>
 

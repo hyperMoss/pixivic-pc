@@ -1,16 +1,12 @@
-
 const path = require('path');
+const os = require('os');
 
-// 去console插件
-const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 // gzip压缩插件
 const CompressionWebpackPlugin = require('compression-webpack-plugin');
 
 function resolve(dir) {
   return path.join(__dirname, dir);
 }
-
-console.log('Url prefix: ', process.env.VUE_APP_PREFIX);
 
 module.exports = {
   runtimeCompiler: true,
@@ -19,19 +15,19 @@ module.exports = {
   // publicPath: './',
 
   // 路径别名
-  chainWebpack: config => {
+  chainWebpack: (config) => {
     config.resolve.alias
       .set('@', resolve('src'))
       .set('assets', resolve('src/assets'))
       .set('components', resolve('src/components')); // key,value自行定义，比如.set('@@', resolve('src/components'))
     const oneOfsMap = config.module.rule('less').oneOfs.store;
-    oneOfsMap.forEach(item => {
+    oneOfsMap.forEach((item) => {
       item
         .use('sass-resources-loader')
         .loader('sass-resources-loader')
         .options({
           // Provide path to the file with resources
-          resources: './src/styles/color.less'
+          resources: './src/styles/color.less',
 
           // Or array of paths
           // resources: ['./path/to/vars.scss', './path/to/mixins.scss']
@@ -48,13 +44,13 @@ module.exports = {
   },
 
   // enabled by default if the machine has more than 1 cores
-  parallel: require('os').cpus().length > 1,
+  parallel: os.cpus().length > 1,
 
   devServer: {
     contentBase: path.join(__dirname, 'dist'),
     compress: true,
     disableHostCheck: true, //  新增该配置项
-    port: 9000
+    port: 9000,
   },
 
   css: {
@@ -67,31 +63,23 @@ module.exports = {
     // css预设器配置项
     loaderOptions: {
       stylus: {
-        'resolve url': true
-      }
-    }
+        'resolve url': true,
+      },
+    },
   },
 
-  configureWebpack: config => {
+  configureWebpack: (config) => {
     const devPlugins = [];
     const plugins = [
-      new UglifyJsPlugin({
-        uglifyOptions: {
-          warnings: false,
-          drop_debugger: true,
-          drop_console: true
-        },
-        sourceMap: false,
-        parallel: true
-      }),
       new CompressionWebpackPlugin({
         filename: '[path].gz[query]',
         algorithm: 'gzip',
-        test: new RegExp('\\.(' + ['js', 'css'].join('|') + ')$'),
+        test: new RegExp(`\\.(${['js', 'css'].join('|')})$`),
         threshold: 10240,
-        minRatio: 0.8
-      })
+        minRatio: 0.8,
+      }),
     ];
+    // eslint-disable-next-line no-param-reassign
     config.externals = {
       // vue: 'Vue',
       // 'vue-router': 'window.VueRouter',
@@ -99,8 +87,10 @@ module.exports = {
       // 其他三方库 ...
     };
     if (process.env.NODE_ENV !== 'development') {
+      // eslint-disable-next-line no-param-reassign
       config.plugins = [...config.plugins, ...plugins];
     } else {
+      // eslint-disable-next-line no-param-reassign
       config.plugins = [...config.plugins, ...devPlugins];
     }
   },
@@ -110,7 +100,7 @@ module.exports = {
       locale: 'zh',
       fallbackLocale: 'en',
       localeDir: 'locales',
-      enableInSFC: true
-    }
-  }
+      enableInSFC: true,
+    },
+  },
 };

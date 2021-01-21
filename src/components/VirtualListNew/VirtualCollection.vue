@@ -23,33 +23,53 @@
     @scroll.passive="onScroll"
   >
     <slot />
-    <div ref="scrollContent" class="vue-virtual-collection-container" :style="containerStyle">
+    <div
+      ref="scrollContent"
+      class="vue-virtual-collection-container"
+      :style="containerStyle"
+    >
       <div
         v-for="item in displayItems"
         :key="item.id"
         class="cell-container"
         :style="getComputedStyle(item)"
       >
-        <slot name="cell" :data="item" />
+        <slot
+          name="cell"
+          :data="item"
+        />
       </div>
     </div>
-    <infinite-loading :identifier="identifier" @infinite="infinite">
+    <infinite-loading
+      :identifier="identifier"
+      @infinite="infinite"
+    >
       <div slot="no-more" />
-      <div slot="no-results" style="margin-top: 50px;">
-        <svg font-size="160" class="icon" aria-hidden="true">
+      <div
+        slot="no-results"
+        style="margin-top: 50px;"
+      >
+        <svg
+          font-size="160"
+          class="icon"
+          aria-hidden="true"
+        >
           <use xlink:href="#pickongtai1" />
         </svg>
-        <p style="color: #e3f2fa; font-size: 20px;">没有内容</p>
+        <p style="color: #e3f2fa; font-size: 20px;">
+          没有内容
+        </p>
       </div>
     </infinite-loading>
-    <el-backtop target=".vue-virtual-collection"></el-backtop>
+    <el-backtop target=".vue-virtual-collection" />
   </div>
 </template>
 
 <script>
 import InfiniteLoading from 'vue-infinite-loading';
-import GroupManager from './GroupManager';
 import throttle from 'lodash/throttle';
+import GroupManager from './GroupManager';
+
 export default {
   components: {
     InfiniteLoading,
@@ -97,20 +117,27 @@ export default {
   computed: {
     containerStyle() {
       return {
-        height: this.totalHeight + 'px',
-        width: this.totalWidth + 'px',
+        height: `${this.totalHeight}px`,
+        width: `${this.totalWidth}px`,
       };
     },
     outerStyle() {
       return {
-        height: this.height + 'px',
-        width: this.width + 'px',
+        height: `${this.height}px`,
+        width: `${this.width}px`,
       };
     },
   },
   watch: {
     collection() {
       this.resetCollection();
+    },
+    $route: {
+      handler() {
+        // 跳转其他页面后保持scroll高度
+        this.$refs.outer.scrollTop = this.scrollY;
+        // console.log(this.scrollY);
+      },
     },
   },
   created() {
@@ -124,6 +151,7 @@ export default {
     } else {
       this.$refs.outer.addEventListener('resize', this.onContainerResized);
     }
+    console.log(this.scrollY);
   },
   beforeDestroy() {
     if (ResizeObserver) {
@@ -139,7 +167,7 @@ export default {
     },
     contentStyle() {
       return {
-        width: 252 * this.column + 'px',
+        width: `${252 * this.column}px`,
         height: `${this.totalHeight}px`,
       };
     },
@@ -165,7 +193,7 @@ export default {
       this.onCollectionChanged();
     },
     onCollectionChanged() {
-      let collection = this.collection;
+      let { collection } = this;
 
       // If the collection is flat, wrap it inside a single group
       if (collection.length > 0 && collection[0].group === undefined) {
@@ -178,7 +206,7 @@ export default {
         const unwatch = this.$watch(
           () => groupContainer,
           () => this.onGroupChanged(groupContainer.group, groupIndex),
-          { deep: true }
+          { deep: true },
         );
 
         this.groupManagers.push(
@@ -187,8 +215,8 @@ export default {
             groupIndex,
             this.sectionSize,
             this.cellSizeAndPositionGetter,
-            unwatch
-          )
+            unwatch,
+          ),
         );
       });
 
@@ -197,10 +225,10 @@ export default {
     },
     updateGridDimensions() {
       this.totalHeight = Math.max(
-        ...this.groupManagers.map((it) => it.totalHeight)
+        ...this.groupManagers.map((it) => it.totalHeight),
       );
       this.totalWidth = Math.max(
-        ...this.groupManagers.map((it) => it.totalWidth)
+        ...this.groupManagers.map((it) => it.totalWidth),
       );
     },
     onGroupChanged(group, index) {
@@ -219,7 +247,9 @@ export default {
       const cellMetadatum = groupManager.getCellMetadata(displayItem.itemIndex);
       if (!cellMetadatum) return;
 
-      const { width, height, x, y } = cellMetadatum;
+      const {
+        width, height, x, y,
+      } = cellMetadatum;
       return {
         left: `${x}px`,
         top: `${y}px`,
@@ -250,7 +280,7 @@ export default {
 
       const displayItems = [];
       this.groupManagers.forEach((groupManager, groupIndex) => {
-        var indices = groupManager.getCellIndices({
+        const indices = groupManager.getCellIndices({
           height: this.height,
           width: this.width,
           x: scrollLeft,
@@ -264,7 +294,7 @@ export default {
               itemIndex,
               key: displayItems.length,
               ...groupManager.getItem(itemIndex),
-            })
+            }),
           );
         });
       });

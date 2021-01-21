@@ -1,24 +1,22 @@
 <template>
-  <div class="list">
-    <VirtualCollection
-      :cell-size-and-position-getter="cellSizeAndPositionGetter"
-      :collection="list"
-      :identifier="identifier"
-      :width="width"
-      :height="height"
-      :column="column"
-      @infinite="infinite"
-    >
-      <slot />
-      <template v-slot:cell="props">
-        <Item
-          :column="props.data"
-          @handleLike="handleLike"
-          @handle-collect="setCollect"
-        />
-      </template>
-    </VirtualCollection>
-  </div>
+  <VirtualCollection
+    :cell-size-and-position-getter="cellSizeAndPositionGetter"
+    :collection="list"
+    :identifier="identifier"
+    :width="width"
+    :height="height"
+    :column="column"
+    @infinite="infinite"
+  >
+    <slot />
+    <template v-slot:cell="props">
+      <Item
+        :column="props.data"
+        @handleLike="handleLike"
+        @handle-collect="setCollect"
+      />
+    </template>
+  </VirtualCollection>
 </template>
 
 <script>
@@ -26,35 +24,36 @@ import dayjs from 'dayjs';
 import { mapGetters } from 'vuex';
 import VirtualCollection from '@/components/VirtualListNew/VirtualCollection';
 import throttle from 'lodash/throttle';
-import Item from './Item';
 import { randomColor, replaceBigImg, replaceSmallImg } from '@/util';
 import { getClient } from '@/util/dom';
+import Item from './Item';
+
 const columnWidth = 252;
 
 export default {
   components: {
     VirtualCollection,
-    Item
+    Item,
   },
   props: {
     listWidth: {
       type: Number,
-      default: 0
+      default: 0,
     },
     listHeight: {
       type: Number,
-      default: getClient().height - 60
+      default: getClient().height - 60,
     },
     list: {
       type: Array,
       default() {
         return [];
-      }
+      },
     },
     identifier: {
       type: Number,
-      default: +new Date()
-    }
+      default: +new Date(),
+    },
   },
   data() {
     return {
@@ -62,7 +61,7 @@ export default {
       columnHeight: [],
       column: 0,
       width: this.listWidth || getClient().width - 65,
-      height: this.listHeight || getClient().height
+      height: this.listHeight || getClient().height,
     };
   },
   computed: {
@@ -73,7 +72,7 @@ export default {
         map.set(item.id, item);
       }
       return map;
-    }
+    },
   },
   watch: {
     list: {
@@ -82,13 +81,13 @@ export default {
           if (val.length === 0) {
             this.columnHeight = new Array(this.column).fill(0);
           } else {
-            const list = val.filter(e => !old.includes(e)); 
+            const list = val.filter((e) => !old.includes(e));
             this.handleList(list);
           }
         } catch (error) {
           console.log(error, '*******');
         }
-      }
+      },
     },
     likeStatus(val) {
       // 注意 List不一定找得到item 要判断下
@@ -98,13 +97,13 @@ export default {
       if (item) {
         this.$set(item, 'isLiked', like);
       }
-    }
+    },
   },
   mounted() {
     this.waterFall();
     window.addEventListener('resize', throttle(this.waterFall));
   },
-  destroyed() {
+  beforeDestroy() {
     window.removeEventListener('resize', this.waterFall);
   },
   methods: {
@@ -124,7 +123,7 @@ export default {
         width: item.width,
         height: item.height,
         x: item.x,
-        y: item.y
+        y: item.y,
       };
     },
     handleLike(data) {
@@ -138,7 +137,7 @@ export default {
       const params = {
         userId: this.user.id,
         illustId: data.id,
-        username: this.user.username
+        username: this.user.username,
       };
       if (!flag) {
         this.$set(item, 'isLiked', true); // 先强制视图更新 防止网络延迟不动
@@ -194,26 +193,24 @@ export default {
           tmp.y = this.columnHeight[index];
           this.columnHeight[index] += height;
 
-          tmp['height'] = height;
-          tmp['width'] = width;
-          tmp['src'] = replaceSmallImg(tmp.imageUrls[0].medium);
-          tmp['style'] = {
-            backgroundColor: randomColor()
+          tmp.height = height;
+          tmp.width = width;
+          tmp.src = replaceSmallImg(tmp.imageUrls[0].medium);
+          tmp.style = {
+            backgroundColor: randomColor(),
           };
-          tmp['itemHeight'] = parseInt(per * this.width);
-          tmp['avatarSrc'] = replaceBigImg(tmp.artistPreView.avatar);
-          tmp['createDate'] = dayjs(tmp.createDate).format('YYYY-MM-DD');
-          tmp['imgs'] = tmp.imageUrls.reduce((pre, cur) => {
-            return pre.concat(replaceBigImg(cur.original));
-          }, []);
-          tmp['originalSrc'] = replaceBigImg(tmp.imageUrls[0].original);
-          tmp['isad'] = tmp.type === 'ad_image' || tmp.type === 'donate';
+          tmp.itemHeight = parseInt(per * this.width);
+          tmp.avatarSrc = replaceBigImg(tmp.artistPreView.avatar);
+          tmp.createDate = dayjs(tmp.createDate).format('YYYY-MM-DD');
+          tmp.imgs = tmp.imageUrls.reduce((pre, cur) => pre.concat(replaceBigImg(cur.original)), []);
+          tmp.originalSrc = replaceBigImg(tmp.imageUrls[0].original);
+          tmp.isad = tmp.type === 'ad_image' || tmp.type === 'donate';
         } catch (error) {
           console.log(error, '*******_!');
         }
       }
-    }
-  }
+    },
+  },
 };
 </script>
 

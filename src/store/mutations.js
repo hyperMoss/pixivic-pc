@@ -1,10 +1,10 @@
-
 import * as types from './mutation-types';
 
 const mutations = {
   [types.SET_USER](state, user) {
     if (user) {
       state.user = user;
+      localStorage.setItem('user', JSON.stringify(user));
     } else {
       state.user = {};
     }
@@ -43,7 +43,10 @@ const mutations = {
   },
   [types.SET_COOLECT_INFO](state, data) {
     if (data) { state.collectInfo = data; }
-  }
+  },
+  [types.SET_PROXY_LIST](state, data) {
+    if (data) { state.serverAddress = data; }
+  },
 };
 
 export default mutations;

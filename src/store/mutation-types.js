@@ -1,4 +1,3 @@
-
 export const SET_USER = 'SET_USER';
 export const ADD_CACHED_VIEWS = 'ADD_CACHED_VIEWS';
 export const DEL_CACHED_VIEW = 'DEL_CACHED_VIEW';
@@ -9,3 +8,4 @@ export const SET_FOLLOW_STATUS = 'SET_FOLLOW_STATUS';
 export const SET_LOGIN_BOOLEAN = 'SET_LOGIN_BOOLEAN';
 export const SET_COOLECT_BOOLEAN = 'SET_COOLECT_BOOLEAN';
 export const SET_COOLECT_INFO = 'SET_COOLECT_INFO';
+export const SET_PROXY_LIST = 'SET_PROXY_LIST';

@@ -1,4 +1,3 @@
-
 <template>
   <div class="CollectPictureAdjust">
     <el-dialog
@@ -9,9 +8,15 @@
       @close="closeModal"
     >
       <div class="md-body">
-        <draggable v-model="localPictureList" class="dragable-box">
+        <draggable
+          v-model="localPictureList"
+          class="dragable-box"
+        >
           <transition-group>
-            <div v-for="item in localPictureList" :key="item.id">
+            <div
+              v-for="item in localPictureList"
+              :key="item.id"
+            >
               <div class="item-line">
                 <div class="item-info">
                   <el-image
@@ -19,20 +24,31 @@
                     fit="cover"
                     style="height: 40px; width: 40px;"
                   >
-                    <div slot="error" class="image-slot">
+                    <div
+                      slot="error"
+                      class="image-slot"
+                    >
                       <i class="el-icon-picture-outline" />
                     </div>
-                    <div slot="placeholder" class="image-slot">
+                    <div
+                      slot="placeholder"
+                      class="image-slot"
+                    >
                       <span class="dot">...</span>
                     </div>
                   </el-image>
-                  <div class="pic-name">{{ item.title }}</div>
+                  <div class="pic-name">
+                    {{ item.title }}
+                  </div>
                 </div>
                 <el-popconfirm
                   title="确定将该画作移出画集吗？"
                   @onConfirm="removePicture(item)"
                 >
-                  <i slot="reference" class="action-icon el-icon-delete" />
+                  <i
+                    slot="reference"
+                    class="action-icon el-icon-delete"
+                  />
                 </el-popconfirm>
               </div>
             </div>
@@ -40,13 +56,23 @@
         </draggable>
       </div>
 
-      <div slot="footer" style="    justify-content: flex-end;display: flex;">
-        <el-button type="text" @click="closeModal">取消</el-button>
+      <div
+        slot="footer"
+        style="    justify-content: flex-end;display: flex;"
+      >
+        <el-button
+          type="text"
+          @click="closeModal"
+        >
+          取消
+        </el-button>
         <el-button
           :loading="loading"
           type="primary"
           @click="submit"
-        >确定</el-button>
+        >
+          确定
+        </el-button>
       </div>
     </el-dialog>
   </div>
@@ -58,13 +84,13 @@ import draggable from 'vuedraggable';
 export default {
   name: 'CollectPictureAdjust',
   components: {
-    draggable
+    draggable,
   },
   props: ['show-boolean', 'picture-list'],
   data() {
     return {
       loading: false,
-      localPictureList: []
+      localPictureList: [],
     };
   },
   computed: {},
@@ -77,10 +103,10 @@ export default {
     submit() {
       this.$api.collect
         .orderCollections({
-          picIdList: this.localPictureList.map(e => e.id),
-          collectionId: this.$route.query.collectionId
+          picIdList: this.localPictureList.map((e) => e.id),
+          collectionId: this.$route.query.collectionId,
         })
-        .then(res => {
+        .then((res) => {
           if (res.data.data) {
             this.$message.success('排序画集成功');
             this.$emit('on-success', this.localPictureList);
@@ -98,21 +124,21 @@ export default {
       this.$api.collect
         .deleteCollectionsIllust({
           illustId: e.id,
-          collectionId: this.$route.query.collectionId
+          collectionId: this.$route.query.collectionId,
         })
-        .then(res => {
+        .then((res) => {
           if (res.data.data) {
             this.$message.success('画作移出画集成功');
             this.localPictureList.splice(
-              this.localPictureList.findIndex(item => item.id === e.id),
-              1
+              this.localPictureList.findIndex((item) => item.id === e.id),
+              1,
             );
           } else {
             this.$message.error('移出画集失败');
           }
         });
-    }
-  }
+    },
+  },
 };
 </script>
 

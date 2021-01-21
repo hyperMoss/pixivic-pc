@@ -1,4 +1,3 @@
-
 <template>
   <div />
 </template>
@@ -14,15 +13,14 @@ export default {
   mounted() { this.checkEmail(); },
   methods: {
     checkEmail() {
-      const query = this.$route.query;
+      const { query } = this.$route;
       delete query.VNK;
       this.$api.user.setEmail(query)
-        .then(res => {
+        .then((res) => {
           alert(res.data.message);
           setTimeout(() => { window.location.href = '/'; }, 1000);
         });
-    }
+    },
   },
 };
 </script>
-

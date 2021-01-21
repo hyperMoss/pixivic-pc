@@ -1,24 +1,24 @@
 export default function snow() {
-  var COUNT = 50;
-  var masthead = document.querySelector('.snow');
-  var canvas = document.createElement('canvas');
-  var ctx = canvas.getContext('2d');
-  var width = masthead.clientWidth;
-  var height = masthead.clientHeight;
-  var i = 0;
-  var active = false;
+  const COUNT = 50;
+  const masthead = document.querySelector('.snow');
+  const canvas = document.createElement('canvas');
+  const ctx = canvas.getContext('2d');
+  let width = masthead.clientWidth;
+  let height = masthead.clientHeight;
+  let i = 0;
+  let active = false;
 
   // shim layer with setTimeout fallback
-  var requestAnimFrame = (function() {
+  const requestAnimFrame = (function () {
     return (
-      window.requestAnimationFrame ||
-      window.webkitRequestAnimationFrame ||
-      window.mozRequestAnimationFrame ||
-      function(callback) {
+      window.requestAnimationFrame
+      || window.webkitRequestAnimationFrame
+      || window.mozRequestAnimationFrame
+      || function (callback) {
         window.setTimeout(callback, 1000 / 10);
       }
     );
-  })();
+  }());
 
   function onResize() {
     width = masthead.clientWidth;
@@ -27,7 +27,7 @@ export default function snow() {
     canvas.height = height;
     ctx.fillStyle = '#FFF';
 
-    var wasActive = active;
+    const wasActive = active;
     active = width > 100;
 
     if (!wasActive && active) {
@@ -35,7 +35,7 @@ export default function snow() {
     }
   }
 
-  var Snowflake = function() {
+  const Snowflake = function () {
     this.x = 0;
     this.y = 0;
     this.vy = 0;
@@ -45,7 +45,7 @@ export default function snow() {
     this.reset();
   };
 
-  Snowflake.prototype.reset = function() {
+  Snowflake.prototype.reset = function () {
     this.x = Math.random() * width;
     this.y = Math.random() * -height;
     this.vy = 1 + Math.random() * 3;
@@ -57,8 +57,8 @@ export default function snow() {
   canvas.style.position = 'absolute';
   canvas.style.left = canvas.style.top = '0';
 
-  var snowflakes = [];
-  var snowflake;
+  const snowflakes = [];
+  let snowflake;
   for (i = 0; i < COUNT; i++) {
     snowflake = new Snowflake();
     snowflake.reset();

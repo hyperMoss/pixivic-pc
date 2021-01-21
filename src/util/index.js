@@ -4,17 +4,17 @@
  * @Last Modified by:   Arius
  * @Last Modified time: 2019-10-05 21:16:43
  */
-import * as dom from './dom';
 import axios from 'axios';
+import store from '@/store/';
+import cookie from 'js-cookie';
+import * as dom from './dom';
 import { COLOR_LIST } from './constants';
 
 export default {
-  dom
+  dom,
 };
 
-export const replaceImg = src => {
-  return `https://test.img.cheerfun.dev/get/${src}`;
-};
+export const replaceImg = (src) => `https://test.img.pixivic.net/get/${src}`;
 
 export function download(href, cb) {
   const eleLink = document.createElement('a');
@@ -33,14 +33,14 @@ export function downloadImage(url, cb) {
       responseType: 'blob',
       onDownloadProgress(progress) {
         cb && cb(progress);
-      }
+      },
     })
-      .then(res => {
+      .then((res) => {
         const url = URL.createObjectURL(res.data);
         download(url);
         resolve();
       })
-      .catch(error => {
+      .catch((error) => {
         reject(error);
       });
   });
@@ -48,9 +48,8 @@ export function downloadImage(url, cb) {
 
 let last = 0;
 export function randomColor() {
-  last =
-    (last + Math.round((Math.random() * COLOR_LIST.length) / 2 + 1)) %
-    COLOR_LIST.length;
+  last = (last + Math.round((Math.random() * COLOR_LIST.length) / 2 + 1))
+    % COLOR_LIST.length;
   return COLOR_LIST[last];
 }
 
@@ -69,7 +68,7 @@ export function debounceAsyncValidator(validator, delay) {
     });
   }
 
-  return function(value) {
+  return function (value) {
     if (currentTimer) {
       currentPromiseReject(new Error('replaced'));
       clearTimeout(currentTimer);
@@ -81,9 +80,15 @@ export function debounceAsyncValidator(validator, delay) {
 }
 
 export function replaceBigImg(url) {
-  return url.replace('_webp', '').replace('i.pximg.net', 'original.img.cheerfun.dev');
+  url = url.replace('_webp', '');
+  if (store.getters.isVip && store.getters.serverAddress) {
+    url = url.replace('https://i.pximg.net', store.getters.serverAddress);
+    url += `?Authorization=${cookie.get('jwt')}`;
+    return url;
+  }
+  return url.replace('i.pximg.net', 'original.img.pixivic.net');
 }
 
 export function replaceSmallImg(url) {
-  return url.replace('i.pximg.net', 'img.cheerfun.dev');
+  return url.replace('i.pximg.net', 'img.pixivic.net');
 }

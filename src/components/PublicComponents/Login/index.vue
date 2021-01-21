@@ -1,4 +1,3 @@
-
 <template>
   <div class="login">
     <el-dialog
@@ -12,7 +11,6 @@
     >
       <login-form v-show="loginOrSign" />
       <register-form v-show="!loginOrSign" />
-
     </el-dialog>
   </div>
 </template>
@@ -20,17 +18,17 @@
 <script>
 import LoginForm from './Login';
 import RegisterForm from './Register';
+
 export default {
   name: 'Login',
   components: {
     LoginForm,
-    RegisterForm
+    RegisterForm,
   },
   computed: {
     loginOrSign() {
       return this.$store.getters.loginOrSign;
-    }
-  }
+    },
+  },
 };
 </script>
-

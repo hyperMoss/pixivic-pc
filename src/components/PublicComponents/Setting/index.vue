@@ -1,5 +1,3 @@
-
-
 <template>
   <div class="index">
     <el-dialog
@@ -10,27 +8,36 @@
     >
       <div class="modal-body">
         <div class="btn-list">
-          <p>
-            <el-button :disabled="isCheckEmail" @click="verifyEmail">
-              {{ isCheckEmail ? "已验证邮箱" : "验证邮箱" }}
-            </el-button>
-          </p>
-
-          <p>
-            <el-button :disabled="isConnectQQ" @click="bindQQ">
-              {{ isConnectQQ ? "已绑定QQ" : "绑定QQ" }}
-            </el-button>
-          </p>
-          <p>
-            <el-button @click="resetPassword">
-              重置密码
-            </el-button>
-          </p>
-          <p>
-            <el-button :disabled="!isConnectQQ" @click="unLinkQQ">
-              解绑QQ
-            </el-button>
-          </p>
+          <el-button
+            :disabled="isCheckEmail"
+            @click="verifyEmail"
+          >
+            {{ isCheckEmail ? "已验证邮箱" : "验证邮箱" }}
+          </el-button>
+          <el-button
+            :disabled="isConnectQQ"
+            @click="bindQQ"
+          >
+            {{ isConnectQQ ? "已绑定QQ" : "绑定QQ" }}
+          </el-button>
+          <el-button @click="resetPassword">
+            重置密码
+          </el-button>
+          <el-button
+            :disabled="!isConnectQQ"
+            @click="unLinkQQ"
+          >
+            解绑QQ
+          </el-button>
+          <el-switch
+            style="width:200px"
+            :value="newOpen"
+            active-color="#13ce66"
+            inactive-color="#ff4949"
+            active-text="开新页面"
+            inactive-text="刷原页面"
+            @change="changeOpen"
+          />
         </div>
 
         <div class="change-avatar">
@@ -53,7 +60,10 @@
               type="file"
               @change="handleLocalImg($event)"
             >
-            <el-button :loading="loading" @click="saveAvatar">
+            <el-button
+              :loading="loading"
+              @click="saveAvatar"
+            >
               确定头像
             </el-button>
           </div>
@@ -66,34 +76,36 @@
 <script>
 import { VueCropper } from 'vue-cropper';
 import { QQ_LINK } from '@/util/constants';
+
 export default {
   name: 'Index',
   components: { VueCropper },
   props: {
     settingVisible: {
       type: Boolean,
-      default: false
+      default: false,
     },
     user: {
       type: Object,
-      default: () => {}
-    }
+      default: () => {},
+    },
   },
   data() {
     return {
       option: {
-        img: `https://pic.cheerfun.dev/53.png`,
+        img: `${process.env.VUE_APP_STATIC_API}53.jpg`,
         size: 0.1,
         autoCrop: true,
-        fixed: true
+        fixed: true,
       },
+      newOpen: localStorage.getItem('openNew') === 'true',
       dialog: false,
       loading: false,
       imageUrl: '',
       columns: ['自动', 1, 2, 3, 4],
       isCheckEmail: false,
       isConnectQQ: false,
-      column: 1
+      column: 1,
     };
   },
   computed: {
@@ -101,16 +113,16 @@ export default {
       get() {
         return this.settingVisible;
       },
-      set() {}
-    }
+      set() {},
+    },
   },
   watch: {},
   mounted() {
     // 验证状态
-    this.$api.user.getEmailIsCheck(this.user.id).then(res => {
+    this.$api.user.getEmailIsCheck(this.user.id).then((res) => {
       this.isCheckEmail = res.data.data;
     });
-    this.$api.user.checkQQ(this.user.id).then(res => {
+    this.$api.user.checkQQ(this.user.id).then((res) => {
       this.isConnectQQ = res.data.data;
     });
 
@@ -119,13 +131,17 @@ export default {
   },
 
   methods: {
+    changeOpen(v) {
+      localStorage.setItem('openNew', v);
+      this.newOpen = v;
+    },
     // 上传图片
     uploadFile() {
-      this.$refs['fileHander'].onClick();
+      this.$refs.fileHander.onClick();
     },
     // 重置密码
     resetPassword() {
-      this.$api.user.resetPasswordEmail(this.user.email).then(res => {
+      this.$api.user.resetPasswordEmail(this.user.email).then((res) => {
         if (res.status === 200) {
           this.$message.info('请注意邮箱内的重置密码邮件');
         } else {
@@ -145,7 +161,7 @@ export default {
         return false;
       }
       const reader = new FileReader();
-      reader.onload = e => {
+      reader.onload = (e) => {
         let data;
         if (typeof e.target.result === 'object') {
           data = window.URL.createObjectURL(new Blob([e.target.result]));
@@ -159,15 +175,15 @@ export default {
     // 更新至服务器
     saveAvatar() {
       this.loading = true;
-      this.$refs.cropper.getCropBlob(async data => {
+      this.$refs.cropper.getCropBlob(async (data) => {
         const type = data.type.split('/')[1];
         const files = new File([data], `${this.user.id}.${type}`, {
-          type: data.type
+          type: data.type,
         });
         const formData = new FormData();
         formData.append('file', files);
         const result = await this.$api.search.uploadImg(formData, {
-          userId: this.user.id
+          userId: this.user.id,
         });
         if (result.status === 200) {
           this.$message.success('更新头像成功');
@@ -182,21 +198,21 @@ export default {
     },
     // 解绑qq
     unLinkQQ() {
-      this.$api.user.unLinkQQ(this.user.id).then(res => {
+      this.$api.user.unLinkQQ(this.user.id).then((res) => {
         this.$message.success(res.data.message);
         this.isConnectQQ = false;
       });
     },
     verifyEmail() {
-      this.$api.user.vertifyEmail(this.user.email).then(res => {
+      this.$api.user.vertifyEmail(this.user.email).then((res) => {
         this.$message.success(res.data.message);
       });
     },
     // 处理窗口关闭
     handleClose() {
       this.$emit('update:settingVisible', false);
-    }
-  }
+    },
+  },
 };
 </script>
 
@@ -206,7 +222,13 @@ export default {
   justify-content: space-between;
 }
 .btn-list {
-  width: 100px;
+  width: 120px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  .el-button+.el-button{
+    margin-left: 0;
+  }
 }
 .change-avatar {
   width: 250px;
