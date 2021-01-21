@@ -198,7 +198,7 @@ export default {
         })
         .then((res) => {
           if (res.data.data) {
-            const data = res.data.data.filter((tmp) => !(tmp.xrestrict === 1 || tmp.sanityLevel >= (this.user ? 5 : 4)));
+            const data = res.data.data.filter((tmp) => !(tmp.xrestrict === 1 || tmp.sanityLevel >= (this.user ? 3 : 3)));
             if (this.type === 'illust') {
               this.IllustList = this.IllustList.concat(data);
             } else {

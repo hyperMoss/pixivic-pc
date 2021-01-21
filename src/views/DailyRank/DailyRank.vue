@@ -136,7 +136,7 @@ export default {
           if (!res.data.data) {
             $state.complete();
           } else {
-            this.pictureList = this.pictureList.concat(res.data.data.filter((e) => e.xrestrict === 0 && e.sanityLevel <= (this.user ? 5 : 4)));
+            this.pictureList = this.pictureList.concat(res.data.data.filter((e) => e.xrestrict === 0 && e.sanityLevel <= (this.user ? 3 : 3)));
             $state.loaded();
           }
         });

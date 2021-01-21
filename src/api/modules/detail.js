@@ -14,7 +14,7 @@ function reqArtistIllust(params) {
     params: {
       page: params.page || 1,
       pageSize: params.pageSize || 30,
-      maxSanityLevel: 4,
+      maxSanityLevel: 3,
     },
   });
 }

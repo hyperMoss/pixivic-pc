@@ -15,7 +15,7 @@
       <main class="detail-content">
         <figure class="detail-content__figure">
           <img
-            v-if="illustDetail.xrestrict==0&&illustDetail.sanityLevel<=(user ? 5 : 4)"
+            v-if="illustDetail.xrestrict==0&&illustDetail.sanityLevel<=(user ? 3 : 3)"
             :src="illustDetail.originalSrc"
             style="width:100%;height:80vh;object-fit: contain"
           >
@@ -367,7 +367,7 @@ export default {
             const {
               data: { data },
             } = res;
-            this.pictureList = this.pictureList.concat(data).filter((item) => item.xrestrict === 0 && item.sanityLevel <= (this.user ? 5 : 4));
+            this.pictureList = this.pictureList.concat(data).filter((item) => item.xrestrict === 0 && item.sanityLevel <= (this.user ? 3 : 3));
           }
         })
         .catch((err) => {
@@ -385,7 +385,7 @@ export default {
             this.$message.info('到底了');
           } else {
             this.relatedPictureList = this.relatedPictureList.concat(
-              res.data.data.filter((item) => !(item.xrestrict === 1 || item.sanityLevel > (this.user && this.user.id ? 5 : 4))),
+              res.data.data.filter((item) => !(item.xrestrict === 1 || item.sanityLevel > (this.user && this.user.id ? 3 : 3))),
             );
           }
         })
