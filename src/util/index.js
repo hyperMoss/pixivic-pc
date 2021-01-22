@@ -86,9 +86,9 @@ export function replaceBigImg(url) {
     url += `?Authorization=${cookie.get('jwt')}`;
     return url;
   }
-  return url.replace('i.pximg.net', 'original.img.pixivic.net');
+  return url.replace('i.pximg.net', 'pixiv.cat');
 }
 
 export function replaceSmallImg(url) {
-  return url.replace('i.pximg.net', 'img.pixivic.net');
+  return url.replace('i.pximg.net', 'pixiv.cat');
 }
