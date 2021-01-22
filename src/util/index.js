@@ -91,5 +91,6 @@ export function replaceBigImg(url) {
 }
 
 export function replaceSmallImg(url) {
-  return url.replace('i.pximg.net', 'i.pixiv.cat');
+  //return url.replace('i.pximg.net', 'i.pixiv.cat');
+  return 'https://s3.ax1x.com/2021/01/22/so3YY4.png';
 }
