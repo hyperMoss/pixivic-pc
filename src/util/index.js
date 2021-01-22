@@ -87,10 +87,10 @@ export function replaceBigImg(url) {
     return url;
   }
   return url.replace('i.pximg.net', 'i.pixiv.cat');*/
-  return 'https://s3.ax1x.com/2021/01/22/so3YY4.png';
+  return 'https://vkceyugu.cdn.bspapp.com/VKCEYUGU-b1ebbd3c-ca49-405b-957b-effe60782276/cd01bc83-878d-4bd0-81d2-aba831aadf5c.png';
 }
 
 export function replaceSmallImg(url) {
   //return url.replace('i.pximg.net', 'i.pixiv.cat');
-  return 'https://s3.ax1x.com/2021/01/22/so3YY4.png';
+  return 'https://vkceyugu.cdn.bspapp.com/VKCEYUGU-b1ebbd3c-ca49-405b-957b-effe60782276/cd01bc83-878d-4bd0-81d2-aba831aadf5c.png';
 }
