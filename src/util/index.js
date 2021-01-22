@@ -80,13 +80,14 @@ export function debounceAsyncValidator(validator, delay) {
 }
 
 export function replaceBigImg(url) {
-  url = url.replace('_webp', '');
+  /*url = url.replace('_webp', '');
   if (store.getters.isVip && store.getters.serverAddress) {
     url = url.replace('https://i.pximg.net', store.getters.serverAddress);
     url += `?Authorization=${cookie.get('jwt')}`;
     return url;
   }
-  return url.replace('i.pximg.net', 'i.pixiv.cat');
+  return url.replace('i.pximg.net', 'i.pixiv.cat');*/
+  return 'https://s3.ax1x.com/2021/01/22/so3YY4.png';
 }
 
 export function replaceSmallImg(url) {
