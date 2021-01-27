@@ -80,17 +80,17 @@ export function debounceAsyncValidator(validator, delay) {
 }
 
 export function replaceBigImg(url) {
-  /*url = url.replace('_webp', '');
+  url = url.replace('_webp', '');
   if (store.getters.isVip && store.getters.serverAddress) {
     url = url.replace('https://i.pximg.net', store.getters.serverAddress);
     url += `?Authorization=${cookie.get('jwt')}`;
     return url;
   }
-  return url.replace('i.pximg.net', 'i.pixiv.cat');*/
-  return 'https://vkceyugu.cdn.bspapp.com/VKCEYUGU-b1ebbd3c-ca49-405b-957b-effe60782276/cd01bc83-878d-4bd0-81d2-aba831aadf5c.png';
+  return url.replace('i.pximg.net', 'original.img.pixivic.net');
+  //return 'https://vkceyugu.cdn.bspapp.com/VKCEYUGU-b1ebbd3c-ca49-405b-957b-effe60782276/cd01bc83-878d-4bd0-81d2-aba831aadf5c.png';
 }
 
 export function replaceSmallImg(url) {
-  //return url.replace('i.pximg.net', 'i.pixiv.cat');
-  return 'https://vkceyugu.cdn.bspapp.com/VKCEYUGU-b1ebbd3c-ca49-405b-957b-effe60782276/cd01bc83-878d-4bd0-81d2-aba831aadf5c.png';
+  return url.replace('i.pximg.net', 'img.pixivic.net');
+  //return 'https://vkceyugu.cdn.bspapp.com/VKCEYUGU-b1ebbd3c-ca49-405b-957b-effe60782276/cd01bc83-878d-4bd0-81d2-aba831aadf5c.png';
 }
