@@ -46,12 +46,7 @@ const routes = [
     name: 'Remark',
     // component: () => import('./views/Remark/Remark.vue')
     component: require('./views/Remark/Remark.vue').default,
-  }, /* ,  {
-    path: '/bbs',
-    name: 'BBS',
-    // component: () => import('./views/BBS/BBS.vue')
-    component: require('./views/BBS/BBS.vue').default,
-  } */
+  },
   {
     path: '/qqauth',
     name: 'QQauth',
@@ -78,7 +73,7 @@ const routes = [
 
 const router = new VueRouter({
   mode: 'history',
-  base: process.env.BASE_URL,
+  base: '/',
   routes,
 });
 
