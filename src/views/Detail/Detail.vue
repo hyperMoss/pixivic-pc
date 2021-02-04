@@ -34,31 +34,28 @@
         </div>
         <figcaption class="detail-content__info">
           <div class="card">
-            <h1>{{ illustDetail.title }}</h1>
+            <h1></h1>
             <div
               class="disc"
-              v-html="illustDetail.caption"
+              v-html=""
             />
             <div class="tags">
               <ul>
                 <li
-                  v-for="item of illustDetail.tags"
-                  :key="item.id"
-                  :title="item.translatedName"
-                  @click="openTag(item)"
+
                 >
-                  #{{ item.name }}
+
                 </li>
               </ul>
             </div>
             <ul class="populor">
               <li title="阅读数">
                 <i class="el-icon-view" />
-                {{ illustDetail.totalView }}
+              0
               </li>
               <li title="收藏数">
                 <i class="el-icon-star-off" />
-                {{ illustDetail.totalBookmarks }}
+               0
               </li>
             </ul>
             <div
