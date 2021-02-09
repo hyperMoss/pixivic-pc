@@ -22,7 +22,35 @@
           >
             购前须知
           </el-button>
-
+        </div>
+        <el-row>
+          <el-button
+              type="primary"
+              size="small"
+              @click="goAilPay"
+          >
+            支付宝
+          </el-button> <el-button
+            size="small"
+            type="success"
+            @click="goWeChatPay"
+        >
+          微信
+        </el-button>
+        </el-row>
+        <el-input
+            v-model="code"
+            style="margin: 20px 0;width: 200px"
+            label="输入激活码（可叠加）"
+            placeholder="输入激活码（可叠加）"
+        />
+        <el-button
+            :disabled="!code"
+            @click="submitCode"
+        >
+          立即兑换
+        </el-button>
+      </div>
     </el-dialog>
   </div>
 </template>
