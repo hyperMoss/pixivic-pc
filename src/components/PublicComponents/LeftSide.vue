@@ -88,7 +88,7 @@ export default {
       console.log(key, keyPath);
     },
     goBBS() {
-      window.open('https://discuss.pixivic.net/');
+      window.open('https://discuss.sharemoe.net/');
     },
   },
 };

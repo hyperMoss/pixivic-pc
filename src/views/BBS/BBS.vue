@@ -2,7 +2,7 @@
   <div class="bbs">
     <a
       class="bbs"
-      href="https://discuss.pixivic.net/"
+      href="https://discuss.sharemoe.net/"
       target="_Blank"
     />
   </div>
