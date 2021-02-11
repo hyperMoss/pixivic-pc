@@ -22,7 +22,8 @@
           >
             购前须知
           </el-button>
-
+        </div>
+      </div>
     </el-dialog>
   </div>
 </template>
