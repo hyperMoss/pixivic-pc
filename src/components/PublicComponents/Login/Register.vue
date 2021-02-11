@@ -210,6 +210,39 @@ export default {
           this.vid = data.vid;
         });
     },
+    // 获取手机验证码
+    getPhoneCode() {
+      if (!this.ruleForm.verifyCode) {
+        this.$refs.ruleForm.validateField('verifyCode');
+        return;
+      }
+      const getMessage = (v) => {
+        if (v) { return; }
+        this.$api.user.getPhoneCode({
+          vid: this.vid,
+          value: this.ruleForm.verifyCode,
+          phone: this.ruleForm.phone,
+        })
+          .then((res) => {
+            if (res.status !== 200) {
+              this.$message.error(res.data.message);
+            }
+            this.$message.success(res.data.message);
+            let time = 60;
+            const sendTimer = setInterval(() => {
+              this.isOvertime = true;
+              time -= 1;
+              this.word = `重新发送${time}`;
+              if (time < 0) {
+                this.isOvertime = false;
+                clearInterval(sendTimer);
+                this.word = '获取验证码';
+              }
+            }, 1000);
+          });
+      };
+      this.$refs.ruleForm.validateField('phone', getMessage);
+    },
     // 表单提交
     submitForm(formName) {
       this.$refs[formName].validate((valid) => {
