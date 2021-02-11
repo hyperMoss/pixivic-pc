@@ -136,7 +136,7 @@
               <template slot="append">
                 <el-link
                   type="primary"
-                  href="https://mall.pixivic.net/product/9.html"
+                  href="https://mall.sharemoe.net/product/9.html"
                   target="_blank"
                 >
                   {{ $t('get') }}
