@@ -101,7 +101,7 @@ export default {
     },
     // 打开说明
     goPayNote() {
-      window.open('https://discuss.pixivic.net/d/10');
+      window.open('https://discuss.sharemoe.net/d/10');
     },
     // 打开购买页面
     goAilPay() {
