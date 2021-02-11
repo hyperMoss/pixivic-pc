@@ -8,18 +8,20 @@ function getPixById(id) {
 }
 
 function reqArtistIllust(params) {
+  if (process.env.NODE_ENV === 'com') { return Promise.resolve({ status: 400 }); }
   return axios({
     url: `/artists/${params.artistId}/illusts/${params.type}`,
     method: 'get',
     params: {
       page: params.page || 1,
       pageSize: params.pageSize || 30,
-      maxSanityLevel: 4,
+      maxSanityLevel: 3,
     },
   });
 }
 
 function reqIllustDetail(pid) {
+  if (process.env.NODE_ENV === 'com') { return Promise.resolve({ status: 400 }); }
   return axios({
     url: `/illusts/${pid}`,
     method: 'get',

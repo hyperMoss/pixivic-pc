@@ -32,13 +32,14 @@
     </el-container>
     <Login />
     <CollectPicture />
+    <CheckPhone />
   </div>
 </template>
 
 <script>
 import cookie from 'js-cookie';
 import { mapGetters } from 'vuex';
-import { serverAddress } from '@/store/getters';
+import CheckPhone from 'components/CheckPhone';
 import HeaderBar from './components/PublicComponents/HeaderBar.vue';
 import LeftSide from './components/PublicComponents/LeftSide.vue';
 import Login from './components/PublicComponents/Login/index.vue';
@@ -69,6 +70,7 @@ export default {
     LeftSide,
     Login,
     CollectPicture,
+    CheckPhone,
   },
   data() {
     return {

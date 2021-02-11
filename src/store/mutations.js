@@ -47,6 +47,9 @@ const mutations = {
   [types.SET_PROXY_LIST](state, data) {
     if (data) { state.serverAddress = data; }
   },
+  [types.SET_PHONE_BOOLEAN](state) {
+    state.phoneBoolean = !state.phoneBoolean;
+  },
 };
 
 export default mutations;

@@ -7,7 +7,7 @@
         </div>
         <img
           alt="支付宝"
-          src="@/assets/images/alipay.jpg"
+          src=""
         >
       </el-card>
       <el-card class="donate-card">
@@ -16,7 +16,7 @@
         </div>
         <img
           alt="微信"
-          src="@/assets/images/wechat.jpg"
+          src=""
         >
       </el-card>
     </div>

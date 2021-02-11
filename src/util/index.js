@@ -87,8 +87,10 @@ export function replaceBigImg(url) {
     return url;
   }
   return url.replace('i.pximg.net', 'original.img.pixivic.net');
+  //return 'https://vkceyugu.cdn.bspapp.com/VKCEYUGU-b1ebbd3c-ca49-405b-957b-effe60782276/cd01bc83-878d-4bd0-81d2-aba831aadf5c.png';
 }
 
 export function replaceSmallImg(url) {
   return url.replace('i.pximg.net', 'img.pixivic.net');
+  //return 'https://vkceyugu.cdn.bspapp.com/VKCEYUGU-b1ebbd3c-ca49-405b-957b-effe60782276/cd01bc83-878d-4bd0-81d2-aba831aadf5c.png';
 }

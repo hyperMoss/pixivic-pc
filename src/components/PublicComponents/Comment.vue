@@ -19,7 +19,7 @@
           type="textarea"
           :rows="3"
           autofocus
-          placeholder="写下你的评论..."
+          placeholder="写下你的评论...(依据国家相关法律，绑定手机号方可评论)"
         />
         <div class="btn-control">
           <span
@@ -154,7 +154,7 @@
               type="textarea"
               :rows="3"
               autofocus
-              placeholder="写下你的评论..."
+              placeholder="写下你的评论...(依据国家相关法律，绑定手机号方可评论)"
             />
             <div class="btn-control">
               <span

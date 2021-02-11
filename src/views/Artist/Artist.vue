@@ -197,8 +197,8 @@ export default {
           type: this.type,
         })
         .then((res) => {
-          if (res.data.data) {
-            const data = res.data.data.filter((tmp) => !(tmp.xrestrict === 1 || tmp.sanityLevel >= (this.user ? 5 : 4)));
+          if (res?.data?.data) {
+            const data = res.data.data.filter((tmp) => !(tmp.xrestrict === 1 || tmp.sanityLevel >= (this.user ? 3 : 3)));
             if (this.type === 'illust') {
               this.IllustList = this.IllustList.concat(data);
             } else {
@@ -296,7 +296,8 @@ export default {
           width: 686px;
           .avatar {
             margin-left: -124px;
-            width: 124px;
+            margin-top: 40px;
+            width: 100px;
             height: 100px;
             transition: all 0.2s ease-in-out 0s;
             img {

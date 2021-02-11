@@ -269,6 +269,7 @@ export default {
     // 获取标签数据
     getHotTag() {
       this.$api.search.getHotTag().then((res) => {
+        if (res.status !== 200) { return; }
         this.hotTags = res.data.data.splice(0, 9);
       });
     },

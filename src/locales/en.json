@@ -33,5 +33,8 @@
   "email": "Email",
   "usernameOrEmail": "Username or email",
   "signUp": "Sign up",
-  "member": "Member"
+  "member": "Member",
+  "getPhoneCode": "Phone Code",
+  "get": "Get",
+  "inviteCode": "Invite Code"
 }
