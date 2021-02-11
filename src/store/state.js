@@ -11,6 +11,7 @@ const state = {
   readyCollectItem: {},
   collectInfo: {},
   serverAddress: localStorage.getItem('serverAddress') || null,
+  phoneBoolean: false,
 };
 
 export default state;

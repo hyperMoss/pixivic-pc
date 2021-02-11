@@ -318,6 +318,7 @@ export default {
     // 请求数据
     getIllustDetail() {
       this.$api.detail.reqIllustDetail(this.pid).then((res) => {
+        if (res.status !== 200) { return; }
         const { data } = res.data;
         this.illustDetail = this.handleData(data);
       });
@@ -363,7 +364,7 @@ export default {
           pageSize: 10,
         })
         .then((res) => {
-          if (res.data.data) {
+          if (res?.data?.data) {
             const {
               data: { data },
             } = res;

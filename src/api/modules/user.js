@@ -1,14 +1,43 @@
 import axios from '../base';
 
 // 获取图形验证码
-function verificationCode() {
+export function verificationCode() {
   return axios({
     url: '/verificationCode',
     method: 'get',
   });
 }
 
-function register(data) {
+// 获取手机验证码
+export function getPhoneCode(data) {
+  return axios({
+    url: `/messageVerificationCode?vid=${data.vid}&value=${data.value}&phone=${data.phone}`,
+    method: 'get',
+  });
+}
+
+// 校验手机号可用性
+export function checkPhone(phone) {
+  return axios({
+    url: `/users/phones/${phone}`,
+    method: 'get',
+  });
+}
+
+// 三要素认证
+export function verifiedInfo(data) {
+  return axios({
+    url: `/users/${data.userId}/verifiedInfo`,
+    method: 'put',
+    data: {
+      name: data.name,
+      exchangeCode: data.exchangeCode,
+      idCard: data.idCard,
+    },
+  });
+}
+
+export function register(data) {
   return axios({
     url: `/users?vid=${data.vid}&value=${data.value}`,
     method: 'post',
@@ -16,7 +45,7 @@ function register(data) {
   });
 }
 
-function login(data) {
+export function login(data) {
   return axios({
     url: `/users/token?vid=${data.vid}&value=${data.value}`,
     method: 'post',
@@ -25,7 +54,7 @@ function login(data) {
 }
 
 // 发送密码重置邮件
-function resetPasswordEmail(email) {
+export function resetPasswordEmail(email) {
   return axios({
     url: `/users/emails/${email}/resetPasswordEmail`,
     method: 'get',
@@ -33,7 +62,7 @@ function resetPasswordEmail(email) {
 }
 
 // 用户重置密码
-function resetPassword(data) {
+export function resetPassword(data) {
   return axios({
     url: `/users/password?vid=${data.vid}&value=${data.value}`,
     method: 'put',
@@ -42,7 +71,7 @@ function resetPassword(data) {
 }
 
 // 效验邮箱可用性
-function checkEmail(email) {
+export function checkEmail(email) {
   return axios({
     url: `/users/emails/${email}`,
     method: 'get',
@@ -50,7 +79,7 @@ function checkEmail(email) {
 }
 
 // 校验用户名可用性
-function checkUser(user) {
+export function checkUser(user) {
   return axios({
     url: `/users/usernames/${user}`,
     method: 'get',
@@ -58,7 +87,7 @@ function checkUser(user) {
 }
 
 // 收藏画作
-function collectIllust(data) {
+export function collectIllust(data) {
   return axios({
     url: '/users/bookmarked',
     method: 'post',
@@ -67,7 +96,7 @@ function collectIllust(data) {
 }
 
 // 收藏画作列表
-function getCollectList(params) {
+export function getCollectList(params) {
   return axios({
     url: `/users/${params.userId}/bookmarked/${params.type}`,
     method: 'get',
@@ -76,7 +105,7 @@ function getCollectList(params) {
 }
 
 // 取消收藏
-function deleteCollect(data) {
+export function deleteCollect(data) {
   return axios({
     url: '/users/bookmarked',
     method: 'delete',
@@ -85,7 +114,7 @@ function deleteCollect(data) {
 }
 
 // 关注和取消关注画师
-function followArtist(data) {
+export function followArtist(data) {
   return axios({
     url: '/users/followed',
     method: data.follow ? 'post' : 'delete',
@@ -98,7 +127,7 @@ function followArtist(data) {
 }
 
 // 用户关注画师列表
-function getFollowArtist(data) {
+export function getFollowArtist(data) {
   return axios({
     url: `/users/${data.userId}/followed`,
     method: 'get',
@@ -107,7 +136,7 @@ function getFollowArtist(data) {
 }
 
 // 关注画师新作
-function getNewIllust(data) {
+export function getNewIllust(data) {
   return axios({
     url: `/users/${data.userId}/followed/latest/${data.type}`,
     method: 'get',
@@ -119,7 +148,7 @@ function getNewIllust(data) {
 }
 
 // 获取用户是否验证邮箱
-function getEmailIsCheck(userId) {
+export function getEmailIsCheck(userId) {
   return axios({
     url: `/users/${userId}/email/isCheck`,
     method: 'get',
@@ -127,7 +156,7 @@ function getEmailIsCheck(userId) {
 }
 
 // 用户发送邮箱验证邮件
-function vertifyEmail(email) {
+export function vertifyEmail(email) {
   return axios({
     url: `/users/emails/${email}/checkEmail`,
     method: 'get',
@@ -135,7 +164,7 @@ function vertifyEmail(email) {
 }
 
 // 用户设置邮箱(会返回新的token)
-function setEmail(params) {
+export function setEmail(params) {
   return axios({
     url: `/users/${params.userId}/email`,
     method: 'put',
@@ -144,7 +173,7 @@ function setEmail(params) {
 }
 
 // qq登录
-function qqLogin(params) {
+export function qqLogin(params) {
   return axios({
     url: '/users/tokenWithQQ',
     method: 'get',
@@ -153,7 +182,7 @@ function qqLogin(params) {
 }
 
 // 用户绑定qq
-function qqAccess(params) {
+export function qqAccess(params) {
   return axios({
     url: `/users/${params.userId}/qqAccessToken`,
     method: 'put',
@@ -162,14 +191,14 @@ function qqAccess(params) {
 }
 
 // 检查是否绑定qq
-function checkQQ(userId) {
+export function checkQQ(userId) {
   return axios({
     url: `/users/${userId}/isBindQQ`,
     method: 'get',
   });
 }
 // 检查是否绑定qq
-function unLinkQQ(userId) {
+export function unLinkQQ(userId) {
   return axios({
     url: `/users/${userId}/qqAccessToken`,
     method: 'delete',
@@ -177,7 +206,7 @@ function unLinkQQ(userId) {
 }
 
 // 查看用户信息
-function getUsers(userId) {
+export function getUsers(userId) {
   return axios({
     url: `/users/${userId}`,
     method: 'get',
@@ -185,7 +214,7 @@ function getUsers(userId) {
 }
 
 // 查看画师关注用户列表
-function getFollowers(params) {
+export function getFollowers(params) {
   return axios({
     url: `/artists/${params.artistId}/followedUsers`,
     method: 'get',
@@ -196,8 +225,19 @@ function getFollowers(params) {
   });
 }
 
+// 绑定手机
+export function verifyPhoneCode(data) {
+  return axios({
+    url: `/users/${data.userId}/phone`,
+    method: 'put',
+    params: {
+      vid: data.vid,
+      value: data.value,
+    },
+  });
+}
 // 获取带有3幅近期画作的follow画师列表
-function getArtists(data) {
+export function getArtists(data) {
   return axios({
     url: `/users/${data.userId}/followedWithRecentlyIllusts`,
     method: 'get',
@@ -209,7 +249,7 @@ function getArtists(data) {
 }
 
 // 用户查看近期画作历史记录
-function getRecentHistory(data) {
+export function getRecentHistory(data) {
   return axios({
     url: `/users/${data.userId}/illustHistory`,
     method: 'get',
@@ -221,7 +261,7 @@ function getRecentHistory(data) {
 }
 
 // 用户查看早期画作历史记录
-function getOldHistory(data) {
+export function getOldHistory(data) {
   return axios({
     url: `/users/${data.userId}/oldIllustHistory`,
     method: 'get',
@@ -233,7 +273,7 @@ function getOldHistory(data) {
 }
 
 // 获取高速服务器列表
-function getVipProxyServer() {
+export function getVipProxyServer() {
   return axios({
     url: '/vipProxyServer',
     method: 'get',
@@ -242,7 +282,7 @@ function getVipProxyServer() {
 
 // 用户激活
 
-function putPlusCode(userId, code) {
+export function putPlusCode(userId, code) {
   return axios({
     url: `/users/${userId}/permissionLevel`,
     method: 'put',
@@ -253,15 +293,15 @@ function putPlusCode(userId, code) {
 }
 
 // 获取活动可参与状态
-function canParticipateStatus(activityName) {
+export function canParticipateStatus(activityName) {
   return axios({
     url: `/vipActivity/${activityName}/canParticipateStatus`,
     method: 'get',
   });
 }
 
-// 参与活动
-function participateStatus(activityName) {
+// 参与活动r
+export function participateStatus(activityName) {
   return axios({
     url: `/vipActivity/${activityName}/participateStatus`,
     method: 'put',
@@ -269,42 +309,9 @@ function participateStatus(activityName) {
 }
 
 // 用户oauth
-function oauth(query) {
+export function oauth(query) {
   return axios({
     url: `/oauth/authorize${query}`,
     method: 'get',
   });
 }
-
-export {
-  verificationCode,
-  register,
-  login,
-  resetPasswordEmail,
-  checkEmail,
-  checkUser,
-  resetPassword,
-  collectIllust,
-  getCollectList,
-  deleteCollect,
-  followArtist,
-  getFollowArtist,
-  getNewIllust,
-  getEmailIsCheck,
-  vertifyEmail,
-  setEmail,
-  qqLogin,
-  qqAccess,
-  checkQQ,
-  unLinkQQ,
-  getUsers,
-  getFollowers,
-  getArtists,
-  getRecentHistory,
-  getOldHistory,
-  getVipProxyServer,
-  putPlusCode,
-  canParticipateStatus,
-  participateStatus,
-  oauth,
-};

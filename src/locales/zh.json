@@ -33,5 +33,11 @@
   "email": "邮箱",
   "usernameOrEmail": "用户名或邮箱",
   "signUp": "注册",
-  "member": "会员"
+  "member": "会员",
+  "getPhoneCode": "手机验证码",
+  "get": "获取",
+  "inviteCode": "邀请码",
+  "phone": "手机号",
+  "ok": "确定",
+  "cancel": "取消"
 }

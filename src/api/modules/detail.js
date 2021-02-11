@@ -8,6 +8,7 @@ function getPixById(id) {
 }
 
 function reqArtistIllust(params) {
+  if (process.env.NODE_ENV === 'com') { return Promise.resolve({ status: 400 }); }
   return axios({
     url: `/artists/${params.artistId}/illusts/${params.type}`,
     method: 'get',
@@ -20,6 +21,7 @@ function reqArtistIllust(params) {
 }
 
 function reqIllustDetail(pid) {
+  if (process.env.NODE_ENV === 'com') { return Promise.resolve({ status: 400 }); }
   return axios({
     url: `/illusts/${pid}`,
     method: 'get',

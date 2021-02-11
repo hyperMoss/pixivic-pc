@@ -12,3 +12,4 @@ export const readyCollectItem = (state) => state.readyCollectItem;
 export const isVip = (state) => state.user.permissionLevel === 4 || (state.user.permissionLevel > 2
   && new Date(state.user.permissionLevelExpireDate).valueOf() > Date.now());
 export const serverAddress = (state) => state.serverAddress;
+export const phoneBoolean = (state) => state.phoneBoolean;

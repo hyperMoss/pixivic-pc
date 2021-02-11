@@ -29,6 +29,12 @@
           >
             解绑QQ
           </el-button>
+          <el-button
+            :disabled="!!user.isCheckPhone"
+            @click="$store.dispatch('setPhoneBoolean')"
+          >
+            绑定手机
+          </el-button>
           <el-switch
             style="width:200px"
             :value="newOpen"
@@ -125,7 +131,6 @@ export default {
     this.$api.user.checkQQ(this.user.id).then((res) => {
       this.isConnectQQ = res.data.data;
     });
-
     const column = parseInt(localStorage.getItem('waterfull-column'));
     this.column = column || '自动';
   },

@@ -195,7 +195,8 @@ export default {
           width: 686px;
           .avatar {
             margin-left: -124px;
-            width: 124px;
+            margin-top: 40px;
+            width: 100px;
             height: 100px;
             transition: all 0.2s ease-in-out 0s;
             img {

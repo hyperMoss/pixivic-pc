@@ -142,3 +142,6 @@ export const vipProxyServer = ({ commit }) => new Promise((resolve, reject) => {
       reject(err);
     });
 });
+export const setPhoneBoolean = ({ commit }, data) => {
+  commit(types.SET_PHONE_BOOLEAN, data);
+};
