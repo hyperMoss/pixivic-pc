@@ -1,12 +1,12 @@
 <template>
   <div class="index">
     <el-dialog
-      :visible.sync="localVisible"
-      modal
-      title="会员图片加速"
-      width="500px"
-      :close-on-click-modal="false"
-      @close="handleClose"
+        :visible.sync="localVisible"
+        modal
+        title="会员图片加速"
+        width="500px"
+        :close-on-click-modal="false"
+        @close="handleClose"
     >
       <div style="text-align: center">
         <div style="font-size: 1.6rem;font-weight: bold;margin-bottom: 20px">
@@ -17,12 +17,39 @@
         </div>
         <div style="margin: 20px 0px">
           <el-button
-            plain
-            @click="goPayNote"
+              plain
+              @click="goPayNote"
           >
             购前须知
           </el-button>
         </div>
+        <el-row>
+          <el-button
+              type="primary"
+              size="small"
+              @click="goAilPay"
+          >
+            支付宝
+          </el-button> <el-button
+            size="small"
+            type="success"
+            @click="goWeChatPay"
+        >
+          微信
+        </el-button>
+        </el-row>
+        <el-input
+            v-model="code"
+            style="margin: 20px 0;width: 200px"
+            label="输入激活码（可叠加）"
+            placeholder="输入激活码（可叠加）"
+        />
+        <el-button
+            :disabled="!code"
+            @click="submitCode"
+        >
+          立即兑换
+        </el-button>
       </div>
     </el-dialog>
   </div>
