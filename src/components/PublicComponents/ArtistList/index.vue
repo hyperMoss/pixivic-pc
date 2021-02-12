@@ -86,7 +86,7 @@ export default {
   filters: {
     replaceImg(val) {
       return (
-        `https://img.pixivic.net/c/360x360_70/img-master${
+        `https://acgpic.net/c/360x360_70/img-master${
           val.split('img-master')[1]}`
       );
     },
