@@ -49,6 +49,33 @@
         />
       </el-form-item>
       <el-form-item
+        :label="$t('inviteCode')"
+        prop="inviteCode"
+      >
+        <el-row
+          type="flex"
+          justify="space-between"
+          :gutter="16"
+        >
+          <el-col>
+            <el-input
+              v-model="ruleForm.inviteCode"
+            >
+              <template slot="append">
+                <el-link
+                  type="primary"
+                  href="https://mall.pixivic.net/product/9.html"
+                  target="_blank"
+                >
+                  {{ $t('get') }}
+                </el-link>
+              </template>
+            </el-input>
+          </el-col>
+        </el-row>
+      </el-form-item>
+
+      <el-form-item
         :label="$t('verifyCode')"
         prop="verifyCode"
       >
@@ -117,32 +144,6 @@
               placeholder="短信验证码(需手机获取)"
               :maxlength="6"
             />
-          </el-col>
-        </el-row>
-      </el-form-item>
-      <el-form-item
-        :label="$t('inviteCode')"
-        prop="inviteCode"
-      >
-        <el-row
-          type="flex"
-          justify="space-between"
-          :gutter="16"
-        >
-          <el-col>
-            <el-input
-              v-model="ruleForm.inviteCode"
-            >
-              <template slot="append">
-                <el-link
-                  type="primary"
-                  href="https://mall.pixivic.net/product/9.html"
-                  target="_blank"
-                >
-                  {{ $t('get') }}
-                </el-link>
-              </template>
-            </el-input>
           </el-col>
         </el-row>
       </el-form-item>
@@ -321,6 +322,10 @@ export default {
     getPhoneCode() {
       if (!this.ruleForm.verifyCode) {
         this.$refs.ruleForm.validateField('verifyCode');
+        return;
+      }
+      if (!this.ruleForm.inviteCode) {
+        this.$refs.ruleForm.validateField('inviteCode');
         return;
       }
       const getMessage = (v) => {
