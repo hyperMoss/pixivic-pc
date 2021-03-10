@@ -235,7 +235,7 @@ export default {
     };
     const checkInviteCode = (rule, value, callback) => {
       if (!value) {
-        callback(new Error('请输入邀请码'));
+        callback(new Error('请输入食用码'));
       } else {
         callback();
       }
@@ -366,7 +366,7 @@ export default {
     },
     // 注册
     register() {
-      this.$confirm('请仔细确认信息，一个邀请码只能使用一次，信息错误也会消耗邀请码，确认无误后按确定完成注册', '确认信息', {
+      this.$confirm('请仔细确认信息，一个认证码只能使用一次，信息错误也会消耗认证码，确认无误后按确定完成注册', '确认信息', {
         distinguishCancelAndClose: false,
         confirmButtonText: '确定',
         cancelButtonText: '放弃',
