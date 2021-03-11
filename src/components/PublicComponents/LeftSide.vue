@@ -26,7 +26,7 @@
         target="_blank"
         style="text-decoration:none;color:#0080FF;"
       >
-        <div class="beian">桂ICP备17012945号-3</div>
+        <div class="beian"></div>
       </a>
     </div>
   </div>
