@@ -136,7 +136,7 @@
               <template slot="append">
                 <el-link
                   type="primary"
-                  href="https://mall.sharemoe.net/product/9.html"
+                  href="https://weidian.com/item.html?itemID=4335762096"
                   target="_blank"
                 >
                   {{ $t('get') }}
