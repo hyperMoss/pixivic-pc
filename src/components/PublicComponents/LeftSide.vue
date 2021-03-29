@@ -22,11 +22,11 @@
     </el-menu>
     <div>
       <a
-        href=" "
+        href="https://beian.miit.gov.cn/"
         target="_blank"
         style="text-decoration:none;color:#0080FF;"
       >
-        <div class="beian"></div>
+        <div class="beian">鲁ICP备17033775号-60</div>
       </a>
     </div>
   </div>
