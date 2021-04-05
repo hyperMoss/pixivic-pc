@@ -29,7 +29,7 @@
               size="small"
               @click="goAilPay"
           >
-            支付宝
+            淘宝
           </el-button> <el-button
             size="small"
             type="success"
@@ -105,7 +105,7 @@ export default {
     },
     // 打开购买页面
     goAilPay() {
-      window.open('https://mall.sharemoe.net/product/');
+      window.open('https://shop126810115.taobao.com/?spm=2013.1.1000126.2.235c59f9ZhUBfB');
     },
     goWeChatPay() {
       window.open('https://weidian.com/?userid=1676062924');
