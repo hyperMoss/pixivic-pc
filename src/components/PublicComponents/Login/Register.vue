@@ -139,7 +139,14 @@
                   href="https://weidian.com/item.html?itemID=4335762096"
                   target="_blank"
                 >
-                  {{ $t('get') }}
+<!--                  {{ $t('get') }}-->微店获取
+                </el-link>
+                <el-link
+                    type="primary"
+                    href="https://item.taobao.com/item.htm?id=630584686068"
+                    target="_blank"
+                >
+                  <!--                  {{ $t('get') }}-->淘宝获取
                 </el-link>
               </template>
             </el-input>
