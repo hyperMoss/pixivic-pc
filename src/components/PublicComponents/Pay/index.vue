@@ -105,7 +105,7 @@ export default {
     },
     // 打开购买页面
     goAilPay() {
-      window.open('https://shop126810115.taobao.com/in');
+      window.open('https://item.taobao.com/item.htm?id=642018557560');
     },
     goWeChatPay() {
       window.open('https://weidian.com/?userid=1676062924');
