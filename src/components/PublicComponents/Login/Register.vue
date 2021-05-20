@@ -401,6 +401,7 @@ export default {
                 this.$message.closeAll();
                 this.$message.warning(res.data.message);
                 this.ruleForm.phoneCode='';
+                this.ruleForm.verifyCode='';
               }
             })
             .catch((err) => {
