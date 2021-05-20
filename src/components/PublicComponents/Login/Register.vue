@@ -375,7 +375,7 @@ export default {
     },
     // 注册
     register() {
-      this.$confirm('请仔细确认信息，一个食用码只能使用一次，信息错误也会消耗食用码，确认无误后按确定完成注册', '确认信息', {
+      this.$confirm('请仔细确认信息，确认无误后按确定完成注册', '确认信息', {
         distinguishCancelAndClose: false,
         confirmButtonText: '确定',
         cancelButtonText: '放弃',
