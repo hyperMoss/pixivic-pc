@@ -400,6 +400,7 @@ export default {
               } else {
                 this.$message.closeAll();
                 this.$message.warning(res.data.message);
+                this.ruleForm.phoneCode='';
               }
             })
             .catch((err) => {
