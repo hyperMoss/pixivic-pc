@@ -9,7 +9,7 @@
     >
       <el-popover
         placement="left"
-        style="position:fixed;z-index:999;right:40px;bottom:100px;"
+        style="position:fixed;z-index:999;right:40px;bottom:120px;"
         trigger="hover"
         width="300"
       >
@@ -121,7 +121,6 @@ export default {
   },
   watch: {},
   mounted() {
-    localStorage.setItem('waterfull-column', 4);
     this.fatherMounted = true;
   },
   methods: {
@@ -172,7 +171,6 @@ export default {
 .DailyRank {
   height: calc(~"100vh - 60px");
   overflow-y: hidden;
-  width: calc(~"100%");
   display: flex;
   justify-content: center;
 }

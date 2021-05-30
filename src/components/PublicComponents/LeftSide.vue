@@ -1,9 +1,9 @@
 <template>
   <div class="LeftSide">
     <el-menu
+      class="menu"
       :collapse="isCollapse"
       :default-active="computerActiveNav"
-      class="el-menu-vertical-demo"
       @close="handleClose"
       @select="handleOpen"
     >
@@ -103,12 +103,30 @@ export default {
   justify-content: space-between;
   align-content: center;
   .beian {
-    width: 15px;
     margin: 0 auto;
     line-height: 24px;
     font-size: 12px;
     word-wrap: break-word; /*英文的时候需要加上这句，自动换行*/
     word-break: break-all;
+  }
+}
+@media screen and (max-width:600px){
+  .menu{
+    display:flex;
+    justify-content:space-between;
+    width:100%;
+    .li{
+      padding-left: 0;
+      width:100%;
+    }
+
+    /deep/ .el-menu-item{
+      width:100%;
+      text-align:center;
+    }
+  }
+  .beian{
+    display:none;
   }
 }
 </style>

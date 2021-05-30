@@ -1,35 +1,25 @@
 <template>
   <div id="app">
-    <el-container
-      class="page-container"
+    <div
+      class="app-container"
       style="overflow: hidden;"
     >
-      <!-- 左边栏开始 -->
-      <el-aside
-        style="background-color: rgb(238, 241, 246)"
-        width="65px"
-      >
+      <!-- 边栏开始 -->
+      <div class="page-bar">
         <left-side />
-      </el-aside>
-      <!-- 左边栏结束 -->
-      <el-container style="overflow: hidden;">
-        <!-- 标题栏开始 -->
-        <el-header>
-          <header-bar />
-        </el-header>
-        <!-- 标题栏结束 -->
-        <!-- 主要页面开始 -->
-        <el-main class="window-view">
+      </div>
+      <div class="page-container">
+        <header-bar />
+        <div class="window-view">
           <vue-page-stack>
             <router-view
               :key="key"
               style="max-height: calc(~'100vh - 60px');"
             />
           </vue-page-stack>
-        </el-main>
-        <!-- 主要页面结束 -->
-      </el-container>
-    </el-container>
+        </div>
+      </div>
+    </div>
     <Login />
     <CollectPicture />
     <CheckPhone />
@@ -116,16 +106,31 @@ export default {
 
 <style lang="less">
 #app {
-  .page-container {
-    /deep/ .el-main {
-      padding: 0px;
+  .app-container {
+    display:flex;
+  }
+  .window-view {
+    overflow: auto;
+    background: #fff;
+  }
+  .page-bar{
+    width:65px;
+    background-color: rgb(238, 241, 246)
+  }
+  @media screen and (max-width:600px){
+    .app-container  {
+      flex-direction: column-reverse;
+    }
+    .page-bar{
+      width:100%;
+      position: absolute;
+      z-index: 10;
+      height: 60px;
     }
   }
-}
-.window-view {
-  height: calc(~"100vh - 60px");
-  width: calc(~"100vw - 65px");
-  overflow: auto;
-  background: #fff;
+  .page-container{
+    overflow: hidden;
+    flex: 1;
+  }
 }
 </style>

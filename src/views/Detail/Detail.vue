@@ -232,7 +232,9 @@ export default {
     },
     // 处理图片数据
     handleData(data) {
-      this.getArtistIllust(data.artistId);
+      if (this.user.id) {
+        this.getArtistIllust(data.artistId);
+      }
       this.srcList = data.imageUrls.map((e) => replaceBigImg(e.original)) || [];
       return {
         ...data,
@@ -570,7 +572,7 @@ export default {
     display: inline-block;
     left: 28px;
     top: -1px;
-    content: '点击看大图';
+    content: '大图';
     width: 88px;
     height: 18px;
   }
