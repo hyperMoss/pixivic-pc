@@ -60,7 +60,7 @@ export default {
       scrollY: 0,
       columnHeight: [],
       column: 0,
-      width: this.listWidth || getClient().width - 65,
+      width: this.listWidth || getClient().width,
       height: this.listHeight || getClient().height,
     };
   },
@@ -160,13 +160,13 @@ export default {
       }
     },
     waterFall() {
-      this.width = this.listWidth || getClient().width - 65;
+      this.width = this.listWidth || getClient().width;
       this.height = this.listHeight || getClient().height;
       const column = parseInt(localStorage.getItem('waterfull-column'));
       if (column) {
         this.column = column;
       } else {
-        this.column = Math.ceil(this.width / columnWidth);
+        this.column = Math.min(Math.floor(this.width / columnWidth), 4);
       }
       this.columnHeight = new Array(this.column).fill(0);
       this.handleList(this.list);

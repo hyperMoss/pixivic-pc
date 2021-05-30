@@ -54,19 +54,19 @@ function getTranslations(param) {
 }
 
 // 图片上传
-function uploadImg(data, params) {
+function uploadImg(param) {
   return axios({
-    url: `https://upload.pixivic.com/avatar/image?isTemp=${!params}`,
+    url: 'https://cbir.pixivic.com/images',
     method: 'post',
-    data,
-    params,
+    headers: { 'Content-Type': 'multipart/form-data' },
+    data: param,
   });
 }
 
 // 以图搜图
 function searchByImg(imageUrl) {
   return axios({
-    url: `/similarityImages?imageUrl=${imageUrl}`,
+    url: `/similarImages?imageUrl=${imageUrl}`,
     method: 'get',
   });
 }

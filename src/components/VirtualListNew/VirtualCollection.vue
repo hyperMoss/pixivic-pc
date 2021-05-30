@@ -61,7 +61,10 @@
         </p>
       </div>
     </infinite-loading>
-    <el-backtop target=".vue-virtual-collection" />
+    <el-backtop
+      target=".vue-virtual-collection"
+      :bottom="64"
+    />
   </div>
 </template>
 

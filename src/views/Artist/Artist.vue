@@ -190,6 +190,9 @@ export default {
       this.$router.back();
     },
     infinite($state) {
+      if (!this.user.id) {
+        return;
+      }
       this.$api.detail
         .reqArtistIllust({
           page: this.page++,

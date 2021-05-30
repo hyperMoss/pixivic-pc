@@ -66,6 +66,14 @@ const routes = [
       title: '重置密码',
     },
   },
+  {
+    path: '/SearchResult/graph',
+    name: 'SearchGraph',
+    component: require('./views/SearchResult/Graph.vue').default,
+    meta: {
+      title: '以图搜图',
+    },
+  },
   ...require('./views/SpotLight').default, // A 业务路由入口
   ...require('./views/User').default, // A 业务路由入口
   ...require('./views/Collection/index').default, // A 业务路由入口

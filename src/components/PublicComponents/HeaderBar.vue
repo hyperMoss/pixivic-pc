@@ -1,20 +1,19 @@
 <template>
   <div class="HeaderBar">
-    <el-row
-      align="middle"
-      justify="space-around"
-      style="width:100%;"
-      type="flex"
-    >
-      <el-col>
-        <a href="/">
-          <img
-            alt
-            src="@/assets/images/icon.svg"
-          >
-        </a>
-      </el-col>
-      <el-col>
+    <div class="flex-container">
+      <a
+        href="/"
+        class="page-icon"
+      >
+        <img
+          alt
+          src="@/assets/images/icon.svg"
+        >
+      </a>
+      <div
+        class="header-info"
+        style="flex:1"
+      >
         <el-autocomplete
           v-model="params.keyword"
           :debounce="300"
@@ -38,6 +37,18 @@
             />
           </el-select>
         </el-autocomplete>
+        <div class="upload">
+          <i
+            class="el-icon-camera upload-icon"
+          />
+          <input
+            id="uploads"
+            type="file"
+            accept="image/png, image/jpeg, image/gif, image/jpg"
+            @change="uploadImg($event)"
+          >
+        </div>
+
         <el-popover
           placement="bottom"
           style="margin-left:10px"
@@ -54,26 +65,27 @@
             @on-click="handleClickTag"
           />
         </el-popover>
-      </el-col>
-      <el-select
-        :value="$i18n.locale"
-        @change="changeLocaleLang"
-      >
-        <el-option
-          v-for="(lang, i) in langs"
-          :key="`Lang${i}`"
-          :value="lang"
-        >
-          {{
-            lang
-          }}
-        </el-option>
-      </el-select>
-      <el-col class="header-info">
+      </div>
+
+      <div class="header-info">
         <!-- <el-badge :value="3">
-          <el-button size="small">消息</el-button>
-        </el-badge>-->
-        <div style="margin-left:20px;">
+            <el-button size="small">消息</el-button>
+          </el-badge>-->
+        <div style="margin-left:auto;display: flex;align-items:center">
+          <el-select
+            :value="$i18n.locale"
+            @change="changeLocaleLang"
+          >
+            <el-option
+              v-for="(lang, i) in langs"
+              :key="`Lang${i}`"
+              :value="lang"
+            >
+              {{
+                lang
+              }}
+            </el-option>
+          </el-select>
           <div v-if="user.id">
             <el-dropdown
               trigger="click"
@@ -111,8 +123,9 @@
             >{{ $t('signUp') }}</span>
           </div>
         </div>
-      </el-col>
-    </el-row>
+      </div>
+    </div>
+
     <SetDialog
       v-if="settingVisible"
       :setting-visible.sync="settingVisible"
@@ -377,6 +390,50 @@ export default {
         this.$store.dispatch('setLoginBoolean');
       }
     },
+    uploadImg(e) {
+      const file = e.target.files[0];
+      if (!/\.(jpg|jpeg|png|webp|GIF|JPG|PNG)$/.test(e.target.value)) {
+        this.$message.info(this.$t('请选择正确图片格式'));
+        return false;
+      }
+      /* if (file.size > 1 * 1024 * 1024) {
+        Alert({
+          content: '图片大小不能超过1M'
+        });
+        return false;
+      } */
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        // eslint-disable-next-line no-unused-vars
+        let data;
+        if (typeof e.target.result === 'object') {
+          data = window.URL.createObjectURL(new Blob([e.target.result]));
+        } else {
+          data = e.target.result;
+        }
+      };
+      reader.readAsArrayBuffer(file);
+      const formData = new FormData();
+      formData.append('image', e.target.files[0]);
+      this.loading = true;
+      this.$api.search.uploadImg(formData)
+        .then((res) => {
+          if (res.status === 200) {
+            this.$router.push({
+              path: '/SearchResult/graph',
+              query: {
+                name: res.data.data,
+              },
+            });
+          } else {
+            this.$message.error(this.$t('上传失败 请重试'));
+          }
+        })
+        .finally(() => {
+          this.loading = false;
+        });
+      /* const result = await this.$api.search.uploadImg(formData); */
+    },
   },
 };
 </script>
@@ -384,17 +441,16 @@ export default {
 <style scoped lang="less">
 .HeaderBar {
   background-color: #fff;
-  height: 100%;
+  height: 60px;
   width: 100%;
   display: flex;
   overflow: hidden;
-
   /deep/ .el-select .el-input {
     width: 80px;
   }
 
   /deep/ .input-with-select {
-    width: 25vw;
+    width: 60%;
     background-color: #fff;
   }
 
@@ -404,7 +460,7 @@ export default {
 
   .header-info {
     display: flex;
-    justify-content: flex-end;
+    justify-content: center;
     align-items: center;
   }
 }
@@ -441,4 +497,36 @@ export default {
     background: rgba(55, 53, 47, 0.16);
   }
 }
+
+.flex-container{
+  width:100%;
+  display: flex;
+  align-items: center;
+  justify-content:space-between;
+}
+.page-icon {
+
+}
+@media screen and (max-width:600px){
+  .page-icon  {
+    display: none;
+  }
+}
+.upload {
+  margin-left: 10px;
+  position: relative;
+  cursor: pointer;
+  .upload-icon {
+    color:#409EFF;
+    width: 16px;
+    z-index: 0;
+  }
+  #uploads {
+    width: 16px;
+    z-index: 1;
+    opacity: 0;
+    position: absolute;
+    left: 0;
+  }}
+
 </style>
