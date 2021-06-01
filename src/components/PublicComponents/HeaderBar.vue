@@ -391,6 +391,10 @@ export default {
       }
     },
     uploadImg(e) {
+      const loading = this.$loading({
+        lock: true,
+        text: '上传中...',
+      });
       const file = e.target.files[0];
       if (!/\.(jpg|jpeg|png|webp|GIF|JPG|PNG)$/.test(e.target.value)) {
         this.$message.info(this.$t('请选择正确图片格式'));
@@ -415,7 +419,6 @@ export default {
       reader.readAsArrayBuffer(file);
       const formData = new FormData();
       formData.append('image', e.target.files[0]);
-      this.loading = true;
       this.$api.search.uploadImg(formData)
         .then((res) => {
           if (res.status === 200) {
@@ -430,7 +433,7 @@ export default {
           }
         })
         .finally(() => {
-          this.loading = false;
+          loading.close();
         });
       /* const result = await this.$api.search.uploadImg(formData); */
     },
