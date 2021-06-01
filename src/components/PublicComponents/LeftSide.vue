@@ -26,7 +26,7 @@
         target="_blank"
         style="text-decoration:none;color:#0080FF;"
       >
-        <div class="beian">桂ICP备17012945号-3</div>
+        <div class="beian"><a href="https://beian.miit.gov.cn/">鲁ICP备17033775号-60</a></div>
       </a>
     </div>
   </div>
