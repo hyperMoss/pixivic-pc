@@ -522,7 +522,8 @@ export default {
     z-index: 0;
   }
   #uploads {
-    width: 16px;
+    cursor: pointer;
+    width: 20px;
     z-index: 1;
     opacity: 0;
     position: absolute;
