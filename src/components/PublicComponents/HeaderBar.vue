@@ -526,6 +526,7 @@ export default {
   }
   #uploads {
     height: 40px;
+    font-size:0;
     cursor: pointer;
     width: 20px;
     z-index: 1;
