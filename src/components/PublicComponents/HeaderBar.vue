@@ -398,6 +398,7 @@ export default {
       const file = e.target.files[0];
       if (!/\.(jpg|jpeg|png|webp|GIF|JPG|PNG)$/.test(e.target.value)) {
         this.$message.info(this.$t('请选择正确图片格式'));
+        loading.close();
         return false;
       }
       /* if (file.size > 1 * 1024 * 1024) {
@@ -433,7 +434,7 @@ export default {
           }
         })
         .finally(() => {
-          loading.close();
+          //loading.close();
         });
       /* const result = await this.$api.search.uploadImg(formData); */
     },
