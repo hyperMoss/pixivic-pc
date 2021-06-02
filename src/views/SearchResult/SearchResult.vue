@@ -77,7 +77,7 @@ export default {
       return;
     }
     this.getTags(this.keyword);
-    this.getExclusive(this.keyword);
+    //this.getExclusive(this.keyword);
   },
   methods: {
     getTags(param) {
@@ -92,7 +92,7 @@ export default {
     },
     clickTag(val) {
       this.getTags(val.keyword);
-      this.getExclusive(val.keyword);
+      //this.getExclusive(val.keyword);
       this.$router.push({
         path: '/keywords',
         query: {
