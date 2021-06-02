@@ -525,6 +525,7 @@ export default {
     z-index: 0;
   }
   #uploads {
+    font-size:0;
     cursor: pointer;
     width: 20px;
     z-index: 1;
