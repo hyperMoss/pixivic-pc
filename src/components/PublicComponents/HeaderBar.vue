@@ -434,7 +434,7 @@ export default {
           }
         })
         .finally(() => {
-          //loading.close();
+          loading.close();
         });
       /* const result = await this.$api.search.uploadImg(formData); */
     },
