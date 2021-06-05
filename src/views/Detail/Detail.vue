@@ -34,7 +34,7 @@
         </div>
         <figcaption class="detail-content__info">
           <div class="card">
-            <h1>{{ illustDetail.title }}</h1>
+            <h2>{{ illustDetail.title }}</h2>
             <div
               class="disc"
               v-html="illustDetail.caption"
