@@ -63,12 +63,12 @@ export default {
           name: this.$t('Notice'),
           icon: 'el-icon-document',
           routePath: '/note',
-        },
+        }/*,
         {
           name: this.$t('Donate'),
           icon: 'el-icon-coffee-cup',
           routePath: '/donate',
-        },
+        }*/,
         {
           name: this.$t('Links'),
           icon: 'el-icon-link',
