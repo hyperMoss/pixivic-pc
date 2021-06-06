@@ -145,7 +145,7 @@
 
                 <el-link
                     type="primary"
-                    href="https://item.taobao.com/item.htm?id=644850272586"
+                    href="https://item.taobao.com/item.htm?id=646619821452"
                     target="_blank"
                 >
                   <!--                  {{ $t('get') }}-->淘宝获取
