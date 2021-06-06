@@ -105,6 +105,7 @@ export {
   getTranslations,
   getExclusive,
   uploadImg,
+  uploadAavatar,
   searchByImg,
   getExists,
   getHotTag,
