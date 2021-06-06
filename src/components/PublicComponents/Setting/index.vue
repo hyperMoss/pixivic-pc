@@ -191,6 +191,7 @@ export default {
           data: formData,
           moduleName: 'avatar'
         };
+        const result = await this.$api.search.uploadAavatar(param);
         if (result.status === 200) {
           this.$message.success('更新头像成功');
         } else {
