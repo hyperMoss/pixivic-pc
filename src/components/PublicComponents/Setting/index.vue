@@ -187,7 +187,7 @@ export default {
         });
         const formData = new FormData();
         formData.append('file', files);
-        const result = await this.$api.search.uploadImg(formData, {
+        const result = await this.$api.search.uploadAavatar(formData, {
           userId: this.user.id,
         });
         if (result.status === 200) {

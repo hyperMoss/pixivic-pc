@@ -63,6 +63,15 @@ function uploadImg(param) {
   });
 }
 
+// 图片上传
+function uploadAavatar(param) {
+  return axios({
+    url: `https://upload.pixivic.com/${param.moduleName}/image`,
+    method: 'post',
+    data: param.data
+  });
+}
+
 // 以图搜图
 function searchByImg(imageUrl) {
   return axios({
