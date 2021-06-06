@@ -1,99 +1,72 @@
 <template>
   <div class="register">
     <el-form
-      ref="ruleForm"
-      :model="ruleForm"
-      status-icon
-      :rules="rules"
-      label-width="100px"
-      class="demo-ruleForm"
-      label-position="left"
+        ref="ruleForm"
+        :model="ruleForm"
+        status-icon
+        :rules="rules"
+        label-width="100px"
+        class="demo-ruleForm"
+        label-position="left"
     >
       <el-form-item
-        :label="$t('email')"
-        prop="email"
+          :label="$t('email')"
+          prop="email"
       >
         <el-input v-model="ruleForm.email" />
       </el-form-item>
       <el-form-item
-        :label="$t('username')"
-        prop="username"
+          :label="$t('username')"
+          prop="username"
       >
         <el-input
-          v-model="ruleForm.username"
-          :maxlength="10"
+            v-model="ruleForm.username"
+            :maxlength="10"
         />
       </el-form-item>
       <el-form-item
-        :label="$t('password')"
-        prop="password"
+          :label="$t('password')"
+          prop="password"
       >
         <el-input
-          v-model="ruleForm.password"
-          :maxlength="20"
-          show-password
-          type="password"
-          autocomplete="off"
+            v-model="ruleForm.password"
+            :maxlength="20"
+            show-password
+            type="password"
+            autocomplete="off"
         />
       </el-form-item>
       <el-form-item
-        :label="$t('checkPassword')"
-        prop="checkPass"
+          :label="$t('checkPassword')"
+          prop="checkPass"
       >
         <el-input
-          v-model="ruleForm.checkPass"
-          :maxlength="20"
-          show-password
-          type="password"
-          autocomplete="off"
+            v-model="ruleForm.checkPass"
+            :maxlength="20"
+            show-password
+            type="password"
+            autocomplete="off"
         />
       </el-form-item>
       <el-form-item
-        :label="$t('inviteCode')"
-        prop="inviteCode"
+          :label="$t('verifyCode')"
+          prop="verifyCode"
       >
         <el-row
-          type="flex"
-          justify="space-between"
-          :gutter="16"
+            type="flex"
+            justify="space-between"
+            :gutter="16"
         >
           <el-col>
             <el-input
-              v-model="ruleForm.inviteCode"
-            >
-              <template slot="append">
-                <el-link
-                  type="primary"
-                  href="https://mall.pixivic.net/product/9.html"
-                  target="_blank"
-                >
-                  {{ $t('get') }}
-                </el-link>
-              </template>
-            </el-input>
-          </el-col>
-        </el-row>
-      </el-form-item>
-
-      <el-form-item
-        :label="$t('verifyCode')"
-        prop="verifyCode"
-      >
-        <el-row
-          type="flex"
-          justify="space-between"
-          :gutter="16"
-        >
-          <el-col>
-            <el-input
-              v-model="ruleForm.verifyCode"
-              :maxlength="4"
+                v-model="ruleForm.verifyCode"
+                :maxlength="4"
             >
               <template slot="append">
                 <img
-                  style="width:100px"
-                  :src="`data:image/bmp;base64,${imageBase64}`"
-                  @click.stop="getCode"
+                    style="width:100px"
+                    :src="`data:image/bmp;base64,${imageBase64}`"
+                    @click.stop="getCode"
                 >
               </template>
             </el-input>
@@ -101,26 +74,26 @@
         </el-row>
       </el-form-item>
       <el-form-item
-        :label="$t('phone')"
-        prop="phone"
+          :label="$t('phone')"
+          prop="phone"
       >
         <el-row
-          type="flex"
-          justify="space-between"
-          :gutter="16"
+            type="flex"
+            justify="space-between"
+            :gutter="16"
         >
           <el-col>
             <el-input
-              v-model="ruleForm.phone"
-              placeholder="手机号"
-              :maxlength="11"
+                v-model="ruleForm.phone"
+                placeholder="手机号"
+                :maxlength="11"
             >
               <template slot="append">
                 <el-button
-                  :disabled="isOvertime"
-                  type="primary"
-                  :loading="loading"
-                  @click="getPhoneCode"
+                    :disabled="isOvertime"
+                    type="primary"
+                    :loading="loading"
+                    @click="getPhoneCode"
                 >
                   {{ word }}
                 </el-button>
@@ -130,28 +103,63 @@
         </el-row>
       </el-form-item>
       <el-form-item
-        :label="$t('getPhoneCode')"
-        prop="phoneCode"
+          :label="$t('getPhoneCode')"
+          prop="phoneCode"
       >
         <el-row
-          type="flex"
-          justify="space-between"
-          :gutter="16"
+            type="flex"
+            justify="space-between"
+            :gutter="16"
         >
           <el-col>
             <el-input
-              v-model="ruleForm.phoneCode"
-              placeholder="短信验证码(需手机获取)"
-              :maxlength="6"
+                v-model="ruleForm.phoneCode"
+                placeholder="短信验证码(需手机获取)"
+                :maxlength="6"
             />
+          </el-col>
+        </el-row>
+      </el-form-item>
+      <el-form-item
+          :label="$t('inviteCode')"
+          prop="inviteCode"
+      >
+        <el-row
+            type="flex"
+            justify="space-between"
+            :gutter="16"
+        >
+          <el-col>
+            <el-input
+                v-model="ruleForm.inviteCode"
+            >
+              <template slot="append">
+                <el-link
+                    type="primary"
+                    href="https://weidian.com/item.html?itemID=4335762096"
+                    target="_blank"
+                >
+                  <!--                  {{ $t('get') }}-->微店获取
+                </el-link>
+                &nbsp;&nbsp;
+
+                <el-link
+                    type="primary"
+                    href="https://item.taobao.com/item.htm?id=644850272586"
+                    target="_blank"
+                >
+                  <!--                  {{ $t('get') }}-->淘宝获取
+                </el-link>
+              </template>
+            </el-input>
           </el-col>
         </el-row>
       </el-form-item>
       <div style="display: flex;justify-content: center">
         <el-button
-          type="primary"
-          :loading="loading"
-          @click="submitForm('ruleForm')"
+            type="primary"
+            :loading="loading"
+            @click="submitForm('ruleForm')"
         >
           {{ $t('registered') }}
         </el-button>
@@ -176,11 +184,11 @@ export default {
         return callback(new Error('邮箱格式错误'));
       }
       this.$api.user.checkEmail(value)
-        .then((res) => {
-          if (res.status !== 200) {
-            callback(new Error('邮箱已被注册'));
-          }
-        });
+          .then((res) => {
+            if (res.status !== 200) {
+              callback(new Error('邮箱已被注册'));
+            }
+          });
       callback();
     };
     // 用户名验证函数
@@ -196,13 +204,13 @@ export default {
         return callback(new Error('用户名应为4-10位'));
       }
       this.$api.user.checkUser(value)
-        .then((res) => {
-          if (res.status !== 200) {
-            callback(new Error('此用户名已被注册'));
-          } else {
-            callback();
-          }
-        });
+          .then((res) => {
+            if (res.status !== 200) {
+              callback(new Error('此用户名已被注册'));
+            } else {
+              callback();
+            }
+          });
     };
     // 密码验证
     const validatePass = (rule, value, callback) => {
@@ -236,7 +244,7 @@ export default {
     };
     const checkInviteCode = (rule, value, callback) => {
       if (!value) {
-        callback(new Error('请输入邀请码'));
+        callback(new Error('请输入食用码'));
       } else {
         callback();
       }
@@ -249,13 +257,13 @@ export default {
         callback(new Error('请输入合法手机号'));
       } else {
         this.$api.user.checkPhone(value)
-          .then((res) => {
-            if (res.status !== 200) {
-              callback(new Error('此手机号不可用'));
-            } else {
-              callback();
-            }
-          });
+            .then((res) => {
+              if (res.status !== 200) {
+                callback(new Error('此手机号不可用'));
+              } else {
+                callback();
+              }
+            });
       }
     };
     return {
@@ -312,20 +320,16 @@ export default {
     // 获取验证码
     getCode() {
       this.$api.user.verificationCode()
-        .then((res) => {
-          const { data: { data } } = res;
-          this.imageBase64 = data.imageBase64;
-          this.vid = data.vid;
-        });
+          .then((res) => {
+            const { data: { data } } = res;
+            this.imageBase64 = data.imageBase64;
+            this.vid = data.vid;
+          });
     },
     // 获取手机验证码
     getPhoneCode() {
       if (!this.ruleForm.verifyCode) {
         this.$refs.ruleForm.validateField('verifyCode');
-        return;
-      }
-      if (!this.ruleForm.inviteCode) {
-        this.$refs.ruleForm.validateField('inviteCode');
         return;
       }
       const getMessage = (v) => {
@@ -335,23 +339,23 @@ export default {
           value: this.ruleForm.verifyCode,
           phone: this.ruleForm.phone,
         })
-          .then((res) => {
-            if (res.status !== 200) {
-              this.$message.error(res.data.message);
-            }
-            this.$message.success(res.data.message);
-            let time = 60;
-            const sendTimer = setInterval(() => {
-              this.isOvertime = true;
-              time -= 1;
-              this.word = `重新发送${time}`;
-              if (time < 0) {
-                this.isOvertime = false;
-                clearInterval(sendTimer);
-                this.word = '获取验证码';
+            .then((res) => {
+              if (res.status !== 200) {
+                this.$message.error(res.data.message);
               }
-            }, 1000);
-          });
+              this.$message.success(res.data.message);
+              let time = 60;
+              const sendTimer = setInterval(() => {
+                this.isOvertime = true;
+                time -= 1;
+                this.word = `重新发送${time}`;
+                if (time < 0) {
+                  this.isOvertime = false;
+                  clearInterval(sendTimer);
+                  this.word = '获取验证码';
+                }
+              }, 1000);
+            });
       };
       this.$refs.ruleForm.validateField('phone', getMessage);
     },
@@ -371,41 +375,43 @@ export default {
     },
     // 注册
     register() {
-      this.$confirm('请仔细确认信息，一个邀请码只能使用一次，信息错误也会消耗邀请码，确认无误后按确定完成注册', '确认信息', {
+      this.$confirm('请仔细确认信息，确认无误后按确定完成注册', '确认信息', {
         distinguishCancelAndClose: false,
         confirmButtonText: '确定',
         cancelButtonText: '放弃',
       })
-        .then(() => {
-          const reqBody = {
-            userInfo: {
-              username: this.ruleForm.username.trim(),
-              email: this.ruleForm.email,
-              password: this.ruleForm.password,
-              exchangeCode: this.ruleForm.inviteCode,
-            },
-            vid: this.ruleForm.phone,
-            value: this.ruleForm.phoneCode,
-          };
-          this.$api.user.register(reqBody)
-            .then((res) => {
-              if (res.status === 200) {
-                this.$store.dispatch('setUser', res.data.data);
-                this.$store.dispatch('setLoginBoolean');
-                this.$message.success(res.data.message);
-              } else {
-                this.$message.closeAll();
-                this.$message.warning(res.data.message);
-              }
-            })
-            .catch((err) => {
-              console.error(err);
-            });
-          this.loading = false;
-          this.getCode();
-        }).catch(() => {
+          .then(() => {
+            const reqBody = {
+              userInfo: {
+                username: this.ruleForm.username.trim(),
+                email: this.ruleForm.email,
+                password: this.ruleForm.password,
+                exchangeCode: this.ruleForm.inviteCode,
+              },
+              vid: this.ruleForm.phone,
+              value: this.ruleForm.phoneCode,
+            };
+            this.$api.user.register(reqBody)
+                .then((res) => {
+                  if (res.status === 200) {
+                    this.$store.dispatch('setUser', res.data.data);
+                    this.$store.dispatch('setLoginBoolean');
+                    this.$message.success(res.data.message);
+                  } else {
+                    this.$message.closeAll();
+                    this.$message.warning(res.data.message);
+                    this.ruleForm.phoneCode='';
+                    this.ruleForm.verifyCode='';
+                  }
+                })
+                .catch((err) => {
+                  console.error(err);
+                });
+            this.loading = false;
+            this.getCode();
+          }).catch(() => {
 
-        });
+      });
     },
   },
 };
