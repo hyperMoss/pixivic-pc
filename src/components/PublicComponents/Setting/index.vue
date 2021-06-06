@@ -187,9 +187,10 @@ export default {
         });
         const formData = new FormData();
         formData.append('file', files);
-        const result = await this.$api.search.uploadAavatar(formData, {
-          userId: this.user.id,
-        });
+        const param = {
+          data: formData,
+          moduleName: 'avatar'
+        };
         if (result.status === 200) {
           this.$message.success('更新头像成功');
         } else {
