@@ -66,7 +66,7 @@ function uploadImg(param) {
 // 图片上传
 function uploadAavatar(param) {
   return axios({
-    url: `https://upload.pixivic.com/${param.moduleName}/image`,
+    url: `https://upload.pixivic.com/avatar/image`,
     method: 'post',
     data: param.data
   });
