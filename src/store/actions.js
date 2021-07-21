@@ -11,7 +11,6 @@ export const setUser = ({
   commit(types.SET_USER, user);
   const { permissionLevelExpireDate = Date.now(), permissionLevel = 1 } = user;
   if (permissionLevel >= 3 && new Date(permissionLevelExpireDate).valueOf() > Date.now()) {
-    if (localStorage.getItem('serverAddress')) { return; }
     getVipProxyServer().then(
       (res) => {
         if (res.status === 200) {
