@@ -145,7 +145,7 @@
 
                 <el-link
                     type="primary"
-                    href="https://item.taobao.com/item.htm?id=646619821452"
+                    href="https://url.ipv4.host/zctb"
                     target="_blank"
                 >
                   <!--                  {{ $t('get') }}-->淘宝获取
