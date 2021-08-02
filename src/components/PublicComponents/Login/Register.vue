@@ -136,7 +136,7 @@
               <template slot="append">
                 <el-link
                     type="primary"
-                    href="https://weidian.com/item.html?itemID=4335762096"
+                    href="https://url.ipv4.host/zcwd"
                     target="_blank"
                 >
                   <!--                  {{ $t('get') }}-->微店获取
