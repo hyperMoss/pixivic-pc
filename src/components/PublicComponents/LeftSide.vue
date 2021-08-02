@@ -58,12 +58,12 @@ export default {
           name: this.$t('Home'),
           icon: 'el-icon-s-home',
           routePath: '/',
-        }/*,
+        },
         {
           name: this.$t('Notice'),
           icon: 'el-icon-document',
           routePath: '/note',
-        }*//*,
+        }/*,
         {
           name: this.$t('Donate'),
           icon: 'el-icon-coffee-cup',

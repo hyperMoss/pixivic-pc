@@ -59,7 +59,7 @@ export default {
       // 相关信息
       noteInfo: [
         {
-          title: '关于',
+/*          title: '关于',
           content: [
             '出生于2018-10-01，是一位兴趣使然的工具酱。',
             '她天然，精致（ui统一），敏捷（前后分离&纯js）。',
@@ -68,7 +68,7 @@ export default {
             '前端项目地址 https://github.com/cheer-fun/pixivic-pc',
             '后端项目地址 https://github.com/OysterQAQ/Pixiv-Illustration-Collection-Backend',
           ],
-        },
+        },*/
         {
           title: '浏览器的使用',
           content: [
@@ -77,13 +77,13 @@ export default {
           ],
         },
         {
-          title: '商务合作',
-          content: ['联系QQ：403827354'],
+          title: '联系方式',
+          content: ['联系邮箱：oysterqaq@gmail.com'],
         }
 
       ],
       // 开发人员
-      devsInfo: [
+/*      devsInfo: [
         {
           href: 'https://www.oysterqaq.com/',
           src: require('@/assets/images/OysterQAQ.jpg'),
@@ -104,7 +104,7 @@ export default {
           href: 'https://github.com/goblinM',
           src: require('@/assets/images/mmx.jpg'),
         },
-      ],
+      ],*/
     };
   },
   computed: {},
