@@ -58,17 +58,17 @@ export default {
       activeNames: [0],
       // 相关信息
       noteInfo: [
-        {
-/*          title: '关于',
-          content: [
-            '出生于2018-10-01，是一位兴趣使然的工具酱。',
-            '她天然，精致（ui统一），敏捷（前后分离&纯js）。',
+        /*     {
+             title: '关于',
+              content: [
+                '出生于2018-10-01，是一位兴趣使然的工具酱。',
+                '她天然，精致（ui统一），敏捷（前后分离&纯js）。',
 
-            '她希望能在茫茫互联网留下一些存在的痕迹，翘首以盼大家能通过各大搜索引擎访问她（将有助于提升她的搜索排名），搜索关键词：Pixiv、pixiv、P站、p站。',
-            '前端项目地址 https://github.com/cheer-fun/pixivic-pc',
-            '后端项目地址 https://github.com/OysterQAQ/Pixiv-Illustration-Collection-Backend',
-          ],
-        },*/
+                '她希望能在茫茫互联网留下一些存在的痕迹，翘首以盼大家能通过各大搜索引擎访问她（将有助于提升她的搜索排名），搜索关键词：Pixiv、pixiv、P站、p站。',
+                '前端项目地址 https://github.com/cheer-fun/pixivic-pc',
+                '后端项目地址 https://github.com/OysterQAQ/Pixiv-Illustration-Collection-Backend',
+              ],
+            },*/
         {
           title: '浏览器的使用',
           content: [
@@ -77,13 +77,13 @@ export default {
           ],
         },
         {
-          title: '联系方式',
+          title: '联系',
           content: ['联系邮箱：oysterqaq@gmail.com'],
         }
 
-      ],
+      ]/*,
       // 开发人员
-/*      devsInfo: [
+      devsInfo: [
         {
           href: 'https://www.oysterqaq.com/',
           src: require('@/assets/images/OysterQAQ.jpg'),
