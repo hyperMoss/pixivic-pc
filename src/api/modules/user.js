@@ -166,7 +166,7 @@ export function vertifyEmail(email) {
 // 用户设置邮箱(会返回新的token)
 export function setEmail(params) {
   return axios({
-    url: `/users/${params.userId}/email`,
+    url: `/users/${params.userId}/emailCheck`,
     method: 'put',
     params,
   });
