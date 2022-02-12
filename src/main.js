@@ -74,7 +74,7 @@ Vue.filter('replaceSmall', (val) => replaceSmallImg(val));
 Vue.filter('replaceAvatar', (val) => `${process.env.VUE_APP_STATIC_API}${val}.jpg`);
 Vue.filter(
   'replaceSquare',
-  (val) => `https://acgpic.net/c/360x360_70/img-master${
+  (val) => `https://s.i.edcms.pw/c/360x360_70/img-master${
     val.split('img-master')[1]}`,
 );
 
