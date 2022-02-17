@@ -1,7 +1,7 @@
 {
   "message": "你好 i18n !!",
   "filter.loginError": "请登录",
-  "wechatImg": "微信公众号",
+  "wechatImg": "",
   "news.title": "消息",
   "news.content": "现已上线安卓和苹果app,请在手机打开下载",
   "Notice": "须知",
@@ -32,7 +32,7 @@
   "checkPassword": "确认密码",
   "email": "邮箱",
   "usernameOrEmail": "用户名或邮箱",
-  "signUp": "注册",
+  "signUp": "",
   "member": "会员",
   "getPhoneCode": "手机验证码",
   "get": "获取",

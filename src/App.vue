@@ -79,7 +79,7 @@ export default {
         title: this.$tc('wechatImg'),
         duration: 0,
         dangerouslyUseHTMLString: true,
-        message: '<img src="https://cdn.jsdelivr.net/gh/OysterQAQ/Blog-Image/wechat.jpg" style="height:200px;width:200px;"/>',
+        message: '<img src="" style="height:200px;width:200px;"/>',
       });
       cookie.set('alert', true, {
         expires: 365,
