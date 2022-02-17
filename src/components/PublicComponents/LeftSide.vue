@@ -15,10 +15,7 @@
         <i :class="[item.icon]" />
         <span slot="title">{{ item.name }}</span>
       </el-menu-item>
-      <el-menu-item @click.native="goBBS">
-        <i class="el-icon-chat-round" />
-        <span slot="title">{{ this.$t('Feedback') }}</span>
-      </el-menu-item>
+
     </el-menu>
     <div>
       <a
