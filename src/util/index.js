@@ -86,11 +86,11 @@ export function replaceBigImg(url) {
     url += `?Authorization=${cookie.get('jwt')}`;
     return url;
   }
-  return url.replace('i.pximg.net', 'o.i.edcms.pw');
+  return url.replace('i.pximg.net', 'acgpic.net');
   //return 'https://vkceyugu.cdn.bspapp.com/VKCEYUGU-b1ebbd3c-ca49-405b-957b-effe60782276/cd01bc83-878d-4bd0-81d2-aba831aadf5c.png';
 }
 
 export function replaceSmallImg(url) {
-  return url.replace('i.pximg.net', 's.i.edcms.pw');
+  return url.replace('i.pximg.net', 'acgpic.net');
   //return 'https://vkceyugu.cdn.bspapp.com/VKCEYUGU-b1ebbd3c-ca49-405b-957b-effe60782276/cd01bc83-878d-4bd0-81d2-aba831aadf5c.png';
 }
