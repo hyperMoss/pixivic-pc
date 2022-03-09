@@ -136,7 +136,7 @@
               <template slot="append">
                 <el-link
                     type="primary"
-                    href="https://url.ipv4.host/zcwd"
+                    href="https://pixivic.com/zcwd"
                     target="_blank"
                 >
                   <!--                  {{ $t('get') }}-->微店获取
@@ -145,7 +145,7 @@
 
                 <el-link
                     type="primary"
-                    href="https://url.ipv4.host/zctb"
+                    href="https://pixivic.com/zctb"
                     target="_blank"
                 >
                   <!--                  {{ $t('get') }}-->淘宝获取
