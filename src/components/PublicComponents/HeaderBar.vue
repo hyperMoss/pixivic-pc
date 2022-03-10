@@ -117,10 +117,7 @@
             <span
               class="button-text"
               @click="login"
-            >{{ $t('login') }}</span> <span
-              class="button-text"
-              @click="signUp"
-            >{{ $t('signUp') }}</span>
+            >{{ $t('login') }}</span>
           </div>
         </div>
       </div>
